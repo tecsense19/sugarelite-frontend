@@ -13,17 +13,17 @@ const MainHeader = () => {
       </header>
 
       {/* Web View */}
-      <header className="hidden sm:flex h-[66px] bg-primary-dark text-white items-center justify-center">
+      <header className="hidden sm:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]">
         <div className="flex justify-between items-center w-full">
           {pathname === client_routes.search
             ? <div className="flex items-center ms-[110px]">
               <button onClick={() => router.push(client_routes.home)}>
-                <Image height={35} width={177} src={"/assets/logo (1).svg"} alt="" className="pointer-events-none" priority />
+                <Image height={35} width={177} src={"/assets/logo (1).svg"} alt="" className="pointer-events-none h-auto w-auto" priority />
               </button>
             </div>
             : <div className="flex items-center ms-[32px]">
               <button onClick={() => router.push(client_routes.home)}>
-                <Image height={35} width={177} src={"/assets/logo (1).svg"} alt="" className="pointer-events-none" priority />
+                <Image height={35} width={177} src={"/assets/logo (1).svg"} alt="" className="pointer-events-none h-auto w-auto" priority />
               </button>
             </div>
           }
