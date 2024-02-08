@@ -1,10 +1,13 @@
-export default function Home() {
+import Home from "@/components/Home";
+
+export default () => {
+  // const router = useRouter()
   return (
     <>
-      <div className="flex">
-        <div className="text-[45px] italic font-[900] leading-[45px] me-[7px]"> SUGAR </div>
-        <div className="text-[45px] font-[400] leading-[45px]"> ELITE </div>
+      <div className="font-bold text-2xl">
+        Home
       </div>
+      <Home />
     </>
   );
 }
