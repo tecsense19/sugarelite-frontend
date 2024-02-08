@@ -10,7 +10,11 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
-      "primary": "#2d2d2d"
+      "primary": "#2d2d2d",
+      "secondary": "#F16667",
+      "primary-dark": "#131313",
+      "primary-dark-2": "#232323",
+      "neutral": "#414141"
     },
     extend: {
       backgroundImage: {

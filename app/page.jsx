@@ -1,12 +1,9 @@
-import Home from "@/components/Home";
+import Home from "@/components/home";
 
 export default () => {
   // const router = useRouter()
   return (
     <>
-      <div className="font-bold text-2xl">
-        Home
-      </div>
       <Home />
     </>
   );
