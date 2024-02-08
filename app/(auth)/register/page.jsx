@@ -9,12 +9,12 @@ import { useForm } from "react-hook-form"
 
 export default () => {
 
-	const { register, handleSubmit } = useForm()
+	const { register, handleSubmit, control } = useForm()
 
 	const [nextStep, setNextStep] = useState(1)
 
-	const registerhandler = ({ sugarType }) => {
-		console.log(sugarType)
+	const registerhandler = (data) => {
+		console.log(data)
 	}
 
 
@@ -49,7 +49,7 @@ export default () => {
 										nextStep === 3 && <Password register={register} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 									}
 									{
-										nextStep === 4 && <Region register={register} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+										nextStep === 4 && <Region register={register} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 									}
 								</form>
 							</div>
