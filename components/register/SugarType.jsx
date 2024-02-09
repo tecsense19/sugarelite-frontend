@@ -2,7 +2,29 @@
 import Image from "next/image"
 
 
-const SugarType = ({ register, nextStepHandler }) => {
+const SugarType = ({ register, nextStepHandler, watch }) => {
+
+    const isValid = watch("sugarType")
+
+    const typeArray = [
+        {
+            sugarType: "SugarDaddy",
+            img: "sugar_dady.svg"
+        },
+        {
+            sugarType: "SugarBoy",
+            img: "sugar_boy.svg"
+        },
+        {
+            sugarType: "SugarMama",
+            img: "sugar_mama.svg"
+        },
+        {
+            sugarType: "SugarBabe",
+            img: "sugar_babe.svg"
+        }
+    ]
+
     return (
         <>
             <div className="text-center">
@@ -11,41 +33,24 @@ const SugarType = ({ register, nextStepHandler }) => {
                 </div>
                 <p className="text-2xl pt-5 font-medium">I am a</p>
             </div>
-            <div className="text-center mt-[60px]">
-                <div className="flex gap-12">
-                    <div>
-                        <label htmlFor="SugarDaddy" className=" cursor-pointer">
-                            <p className="mb-[9px]">SugarDaddy</p>
-                            <Image src={"/assets/sugar_dady.svg"} alt="sugar_dady" width={90} height={90} className=" rounded-full" priority />
-                        </label>
-                        <input type="radio" {...register("sugarType")} value={"SugarDaddy"} className="hidden" id="SugarDaddy" />
-                    </div>
-                    <div>
-                        <label htmlFor="SugarBoy" className=" cursor-pointer">
-                            <p className="mb-[9px]">SugarBoy</p>
-                            <Image src={"/assets/sugar_boy.svg"} alt="sugar_boy" width={90} height={90} className="rounded-full" priority />
-                        </label>
-                        <input type="radio" {...register("sugarType")} value={"SugarBoy"} className="hidden" id="SugarBoy" />
-                    </div>
+            <div className="text-center mt-[60px] w-[20rem]">
+                <div className="flex gap-6 flex-wrap justify-center">
+                    {
+                        typeArray.map((type, inx) => (
+                            <div className={`${isValid === type.sugarType && "bg-secondary"} py-3 px-5 rounded-lg`} key={inx}>
+                                <label htmlFor={type.sugarType} className=" cursor-pointer ">
+                                    <p className="mb-[9px]">{type.sugarType}</p>
+                                    <Image src={`/assets/${type.img}`} alt={type.sugarType} width={90} height={90} className=" rounded-full" priority />
+                                </label>
+                                <input type="radio" {...register("sugarType")} value={type.sugarType} className="hidden" id={type.sugarType} />
+                            </div>
+                        ))
+                    }
+
                 </div>
-                <div className="flex gap-12 pt-[30px]">
-                    <div>
-                        <label htmlFor="SugarMama" className=" cursor-pointer">
-                            <p className="mb-[9px]">SugarMama</p>
-                            <Image src={"/assets/sugar_mama.svg"} alt="sugar_mama" width={90} height={90} className="rounded-full" priority />
-                        </label>
-                        <input type="radio" {...register("sugarType")} value={"SugarMama"} className="hidden" id="SugarMama" />
-                    </div>
-                    <div>
-                        <label htmlFor="SugarBabe" className=" cursor-pointer">
-                            <p className="mb-[9px]">SugarBabe</p>
-                            <Image src={"/assets/sugar_babe.svg"} alt="sugar_babe" width={90} height={90} className="rounded-full" priority />
-                        </label>
-                        <input type="radio" {...register("sugarType")} value={"SugarBabe"} className="hidden" id="SugarBabe" />
-                    </div>
-                </div>
+
             </div>
-            <button className="bg-secondary w-full py-3 mt-[65px] rounded" onClick={nextStepHandler} type="button">NEXT</button>
+            <button className="bg-secondary w-full py-3 mt-[65px] rounded max-w-[25rem]" onClick={nextStepHandler} type="button" disabled={!isValid}>NEXT</button>
 
         </>
     )

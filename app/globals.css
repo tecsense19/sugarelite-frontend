@@ -6,30 +6,55 @@
   font-family: "Myriad Pro Regular";
 }
 
-.filter-container .ant-select-selector {
-  @apply !px-[20px];
+button:disabled {
+  opacity: .5;
 }
 
-.ant-select-selection-search {
-  @apply px-[9px];
+.region_dropdown .ant-select-selector {
+  padding: 0 18px !important;
 }
 
 .ant-select-arrow {
-  @apply !hidden;
+  display: none;
 }
 
-.filter-container .country-container .ant-select-selection-search {
-  @apply px-[41px];
+.region_dropdown .ant-select-selection-search {
+  @apply !px-[6px] !font-medium
 }
 
-.filter-container .ant-checkbox-input,
-.filter-container .ant-checkbox-inner {
-  @apply !h-6 !w-6 !flex !justify-center !items-center !border-none;
+.region_dropdown .ant-select-selection-item {
+  @apply font-medium
 }
 
-.ant-checkbox-inner::after {
-  content: "";
-  @apply inline-block !h-[18px] !w-[18px] !transform-none !bg-center !border-0 !bg-cover;
-  position: unset !important;
-  background-image: url('../public/assets/check.svg');
+.ant-empty-description, .ant-empty {
+  @apply !text-[white] opacity-[50%]
+}
+
+.ant-picker {
+  @apply !px-[18px] !py-[9px]
+}
+
+.ant-picker-cell-in-view {
+  @apply !text-[black]
+}
+
+.ant-picker-content th {
+  @apply !text-slate-600
+}
+
+.ant-picker-body {
+  @apply !pt-0
+}
+
+.ant-picker-cell-disabled {
+  @apply !text-opacity-[25%]
+}
+
+.ant-picker-suffix,
+.ant-picker-clear {
+  @apply !text-white opacity-[50%]
+}
+
+.ant-picker-input {
+  @apply !font-medium
 }
