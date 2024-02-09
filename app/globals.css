@@ -5,3 +5,56 @@
 .font-myriad {
   font-family: "Myriad Pro Regular";
 }
+
+button:disabled {
+  opacity: .5;
+}
+
+.region_dropdown .ant-select-selector {
+  padding: 0 18px !important;
+}
+
+.ant-select-arrow {
+  display: none;
+}
+
+.ant-select-selection-search {
+  @apply !px-[6px] !font-medium
+}
+
+.region_dropdown .ant-select-selection-item {
+  @apply font-medium
+}
+
+.ant-empty-description, .ant-empty {
+  @apply !text-[white] opacity-[50%]
+}
+
+.ant-picker {
+  @apply !px-[18px] !py-[9px]
+}
+
+.ant-picker-cell-in-view {
+  @apply !text-[black]
+}
+
+.ant-picker-content th {
+  @apply !text-slate-600
+}
+
+.ant-picker-body {
+  @apply !pt-0
+}
+
+.ant-picker-cell-disabled {
+  @apply !text-opacity-[25%]
+}
+
+.ant-picker-suffix,
+.ant-picker-clear {
+  @apply !text-white opacity-[50%]
+}
+
+.ant-picker-input {
+  @apply !font-medium
+}

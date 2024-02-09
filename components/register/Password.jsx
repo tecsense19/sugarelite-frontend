@@ -1,7 +1,11 @@
 import Image from 'next/image'
 import React from 'react'
 
-const Password = ({ nextStepHandler, prevStepHandler, register }) => {
+const Password = ({ nextStepHandler, prevStepHandler, register, watch }) => {
+    const isValid = {
+        password: watch("password"),
+        cpassword: watch("cpassword"),
+    }
     return (
         <>
             <div className="text-center flex flex-col items-center">
@@ -12,12 +16,12 @@ const Password = ({ nextStepHandler, prevStepHandler, register }) => {
                 <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem]'>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <div className='mt-14 w-full'>
-                <input type="password" {...register('password', { required: true })} placeholder='Password' className='w-full bg-transparent border border-[#535353] rounded py-3 ps-[18px] text-white text-opacity-[50%] outline-none mb-3' autoComplete='off' />
-                <input type="password" {...register('cpassword', { required: true })} placeholder='Confirm password' className='w-full bg-transparent border border-[#535353] rounded py-3 ps-[18px] text-white text-opacity-[50%] outline-none' autoComplete='off' />
+                <input type="password" {...register('password', { required: true })} placeholder='Password' className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)]   border border-[#535353] rounded h-[42px] ps-[18px] text-white text-opacity-[50%] outline-none mb-3' autoComplete='off' />
+                <input type="password" {...register('cpassword', { required: true })} placeholder='Confirm password' className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)]   border border-[#535353] rounded h-[42px] ps-[18px] text-white text-opacity-[50%] outline-none' autoComplete='off' />
             </div>
             <div className='mt-14 w-full'>
-                <button className="bg-secondary w-full py-3 mb-3 rounded" onClick={prevStepHandler} type="button">BACK</button>
-                <button className=" w-full py-3 rounded border border-[#53535350]" onClick={nextStepHandler} type="button">NEXT</button>
+                <button className="bg-secondary w-full h-[42px] mb-3 rounded" onClick={prevStepHandler} type="button">BACK</button>
+                <button className=" w-full h-[42px] rounded border border-[#53535350]" onClick={nextStepHandler} type="button" disabled={!isValid.cpassword || !isValid.password || isValid.password !== isValid.cpassword}>NEXT</button>
             </div>
         </>
     )
