@@ -5,3 +5,31 @@
 .font-myriad {
   font-family: "Myriad Pro Regular";
 }
+
+.filter-container .ant-select-selector {
+  @apply !px-[20px];
+}
+
+.ant-select-selection-search {
+  @apply px-[9px];
+}
+
+.ant-select-arrow {
+  @apply !hidden;
+}
+
+.filter-container .country-container .ant-select-selection-search {
+  @apply px-[41px];
+}
+
+.filter-container .ant-checkbox-input,
+.filter-container .ant-checkbox-inner {
+  @apply !h-6 !w-6 !flex !justify-center !items-center !border-none;
+}
+
+.ant-checkbox-inner::after {
+  content: "";
+  @apply inline-block !h-[18px] !w-[18px] !transform-none !bg-center !border-0 !bg-cover;
+  position: unset !important;
+  background-image: url('../public/assets/check.svg');
+}

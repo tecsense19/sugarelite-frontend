@@ -13,7 +13,7 @@ const AuthHeader = () => {
 
       {/* Web View */}
       <header className="hidden sm:flex h-[80px] bg-black text-white items-center justify-center top-0 fixed w-full z-[2]">
-        <div className="w-9/12 flex justify-between items-center">
+        <div className="w-11/12 xl:w-9/12 flex justify-between items-center">
           <div className="flex items-center">
             <button onClick={() => router.push(client_routes.home)}>
               <Image height={37} width={188} className="pointer-events-none" src={"/assets/logo.svg"} alt="" priority />
