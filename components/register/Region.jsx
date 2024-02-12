@@ -45,7 +45,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
             borderRadius: '5px',
             colorPrimary: "#535353",
             fontSize: "16px",
-            padding: '12px 18px',
+            padding: '12px 28px',
             colorIcon: "white",
             fontWeight: "medium"
         }
@@ -76,10 +76,10 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                 <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
                     <Image src={"/assets/treasure_map.svg"} alt="pad_lock" width={48} height={48} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl pt-5 font-medium max-w-[15rem]">Where are you from? which region?</p>
-                <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem]'>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p className="text-2xl pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? which region?</p>
+                <p className='text-white opacity-[50%] sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
-            <div className='mt-14 w-full relative text-opacity-[70%] region_dropdown '>
+            <div className='mt-14 w-full relative text-opacity-[70%] region_dropdown sm:mt-[25px]'>
                 <div className="mb-3 relative flex justify-end items-center">
                     <Controller
                         name="country"
@@ -91,7 +91,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                 <Select
                                     {...field}
                                     showSearch
-                                    placeholder="Select Country"
+                                    placeholder="Select Region"
                                     optionFilterProp="children"
                                     dropdownStyle={{ backgroundColor: '#232323' }}
                                     filterOption={(input, option) =>
@@ -108,6 +108,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                     }
                                 </Select>
                                 <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
+                                <Image src={"/assets/region.svg"} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 left-0 pointer-events-none' />
                             </ConfigProvider>
 
                         )}
@@ -124,7 +125,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                 <Select
                                     {...field}
                                     showSearch
-                                    placeholder="Select Region"
+                                    placeholder="Select your country"
                                     optionFilterProp="children"
                                     dropdownStyle={{ backgroundColor: '#232323' }}
                                     filterOption={(input, option) =>
@@ -139,14 +140,25 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                     ))}
                                 </Select>
                                 <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
+                                <Image src={"/assets/country.svg"} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 left-0 pointer-events-none' />
                             </ConfigProvider>
                         )}
                     />
                 </div>
             </div>
-            <div className='mt-14 w-full'>
-                <button className="bg-secondary w-full  h-[42px] mb-3 rounded" onClick={prevStepHandler} type="button">BACK</button>
-                <button className=" w-full  rounded border h-[42px] border-[#53535350]" type="button" disabled={!isValid.region || !isValid.country} onClick={nextStepHandler}>NEXT</button>
+            <div className='mt-14 w-full  sm:grid grid-cols-2 gap-x-[37px]'>
+                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
+                    <div className="flex justify-center">
+                        <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
+                        BACK
+                    </div>
+                </button>
+                <button className=" w-full  rounded bg-secondary h-[42px]  relative text-white text-opacity-[70%]" type="button" disabled={!isValid.region || !isValid.country} onClick={nextStepHandler}>
+                    <div className="flex justify-center sm:ms-4">
+                        NEXT
+                        <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
+                    </div>
+                </button>
             </div>
         </>
     )
