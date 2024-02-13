@@ -1,27 +1,29 @@
-import Image from "next/image"
-import hug1 from "../../public/assets/hug.svg"
-import { useRouter } from "next/navigation"
+import Image from "next/image";
+import hugIcon from "../../public/assets/hug.svg";
+import userFriendlyDesktopImg from "../../public/assets/user_friendly_desktop.png";
+import userFriendlyMobileImg from "../../public/assets/user_friendly_mobile.svg";
+import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
 
 const UserFriendly = () => {
   const router = useRouter();
 
   return (
-    <div className="mt-[140px] lg:mt-[230px] px-4 lg:px-0 flex justify-center items-center lg:block">
-      <div className="block lg:flex justify-between items-center bg-primary-dark-2 pt-[89px] pb-[35px] px-4 lg:px-0 lg:py-[80px] rounded-[5px] lg:rounded-[0px] w-full sm:w-9/12 lg:w-full">
-        <div className="w-full lg:w-6/12 relative h-full flex items-center justify-center lg:justify-start">
-          <Image src={"/assets/user_friendly_desktop.png"} alt="" width={1000} height={1000} priority className="hidden lg:block absolute pointer-events-none select-none w-11/12" />
-          <Image src={"/assets/user_friendly_mobile.png"} alt="" width={1000} height={1000} priority className="block lg:hidden absolute pointer-events-none select-none w-[260px] mb-10 -translate-y-[50%]" />
+    <div className="mt-[135px] lg:mt-[230px] px-4 lg:px-0 flex justify-center items-center lg:block">
+      <div className="block lg:flex justify-between items-center bg-primary-dark-2 pt-[93px] pb-[35px] px-4 lg:px-0 lg:py-[80px] rounded-[5px] lg:rounded-[0px] w-full sm:w-9/12 lg:w-full" data-aos="fade-left" data-aos-offset="100" data-aos-duration="500">
+        <div className="w-full lg:w-6/12 relative h-full flex items-center justify-center lg:justify-start" data-aos="fade-right" data-aos-offset="100" data-aos-duration="500" data-aos-delay="10">
+          <Image src={userFriendlyDesktopImg} alt="" width={1000} height={1000} priority className="hidden lg:block absolute pointer-events-none select-none w-11/12" />
+          <Image src={userFriendlyMobileImg} alt="" width={1000} height={1000} priority className="block lg:hidden absolute pointer-events-none select-none w-[260px] mb-10 -translate-y-[45%]" />
         </div>
         <div className="w-full lg:w-6/12">
           <div className="flex justify-center lg:justify-start w-full">
             <div className="w-[50px] h-[50px] sm:w-[65px] sm:h-[65px] lg:w-[75px] lg:h-[75px] bg-secondary rounded-full flex justify-center items-center">
-              <Image src={hug1} alt="" height={27} width={27} priority className="pointer-events-none select-none block sm:hidden" />
-              <Image src={hug1} alt="" height={35} width={35} priority className="pointer-events-none select-none sm:block hidden lg:hidden" />
-              <Image src={hug1} alt="" height={40} width={40} priority className="pointer-events-none select-none hidden lg:block" />
+              <Image src={hugIcon} alt="" height={27} width={27} priority className="pointer-events-none select-none block sm:hidden" />
+              <Image src={hugIcon} alt="" height={35} width={35} priority className="pointer-events-none select-none sm:block hidden lg:hidden" />
+              <Image src={hugIcon} alt="" height={40} width={40} priority className="pointer-events-none select-none hidden lg:block" />
             </div>
           </div>
-          <div className="text-[clamp(21px,5vw,25px)] lg:text-[38px] mt-4 lg:mt-5 font-semibold lg:font-extrabold text-center lg:text-start" style={{ letterSpacing: "-1px" }}>
+          <div className="text-[clamp(21px,5vw,25px)] lg:text-[38px] mt-4 lg:mt-5 font-semibold lg:font-extrabold text-center lg:text-start -tracking-[1px] leading-[normal]">
             User-friendly settings
           </div>
           <div className="w-full flex justify-center lg:justify-start">

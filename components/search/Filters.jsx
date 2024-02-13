@@ -60,7 +60,7 @@ const Filters = () => {
 
   return (
     // Filter Section
-    <div className="bg-primary-dark-3 h-full max-h-full overflow-y-auto w-[400px] p-[30px] text-white filter-container">
+    <div className="bg-primary-dark-3 h-full max-h-full overflow-y-auto w-[400px] p-[30px] text-white filter-container" style={{ scrollbarWidth: "none" }}>
       <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px]" style={{ lineHeight: "normal" }}>
         RESET SEARCH
       </button>
