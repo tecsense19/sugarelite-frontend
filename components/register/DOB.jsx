@@ -1,35 +1,25 @@
+"use client"
 import Image from "next/image"
 import { ConfigProvider, DatePicker } from 'antd';
 import { Controller } from "react-hook-form";
 import dayjs from 'dayjs';
 
 const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
-    const isValid = watch("date_of_birth")
-
-    const isFormValid = {
-        sugarType: watch("sugarType"),
-        username: watch("username"),
-        email: watch("email"),
-        password: watch("password"),
-        region: watch("region"),
-        country: watch("country"),
-        date_of_birth: watch("date_of_birth"),
-    }
-    const dateFormat = 'DD-MM-YYYY';
-    console.log(isFormValid)
+    const isValid = watch("date")
+    const dateFormat = 'DD/MM/YYYY';
     return (
         <>
             <div className="text-center flex flex-col items-center">
                 <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
                     <Image src={"/assets/calendar_3.svg"} alt="calender" width={48} height={48} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Enter Date of Birth?</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Enter Date of Birth?</p>
                 <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <div className="relative flex justify-end items-center">
                     <Controller
-                        name="date_of_birth"
+                        name="date"
                         control={control}
                         render={({ field }) => (
                             <ConfigProvider
@@ -60,14 +50,14 @@ const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
                             >
                                 <DatePicker
                                     {...field}
-                                    maxDate={dayjs('09-02-2024', dateFormat)}
+                                    maxDate={dayjs('09/02/2024', dateFormat)}
                                     showNow={false}
                                     placeholder="dd/mm/yyyy"
-                                    format={'DD/MM/YYYY'}
+                                    format={dateFormat}
                                     dropdownStyle={{ backgroundColor: '#232323', }}
                                     className="w-full text-opacity-[70%] pt-4"
                                 />
-                                <Image src={'assets/calendar.svg'} alt="dob" width={20} height={20} className="absolute left-0 hidden sm:block translate-x-4" />
+                                <Image src={'assets/calendar.svg'} alt="dob" width={20} height={20} className="absolute left-0 opacity-70 translate-x-4" />
                             </ConfigProvider>
                         )}
                     />
@@ -80,7 +70,7 @@ const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
                         BACK
                     </div>
                 </button>
-                <button className=" w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" onClick={nextStepHandler} type="button" disabled={!isValid}>
+                <button className=" w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" type="submit" disabled={!isValid}>
                     <div className="flex justify-center gap-1 ms-4">
                         SUBMIT
                         <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto  text-white" />

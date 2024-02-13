@@ -1,7 +1,10 @@
+"use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 
 const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue }) => {
+
+
 
     const isValid = {
         username: watch("username"),
@@ -12,16 +15,16 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
 
 
         <>
-            <div className="text-center flex flex-col items-center">
+            <div className="text-center flex flex-col items-center ">
                 <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
                     <Image src={"/assets/gmail.svg"} alt="Card_email" width={48} height={48} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">What is your username & email?</p>
-                <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">What is your username & email?</p>
+                <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:max-w-full sm:mt-[6px]'>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px] '>
-                <div className=' mb-3 flex h-[42px] items-center border border-[#535353] ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                    <Image src={'/assets/username.svg'} width={20} height={20} alt='username ' className='me-[10px] w-[20px] h-[20px]' />
+                <div className=' mb-3 flex h-[42px] items-center border border-[#535353] ps-[12px] sm:ps-[20px]  rounded-[5px]'>
+                    <Image src={'/assets/username.svg'} width={20} height={20} alt='username ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                     <input
                         type="text"
                         {...register('username', { required: true })}
@@ -32,18 +35,18 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                     />
                 </div>
                 <div className=' flex items-center h-[42px] border border-[#535353] ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                    <Image src={'/assets/email.svg'} width={20} height={20} alt='email ' className='me-[10px] w-[20px] h-[20px]' />
+                    <Image src={'/assets/email.svg'} width={20} height={20} alt='email ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                     <input
                         type="email"
                         {...register('email', { required: true })}
                         onChange={(e) => setValue("email", e.target.value)}
-                        placeholder='Email id'
-                        className='w-full placeholder:text-[rgba(255,255,255,0.5)]  bg-transparent  text-[16px]   text-white text-opacity-[70%] font-medium outline-none'
+                        placeholder='E-mail'
+                        className='w-full placeholder:text-[rgba(255,255,255,0.5)]  bg-transparent text-[16px] text-white text-opacity-[70%] font-medium outline-none'
                         autoComplete='off' />
                 </div>
             </div>
-            <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
-                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
+            <div className={`mt-14 w-full sm:grid grid-cols-2 gap-x-[37px] `}>
+                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={() => { prevStepHandler() }} type="button">
                     <div className="flex justify-center">
                         <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK

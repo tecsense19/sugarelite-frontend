@@ -7,15 +7,17 @@ import SugarType from "@/components/register/SugarType"
 import UserName from "@/components/register/UserName"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import dayjs from 'dayjs';
 import { useForm } from "react-hook-form"
 
 export default () => {
 
-	const { register, handleSubmit, control, watch, setValue, formState: { isValid } } = useForm()
+	const { register, handleSubmit, control, watch, setValue } = useForm()
 
 	const [nextStep, setNextStep] = useState(1)
 
 	const registerhandler = (data) => {
+		data = { ...data, "date": dayjs(data.date).format("DD/MM/YYYY") }
 		console.log(data)
 	}
 
@@ -35,7 +37,7 @@ export default () => {
 		},
 		{
 			step: "email",
-			img_url: "id-card_2.svg",
+			img_url: "gmail.svg",
 			val: 2
 		},
 		{
@@ -71,7 +73,7 @@ export default () => {
 						<div className="text-white w-full h-full">
 							<Image src={"/assets/chevron_left.svg"} alt="back-btn" width={26} height={26} className="pointer-events-none" />
 							<div className="flex justify-center items-center h-[calc(100%-26px)]">
-								<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
+								<form className="flex flex-col items-center w-full " onSubmit={handleSubmit(registerhandler)}>
 									{
 										nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
 									}
@@ -129,10 +131,10 @@ export default () => {
 									nextStep === 3 && <Password setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
-									nextStep === 4 && <Region register={register} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 4 && <Region register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
-									nextStep === 5 && <DOB register={register} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 5 && <DOB register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
 									nextStep === 6 && <Success />

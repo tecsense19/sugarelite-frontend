@@ -15,7 +15,7 @@ const people = [
 ]
 const { Option } = Select;
 
-const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
+const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) => {
 
     const [countries, setCountires] = useState([])
     const [states, setStates] = useState([])
@@ -60,7 +60,11 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
     }, [])
 
     useEffect(() => {
+        setValue("region", "Select your Region")
         const filteredArray = countries.filter((country) => country.name === watch("country"))
+        if (filteredArray[0]?.name && !filteredArray[0]?.states.length) {
+            setValue("region", "No region")
+        }
         setStates(filteredArray[0]?.states)
     }, [watch("country")])
 
@@ -76,7 +80,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                 <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
                     <Image src={"/assets/treasure_map.svg"} alt="pad_lock" width={48} height={48} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? which region?</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? which region?</p>
                 <p className='text-white opacity-[50%] sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <div className='mt-14 w-full relative text-opacity-[70%] region_dropdown sm:mt-[25px]'>
@@ -91,7 +95,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                 <Select
                                     {...field}
                                     showSearch
-                                    placeholder="Select Region"
+                                    placeholder="Select your Country"
                                     optionFilterProp="children"
                                     dropdownStyle={{ backgroundColor: '#232323' }}
                                     filterOption={(input, option) =>
@@ -108,7 +112,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                     }
                                 </Select>
                                 <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
-                                <Image src={"/assets/region.svg"} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 left-0 pointer-events-none' />
+                                <Image src={"/assets/country.svg"} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 left-0 pointer-events-none' />
                             </ConfigProvider>
 
                         )}
@@ -125,7 +129,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                 <Select
                                     {...field}
                                     showSearch
-                                    placeholder="Select your country"
+                                    placeholder="Select your Region"
                                     optionFilterProp="children"
                                     dropdownStyle={{ backgroundColor: '#232323' }}
                                     filterOption={(input, option) =>
@@ -140,7 +144,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch }) => {
                                     ))}
                                 </Select>
                                 <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
-                                <Image src={"/assets/country.svg"} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 left-0 pointer-events-none' />
+                                <Image src={"/assets/region.svg"} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 left-0 pointer-events-none' />
                             </ConfigProvider>
                         )}
                     />

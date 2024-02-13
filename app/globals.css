@@ -7,6 +7,15 @@ input::-ms-clear {
   display: none;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff7c;
+  -webkit-text-size-adjust: 20px;
+}
+
 .font-myriad {
   font-family: "Myriad Pro Regular";
 }
@@ -38,17 +47,7 @@ button:disabled {
 }
 
 .ant-picker {
-  @apply !px-[18px] !py-[9px]
-}
-
-@media screen and (min-width:640px) {
-  /* .region_dropdown .ant-select-selector {
-    padding: 0 46px !important;
-  } */
-
-  .ant-picker {
-    @apply !pl-[46px] !py-[9px]
-  }
+  @apply !px-[46px] !py-[9px]
 }
 
 .ant-picker-cell-in-view {
@@ -69,7 +68,7 @@ button:disabled {
 
 .ant-picker-suffix,
 .ant-picker-clear {
-  @apply !text-white opacity-[50%]
+  @apply !text-white opacity-[50%] !hidden
 }
 
 .ant-picker-input {
