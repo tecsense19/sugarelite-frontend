@@ -8,12 +8,12 @@ const MainHeader = () => {
   return (
     <>
       {/* Mobile View */}
-      <header className="sm:hidden flex">
+      {/* <header className="sm:hidden flex">
         Main Mobile Navbar
-      </header>
+      </header> */}
 
       {/* Web View */}
-      <header className="hidden sm:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]">
+      <header className="hidden md:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]">
         <div className="flex justify-between items-center w-full">
           {pathname === client_routes.search
             ? <div className="flex items-center ms-[110px]">

@@ -65,15 +65,15 @@ const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
-                    <div className="flex justify-center">
+                    <div className="sm:flex justify-center font-bold gap-[5px]">
                         <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
-                <button className=" w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" type="submit" disabled={!isValid}>
-                    <div className="flex justify-center gap-1 ms-4">
+                <button className="w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" type="submit" disabled={!isValid}>
+                    <div className="sm:flex justify-center gap-[5px] font-bold ms-4">
                         SUBMIT
-                        <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto  text-white" />
+                        <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                     </div>
                 </button>
             </div>

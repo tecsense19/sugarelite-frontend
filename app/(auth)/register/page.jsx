@@ -16,7 +16,8 @@ export default () => {
 
 	const [nextStep, setNextStep] = useState(1)
 
-	const registerhandler = (data) => {
+	const registerhandler = (data, e) => {
+		e.preventDefault()
 		data = { ...data, "date": dayjs(data.date).format("DD/MM/YYYY") }
 		console.log(data)
 	}
@@ -73,7 +74,7 @@ export default () => {
 						<div className="text-white w-full h-full">
 							<Image src={"/assets/chevron_left.svg"} alt="back-btn" width={26} height={26} className="pointer-events-none" />
 							<div className="flex justify-center items-center h-[calc(100%-26px)]">
-								<form className="flex flex-col items-center w-full " onSubmit={handleSubmit(registerhandler)}>
+								<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
 									{
 										nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
 									}
@@ -120,7 +121,7 @@ export default () => {
 									}
 								</div>
 							</div>
-							<form className="flex flex-col items-center sm:w-[82%] lg:w-[665px] ">
+							<form className="flex flex-col items-center sm:w-[82%] lg:w-[665px]" onSubmit={handleSubmit(registerhandler)}>
 								{
 									nextStep === 1 && <SugarType setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} />
 								}
@@ -134,7 +135,7 @@ export default () => {
 									nextStep === 4 && <Region register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
-									nextStep === 5 && <DOB register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
 									nextStep === 6 && <Success />
