@@ -10,6 +10,7 @@ import Image from "next/image"
 import upArrowIcon from "../../public/assets/up_arrow.svg";
 import UniqueProfile from "./UniqueProfile"
 import HomeCounter from "./HomeCounter"
+import Working from "./Working"
 
 const Home = () => {
   const { state: { isOpenMobileNavbar } } = useStore();
@@ -52,6 +53,7 @@ const Home = () => {
         <EasySearch />
         <UniqueProfile />
         <HomeCounter />
+        <Working />
       </div>
       {showScrollTopBtn &&
         <button className="fade-down fixed bottom-5 right-5 w-10 h-10 bg-secondary rounded-full flex justify-center items-center" onClick={handleScrollTop} data-aos="fade-up">

@@ -31,11 +31,14 @@ const HomeCounter = () => {
         }
       });
     }, options);
-
-    observer.observe(countRef.current);
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
 
     return () => {
-      observer.unobserve(countRef.current);
+      if (countRef.current) {
+        observer.unobserve(countRef.current);
+      }
     };
   }, []);
 
