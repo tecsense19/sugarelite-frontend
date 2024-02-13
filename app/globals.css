@@ -21,7 +21,7 @@ input:-webkit-autofill:active {
 }
 
 button:disabled {
-  opacity: .5;
+  @apply !bg-opacity-50
 }
 
 .region_dropdown .ant-select-selector {

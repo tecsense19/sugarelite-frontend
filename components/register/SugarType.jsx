@@ -52,7 +52,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
 
             </div>
             <button className="bg-secondary w-full max-w-[26rem] sm:max-w-full text-white text-opacity-[70%] h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] " onClick={nextStepHandler} type="button" disabled={!isValid}>
-                <div className="flex justify-center ms-4">
+                <div className="flex justify-center gap-[5px] font-bold ms-4">
                     NEXT
                     <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                 </div>

@@ -29,8 +29,8 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 colorBorder: "#535353",
                 controlItemBgHover: "none",
                 controlHeight: "42px",
-                colorTextPlaceholder: "rgba(255,255,255,0.5)",
-                colorText: "rgba(255,255,255,0.8)",
+                colorTextPlaceholder: "rgba(255,255,255,0.7)",
+                colorText: "rgba(255,255,255,0.7)",
                 colorSuccessBorderHover: "none",
                 colorInfoBorderHover: "none",
                 colorTextActive: "black",
@@ -152,13 +152,13 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
             </div>
             <div className='mt-14 w-full  sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
-                    <div className="flex justify-center">
+                    <div className="flex justify-center font-bold gap-[5px]">
                         <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
                 <button className=" w-full  rounded bg-secondary h-[42px]  relative text-white text-opacity-[70%]" type="button" disabled={!isValid.region || !isValid.country} onClick={nextStepHandler}>
-                    <div className="flex justify-center sm:ms-4">
+                    <div className="flex justify-center font-bold gap-[5px] sm:ms-4">
                         NEXT
                         <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                     </div>
