@@ -9,7 +9,7 @@ import heartIcon from "../../public/assets/heart_icon.svg";
 const Working = () => {
   return (
     <div className="mt-[50px] lg:mt-[120px] w-full flex justify-center px-4 sm:px-0">
-      <div className="w-full sm:w-9/12 flex flex-col justify-center items-center">
+      <div className="w-full sm:w-8/12 flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center" data-aos="fade-in" data-aos-duration="500">
           <div className="text-[clamp(26px,5vw,60px)] font-extrabold leading-[normal] -tracking-[0.5px] lg:-tracking-[1px] text-center">
             How does it work?
@@ -28,7 +28,7 @@ const Working = () => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum.
             </div>
           </div>
-          <div className="row-start-1 2xl:col-span-1 lg:col-span-2 2xl:row-span-2 flex justify-center items-center" data-aos="fade-in" data-aos-duration="500">
+          <div className="row-start-1 2xl:col-span-1 lg:col-span-2 2xl:row-span-2 flex justify-center items-center" data-aos="fade-in" data-aos-duration="800">
             <Image src={workingHomeDesktopImg} alt="" height={1000} width={1000} className="sm:w-8/12 lg:w-6/12 2xl:w-full hidden sm:block" />
             <Image src={workingHomeMobileImg} alt="" height={1000} width={1000} className="w-10/12 sm:hidden" />
           </div>
