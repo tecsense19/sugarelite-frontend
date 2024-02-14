@@ -11,6 +11,7 @@ import upArrowIcon from "../../public/assets/up_arrow.svg";
 import UniqueProfile from "./UniqueProfile"
 import HomeCounter from "./HomeCounter"
 import Working from "./Working"
+import Footer from "./Footer"
 
 const Home = () => {
   const { state: { isOpenMobileNavbar } } = useStore();
@@ -21,7 +22,6 @@ const Home = () => {
     AOS.init()
     setShowScrollTopBtn(false)
     window.scrollTo({ top: 0, behavior: "smooth" })
-    document.body.classList.add("bg-primary")
     const scrollEventListener = () => {
       if (window.scrollY > 300) {
         setShowScrollTopBtn(true)
@@ -33,7 +33,6 @@ const Home = () => {
       scrollEventListener()
     })
     return () => {
-      document.body.classList.remove("bg-primary")
       window.removeEventListener("scroll", () => {
         scrollEventListener()
       })
@@ -46,7 +45,7 @@ const Home = () => {
 
   return (
     <>
-      <div className={`min-h-dvh md:pt-[80px] bg-primary text-white pb-10 transition-all duration-150 ease-linear origin-top ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
+      <div className={`min-h-dvh md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
         <Banner />
         <Services />
         <UserFriendly />
@@ -54,6 +53,7 @@ const Home = () => {
         <UniqueProfile />
         <HomeCounter />
         <Working />
+        <Footer />
       </div>
       {showScrollTopBtn &&
         <button className="fade-down fixed bottom-5 right-5 w-10 h-10 bg-secondary rounded-full flex justify-center items-center" onClick={handleScrollTop} data-aos="fade-up">
