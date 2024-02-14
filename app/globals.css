@@ -25,7 +25,7 @@ button:disabled {
 }
 
 .region_dropdown .ant-select-selector {
-  padding: 0 46px !important;
+  padding: 0 56px !important;
 }
 
 
@@ -35,7 +35,7 @@ button:disabled {
 }
 
 .region_dropdown .ant-select-selection-search {
-  @apply !pl-[35px] !font-medium
+  @apply !pl-[45px] !font-medium
 }
 
 .region_dropdown .ant-select-selection-item {
@@ -91,41 +91,30 @@ button:disabled {
   @apply text-white scale-110 pt-1;
 }
 
-/* Animista css */
-
-.scale-up-tl {
-  -webkit-animation: scale-up-tl 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-  animation: scale-up-tl 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+.ant-upload.ant-upload-select {
+  @apply !border !border-[#8A8A8A]
 }
 
-@-webkit-keyframes scale-up-tl {
-  0% {
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
-    -webkit-transform-origin: 0% 0%;
-    transform-origin: 0% 0%;
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform-origin: 0% 0%;
-    transform-origin: 0% 0%;
-  }
+.ant-upload.ant-upload-select:hover {
+  @apply !border !border-[#8A8A8A]
 }
 
-@keyframes scale-up-tl {
-  0% {
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
-    -webkit-transform-origin: 0% 0%;
-    transform-origin: 0% 0%;
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform-origin: 0% 0%;
-    transform-origin: 0% 0%;
-  }
+.ant-upload-list-item-actions {
+  @apply !hidden
 }
+
+.ant-upload-list-item {
+  @apply !p-0 !border !border-[#8A8A8A] !border-dashed
+}
+
+.ant-upload-list-item:hover::before {
+  @apply !opacity-0
+}
+
+/* swipe card start */
+.moving.profile-card {
+  transition: none;
+  @apply cursor-grabbing
+}
+
+/* swipe card end */

@@ -112,7 +112,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                     }
                                 </Select>
                                 <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
-                                <Image src={"/assets/country.svg"} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 left-0 pointer-events-none' />
+                                <Image src={"/assets/country.svg"} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 md:translate-x-6 left-0 pointer-events-none' />
                             </ConfigProvider>
 
                         )}
@@ -144,7 +144,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                     ))}
                                 </Select>
                                 <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
-                                <Image src={"/assets/region.svg"} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 left-0 pointer-events-none' />
+                                <Image src={"/assets/region.svg"} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 md:translate-x-6 left-0 pointer-events-none' />
                             </ConfigProvider>
                         )}
                     />

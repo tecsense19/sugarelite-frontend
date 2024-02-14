@@ -1,12 +1,13 @@
 "use client"
 import { ConfigProvider, Select } from "antd"
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form"
 
 const { Option } = Select;
 
 
-const SelectBox = ({ name, options, text, control }) => {
+const SelectBox = ({ name, options, text, control, inx }) => {
 
     const customStyles = {
         components: {
@@ -39,8 +40,40 @@ const SelectBox = ({ name, options, text, control }) => {
         }
     }
 
+    const [animation, setAnimation] = useState("")
+
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+
+        const handleResize = () => {
+            const width = window.innerWidth;
+            if (width <= 640) {
+                inx % 2 === 0 ? setAnimation("fade-left") : setAnimation("fade-right")
+            } else if (width <= 768) {
+                inx % 2 === 0 ? setAnimation("fade-right") : setAnimation("fade-left")
+            } else if (width <= 1669) {
+                if (inx % 3 === 0) {
+                    setAnimation('fade-right');
+                } else if (inx % 3 === 1) {
+                    setAnimation('zoom-in');
+                } else {
+                    setAnimation('fade-left');
+
+                }
+            } else {
+                setAnimation("zoom-in")
+            }
+        }
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, [])
+
     return (
-        <div className="relative w-full sm:w-[calc(100%/2-20px)] md:w-[calc(100%/3-20px)] xl:max-w-[327px] profile">
+        <div className="relative w-full sm:w-[calc(100%/2-20px)] md:w-[calc(100%/3-20px)] xl:max-w-[327px] profile" data-aos={animation} data-aos-duration="800">
             <Controller
                 name={name}
                 control={control}
