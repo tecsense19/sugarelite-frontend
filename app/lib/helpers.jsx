@@ -5,7 +5,9 @@ export const client_routes = {
   login: "/login",
   register: "/register",
   search: "/search",
-  profile: "/profile"
+  profile: "/profile",
+  edit_profile: "/profile/edit",
+  discover: "/discover"
 }
 
 export const aosInit = () => {

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Sugar Elite - Search",
-  description: "Search your date Partner !",
+  title: "Sugar Elite - Discover",
+  description: "Discover more peoples !",
 };
 
 export default function RootLayout({ children }) {
