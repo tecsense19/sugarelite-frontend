@@ -4,6 +4,8 @@ import { Divider } from "antd";
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react";
+import logo2 from "../../public/assets/Logo (2).svg"
+import logo from "../../public/assets/logo.svg"
 
 const AuthHeader = () => {
   const { dispatch } = useStore();
@@ -28,7 +30,7 @@ const AuthHeader = () => {
               <div className="flex justify-between items-center h-[65px]">
                 <div className="flex items-center">
                   <button onClick={() => router.push(client_routes.home)}>
-                    <Image src={"/assets/Logo (2).svg"} alt="" height={22} width={102} className="pointer-events-none select-none aspect-auto" priority />
+                    <Image src={logo2} alt="" height={22} width={102} className="pointer-events-none select-none" priority />
                   </button>
                 </div>
                 <div className="flex items-center">
@@ -56,7 +58,7 @@ const AuthHeader = () => {
         <div className="w-11/12 xl:w-9/12 flex justify-between items-center">
           <div className="flex items-center">
             <button onClick={() => router.push(client_routes.home)}>
-              <Image height={37} width={188} className="pointer-events-none select-none" src={"/assets/logo.svg"} alt="" priority />
+              <Image height={37} width={188} className="pointer-events-none select-none" src={logo} alt="" priority />
             </button>
           </div>
           <div className="flex items-center">

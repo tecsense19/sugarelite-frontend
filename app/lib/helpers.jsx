@@ -7,7 +7,9 @@ export const client_routes = {
   search: "/search",
   profile: "/profile",
   edit_profile: "/profile/edit",
-  discover: "/discover"
+  profile_id: "profile/:id",
+  discover: "/discover",
+  chat: "/chat"
 }
 
 export const aosInit = () => {
