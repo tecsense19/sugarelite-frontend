@@ -1,6 +1,7 @@
 import { client_routes } from "@/app/lib/helpers"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
+import logo from "../../public/assets/logo (1).svg"
 
 const MainHeader = () => {
   const pathname = usePathname()
@@ -18,12 +19,12 @@ const MainHeader = () => {
           {pathname === client_routes.search
             ? <div className="flex items-center ms-[110px]">
               <button onClick={() => router.push(client_routes.home)}>
-                <Image height={35} width={177} src={"/assets/logo (1).svg"} alt="" className="pointer-events-none h-auto w-auto" priority />
+                <Image height={35} width={177} src={logo} alt="" className="pointer-events-none" priority />
               </button>
             </div>
             : <div className="flex items-center ms-[32px]">
               <button onClick={() => router.push(client_routes.home)}>
-                <Image height={35} width={177} src={"/assets/logo (1).svg"} alt="" className="pointer-events-none h-auto w-auto" priority />
+                <Image height={35} width={177} src={logo} alt="" className="pointer-events-none" priority />
               </button>
             </div>
           }
