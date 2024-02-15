@@ -111,6 +111,14 @@ button:disabled {
   @apply !opacity-0
 }
 
+.ant-upload-list-picture-card {
+  @apply !flex flex-wrap !w-full
+}
+
+.ant-upload-list-item-container, .ant-upload-select {
+  @apply w-[calc(100%/3-14px)] !h-auto sm:w-[calc(100%/5-8px)] !mr-[14px] min-h-[160px] !important
+}
+
 /* swipe card start */
 .moving.profile-card {
   transition: none;
@@ -118,3 +126,14 @@ button:disabled {
 }
 
 /* swipe card end */
+
+/* popup_upload_pic */
+
+
+.ant-popover-inner {
+  @apply !rounded-[5px] !p-[8px]
+}
+
+.ant-popconfirm-description {
+  @apply !m-0
+}

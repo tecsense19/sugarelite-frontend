@@ -15,6 +15,7 @@ module.exports = {
       "primary-dark": "#131313",
       "primary-dark-2": "#232323",
       "primary-dark-3": "#1F1F1F",
+      "primary-dark-4": "#626262",
       "neutral": "#414141"
     },
     extend: {
@@ -23,7 +24,11 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      screens: {
+        "xs": "420px"
+      }
     },
+
   },
   plugins: [],
 };
