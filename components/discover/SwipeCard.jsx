@@ -7,17 +7,17 @@ import closeIcon from "../../public/assets/cross_icon.svg";
 import starIcon from "../../public/assets/star_icon.svg";
 import heartIcon from "../../public/assets/heart_swipe_icon.svg";
 
-const SwipeCard = ({ profile, onSwipe, i, profiles }) => {
+const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, activeIndex, currentPhotoNumber }) => {
   const cardRef = useRef(null);
+  let dragCardValues = {}
+
   useEffect(() => {
     if (cardRef.current) {
       const Hammer = require("hammerjs")
       const hammer = new Hammer(cardRef.current);
       cardRef.current.style.zIndex = i;
-      // cardRef.current.style.transform = `scale(${(20 - (profiles.length - i - 1)) / 20}) translateY(-${30 * (profiles.length - i - 1)}px)`;
-      // cardRef.current.style.opacity = ((i + 1) / (profiles.length));
 
-      if (i === (profiles.length - 1)) {
+      if (i === activeIndex) {
         hammer.on('pan', (event) => {
           cardRef.current.classList.add('moving');
         });
@@ -52,7 +52,6 @@ const SwipeCard = ({ profile, onSwipe, i, profiles }) => {
           } else {
             cardRef.current.style.transform = `translate(${moveOutWidth * 2}px, -100px) rotate(-30deg)`
             const direction = event.deltaX > 0 ? 'right' : 'left';
-            // console.log("index ::", i)
             onSwipe(profile, direction, i);
           }
         });
@@ -73,21 +72,56 @@ const SwipeCard = ({ profile, onSwipe, i, profiles }) => {
     }
   }, [onSwipe, cardRef.current]);
 
+  const onCardDragStart = (e) => {
+    dragCardValues = { clientX: e.clientX, clientY: e.clientY };
+  }
+  const onCardDragEnd = (e, fn) => {
+    if (dragCardValues.clientX === e.clientX && dragCardValues.clientY === e.clientY) {
+      let coords = { clientX: e.clientX, clientY: e.clientY };
+      if (fn) {
+        fn();
+      } else {
+        handleImageChange(coords);
+      }
+    }
+  }
+  const handleImageChange = (coords) => {
+    let btn = document.getElementById("imageChangeCard_" + i);
+    let rect = btn.getBoundingClientRect();
+    let btnWidth = rect.width;
+    let clickedX = coords.clientX - rect.x;
+    if (clickedX <= btnWidth / 2) {
+      onLeftClick();
+    } else {
+      onRightClick();
+    }
+  }
+
+  const onCrossClick = () => {
+    console.log("Cross Click", i)
+  }
+  const onBookmarkClick = () => {
+    console.log("Bookmark Click", i)
+  }
+  const onHeartClick = () => {
+    console.log("Heart Click", i)
+  }
+
   return (
     <>
-      <div ref={cardRef} className={`profile-card absolute text-white bg-white ease-linear duration-100 transition-transform rounded-xl select-none overflow-hidden w-full h-full ${i === (profiles.length - 1) ? "cursor-grab" : ""}`}>
+      <div ref={cardRef} id={`imageChangeCard_${i}`} className={`profile-card absolute text-white bg-primary ease-linear duration-100 transition-transform rounded-xl select-none overflow-hidden w-full h-full ${i === activeIndex ? "cursor-grab" : ""}`} onMouseDown={onCardDragStart} onMouseUp={onCardDragEnd}>
         {/* <div className="group w-full h-full"> */}
         <div className="relative group w-full h-full">
-          <Image src={profile.imgUrl} alt={profile.name} width={1000} height={1000} className='h-full w-full rounded-xl object-cover object-center pointer-events-none' priority />
+          <Image src={activeIndex === i ? profile.public_images[currentPhotoNumber] : profile.public_images[0]} alt={profile.name} width={1000} height={1000} className='h-full w-full rounded-xl object-cover object-center pointer-events-none' priority />
           <div className="absolute inset-0 w-full h-full flex flex-col justify-end items-center pt-[14px] pb-[17px] px-[17px]">
             <div className='relative h-full w-full flex flex-col justify-between'>
-              {profile.is_active && <div className='absolute right-[-5px] top-[-2px] h-[13.2px] w-[13.2px] border-[1.7px] border-white bg-[#1DD719] rounded-full'></div>}
+              {profile.is_active && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-[#1DD719] rounded-full'></div>}
               <div className='flex w-full justify-center gap-x-[5.5px]'>
-                <div className='bg-secondary rounded-full h-[11px] w-[11px]'></div>
-                <div className='bg-white/50 rounded-full h-[11px] w-[11px]'></div>
-                <div className='bg-white/50 rounded-full h-[11px] w-[11px]'></div>
-                <div className='bg-white/50 rounded-full h-[11px] w-[11px]'></div>
-                <div className='bg-white/50 rounded-full h-[11px] w-[11px]'></div>
+                {profile?.public_images?.map((item, idx) => {
+                  return (
+                    <div key={idx} className={`rounded-full h-[11px] w-[11px] ${(activeIndex === i) ? (currentPhotoNumber === idx ? "bg-secondary" : "bg-white/50") : (idx === 0 ? "bg-secondary" : "bg-white/50")}`} />
+                  )
+                })}
               </div>
               <div className='flex justify-between items-end'>
                 <div className="flex flex-col items-start">
@@ -98,13 +132,13 @@ const SwipeCard = ({ profile, onSwipe, i, profiles }) => {
                   <div className="mt-[5px] text-[clamp(14px,1.5vw,15px)] leading-[14px] font-medium text-white/50">{profile.desc}</div>
                 </div>
                 <div className='flex flex-col gap-y-[13.2px]'>
-                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full'>
+                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onCrossClick) }}>
                     <Image src={closeIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button>
-                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full'>
+                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onBookmarkClick) }}>
                     <Image src={starIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button>
-                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-secondary rounded-full'>
+                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-secondary rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onHeartClick) }}>
                     <Image src={heartIcon} alt="" height={24.2} width={22} priority className="pointer-events-none" />
                   </button>
                 </div>

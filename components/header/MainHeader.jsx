@@ -13,7 +13,7 @@ const MainHeader = () => {
       </header> */}
 
       {/* Web View */}
-      <header className="hidden md:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]">
+      <header className="hidden md:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
         <div className="flex justify-between items-center w-full">
           {pathname === client_routes.search
             ? <div className="flex items-center ms-[110px]">

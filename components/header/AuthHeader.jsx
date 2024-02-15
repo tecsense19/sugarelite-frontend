@@ -22,7 +22,7 @@ const AuthHeader = () => {
     <>
       {/* Mobile View */}
       {pathname === client_routes.home &&
-        <header className="md:hidden top-0 fixed w-full z-[2] ">
+        <header className="md:hidden top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
           <div className="flex bg-black text-white items-center justify-center px-4">
             <div className="w-full sm:w-11/12 xl:w-9/12">
               <div className="flex justify-between items-center h-[65px]">
@@ -52,7 +52,7 @@ const AuthHeader = () => {
       }
 
       {/* Web View */}
-      <header className="hidden md:flex h-[80px] bg-black text-white items-center justify-center top-0 fixed w-full z-[2]">
+      <header className="hidden md:flex h-[80px] bg-black text-white items-center justify-center top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
         <div className="w-11/12 xl:w-9/12 flex justify-between items-center">
           <div className="flex items-center">
             <button onClick={() => router.push(client_routes.home)}>

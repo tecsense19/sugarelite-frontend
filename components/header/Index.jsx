@@ -4,9 +4,15 @@ import { client_routes } from "@/app/lib/helpers"
 import { usePathname } from "next/navigation"
 import AuthHeader from "./AuthHeader"
 import MainHeader from "./MainHeader"
+import { useEffect } from "react"
 
 const Header = () => {
   const pathname = usePathname()
+
+  useEffect(() => {
+    const AOS = require("aos");
+    AOS.init();
+  }, [])
 
   return (
     <>

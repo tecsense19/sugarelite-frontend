@@ -105,12 +105,12 @@ const Footer = () => {
           {/* Desktop Middle Content End */}
           <div className="2xl:col-span-3 mt-10 2xl:mt-0">
             <div className="text-[24px] font-extrabold leading-[30px]">News Letter</div>
-            <div className="mt-5 2xl:mt-10 relative flex items-center">
-              <input type="text" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" />
-              <button className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)]">
+            <form onSubmit={(e) => e.preventDefault()} className="mt-5 2xl:mt-10 relative flex items-center">
+              <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" />
+              <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)]">
                 <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />
               </button>
-            </div>
+            </form>
           </div>
         </div>
 
