@@ -83,7 +83,6 @@ const SelectBox = ({ name, options, text, control, inx }) => {
                     >
                         <Select
                             {...field}
-                            // showSearch
                             placeholder={"ask me"}
                             optionFilterProp="children"
                             dropdownStyle={{ backgroundColor: '#535353' }}

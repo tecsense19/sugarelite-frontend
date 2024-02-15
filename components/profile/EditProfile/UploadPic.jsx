@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-const UploadPic = ({ control, setValue }) => {
+const UploadPic = ({ control, setValue, name }) => {
 
     const [photoList, setPhotoList] = useState([])
 
@@ -58,7 +58,7 @@ const UploadPic = ({ control, setValue }) => {
         <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[14px]'>
             {
                 photoList && photoList.map((photo, index) => {
-                    return <div className="aspect-square relative  popup_upload_pic" key={index}>
+                    return <div className="aspect-square relative  popup_upload_pic" key={index} data-aos='zoom-in'>
                         <ConfigProvider theme={customStyles}>
                             <Popconfirm
                                 title="Delete the photo"
@@ -77,15 +77,15 @@ const UploadPic = ({ control, setValue }) => {
                     </div>
                 })
             }
-            <div className="aspect-square" >
+            <div className="aspect-square" data-aos='zoom-in'>
                 <Controller
-                    name="photo"
+                    name={name}
                     control={control}
                     render={({ field }) => <>
-                        <input type='file' {...field} id='photo' onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' />
-                        <label htmlFor="photo" className='h-full w-full border-dashed border border-[#ffffff70] flex flex-col justify-center items-center rounded-[5px] cursor-pointer '>
+                        <input type='file' {...field} id={name} onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' />
+                        <label htmlFor={name} className='h-full w-full border-dashed border border-[#ffffff70] flex flex-col gap-[10px] justify-center items-center rounded-[5px] cursor-pointer '>
                             <span className='text-[20px] text-white text-opacity-70 -mt-[8px]'>+</span>
-                            <span className='text-[16px] font-medium text-white text-opacity-70'>Upload <span className='hidden sm:inline'>Photo</span></span>
+                            <span className='text-[16px] font-medium text-white text-opacity-70'>Upload</span>
                         </label>
                     </>}
                 />
