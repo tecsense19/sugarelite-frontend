@@ -2,33 +2,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
-import { Controller } from 'react-hook-form'
-import SearchedProfile from './searched_Profile/Buttons_Profile'
+import SearchedProfile from './Buttons_Profile'
 
-const SideContent = ({ control, params }) => {
+const SideContent = () => {
 
     const path = usePathname()
-
-    const getBase64 = (file) =>
-        new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
-        });
-
-
-    const profileHandler = async (e) => {
-        let obj = {}
-        const { files } = e.target
-        if (files[0]) {
-            let file = await getBase64(files[0])
-            obj.name = files[0].name
-            obj.photo_url = file
-        }
-        console.log(obj)
-    }
 
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
@@ -39,35 +17,14 @@ const SideContent = ({ control, params }) => {
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
-                    <Image src={'/assets/profile_person.png'} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === "/profile/edit" && "opacity-50"}`} priority />
+                    <Image src={'/assets/profile_img_5.png'} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === "/profile/edit" && "opacity-50"}`} priority />
                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
-
-                    {/* Edit Profile option starts */}
-
-                    {
-                        path === "/profile/edit" &&
-                        <div className='absolute h-full w-full'>
-                            <Controller
-                                name='profile'
-                                control={control}
-                                render={({ field }) => <>
-                                    <label htmlFor="profile" className='flex flex-col justify-center items-center h-full cursor-pointer'>
-                                        <Image src={'/assets/edit.svg'} alt='edit' width={36} height={36} priority />
-                                        <span className='font-medium text-[16px]'>Edit Profile</span>
-                                    </label>
-                                    <input type="file" {...field} onChange={profileHandler} id='profile' className='hidden' />
-                                </>}
-                            />
-                        </div>
-                    }
-
-                    {/* Edit Profile content ends */}
 
                 </div>
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
                         <div className='flex items-center '>
-                            <span className="text-[30px] font-bold me-[20px]">Rajesh, 23</span>
+                            <span className="text-[30px] font-bold me-[20px]">Dhaval, 27</span>
                             <Image src={'/assets/premium.svg'} alt='edit' width={30} height={30} priority />
                             <span className='text-[16px] font-semibold ms-2'>Premium</span>
                         </div>
@@ -77,23 +34,14 @@ const SideContent = ({ control, params }) => {
                         </div>
                     </div>
                 </div>
-
-                {/* searched profile content starts  */}
-                {/* 
                 <div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center md:flex-row flex-col gap-3'>
-                    {
-                        params?.id &&
-                        <SearchedProfile />
-                    }
-                </div> */}
-
-                {/* searched profile content ends  */}
-
+                    <SearchedProfile />
+                </div>
                 <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                     <div className="p-4 text-[16px] font-light">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, cumque quas. Sint reiciendis commodi libero, sequi ipsam nam sed iusto odio perferendis voluptates eveniet ducimus nostrum quidem est. Voluptatum, voluptatibus?
                     </div>
-                    <div className="bg-primary-dark-3 xl:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
+                    <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
                         <p className="text-[18px] font-medium">Biography</p>
                         <p className="text-[12px] font-medium text-white text-opacity-80">No Cinema</p>
                     </div>

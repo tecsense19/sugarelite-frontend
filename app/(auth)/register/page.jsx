@@ -103,24 +103,28 @@ export default () => {
 
 			{/* Web view */}
 
-			<main className="hidden sm:flex h-dvh">
-				<div className="w-full relative flex justify-center items-center">
-					<div className="absolute pt-[80px] text-white w-full h-full flex justify-center items-center ">
-						<div className="h-[80%] bg-primary bg-opacity-[80%] max-w-[1195px] w-[88%] md:w-[80%] gap-7 rounded-[5px] flex items-center justify-center flex-col p-2">
-							<h1 className="italic font-[900] sm:text-[35px] md:text-[45px] ">SUGAR<span className="font-normal sm:ms-2 md:ms-3">ELITE</span></h1>
-							<div className="  sm:w-[82%] lg:w-[665px] relative">
-								<div className="bg-black w-full h-1 rounded-[29px] absolute top-[50%] translate-y-[-50%] z-10"></div>
-								<div style={{ transform: `scaleX(${(nextStep - 1) * 20}%)` }} className="bg-secondary transition-transform duration-300 ease-in-out w-full origin-left h-1 rounded-[29px] absolute top-[43.5%] translate-y-[-50%] z-10"></div>
-								<div className="flex justify-between z-20">
+			<main className="hidden sm:flex h-screen">
+				<div className="h-full w-full relative">
+					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
+						<div className="text-white h-[725px]  sm:w-[90%] xl:w-[60%] py-[50px] rounded-[5px] sm:bg-primary  flex justify-center items-center flex-col ">
+							<h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">SUGAR<span className="font-normal sm:ms-2 md:ms-3">ELITE</span></h1>
+							{/* step status tarcker starts */}
+
+							<div className="sm:w-[82%] lg:w-[665px] mb-[50px] relative h-[40px]">
+								<div className="bg-black w-full h-1 rounded-[29px] absolute top-[50%] translate-y-[-50%]"></div>
+								<div style={{ transform: `scaleX(${(nextStep - 1) * 20}%)` }} className="bg-secondary transition-transform duration-300 ease-in-out w-full origin-left h-1 rounded-[29px] absolute top-[43.5%] translate-y-[-50%]"></div>
+								<div className="flex justify-between absolute w-full top-[50%] translate-y-[-50%] ">
 									{
 										stepsArr.map((step, inx) => (
-											<div className={`h-[40px] w-[40px] flex items-center justify-center rounded-full transition-all duration-500 ease-in  z-[100] ${nextStep >= step.val ? "bg-secondary" : "bg-black"}`} key={inx}>
+											<div className={`h-[40px] w-[40px] flex items-center justify-center rounded-full transition-all duration-500 ease-in ${nextStep >= step.val ? "bg-secondary" : "bg-black"}`} key={inx}>
 												<Image src={`/assets/${step.img_url}`} alt={step.step} width={24} height={24} priority />
 											</div>
 										))
 									}
 								</div>
 							</div>
+							{/* step status tarcker ends */}
+
 							<form className="flex flex-col items-center sm:w-[82%] lg:w-[665px]" onSubmit={handleSubmit(registerhandler)}>
 								{
 									nextStep === 1 && <SugarType setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} />
@@ -143,7 +147,7 @@ export default () => {
 							</form>
 						</div>
 					</div>
-					<Image src={'/assets/large_image.png'} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full object-cover select-none pointer-events-none" />
+					<Image src={'/assets/large_image.png'} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
 				</div>
 			</main>
 

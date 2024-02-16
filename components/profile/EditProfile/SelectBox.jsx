@@ -73,7 +73,8 @@ const SelectBox = ({ name, options, text, control, inx }) => {
     }, [])
 
     return (
-        <div className="relative w-full sm:w-[calc(100%/2-20px)] md:w-[calc(100%/3-20px)] xl:max-w-[327px] profile" data-aos={animation} data-aos-duration="800">
+        // <div className="relative w-full sm:w-[calc(100%/2-20px)] md:w-[calc(100%/3-20px)] xl:max-w-[327px] profile" data-aos={animation} data-aos-duration="800">
+        <div className="relative aspect-auto profile" data-aos={animation} data-aos-duration="800">
             <Controller
                 name={name}
                 control={control}
