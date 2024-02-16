@@ -1,0 +1,75 @@
+.rce-citem {
+  @apply !bg-primary h-[82px];
+}
+
+.rce-container-citem {
+  @apply min-h-[84px]
+}
+
+.rce-citem-status {
+  @apply border-[1px] border-primary h-[11px] w-[11px] top-[1px] right-1;
+}
+
+.rce-citem-avatar {
+  @apply ps-[15px] pe-4;
+}
+
+.rce-avatar-container.large {
+  @apply h-[50px] w-[50px] relative overflow-visible;
+}
+
+.rce-citem-body--top {
+  @apply items-center;
+}
+
+.rce-citem-body--top-title {
+  @apply text-white text-[20px] font-semibold leading-[20px];
+}
+
+.rce-citem-body--top-time {
+  @apply text-white/70 text-[15px] italic font-normal leading-[19px] capitalize;
+}
+
+.rce-citem-body--bottom {
+  @apply mt-[5px] items-center;
+}
+
+.rce-citem-body--bottom-title {
+  @apply text-white/70 text-[16px] font-normal leading-[20px];
+}
+
+.rce-citem-body--bottom-status {
+  @apply h-[22px] w-[22px] bg-[#3DC73A] rounded-full flex justify-center items-center;
+}
+
+.rce-citem-body--bottom-status:empty {
+  @apply hidden;
+}
+
+.rce-citem-body--bottom-status span {
+  @apply text-[14px] font-medium leading-[20px];
+}
+
+.second-child::-webkit-scrollbar {
+  width: 8px;
+  /* Width of the scrollbar */
+}
+
+/* Track (the area behind the scrollbar) */
+.second-child::-webkit-scrollbar-track {
+  @apply bg-white/10 rounded-lg;
+
+  /* Color of the track */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+.second-child::-webkit-scrollbar-thumb {
+  @apply rounded-lg bg-primary-dark-4;
+  /* Color of the scrollbar handle */
+}
+
+/* Handle on hover */
+.second-child::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  /* Color of the scrollbar handle on hover */
+}
