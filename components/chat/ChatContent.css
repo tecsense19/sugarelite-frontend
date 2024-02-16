@@ -1,0 +1,15 @@
+.ant-popover-inner {
+  @apply !rounded-none;
+}
+
+.ant-popover-arrow {
+  @apply !right-[6px];
+}
+
+.ant-popover-arrow::before {
+  @apply !w-[8px];
+}
+
+.ant-popover-content {
+  @apply !right-[14px];
+}
