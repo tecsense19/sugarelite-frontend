@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import arrow_left from "../../../../public/assets/arrow_left.svg";
 
-export default () => {
+const EditProfile = () => {
   return (
     <>
       <main className="lg:pt-[66px] bg-primary ">
@@ -15,3 +15,5 @@ export default () => {
     </>
   )
 }
+
+export default EditProfile

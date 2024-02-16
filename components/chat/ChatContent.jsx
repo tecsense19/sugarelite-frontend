@@ -10,7 +10,7 @@ import starIcon from "../../public/assets/chat_option_star_icon.svg";
 import reportIcon from "../../public/assets/chat_report_icon.svg";
 import blockIcon from "../../public/assets/chat_block_icon.svg";
 
-export default ({ selectedObj }) => {
+const ChatContent = ({ selectedObj }) => {
   // const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
   // const selectedObj = { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?" };
   const [showOptions, setShowOptions] = useState(false);
@@ -74,3 +74,5 @@ export default ({ selectedObj }) => {
     </div>
   )
 }
+
+export default ChatContent

@@ -21,7 +21,7 @@ import Img13 from "../../public/assets/swipe_img_1.png";
 import Img14 from "../../public/assets/swipe_img_2.png";
 import chatArrowRight from "../../public/assets/chat_arrow_right.png";
 
-export default ({ setSelectedObj }) => {
+const ChatList = ({ setSelectedObj }) => {
   const horizontalProfilesRef = useRef(null);
   const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
   const [profiles, setProfiles] = useState([
@@ -116,3 +116,5 @@ export default ({ setSelectedObj }) => {
     </div>
   )
 }
+
+export default ChatList

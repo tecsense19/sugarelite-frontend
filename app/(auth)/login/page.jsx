@@ -14,7 +14,7 @@ import eyeOpenImg from "../../../public/assets/eye_open.svg";
 import bgMobileImg from "../../../public/assets/Group 427318831.png";
 import bgDesktopImg from "../../../public/assets/large_image.png";
 
-export default () => {
+const Login = () => {
 
   const { register, setValue, handleSubmit, control, watch } = useForm()
   const [showPass, setShowPass] = useState(false)
@@ -95,3 +95,5 @@ export default () => {
     </main>
   )
 }
+
+export default Login

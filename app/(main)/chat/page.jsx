@@ -4,7 +4,7 @@ import ChatContent from "@/components/chat/ChatContent"
 import ChatList from "@/components/chat/ChatList"
 import { useState } from "react"
 
-export default () => {
+const Chat = () => {
   const [selectedObj, setSelectedObj] = useState("");
 
   return (
@@ -14,3 +14,5 @@ export default () => {
     </div>
   )
 }
+
+export default Chat

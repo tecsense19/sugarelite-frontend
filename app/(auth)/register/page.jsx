@@ -19,7 +19,7 @@ import calendar_3 from "../../../public/assets/calendar_3.svg"
 import check_mark from "../../../public/assets/check_mark.svg"
 import gmail from "../../../public/assets/gmail.svg"
 
-export default () => {
+const Register = () => {
 
 	const { register, handleSubmit, control, watch, setValue } = useForm()
 
@@ -163,3 +163,5 @@ export default () => {
 		</>
 	)
 }
+
+export default Register

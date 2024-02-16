@@ -1,6 +1,6 @@
 import Home from "@/components/home/Index";
 
-export default () => {
+const Page = () => {
   // const router = useRouter()
   return (
     <>
@@ -8,3 +8,5 @@ export default () => {
     </>
   );
 }
+
+export default Page

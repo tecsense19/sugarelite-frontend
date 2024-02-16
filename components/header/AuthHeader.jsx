@@ -46,9 +46,9 @@ const AuthHeader = () => {
           </div>
           <div id="mobile-navbar" className={`w-full border-t border-t-[rgba(255,255,255,0.4)] flex justify-center transition-transform duration-150 ease-linear origin-top bg-black ${open ? "scale-y-100" : "scale-y-0"}`}>
             <div className="text-white/70 w-11/12 xl:w-9/12 p-3">
-              <button className="w-full text-start text-[17px] font-[450] tracking-wide">Login</button>
+              <button className="w-full text-start text-[17px] font-[450] tracking-wide" onClick={() => router.push(client_routes.login)}>Login</button>
               <Divider className="border-t-0" style={{ margin: "7px 0px 7px 0px", backgroundColor: "rgba(255,255,255,0.3)" }} />
-              <button className="w-full text-start text-[17px] font-[450] tracking-wide">Register Now</button>
+              <button className="w-full text-start text-[17px] font-[450] tracking-wide" onClick={() => router.push(client_routes.register)}>Register Now</button>
             </div>
           </div>
         </header>

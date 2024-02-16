@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import editImg from "../../../public/assets/edit.svg";
 
-export default () => {
+const Profile = () => {
 
   return (
     <>
@@ -18,3 +18,5 @@ export default () => {
     </>
   )
 }
+
+export default Profile

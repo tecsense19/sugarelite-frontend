@@ -13,7 +13,7 @@ const Success = () => {
             <div className=" flex justify-center items-center rounded-full">
                 <Image src={success} alt="success" width={220} height={220} className="pointer-events-none select-none" />
             </div>
-            <p className="text-[30px] pt-5 font-bold max-w-[15rem]">You're in!</p>
+            <p className="text-[30px] pt-5 font-bold max-w-[15rem]">You are in!</p>
         </div>
     )
 }
