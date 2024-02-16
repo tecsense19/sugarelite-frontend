@@ -2,6 +2,10 @@ import { client_routes } from "@/app/lib/helpers"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import logo from "../../public/assets/logo (1).svg"
+import notification from "../../public/assets/Mask group (1).svg"
+import messages from "../../public/assets/Mask group.svg"
+import search from "../../public/assets/search.svg"
+import profile_icon from "../../public/assets/Profile-icon.svg"
 
 const MainHeader = () => {
   const pathname = usePathname()
@@ -30,16 +34,16 @@ const MainHeader = () => {
           }
           <div className="flex items-center me-[72px]">
             <button>
-              <Image height={20} width={20} src={"/assets/Mask group (1).svg"} alt="" />
+              <Image height={20} width={20} src={notification} alt="" />
             </button>
             <button>
-              <Image height={20} width={20} src={"/assets/Mask group.svg"} alt="" className="ms-[15px]" />
+              <Image height={20} width={20} src={messages} alt="" className="ms-[15px]" />
             </button>
             <label className="bg-primary px-3 py-[7px] rounded-[5px] h-[32px] w-[193px] mx-[30px] flex items-center">
-              <Image height={18} width={18} src={"/assets/search.svg"} className="mr-3" alt="" priority />
+              <Image height={18} width={18} src={search} className="mr-3" alt="" priority />
               <input type="text" placeholder="Search" className="w-full bg-transparent outline-none border-0 text-[12px] font-light" style={{ lineHeight: "normal" }} />
             </label>
-            <Image height={40} width={40} className="pointer-events-none" src={"/assets/Profile-icon.svg"} alt="" priority />
+            <Image height={40} width={40} className="pointer-events-none" src={profile_icon} alt="" priority />
           </div>
         </div>
       </header>

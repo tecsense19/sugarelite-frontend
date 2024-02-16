@@ -9,6 +9,15 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import dayjs from 'dayjs';
 import { useForm } from "react-hook-form"
+import chevronLeft from "../../../public/assets/chevron_left.svg"
+import bgMobileImg from "../../../public/assets/Group 427318831.png"
+import large_image from "../../../public/assets/large_image.png"
+import boy_small from "../../../public/assets/boy_small.svg"
+import pad_lock from "../../../public/assets/pad_lock.svg"
+import treasure_map from "../../../public/assets/treasure_map.svg"
+import calendar_3 from "../../../public/assets/calendar_3.svg"
+import check_mark from "../../../public/assets/check_mark.svg"
+import gmail from "../../../public/assets/gmail.svg"
 
 export default () => {
 
@@ -33,32 +42,32 @@ export default () => {
 	const stepsArr = [
 		{
 			step: "sugarType",
-			img_url: "boy_small.svg",
+			img_url: boy_small,
 			val: 1
 		},
 		{
 			step: "email",
-			img_url: "gmail.svg",
+			img_url: gmail,
 			val: 2
 		},
 		{
 			step: "password",
-			img_url: "pad_lock.svg",
+			img_url: pad_lock,
 			val: 3
 		},
 		{
 			step: "region",
-			img_url: "treasure_map.svg",
+			img_url: treasure_map,
 			val: 4
 		},
 		{
 			step: "dob",
-			img_url: "calendar_3.svg",
+			img_url: calendar_3,
 			val: 5
 		},
 		{
 			step: "success",
-			img_url: "check_mark.svg",
+			img_url: check_mark,
 			val: 6
 		}
 	]
@@ -72,7 +81,7 @@ export default () => {
 				<div className="h-full w-full relative">
 					<div className="h-[calc(100%-12px)] w-full absolute p-4">
 						<div className="text-white w-full h-full">
-							<Image src={"/assets/chevron_left.svg"} alt="back-btn" width={26} height={26} className="pointer-events-none" />
+							<Image src={chevronLeft} alt="back-btn" width={26} height={26} className="pointer-events-none" />
 							<div className="flex justify-center items-center h-[calc(100%-26px)]">
 								<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
 									{
@@ -97,7 +106,7 @@ export default () => {
 							</div>
 						</div>
 					</div>
-					<Image src={'/assets/Group 427318831.png'} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" />
+					<Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" />
 				</div>
 			</main>
 
@@ -117,7 +126,7 @@ export default () => {
 									{
 										stepsArr.map((step, inx) => (
 											<div className={`h-[40px] w-[40px] flex items-center justify-center rounded-full transition-all duration-500 ease-in ${nextStep >= step.val ? "bg-secondary" : "bg-black"}`} key={inx}>
-												<Image src={`/assets/${step.img_url}`} alt={step.step} width={24} height={24} priority />
+												<Image src={step.img_url} alt={step.step} width={24} height={24} priority />
 											</div>
 										))
 									}
@@ -147,7 +156,7 @@ export default () => {
 							</form>
 						</div>
 					</div>
-					<Image src={'/assets/large_image.png'} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+					<Image src={large_image} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
 				</div>
 			</main>
 

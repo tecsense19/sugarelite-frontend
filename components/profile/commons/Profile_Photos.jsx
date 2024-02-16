@@ -1,5 +1,5 @@
 import Image from "next/image"
-
+import no_picture from "../../../public/assets/no_picture.svg"
 
 const Profile_Photos = ({ title, list }) => {
     return (
@@ -9,7 +9,7 @@ const Profile_Photos = ({ title, list }) => {
                 {
                     Array.from({ length: 9 }).map((photo, index) => {
                         return <div className="aspect-square relative " key={index} data-aos='zoom-in'>
-                            <Image src={'/assets/no_picture.svg'} width={1000} height={1000} alt="person" className="h-full w-full select-none pointer-events-none  rounded-[5px] object-contain object-center overflow-hidden" />
+                            <Image src={no_picture} width={1000} height={1000} alt="person" className="h-full w-full select-none pointer-events-none  rounded-[5px] object-contain object-center overflow-hidden" />
                         </div>
                     })
                 }

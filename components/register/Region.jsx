@@ -4,6 +4,11 @@ import { ConfigProvider, Select } from "antd"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { Controller } from "react-hook-form"
+import treasure_map from "../../public/assets/treasure_map.svg"
+import chevronDown from "../../public/assets/chevron-down.svg"
+import country from "../../public/assets/country.svg"
+import region from "../../public/assets/region.svg"
+import chevron_right from "../../public/assets/chevron_right.svg"
 
 const people = [
     { value: 'Wade Cooper' },
@@ -78,7 +83,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
         <>
             <div className="text-center flex flex-col items-center">
                 <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
-                    <Image src={"/assets/treasure_map.svg"} alt="pad_lock" width={48} height={48} className="pointer-events-none select-none" />
+                    <Image src={treasure_map} alt="pad_lock" width={48} height={48} className="pointer-events-none select-none" />
                 </div>
                 <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? which region?</p>
                 <p className='text-white opacity-[50%] sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -111,8 +116,8 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                         })
                                     }
                                 </Select>
-                                <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
-                                <Image src={"/assets/country.svg"} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 md:translate-x-6 left-0 pointer-events-none' />
+                                <Image src={chevronDown} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
+                                <Image src={country} alt='down_arrow' width={20} height={20} priority className='absolute translate-x-4 md:translate-x-6 left-0 pointer-events-none' />
                             </ConfigProvider>
 
                         )}
@@ -143,8 +148,8 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                         </Option>
                                     ))}
                                 </Select>
-                                <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
-                                <Image src={"/assets/region.svg"} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 md:translate-x-6 left-0 pointer-events-none' />
+                                <Image src={chevronDown} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
+                                <Image src={region} alt='down_arrow' width={20} height={20} priority className='absolute  translate-x-4 md:translate-x-6 left-0 pointer-events-none' />
                             </ConfigProvider>
                         )}
                     />
@@ -153,14 +158,14 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
             <div className='mt-14 w-full  sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center font-bold gap-[5px]">
-                        <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
+                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
                 <button className=" w-full  rounded bg-secondary h-[42px]  relative text-white text-opacity-[70%]" type="button" disabled={!isValid.region || !isValid.country} onClick={nextStepHandler}>
                     <div className="flex justify-center font-bold gap-[5px] sm:ms-4">
                         NEXT
-                        <Image src={'/assets/chevron_right.svg'} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
+                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                     </div>
                 </button>
             </div>

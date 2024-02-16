@@ -4,6 +4,7 @@ import { Checkbox, ConfigProvider, Select, Slider } from 'antd';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import chevron_down from "../../public/assets/chevron-down.svg"
 
 const { Option } = Select;
 
@@ -104,7 +105,7 @@ const Filters = () => {
                   </Option>
                 ))}
               </Select>
-              <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
+              <Image src={chevron_down} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none' />
             </ConfigProvider>
           )}
           />
@@ -127,7 +128,7 @@ const Filters = () => {
                   </Option>
                 ))}
               </Select>
-              <Image src={"/assets/chevron-down.svg"} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={20} height={20} priority className='absolute left-[calc(100%-36px)] pointer-events-none' />
+              <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={20} height={20} priority className='absolute left-[calc(100%-36px)] pointer-events-none' />
             </ConfigProvider>
           )}
           />
@@ -147,7 +148,7 @@ const Filters = () => {
                   </Option>
                 ))}
               </Select>
-              <Image src={"/assets/chevron-down.svg"} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={20} height={20} priority className='absolute left-[calc(100%-36px)] pointer-events-none' />
+              <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={20} height={20} priority className='absolute left-[calc(100%-36px)] pointer-events-none' />
             </ConfigProvider>
           )} />
         </div>

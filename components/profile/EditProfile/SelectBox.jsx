@@ -3,7 +3,7 @@ import { ConfigProvider, Select } from "antd"
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Controller } from "react-hook-form"
-
+import chevron_down from "../../../public/assets/chevron-down.svg"
 const { Option } = Select;
 
 
@@ -100,7 +100,7 @@ const SelectBox = ({ name, options, text, control, inx }) => {
                                 ))
                             }
                         </Select>
-                        <Image src={"/assets/chevron-down.svg"} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none top-[50%] -translate-y-[50%] right-0 ' />
+                        <Image src={chevron_down} alt='down_arrow' width={20} height={20} priority className='absolute -translate-x-4 pointer-events-none top-[50%] -translate-y-[50%] right-0 ' />
                         <p className="absolute -top-3 bg-primary ml-[10px] xl:ml-[22px] px-1 text-[15px] md:text-[16px] font-medium text-white text-opacity-50 uppercase">{text}</p>
                     </ConfigProvider>
                 )}

@@ -82,9 +82,9 @@ export default ({ setSelectedObj }) => {
         <div ref={horizontalProfilesRef} className={`flex gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
           {profiles?.map((item, idx) => {
             return (
-              <div key={idx} className="flex items-center justify-center">
+              <button key={idx} className="flex items-center justify-center" onClick={() => setSelectedObj(item)}>
                 <Image src={item.img_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
-              </div>
+              </button>
             )
           })}
         </div>

@@ -3,6 +3,7 @@ import { Button, ConfigProvider, Popconfirm } from 'antd'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
+import cross from "../../../public/assets/cross.svg"
 
 const UploadPic = ({ control, setValue, name }) => {
 
@@ -69,7 +70,7 @@ const UploadPic = ({ control, setValue, name }) => {
                                 cancelText="No"
                             >
                                 <button className='absolute backdrop-blur-3xl shadow-inner bg-secondary -top-2 -right-2 h-[18px] w-[18px] rounded-full  flex items-center justify-center' type='button'>
-                                    <Image src={"/assets/cross.svg"} width={6} height={6} alt="delete" className='' />
+                                    <Image src={cross} width={6} height={6} alt="delete" className='' />
                                 </button>
                             </Popconfirm>
                         </ConfigProvider>

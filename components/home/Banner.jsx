@@ -1,6 +1,7 @@
 import { client_routes } from "@/app/lib/helpers"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import bannerImg from "../../public/assets/In love-bro 1.svg";
 
 const Banner = () => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const Banner = () => {
     <div className="w-full flex justify-center">
       <div className="w-full px-4 sm:w-11/12 xl:w-9/12 lg:flex lg:flex-row-reverse justify-between items-center mt-5 lg:mt-[65px]">
         <div className="w-full flex justify-center items-center lg:block lg:w-5/12" data-aos="fade-left" data-aos-anchor="#example-anchor" data-aos-duration="800">
-          <Image src={"/assets/In love-bro 1.svg"} alt="" width={1000} height={1000} priority className="lg:w-full md:w-8/12 sm:9/12 w-11/12" />
+          <Image src={bannerImg} alt="" width={1000} height={1000} priority className="lg:w-full md:w-8/12 sm:9/12 w-11/12" />
         </div>
         <div className="w-full flex flex-col items-center mt-[30px] lg:block lg:w-6/12 lg:mt-0" data-aos="fade-right" data-aos-anchor="#example-anchor" data-aos-duration="800">
           <div className="flex items-center">

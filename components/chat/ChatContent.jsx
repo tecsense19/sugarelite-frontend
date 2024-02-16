@@ -67,7 +67,9 @@ export default ({ selectedObj }) => {
             </ConfigProvider>
           </div>
         </>
-        : <></>
+        : <div className="flex justify-center items-center w-full h-full">
+          <div className="text-[22px]">Please click on a profile to chat</div>
+        </div>
       }
     </div>
   )

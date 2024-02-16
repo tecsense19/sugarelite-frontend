@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react";
 import logo2 from "../../public/assets/Logo (2).svg"
 import logo from "../../public/assets/logo.svg"
+import close from "../../public/assets/close.svg"
+import align_right from "../../public/assets/align-right.svg"
 
 const AuthHeader = () => {
   const { dispatch } = useStore();
@@ -35,8 +37,8 @@ const AuthHeader = () => {
                 </div>
                 <div className="flex items-center">
                   <button className="outline-none relative w-6 h-6 flex justify-center items-center" onClick={handleOpenChange}>
-                    <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-100" : "scale-y-0"}`} src={"/assets/close.svg"} alt="" priority />
-                    <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-0" : "scale-y-100"}`} src={"/assets/align-right.svg"} alt="" priority />
+                    <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-100" : "scale-y-0"}`} src={close} alt="" priority />
+                    <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-0" : "scale-y-100"}`} src={align_right} alt="" priority />
                   </button>
                 </div>
               </div>

@@ -4,6 +4,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
+import unLockImg from "../../../public/assets/password.svg"
+import lockImg from "../../../public/assets/lock.svg";
+import loginLogoImg from "../../../public/assets/login_logo.svg";
+import eliteLogoImg from "../../../public/assets/elite_logo.svg";
+import emailImg from "../../../public/assets/email.svg";
+import eyeCloseImg from "../../../public/assets/eye_close.svg";
+import eyeOpenImg from "../../../public/assets/eye_open.svg";
+import bgMobileImg from "../../../public/assets/Group 427318831.png";
+import bgDesktopImg from "../../../public/assets/large_image.png";
 
 export default () => {
 
@@ -28,13 +37,13 @@ export default () => {
         <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
           <div className="text-white w-full h-full sm:h-[78%] sm:rounded-[5px] sm:w-[85%] md:w-[75%] sm:min-h-[625px] sm:bg-primary sm:bg-opacity-[80%] flex justify-center items-center flex-col ">
             <div className="flex flex-col justify-center items-center gap-4">
-              <Image src={`/assets/login_logo.svg`} alt={"logo"} width={54} height={64} priority className="w-auto h-auto select-none pointer-events-none" />
-              <Image src={`/assets/elite_logo.svg`} alt={"logo"} width={156} height={34} priority className="select-none pointer-events-none" />
+              <Image src={loginLogoImg} alt={"logo"} width={54} height={64} priority className="w-auto h-auto select-none pointer-events-none" />
+              <Image src={eliteLogoImg} alt={"logo"} width={156} height={34} priority className="select-none pointer-events-none" />
             </div>
             <form className="w-full max-w-[30rem]" onSubmit={handleSubmit(loginHandler)}>
               <div className=" w-full mt-[97px]">
                 <div className='flex items-center h-[42px] border border-[#535353] ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                  <Image src={'/assets/email.svg'} width={20} height={20} alt='email' className='me-[10px] w-[20px] h-[20px]' />
+                  <Image src={emailImg} width={20} height={20} alt='email' className='me-[10px] w-[20px] h-[20px]' />
                   <input
                     type="email"
                     {...register('email', { required: true })}
@@ -45,7 +54,7 @@ export default () => {
                   />
                 </div>
                 <div className=' flex h-[42px] items-center border border-[#535353] ps-[12px] mt-[12px] sm:ps-[20px] rounded-[5px]'>
-                  <Image src={showPass ? '/assets/password.svg' : "/assets/lock.svg"} width={20} height={20} alt='password ' className='me-[10px] w-[20px] h-[20px]' />
+                  <Image src={showPass ? unLockImg : lockImg} width={20} height={20} alt='password ' className='me-[10px] w-[20px] h-[20px]' />
                   <input
                     type={showPass ? "text" : "password"}
                     {...register('cpassword', { required: true })}
@@ -54,8 +63,8 @@ export default () => {
                     className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[70%] outline-none ' autoComplete='new-password' />
                   {
                     showPass ?
-                      <Image src={'/assets/eye_close.svg'} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close")} /> :
-                      <Image src={'/assets/eye_open.svg'} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open")} />
+                      <Image src={eyeCloseImg} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close")} /> :
+                      <Image src={eyeOpenImg} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open")} />
                   }
                 </div>
               </div>
@@ -80,8 +89,8 @@ export default () => {
             </div>
           </div>
         </div>
-        <Image src={'/assets/Group 427318831.png'} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" />
-        <Image src={'/assets/large_image.png'} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+        <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" />
+        <Image src={bgDesktopImg} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
       </div>
     </main>
   )
