@@ -15,5 +15,3 @@ export const client_routes = {
 export const aosInit = () => {
   AOS.init()
 }
-
-export const baseRoute = "/projects/sugarelite";

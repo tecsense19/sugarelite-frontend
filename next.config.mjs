@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/projects/sugarelite",
-  output: 'export',
+  basePath: process.env.BASE_ROUTE,
+  trailingSlash: true,
+  // output: 'export',
   // distDir: 'dist',
 };
 

@@ -5,7 +5,7 @@ import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react";
 import logo2 from "../../public/assets/Logo (2).svg"
-import logo from "../../public/assets/logo.svg"
+import logo from "../../public/assets/Logo.svg"
 import close from "../../public/assets/close.svg"
 import align_right from "../../public/assets/align-right.svg"
 

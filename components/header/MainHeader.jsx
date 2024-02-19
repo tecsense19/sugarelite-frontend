@@ -1,7 +1,7 @@
 import { client_routes } from "@/app/lib/helpers"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
-import logo from "../../public/assets/logo (1).svg"
+import logo from "../../public/assets/Logo (1).svg"
 import notification from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"

@@ -8,7 +8,7 @@ import more_horizontal from "../../../public/assets/more_horizontal.svg"
 import profile_img_5 from "../../../public/assets/profile_img_5.png"
 import premium from "../../../public/assets/premium.svg"
 
-const SideContent = () => {
+const SideContent = ({ params }) => {
 
 	const path = usePathname()
 
@@ -28,7 +28,7 @@ const SideContent = () => {
 				<div className="lg:self-start mt-[20px] lg:mt-[30px]">
 					<div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
 						<div className='flex items-center '>
-							<span className="text-[30px] font-bold me-[20px]">Dhaval, 27</span>
+							<span className="text-[30px] font-bold me-[20px]">{params.id}. Dhaval</span>
 							<Image src={premium} alt='edit' width={30} height={30} priority />
 							<span className='text-[16px] font-semibold ms-2'>Premium</span>
 						</div>
