@@ -1,9 +1,9 @@
 .rce-citem {
-  @apply !bg-primary h-[82px];
+  @apply !bg-primary h-[60px] md:h-[82px];
 }
 
 .rce-container-citem {
-  @apply min-h-[84px]
+  @apply min-h-[60px] md:min-h-[84px];
 }
 
 .rce-citem-status {
@@ -11,11 +11,11 @@
 }
 
 .rce-citem-avatar {
-  @apply ps-[15px] pe-4;
+  @apply ps-4 pe-[14px] md:ps-[15px] md:pe-4;
 }
 
 .rce-avatar-container.large {
-  @apply h-[50px] w-[50px] relative overflow-visible;
+  @apply h-10 w-10 md:h-[50px] md:w-[50px] relative overflow-visible;
 }
 
 .rce-citem-body--top {
@@ -23,11 +23,11 @@
 }
 
 .rce-citem-body--top-title {
-  @apply text-white text-[20px] font-semibold leading-[20px];
+  @apply text-white text-[18px] md:text-[20px] font-semibold leading-[20px];
 }
 
 .rce-citem-body--top-time {
-  @apply text-white/70 text-[15px] italic font-normal leading-[19px] capitalize;
+  @apply text-white/70 text-[14px] md:text-[15px] italic font-normal leading-[19px] capitalize;
 }
 
 .rce-citem-body--bottom {
@@ -35,11 +35,11 @@
 }
 
 .rce-citem-body--bottom-title {
-  @apply text-white/70 text-[16px] font-normal leading-[20px];
+  @apply text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px];
 }
 
 .rce-citem-body--bottom-status {
-  @apply h-[22px] w-[22px] bg-[#3DC73A] rounded-full flex justify-center items-center;
+  @apply h-5 w-5 md:h-[22px] md:w-[22px] bg-[#3DC73A] rounded-full flex justify-center items-center;
 }
 
 .rce-citem-body--bottom-status:empty {
