@@ -14,12 +14,13 @@ import Img6 from "../../public/assets/profile_img_6.png";
 import Img7 from "../../public/assets/profile_img_7.png";
 import Img8 from "../../public/assets/profile_img_8.png";
 import Img9 from "../../public/assets/profile_img_9.png";
-import Img10 from "../../public/assets/profile_img_10.png";
-import Img11 from "../../public/assets/profile_img_11.png";
-import Img12 from "../../public/assets/profile_img_12.png";
-import Img13 from "../../public/assets/swipe_img_1.png";
-import Img14 from "../../public/assets/swipe_img_2.png";
+// import Img10 from "../../public/assets/profile_img_10.png";
+// import Img11 from "../../public/assets/profile_img_11.png";
+// import Img12 from "../../public/assets/profile_img_12.png";
+// import Img13 from "../../public/assets/swipe_img_1.png";
+// import Img14 from "../../public/assets/swipe_img_2.png";
 import chatArrowRight from "../../public/assets/chat_arrow_right.png";
+import arrowLeft from "../../public/assets/arrow_left.svg";
 
 const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
   const horizontalProfilesRef = useRef(null);
@@ -29,15 +30,15 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
 
   useEffect(() => {
     setProfiles([
-      { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?" },
-      { id: 2, img_url: Img2, name: "Belinda", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 2, last_msg: "How are you john?" },
-      { id: 3, img_url: Img3, name: "Jennifer", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 4, last_msg: "Ok, by see you" },
-      { id: 4, img_url: Img4, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" },
-      { id: 5, img_url: Img5, name: "Madeline", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "How are you ?" },
-      { id: 6, img_url: Img6, name: "Reagan", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here" },
-      { id: 7, img_url: Img7, name: "Catherine", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here" },
-      { id: 8, img_url: Img8, name: "Priscilla", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" },
-      { id: 9, img_url: Img9, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" }
+      { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?", is_premium: true, age: 21 },
+      { id: 2, img_url: Img2, name: "Belinda", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 2, last_msg: "How are you john?", is_premium: false, age: 23 },
+      { id: 3, img_url: Img3, name: "Jennifer", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 4, last_msg: "Ok, by see you", is_premium: true, age: 26 },
+      { id: 4, img_url: Img4, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: true, age: 24 },
+      { id: 5, img_url: Img5, name: "Madeline", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "How are you ?", is_premium: false, age: 27 },
+      { id: 6, img_url: Img6, name: "Reagan", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here", is_premium: false, age: 29 },
+      { id: 7, img_url: Img7, name: "Catherine", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here", is_premium: false, age: 21 },
+      { id: 8, img_url: Img8, name: "Priscilla", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: false, age: 22 },
+      { id: 9, img_url: Img9, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: false, age: 26 }
     ])
     const AOS = require("aos");
     AOS.init();
@@ -75,11 +76,17 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
   }
 
   return (
-    <div className='w-[400px] bg-primary-dark-3 h-full py-[30px]' data-aos="fade-right" data-aos-duration="800">
-      <div className="text-[26px] font-bold leading-[30px] px-[30px]">
+    <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[13px] md:py-[30px]' data-aos="fade-right" data-aos-duration="800">
+      <div className="md:hidden relative flex justify-center items-center">
+        <button className="flex justify-center items-center absolute left-4">
+          <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
+        </button>
+        <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>
+      </div>
+      <div className="text-[20px] md:text-[26px] font-semibold md:font-bold leading-[30px] px-4 md:px-[30px] mt-5 md:mt-0">
         Favorites
       </div>
-      <div className="relative flex items-center mt-5 px-[22px] mx-1">
+      <div className="relative flex items-center mt-[10px] md:mt-5 px-4 md:px-[22px] mx-1">
         <button className={`absolute left-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollLeftBtn ? "flex" : "hidden"}`} onClick={() => handleHorizontalScrollBtn(-40)}>
           <Image src={chatArrowRight} alt="" height={1000} width={1000} className="h-full w-full pointer-events-none rotate-180" />
         </button>
@@ -96,10 +103,10 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
           <Image src={chatArrowRight} alt="" height={1000} width={1000} className="h-full w-full pointer-events-none" />
         </button>
       </div>
-      <div className="mt-[30px] px-[30px]">
-        <div className="text-[26px] font-bold leading-[30px]">My Chat List</div>
+      <div className="mt-5 px-5 md:mt-[30px] md:px-[30px]">
+        <div className="text-[20px] md:text-[26px] font-semibold md:font-bold leading-[30px]">My Chat List</div>
       </div>
-      <div className="flex flex-col mt-5 gap-y-4 overflow-y-auto h-[calc(100%-170px)] ps-[30px] me-3 pe-3 second-child">
+      <div className="flex flex-col mt-[10px] md:mt-5 gap-y-[10px] md:gap-y-4 overflow-y-auto h-[calc(100%-170px)] ps-4 px- md:ps-[30px] me-0 pe-4 md:me-3 md:pe-3 md:second-child" style={{ scrollbarWidth: "none" }}>
         {profiles?.map((item, idx) => {
           return (
             <ChatItem
