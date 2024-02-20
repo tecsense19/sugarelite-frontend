@@ -20,18 +20,11 @@ const MainHeader = () => {
       {/* Web View */}
       <header className="hidden md:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
         <div className="flex justify-between items-center w-full">
-          {pathname === client_routes.search
-            ? <div className="flex items-center ms-[110px]">
-              <button onClick={() => router.push(client_routes.home)}>
-                <Image height={35} width={177} src={logo} alt="" className="pointer-events-none" priority />
-              </button>
-            </div>
-            : <div className="flex items-center ms-[32px]">
-              <button onClick={() => router.push(client_routes.home)}>
-                <Image height={35} width={177} src={logo} alt="" className="pointer-events-none" priority />
-              </button>
-            </div>
-          }
+          <div className={`flex items-center ${pathname === client_routes.search ? "ms-[110px]" : "ms-[32px]"}`}>
+            <button onClick={() => router.push(client_routes.home)}>
+              <Image height={35} width={177} src={logo} alt="" className="pointer-events-none aspect-auto" priority />
+            </button>
+          </div>
           <div className="flex items-center me-[72px]">
             <button>
               <Image height={20} width={20} src={notification} alt="" />

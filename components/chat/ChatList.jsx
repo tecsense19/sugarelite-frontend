@@ -21,36 +21,29 @@ import Img13 from "../../public/assets/swipe_img_1.png";
 import Img14 from "../../public/assets/swipe_img_2.png";
 import chatArrowRight from "../../public/assets/chat_arrow_right.png";
 
-const ChatList = ({ setSelectedObj }) => {
+const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
   const horizontalProfilesRef = useRef(null);
   const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
-  const [profiles, setProfiles] = useState([
-    { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?" },
-    { id: 2, img_url: Img2, name: "Belinda", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 2, last_msg: "How are you john?" },
-    { id: 3, img_url: Img3, name: "Jennifer", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 4, last_msg: "Ok, by see you" },
-    { id: 4, img_url: Img4, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" },
-    { id: 5, img_url: Img5, name: "Madeline", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "How are you ?" },
-    { id: 6, img_url: Img6, name: "Reagan", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here" },
-    { id: 7, img_url: Img7, name: "Catherine", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here" },
-    { id: 8, img_url: Img8, name: "Priscilla", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" },
-    { id: 9, img_url: Img9, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" }
-  ])
   const [showProfileScrollLeftBtn, setShowProfileScrollLeftBtn] = useState(false)
   const [showProfileScrollRightBtn, setShowProfileScrollRightBtn] = useState(false)
 
   useEffect(() => {
+    setProfiles([
+      { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?" },
+      { id: 2, img_url: Img2, name: "Belinda", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 2, last_msg: "How are you john?" },
+      { id: 3, img_url: Img3, name: "Jennifer", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 4, last_msg: "Ok, by see you" },
+      { id: 4, img_url: Img4, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" },
+      { id: 5, img_url: Img5, name: "Madeline", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "How are you ?" },
+      { id: 6, img_url: Img6, name: "Reagan", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here" },
+      { id: 7, img_url: Img7, name: "Catherine", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here" },
+      { id: 8, img_url: Img8, name: "Priscilla", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" },
+      { id: 9, img_url: Img9, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer" }
+    ])
     const AOS = require("aos");
     AOS.init();
     if (horizontalProfilesRef.current) {
       // console.log(.scrollLeft)
     }
-    const handleScroll = () => {
-      let leftScroll = horizontalProfilesRef.current.scrollLeft;
-      let maxLeftScroll = horizontalProfilesRef.current.scrollWidth - horizontalProfilesRef.current.clientWidth;
-      (leftScroll === 0) ? setShowProfileScrollLeftBtn(false) : setShowProfileScrollLeftBtn(true);
-      (leftScroll === maxLeftScroll) ? setShowProfileScrollRightBtn(false) : setShowProfileScrollRightBtn(true);
-    };
-    handleScroll()
 
     const container = horizontalProfilesRef.current;
     container.addEventListener('scroll', handleScroll);
@@ -60,6 +53,17 @@ const ChatList = ({ setSelectedObj }) => {
     };
 
   }, [])
+
+  useEffect(() => {
+    handleScroll()
+  }, [profiles])
+
+  const handleScroll = () => {
+    let leftScroll = horizontalProfilesRef.current.scrollLeft;
+    let maxLeftScroll = horizontalProfilesRef.current.scrollWidth - horizontalProfilesRef.current.clientWidth;
+    (leftScroll === 0) ? setShowProfileScrollLeftBtn(false) : setShowProfileScrollLeftBtn(true);
+    (leftScroll === maxLeftScroll) ? setShowProfileScrollRightBtn(false) : setShowProfileScrollRightBtn(true);
+  };
 
   const handleHorizontalScrollBtn = (val) => {
     if (horizontalProfilesRef.current) {
