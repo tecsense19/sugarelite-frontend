@@ -45,7 +45,7 @@ const Home = () => {
 
   return (
     <>
-      <div className={`min-h-dvh md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
+      <div className={`min-h-dvh w-dvw overflow-x-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
         <Banner />
         <Services />
         <UserFriendly />
