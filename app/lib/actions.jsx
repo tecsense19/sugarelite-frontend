@@ -5,3 +5,5 @@ export const getCountries = async () => {
     const data = await res.json()
     return data
 }
+
+
