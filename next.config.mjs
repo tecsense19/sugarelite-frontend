@@ -4,7 +4,12 @@ const nextConfig = {
   reactStrictMode: false,
   eslint: {
     ignoreDuringBuilds: true
-  }
+  },
+  async rewrites() {
+    return [
+      { source: '/admin/:path*', destination: '/admin/:path*' },
+    ];
+  },
   // trailingSlash: true,
 };
 
