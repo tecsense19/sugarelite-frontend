@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html className="overflow-x-hidden" lang="en">
+    <html className="overflow-x-hidden w-dvw" lang="en">
       <AntdRegistry>
         <body className={inter.className + " select-none bg-primary"} suppressHydrationWarning={true}>
           <StoreProvider>

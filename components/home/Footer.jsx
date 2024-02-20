@@ -50,7 +50,7 @@ const Footer = () => {
   }
 
   return (
-    <div className="mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
+    <div className="mt-[50px] md:mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
         <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 2xl:grid-cols-12 gap-x-[55px]">
           <div className="2xl:col-span-3">
