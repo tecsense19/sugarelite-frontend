@@ -26,7 +26,7 @@ const AuthHeader = () => {
     <>
       {/* Mobile View */}
       {pathname === client_routes.home &&
-        <header className="md:hidden top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
+        <header className="md:hidden top-0 fixed w-dvw z-[2]" data-aos="fade-down" data-aos-duration="500">
           <div className="flex bg-black text-white items-center justify-center px-4">
             <div className="w-full sm:w-11/12 xl:w-9/12">
               <div className="flex justify-between items-center h-[65px]">
