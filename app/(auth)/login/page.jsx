@@ -31,11 +31,12 @@ const Login = () => {
     console.log(data)
   }
 
+
   return (
     <main className="flex h-screen">
       <div className="h-full w-full relative">
         <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
-          <div className="text-white w-full h-full sm:h-[78%] sm:rounded-[5px] sm:w-[85%] md:w-[75%] sm:min-h-[625px] sm:bg-primary sm:bg-opacity-[80%] flex justify-center items-center flex-col ">
+          <div className="text-white w-full h-full sm:h-[78%] sm:rounded-[5px] sm:w-[85%] md:w-[75%] sm:min-h-[625px] sm:bg-primary sm:bg-opacity-[80%] lg:max-w-[762px] flex justify-center items-center flex-col ">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={loginLogoImg} alt={"logo"} width={54} height={64} priority className="w-auto h-auto select-none pointer-events-none" />
               <Image src={eliteLogoImg} alt={"logo"} width={156} height={34} priority className="select-none pointer-events-none" />

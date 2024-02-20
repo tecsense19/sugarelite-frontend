@@ -4,6 +4,7 @@ import 'aos/dist/aos.css';
 import React, { useEffect } from 'react'
 import Profile_Photos from './commons/Profile_Photos';
 import Profile_Styles from './commons/Profile_Styles';
+import Divider from './commons/Divider';
 
 const ProfileMainContent = ({ params }) => {
 
@@ -75,8 +76,11 @@ const ProfileMainContent = ({ params }) => {
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
             <Profile_Photos title={"Public Photos"} />
+            <Divider />
             <Profile_Photos title={"Private Photos"} />
+            <Divider />
             <Profile_Styles title={"Appearance"} list={profile.appearance} />
+            <Divider />
             <Profile_Styles title={"Lifestyle"} list={profile.lifestyle} />
         </div>
     )

@@ -7,6 +7,7 @@ import arrow_left from "../../../public/assets/arrow_left.svg"
 import more_horizontal from "../../../public/assets/more_horizontal.svg"
 import profile_img_5 from "../../../public/assets/profile_img_5.png"
 import premium from "../../../public/assets/premium.svg"
+import PopOver from '../commons/PopOver'
 
 const SideContent = ({ params }) => {
 
@@ -17,7 +18,9 @@ const SideContent = ({ params }) => {
 			<div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
 				<Link href={path === "/profile/edit" ? "/profile" : "/search"}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
 				<p className="text-[24px] font-semibold select-none">Profile</p>
-				<Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
+				<PopOver>
+					<Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
+				</PopOver>
 			</div>
 			<div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
 				<div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">

@@ -81,7 +81,7 @@ const Register = () => {
 				<div className="h-full w-full relative">
 					<div className="h-[calc(100%-12px)] w-full absolute p-4">
 						<div className="text-white w-full h-full">
-							<Image src={chevronLeft} alt="back-btn" width={26} height={26} className="pointer-events-none" />
+							{/* <Image src={chevronLeft} alt="back-btn" width={26} height={26} className="pointer-events-none" /> */}
 							<div className="flex justify-center items-center h-[calc(100%-26px)]">
 								<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
 									{

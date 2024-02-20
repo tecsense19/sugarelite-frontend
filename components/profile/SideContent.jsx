@@ -10,6 +10,7 @@ import more_horizontal from "../../public/assets/more_horizontal.svg"
 import profile_person from "../../public/assets/profile_person.png"
 import edit from "../../public/assets/edit.svg"
 import premium from "../../public/assets/premium.svg"
+import PopOver from './commons/PopOver'
 
 const SideContent = ({ control, params }) => {
 
@@ -40,7 +41,9 @@ const SideContent = ({ control, params }) => {
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
                 <Link href={path === "/profile/edit" ? "/profile" : "/search"}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
                 <p className="text-[24px] font-semibold select-none">Profile</p>
-                <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
+                <PopOver>
+                    <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
+                </PopOver>
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
@@ -72,12 +75,12 @@ const SideContent = ({ control, params }) => {
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
                         <div className='flex items-center '>
-                            <span className="text-[30px] font-bold me-[20px]">Rajesh, 23</span>
+                            <span className="text-[30px] font-bold me-[20px] leading-[30px]">Rajesh, 23</span>
                             <Image src={premium} alt='edit' width={30} height={30} priority />
                             <span className='text-[16px] font-semibold ms-2'>Premium</span>
                         </div>
                         <div className='mt-[11px]'>
-                            <span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px]">LIVING IN</span>
+                            <span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px] leading-[normal]">LIVING IN</span>
                             <span className="text-[16px] font-semibold text-opacity-80 text-white mt-[11px]">Ask me, Del Valle</span>
                         </div>
                     </div>
