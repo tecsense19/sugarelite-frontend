@@ -14,7 +14,7 @@ const Index = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(editHanlder)} className='w-full flex flex-col lg:flex-row'>
+            <form onSubmit={handleSubmit(editHanlder)} className='w-full overflow-x-hidden flex flex-col lg:flex-row'>
                 <SideContent control={control} setValue={setValue} />
                 <EditMainContent control={control} setValue={setValue} />
             </form>

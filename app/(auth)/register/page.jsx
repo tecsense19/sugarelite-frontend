@@ -114,7 +114,7 @@ const Register = () => {
 
 			<main className="hidden sm:flex h-screen">
 				<div className="h-full w-full relative">
-					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
+					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
 						<div className="text-white h-[725px]  sm:w-[90%] xl:w-[60%] py-[50px] rounded-[5px] sm:bg-primary  flex justify-center items-center flex-col ">
 							<h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">SUGAR<span className="font-normal sm:ms-2 md:ms-3">ELITE</span></h1>
 							{/* step status tarcker starts */}

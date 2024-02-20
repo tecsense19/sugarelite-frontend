@@ -20,6 +20,21 @@ const UploadPic = ({ control, setValue, name }) => {
     const photoHandler = async (e) => {
         let obj = {}
         const { files } = e.target
+        // if (!files.length) {
+        //     return;
+        // }
+
+        // const arr = Object.values(files)
+        // if (arr.length) {
+        //     arr.forEach((i) => {
+        //         let file = getBase64(i)
+        //         obj.name = i.name
+        //         obj.photo_url = file
+        //         console.log(obj)
+        //         // setPhotoList((prev) => [...prev, obj])
+        //     })
+        // }
+
         if (files[0]) {
             let file = await getBase64(files[0])
             obj.name = files[0].name
@@ -28,8 +43,9 @@ const UploadPic = ({ control, setValue, name }) => {
         }
     }
 
-    const deletePicHandler = (photo) => {
-        console.log(photo)
+    const deletePicHandler = (index) => {
+        const desiredArr = photoList.filter((photo, inx) => inx !== index)
+        setPhotoList(desiredArr)
     }
 
     const customStyles = {
@@ -83,7 +99,7 @@ const UploadPic = ({ control, setValue, name }) => {
                     name={name}
                     control={control}
                     render={({ field }) => <>
-                        <input type='file' {...field} id={name} onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' />
+                        <input type='file' {...field} id={name} onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' multiple />
                         <label htmlFor={name} className='h-full w-full border-dashed border border-[#ffffff70] flex flex-col gap-[10px] justify-center items-center rounded-[5px] cursor-pointer '>
                             <span className='text-[20px] text-white text-opacity-70 -mt-[8px]'>+</span>
                             <span className='text-[16px] font-medium text-white text-opacity-70'>Upload</span>

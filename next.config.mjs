@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: process.env.BASE_ROUTE,
+  // basePath: process.env.BASE_ROUTE,
   // trailingSlash: true,
 };
 
