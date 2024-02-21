@@ -21,11 +21,11 @@ const Banner = () => {
         </div>
         <div className="w-full flex flex-col items-center mt-[30px] lg:block lg:w-6/12 lg:mt-0" data-aos="fade-right" data-aos-anchor="#example-anchor" data-aos-duration="800">
           <div className="flex items-center">
-            <span className="text-[70px] italic font-[750] lg:me-2 hidden lg:block" style={{ lineHeight: "70px" }}>SUGAR</span>
+            <span className="text-[70px] italic font-[750] lg:me-3 hidden lg:block" style={{ lineHeight: "70px" }}>SUGAR</span>
             <span className="text-[clamp(30px,9vw,50px)] italic font-[750] me-[10px] lg:hidden block" style={{ lineHeight: "clamp(30px,9vw,50px)" }}>SUGAR</span>
 
             <span className="text-[70px] font-[350] hidden lg:block" style={{ lineHeight: "70px" }}>ELITE</span>
-            <span className="text-[clamp(30px,9vw,40px)] font-[350] lg:hidden block" style={{ lineHeight: "clamp(30px,9vw,40px)" }}>ELITE</span>
+            <span className="text-[clamp(30px,9vw,50px)] font-[350] lg:hidden block" style={{ lineHeight: "clamp(30px,9vw,50px)" }}>ELITE</span>
           </div>
           <div className="mt-[15px] text-[40px] font-[500] tracking-[-0.4px] hidden lg:block" style={{ lineHeight: "normal" }}>
             Create a free sugar Date profile now!
@@ -39,7 +39,7 @@ const Banner = () => {
           <div className="mt-[20px] text-center text-white/50 text-[clamp(17px,4.61539vw,20px)] font-[400] tracking-[-0.18px] lg:hidden block" style={{ lineHeight: "clamp(20px,6vw,28px)" }}>
             In publishing and graphic design, Lorem ipsum is a placeholder demonstrate the visual form of a document or a typeface without relying
           </div>
-          <div className="mt-[30px] lg:mt-[40px] flex items-center w-full sm:w-8/12 lg:w-auto">
+          <div className="mt-[30px] lg:mt-[40px] flex justify-center lg:justify-start items-center w-full sm:w-8/12 lg:w-auto">
             <button className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-secondary me-[20px]" style={{ lineHeight: "normal" }} onClick={() => router.push(client_routes.register)}>
               CREATE PROFILE
             </button>

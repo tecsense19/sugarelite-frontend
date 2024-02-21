@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image";
 import 'react-chat-elements/dist/main.css'
-import { ChatItem } from 'react-chat-elements';
 import "./ChatList.css";
 import Img1 from "../../public/assets/profile_img_1.png";
 import Img2 from "../../public/assets/profile_img_2.png";
@@ -14,15 +13,11 @@ import Img6 from "../../public/assets/profile_img_6.png";
 import Img7 from "../../public/assets/profile_img_7.png";
 import Img8 from "../../public/assets/profile_img_8.png";
 import Img9 from "../../public/assets/profile_img_9.png";
-// import Img10 from "../../public/assets/profile_img_10.png";
-// import Img11 from "../../public/assets/profile_img_11.png";
-// import Img12 from "../../public/assets/profile_img_12.png";
-// import Img13 from "../../public/assets/swipe_img_1.png";
-// import Img14 from "../../public/assets/swipe_img_2.png";
 import chatArrowRight from "../../public/assets/chat_arrow_right.png";
 import arrowLeft from "../../public/assets/arrow_left.svg";
+import ChatListItems from "./ChatListItems";
 
-const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
+const ChatList = ({ setSelectedObj, setProfiles, profiles, showMobileChatContent, setShowMobileChatContent }) => {
   const horizontalProfilesRef = useRef(null);
   const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
   const [showProfileScrollLeftBtn, setShowProfileScrollLeftBtn] = useState(false)
@@ -48,9 +43,11 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
 
     const container = horizontalProfilesRef.current;
     container.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
 
     return () => {
       container.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
 
   }, [])
@@ -76,7 +73,7 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
   }
 
   return (
-    <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[13px] md:py-[30px]' data-aos="fade-right" data-aos-duration="800">
+    <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[14px] md:py-[30px]' data-aos="fade-right" data-aos-duration="800">
       <div className="md:hidden relative flex justify-center items-center">
         <button className="flex justify-center items-center absolute left-4">
           <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
@@ -103,27 +100,7 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles }) => {
           <Image src={chatArrowRight} alt="" height={1000} width={1000} className="h-full w-full pointer-events-none" />
         </button>
       </div>
-      <div className="mt-5 px-5 md:mt-[30px] md:px-[30px]">
-        <div className="text-[20px] md:text-[26px] font-semibold md:font-bold leading-[30px]">My Chat List</div>
-      </div>
-      <div className="flex flex-col mt-[10px] md:mt-5 gap-y-[10px] md:gap-y-4 overflow-y-auto h-[calc(100%-170px)] ps-4 px- md:ps-[30px] me-0 pe-4 md:me-3 md:pe-3 md:second-child" style={{ scrollbarWidth: "none" }}>
-        {profiles?.map((item, idx) => {
-          return (
-            <ChatItem
-              onClick={() => setSelectedObj(item)}
-              key={idx}
-              className="rounded-[5px] overflow-hidden border-[1px] border-white/30"
-              statusColor={item.online ? "#3DC73A" : (item.last_activity === "near" ? "#FEBF0F" : "")}
-              avatar={item.img_url.src}
-              alt=''
-              title={item.name}
-              subtitle={item.last_msg}
-              date={item.time}
-              unread={item.unread_count}
-            />
-          )
-        })}
-      </div>
+      <ChatListItems profiles={profiles} setSelectedObj={setSelectedObj} showMobileChatContent={showMobileChatContent} setShowMobileChatContent={setShowMobileChatContent} />
     </div>
   )
 }

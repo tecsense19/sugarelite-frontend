@@ -1,24 +1,24 @@
 import Image from "next/image";
-import optionsIcon from "../../public/assets/chat_options_icon.svg";
-import { ConfigProvider, Drawer, Popover } from "antd";
-import { useEffect, useState } from "react";
+import { ConfigProvider, Drawer } from "antd";
+import { useEffect, useRef, useState } from "react";
 // import Img1 from "../../public/assets/profile_img_1.png";
-import starIcon from "../../public/assets/chat_option_star_icon.svg";
-import reportIcon from "../../public/assets/chat_report_icon.svg";
-import blockIcon from "../../public/assets/chat_block_icon.svg";
 import smileIcon from "../../public/assets/smile_icon.svg";
 import attachmentIcon from "../../public/assets/attachment_icon.svg";
 import sendIcon from "../../public/assets/send_icon.svg";
+import chatScrollBottom from "../../public/assets/chat_scroll_bottom_icon.svg";
 import ChatProfile from "./ChatProfile";
 import Message from "./Message";
+import ChatSectionHeader from "./ChatSectionHeader";
 
-const ChatSection = ({ selectedObj, profiles }) => {
+const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobileChatContent }) => {
   // const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
   // const selectedObj = { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?" };
   const [user, setUser] = useState("")
-  const [showOptions, setShowOptions] = useState(false);
   const [messages, setMessages] = useState([])
+  const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showMobileProfile, setShowMobileProfile] = useState(false);
+  const msgContainerRef = useRef(null)
 
   useEffect(() => {
     setUser(profiles[0])
@@ -39,13 +39,54 @@ const ChatSection = ({ selectedObj, profiles }) => {
       { message: "I am also good.", from: profiles[0], to: profiles[1], time: formattedTime },
       { message: "I am also good.", from: profiles[0], to: profiles[1], time: formattedTime },
       { message: "I am also good.", from: profiles[0], to: profiles[1], time: formattedTime },
-      { message: "I am also goodkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk.", from: profiles[0], to: profiles[1], time: formattedTime },
     ])
+    scrollMsgsToBottom()
+    setTimeout(() => {
+      let container = msgContainerRef.current
+      container.addEventListener("scroll", handleChatScrollBtn)
+    })
+    window.addEventListener("resize", closeAll)
+    return () => {
+      window.removeEventListener("resize", closeAll)
+      setTimeout(() => {
+        let container = msgContainerRef.current
+        container.removeEventListener("scroll", handleChatScrollBtn)
+      })
+    }
   }, [])
 
-  const handleShowOptionsChange = (val) => {
-    setShowOptions(val)
+
+  const handleChatScrollBtn = () => {
+    const objDiv = msgContainerRef.current;
+    const maxScroll = objDiv.scrollHeight - objDiv.clientHeight;
+    if (objDiv.scrollTop < (maxScroll - 100)) {
+      setShowScrollToBottom(true)
+    } else {
+      setShowScrollToBottom(false)
+    }
   }
+
+  const scrollMsgsToBottom = () => {
+    setTimeout(() => {
+      if (msgContainerRef.current) {
+        const objDiv = msgContainerRef.current;
+        const maxScroll = objDiv.scrollHeight - objDiv.clientHeight;
+        if (objDiv) {
+          objDiv.scrollTop = maxScroll;
+        }
+        setShowScrollToBottom(false);
+      }
+    })
+  }
+
+  const closeAll = () => {
+    if (setShowMobileChatContent) {
+      setShowMobileChatContent(false);
+    }
+    setShowMobileProfile(false);
+    setDrawerOpen(false)
+  }
+
   const onDrawerClose = () => {
     setDrawerOpen(false)
   }
@@ -53,90 +94,59 @@ const ChatSection = ({ selectedObj, profiles }) => {
     <>
       {user &&
         <div className="flex h-full">
-          <div className="w-full 2xl:w-[calc(100%-400px)] flex flex-col h-full" data-aos='zoom-in'>
-            <div className="w-full border-b-[1px] border-white/30 px-10 py-5 flex justify-between items-center">
-              <div className="flex items-center 2xl:pointer-events-none" onClick={() => setDrawerOpen(true)}>
-                <button className="flex items-center">
-                  <Image src={selectedObj.img_url.src} alt="" height={60} width={60} priority className="pointer-events-none rounded-full" />
-                  <div className="text-[22px] font-semibold leading-[20px] ms-6">{selectedObj.name}</div>
-                </button>
-                <div>
-                  {selectedObj.online
-                    ? <div className="ms-[10px] flex items-center">
-                      <div className="h-[9px] w-[9px] bg-[#3DC73A] rounded-full" />
-                      <div className="ms-[10px] text-white/50 text-[14px] font-medium leading-[20px]">Active</div>
-                    </div>
-                    : <>
-                      {selectedObj.last_activity === "near"
-                        ? <div className="ms-[10px] flex items-center">
-                          <div className="h-[9px] w-[9px] bg-[#FEBF0F] rounded-full" />
-                          <div className="ms-[10px] text-white/50 text-[14px] font-medium leading-[20px]">5 mins ago</div>
+          {(showMobileProfile === false || window.innerWidth > 768) &&
+            <div className="w-full 2xl:w-[calc(100%-400px)] flex flex-col h-full" data-aos='fade-up'>
+              <ChatSectionHeader setDrawerOpen={setDrawerOpen} selectedObj={selectedObj} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} />
+              <div className="h-[calc(100%-60px)] md:h-[calc(100%-101px)] flex flex-col justify-end">
+                <div className="relative w-full h-full overflow-y-hidden p-4 md:py-5 md:px-10 flex flex-col justify-end">
+                  <div ref={msgContainerRef} className="relative w-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+                    {messages.map((item, idx) => {
+                      return (
+                        <div key={idx} className={`flex my-[2px] ${user.id === item.from.id ? "justify-end" : "justify-start"}`}>
+                          <Message user={user} item={item} messages={messages} idx={idx} />
                         </div>
-                        : <></>
-                      }
-                    </>
+                      )
+                    })}
+                  </div>
+                  {showScrollToBottom &&
+                    <button className="absolute right-4 bottom-4 md:right-10 md:bottom-5 bg-black rounded-full flex justify-center items-center h-10 w-10" onClick={scrollMsgsToBottom} data-aos="fade-up">
+                      <Image src={chatScrollBottom} alt="" height={22} width={22} priority className="select-none pointer-events-none" />
+                    </button>
                   }
                 </div>
-              </div>
-              <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
-                <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
-                  <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
-                    <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                      <Image src={starIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                      <div className="text-[14px] font-medium leading-[20px]">Favorites</div>
+                <div className="w-full flex px-4 pb-[18px] md:px-10 md:pb-10">
+                  <div className="w-full h-12 md:h-[70px] rounded-[5px] bg-black flex items-center px-3 md:px-[30px]">
+                    <button>
+                      <Image src={smileIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />
+                      <Image src={smileIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
                     </button>
-                    <button className="bg-primary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                      <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                      <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
+                    <input type="text" placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px]" />
+                    <button>
+                      <Image src={attachmentIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />
+                      <Image src={attachmentIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
                     </button>
-                    <button className="bg-primary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                      <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                      <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                    <button className="h-[30px] w-[30px] md:h-[35px] md:w-[35px] bg-secondary flex justify-center items-center ms-3 md:ms-[30px] rounded-full">
+                      <Image src={sendIcon} priority alt="" height={18} width={18} className="hidden md:block pointer-events-none" />
+                      <Image src={sendIcon} priority alt="" height={15.5} width={15.5} className="md:hidden pointer-events-none" />
                     </button>
                   </div>
-                )}>
-                  <button className="h-[30px] w-[30px] flex items-center">
-                    <Image src={optionsIcon} alt="" height={30} width={30} priority className="pointer-events-none rounded-full" />
-                  </button>
-                </Popover>
-              </ConfigProvider>
-            </div>
-            <div className="h-[calc(100%-101px)] flex flex-col justify-end">
-              <div className="chat-container w-full h-full overflow-y-auto py-5 px-10 flex flex-col justify-end">
-                <div className="w-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
-                  {messages.map((item, idx) => {
-                    return (
-                      <div key={idx} className={`flex my-[2px] ${user.id === item.from.id ? "justify-end" : "justify-start"}`}>
-                        <Message user={user} item={item} messages={messages} idx={idx} />
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-              <div className="w-full flex px-10 pb-10">
-                <div className="w-full h-[70px] rounded-[5px] bg-black flex items-center px-[30px]">
-                  <button>
-                    <Image src={smileIcon} alt="" height={28} width={28} className="pointer-events-none" />
-                  </button>
-                  <input type="text" placeholder="Type a message..." className="mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-181px)]" />
-                  <button>
-                    <Image src={attachmentIcon} alt="" height={28} width={28} className="pointer-events-none" />
-                  </button>
-                  <button className="h-[35px] w-[35px] bg-secondary flex justify-center items-center ms-[30px] rounded-full">
-                    <Image src={sendIcon} alt="" height={18} width={18} className="pointer-events-none" />
-                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="hidden 2xl:block" data-aos='fade-left'>
+          }
+          <div className="hidden 2xl:block w-[400px]" data-aos='fade-left'>
             <ChatProfile selectedObj={selectedObj} />
           </div>
-          <ConfigProvider theme={{ token: { colorBgElevated: "#2d2d2d" } }}>
-            <Drawer width={400} closable={false} onClose={onDrawerClose} open={drawerOpen} style={{ container: { width: "400px" } }} styles={{ body: { padding: "0px" } }}>
-              <ChatProfile selectedObj={selectedObj} />
-            </Drawer>
-          </ConfigProvider>
+          {showMobileChatContent
+            ? <>
+              {showMobileProfile ? <ChatProfile selectedObj={selectedObj} setShowMobileProfile={setShowMobileProfile} /> : <></>}
+            </>
+            : <ConfigProvider theme={{ token: { colorBgElevated: "#2d2d2d" } }}>
+              <Drawer width={400} closable={false} onClose={onDrawerClose} open={drawerOpen} style={{ container: { width: "400px" } }} styles={{ body: { padding: "0px" } }}>
+                <ChatProfile selectedObj={selectedObj} />
+              </Drawer>
+            </ConfigProvider>
+          }
         </div>
       }
     </>

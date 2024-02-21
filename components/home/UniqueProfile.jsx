@@ -9,10 +9,10 @@ const UniqueProfile = () => {
   const router = useRouter();
 
   return (
-    <div className="mt-[140px] lg:mt-[200px] 2xl:mt-[270px] px-4 lg:px-0 flex justify-center items-center lg:block">
-      <div className="block lg:flex justify-between items-center bg-primary-dark-2 pt-[159px] pb-[35px] px-4 lg:px-0 lg:py-[80px] rounded-[5px] lg:rounded-[0px] w-full sm:w-9/12 lg:w-full" data-aos="fade-left" data-aos-offset="100" data-aos-duration="500">
+    <div className="mt-[140px] lg:mt-[200px] 2xl:mt-[269px] px-4 lg:px-0 flex justify-center items-center lg:block">
+      <div className="block lg:flex justify-between items-center bg-primary-dark-2 pt-[159px] pb-[35px] px-4 lg:px-0 lg:py-[90px] rounded-[5px] lg:rounded-[0px] w-full sm:w-9/12 lg:w-full" data-aos="fade-left" data-aos-offset="100" data-aos-duration="500">
         <div className="w-full lg:w-6/12 relative h-full flex items-center justify-center lg:justify-center" data-aos="fade-right" data-aos-offset="100" data-aos-duration="500" data-aos-delay="10">
-          <Image src={uniqueProfileDesktopImg} alt="" width={1000} height={1000} priority className="hidden lg:block absolute pointer-events-none select-none w-11/12" />
+          <Image src={uniqueProfileDesktopImg} alt="" width={1000} height={1000} priority className="hidden lg:block absolute pointer-events-none select-none w-11/12 max-w-[854px] 2xl:translate-y-[33px]" />
           <Image src={uniqueProfileMobileImg} alt="" width={1000} height={1000} priority className="block lg:hidden absolute pointer-events-none select-none w-[260px] mb-10 -translate-y-[50%]" />
         </div>
         <div className="w-full lg:w-6/12">
