@@ -119,6 +119,15 @@ button:disabled {
   @apply w-[calc(100%/3-14px)] !h-auto sm:w-[calc(100%/5-8px)] !mr-[14px] min-h-[160px] !important
 }
 
+
+.country-container_filter .ant-select-selector {
+  @apply !border-none !px-[20px] !text-[16px] !font-medium
+}
+
+.country-container_filter .ant-select-selection-search {
+  @apply !px-[8px]
+}
+
 /* swipe card start */
 .moving.profile-card {
   transition: none;
@@ -136,4 +145,41 @@ button:disabled {
 
 .ant-popconfirm-description {
   @apply !m-0
+}
+
+
+
+/* Animista */
+
+.slide-in-bottom {
+  -webkit-animation: slide-in-bottom 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-in-bottom 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(1000px);
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(1000px);
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

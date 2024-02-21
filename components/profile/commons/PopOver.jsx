@@ -79,7 +79,7 @@ const PopOver = ({ children }) => {
                             <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
                                 {
                                     navs.map((nav, inx) => (
-                                        <button key={inx} className="bg-primary hover:border-0 hover:bg-secondary hover:text-white text-white/70 border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={() => navigate.push(client_routes.chat)}>
+                                        <button key={inx} className="bg-primary hover:border-0 hover:bg-secondary hover:text-white text-white/70 border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" >
                                             <Image src={nav.icon} alt="" height={14} width={14} priority className="ms-2 pointer-events-none" />
                                             <div className="text-[14px] font-medium leading-[20px]  ">{nav.name}</div>
                                         </button>

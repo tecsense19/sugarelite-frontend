@@ -1,9 +1,8 @@
 "use client"
 import React, { createContext, useContext, useReducer } from 'react';
 
-// Step 1: Define your Redux store using createContext
 const initialState = {
-  isOpenMobileNavbar: false
+  isOpenMobileNavbar: false,
 };
 
 const reducer = (state, action) => {
@@ -17,11 +16,33 @@ const reducer = (state, action) => {
   }
 };
 
+const filterReducer = (state, action) => {
+  switch (action.type) {
+    case 'Filter_Open':
+      return { ...state, isFilterOpen: true };
+    case 'Filter_Close':
+      return { ...state, isFilterOpen: false };
+    default:
+      return state;
+  }
+}
+
 const StoreContext = createContext();
+
+const rootReducer = ({ firstState, filterState }, action) => ({
+  firstState: reducer(firstState, action),
+  filterState: filterReducer(filterState, action)
+});
 
 
 export const StoreProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(rootReducer, {
+    firstState: initialState,
+    filterState: {
+      isFilterOpen: false,
+    }
+  });
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

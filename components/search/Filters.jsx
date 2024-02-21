@@ -70,7 +70,7 @@ const Filters = () => {
       <form onSubmit={handleSubmit(submitHandler)}>
         <label className="w-full">
           <div className="text-white text-[16px] font-[500] mt-[20px] mb-[5px]" style={{ lineHeight: "normal" }}>Search by name</div>
-          <input type="text" placeholder="Search..." {...register('search', { required: true })} className="bg-primary text-white outline-none border border-white/30 rounded-[5px] h-[56px] text-[15px] font-[300] px-[20px] w-full" style={{ lineHeight: "normal" }} />
+          <input type="text" placeholder="Search..." {...register('name', { required: true })} className="bg-primary text-white outline-none border border-white/30 rounded-[5px] h-[56px] text-[15px] font-[300] px-[20px] w-full" style={{ lineHeight: "normal" }} />
         </label>
 
         <div className="mt-[30px]">

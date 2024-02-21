@@ -85,7 +85,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
                     <Image src={treasure_map} alt="pad_lock" width={48} height={48} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? which region?</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? Which region?</p>
                 <p className='text-white opacity-[50%] sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <div className='mt-14 w-full relative text-opacity-[70%] region_dropdown sm:mt-[25px]'>

@@ -14,8 +14,12 @@ import Img10 from "../../public/assets/profile_img_10.png";
 import Img11 from "../../public/assets/profile_img_11.png";
 import Img12 from "../../public/assets/profile_img_12.png";
 import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
+import { useRouter } from "next/navigation";
 
 const Cards = () => {
+
+  const navigate = useRouter()
+
   const profiles = [
     { id: 1, img: Img1, is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
     { id: 2, img: Img2, is_active: false, name: "Inga Green", age: 22, is_premium: true, desc: "Obcaecati cumque et" },
@@ -30,11 +34,12 @@ const Cards = () => {
     { id: 11, img: Img11, is_active: true, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
     { id: 12, img: Img12, is_active: false, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
   ]
+
   return (
-    <div className="bg-primary max-h-full h-fit lg:w-[calc(100%-350px)] xl:w-[calc(100%-350px)] w-full p-4 lg:p-[40px] xl:p-[60px] 2xl:p-[70px] grid grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-[16px] lg:gap-[30px] md:overflow-y-auto" style={{ scrollbarWidth: "none" }} data-aos="fade-left">
+    <div className="bg-primary max-h-full h-fit lg:w-[calc(100%-350px)] xl:w-[calc(100%-350px)] w-full p-4 lg:p-[40px] xl:p-[60px] 2xl:p-[70px] grid grid-cols-2 mb-[20px]   xl:grid-cols-3 2xl:grid-cols-4 gap-[16px] lg:gap-[30px] md:overflow-y-auto slide-in-bottom" style={{ scrollbarWidth: "none" }} data-aos="fade-left">
       {profiles?.map((item, idx) => {
         return (
-          <div key={idx} className="relative rounded-[5px] lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] xs:h-auto  w-full flex justify-center items-center">
+          <div key={idx} onClick={() => navigate.push(`/profile/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] xs:h-auto  w-full flex justify-center items-center">
             <Image src={item.img} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
             <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
               <div className="flex justify-end">
@@ -54,9 +59,6 @@ const Cards = () => {
         )
       })}
     </div>
-    // <div className="bg-primary ">
-
-    // </div>
   )
 }
 

@@ -18,6 +18,8 @@ import treasure_map from "../../../public/assets/treasure_map.svg"
 import calendar_3 from "../../../public/assets/calendar_3.svg"
 import check_mark from "../../../public/assets/check_mark.svg"
 import gmail from "../../../public/assets/gmail.svg"
+import { useRouter } from "next/navigation"
+import { client_routes } from "@/app/lib/helpers"
 
 const Register = () => {
 
@@ -25,8 +27,9 @@ const Register = () => {
 
 	const [nextStep, setNextStep] = useState(1)
 
-	const registerhandler = (data, e) => {
-		e.preventDefault()
+	const navigate = useRouter()
+
+	const registerhandler = (data) => {
 		data = { ...data, "date": dayjs(data.date).format("DD/MM/YYYY") }
 		console.log(data)
 	}
@@ -77,36 +80,36 @@ const Register = () => {
 		<>
 			{/* Mobile View */}
 
-			<main className="sm:hidden flex bg-black h-dvh">
+			<main className="sm:hidden block h-screen">
 				<div className="h-full w-full relative">
-					<div className="h-[calc(100%-12px)] w-full absolute p-4">
-						<div className="text-white w-full h-full">
-							{/* <Image src={chevronLeft} alt="back-btn" width={26} height={26} className="pointer-events-none" /> */}
-							<div className="flex justify-center items-center h-[calc(100%-26px)]">
-								<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
-									{
-										nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
-									}
-									{
-										nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
-									}
-									{
-										nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
-									}
-									{
-										nextStep === 4 && <Region setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
-									}
-									{
-										nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
-									}
-									{
-										nextStep === 6 && <Success />
-									}
-								</form>
-							</div>
+					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
+						{
+							nextStep === 1 && <Image src={chevronLeft} alt="back-btn" width={26} height={26} onClick={() => navigate.push(client_routes.home)} />
+						}
+						<div className="flex justify-center text-white items-center mt-[70px]">
+							<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
+								{
+									nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
+								}
+								{
+									nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+								}
+								{
+									nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+								}
+								{
+									nextStep === 4 && <Region setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+								}
+								{
+									nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+								}
+								{
+									nextStep === 6 && <Success />
+								}
+							</form>
 						</div>
 					</div>
-					<Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" />
+					<Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full sm:hidden block object-cover object-top select-none pointer-events-none" />
 				</div>
 			</main>
 
@@ -115,10 +118,10 @@ const Register = () => {
 			<main className="hidden sm:flex h-screen">
 				<div className="h-full w-full relative">
 					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
-						<div className="text-white h-[725px]  sm:w-[90%] xl:w-[60%] py-[50px] rounded-[5px] sm:bg-primary  flex justify-center items-center flex-col ">
+						<div className="text-white h-[725px] sm:w-[90%] xl:w-[60%] py-[50px] rounded-[5px] sm:bg-primary/80 sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center flex-col ">
 							<h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">SUGAR<span className="font-normal sm:ms-2 md:ms-3">ELITE</span></h1>
-							{/* step status tarcker starts */}
 
+							{/* step status tarcker starts */}
 							<div className="sm:w-[82%] lg:w-[665px] mb-[50px] relative h-[40px]">
 								<div className="bg-black w-full h-1 rounded-[29px] absolute top-[50%] translate-y-[-50%]"></div>
 								<div style={{ transform: `scaleX(${(nextStep - 1) * 20}%)` }} className="bg-secondary transition-transform duration-300 ease-in-out w-full origin-left h-1 rounded-[29px] absolute top-[43.5%] translate-y-[-50%]"></div>

@@ -29,14 +29,14 @@ const MainHeader = () => {
             <button>
               <Image height={20} width={20} src={notification} alt="" />
             </button>
-            <button>
+            <button onClick={() => router.push(client_routes.chat)}>
               <Image height={20} width={20} src={messages} alt="" className="ms-[15px]" />
             </button>
             <label className="bg-primary px-3 py-[7px] rounded-[5px] h-[32px] w-[193px] mx-[30px] flex items-center">
               <Image height={18} width={18} src={search} className="mr-3" alt="" priority />
               <input type="text" placeholder="Search" className="w-full bg-transparent outline-none border-0 text-[12px] font-light" style={{ lineHeight: "normal" }} />
             </label>
-            <Image height={40} width={40} className="pointer-events-none" src={profile_icon} alt="" priority />
+            <Image height={40} width={40} src={profile_icon} alt="profile_pic" className="cursor-pointer" priority onClick={() => router.push(client_routes.profile)} />
           </div>
         </div>
       </header>

@@ -2,15 +2,10 @@
 import React, { useEffect } from 'react'
 import SelectBox from './SelectBox'
 import { profile_select_options_appearance, profile_select_options_lifestyle } from '@/app/lib/constants'
-import { useForm } from 'react-hook-form'
 import { aosInit } from '@/app/lib/helpers'
 import UploadPic from './UploadPic'
 
-const EditMainContent = ({ handleSubmit, control, setValue }) => {
-
-    // const { handleSubmit, control, setValue } = useForm()
-
-
+const EditMainContent = ({ control, setValue }) => {
 
     useEffect(() => {
         aosInit()
