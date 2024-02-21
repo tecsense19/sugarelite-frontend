@@ -7,9 +7,10 @@ const Banner = () => {
   const router = useRouter();
 
   const handleReadMoreClick = () => {
-    let ele = document.getElementById("services_container")
-    if (ele) {
-      ele.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const targetElement = document.getElementById("services_container")
+    if (targetElement) {
+      const elementOffsetTop = targetElement.getBoundingClientRect().top;
+      window.scrollTo({ top: elementOffsetTop, left: 0, behavior: 'smooth' });
     }
   }
 
