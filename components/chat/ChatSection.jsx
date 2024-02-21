@@ -49,8 +49,10 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
     return () => {
       window.removeEventListener("resize", closeAll)
       setTimeout(() => {
-        let container = msgContainerRef.current
-        container.removeEventListener("scroll", handleChatScrollBtn)
+        let container = msgContainerRef.current;
+        if (container) {
+          container.removeEventListener("scroll", handleChatScrollBtn)
+        }
       })
     }
   }, [])

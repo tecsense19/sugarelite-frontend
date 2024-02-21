@@ -87,10 +87,19 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles, showMobileChatContent
         <button className={`absolute left-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollLeftBtn ? "flex" : "hidden"}`} onClick={() => handleHorizontalScrollBtn(-40)}>
           <Image src={chatArrowRight} alt="" height={1000} width={1000} className="h-full w-full pointer-events-none rotate-180" />
         </button>
-        <div ref={horizontalProfilesRef} className={`flex gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
+        <div ref={horizontalProfilesRef} className={`md:flex hidden gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
           {profiles?.map((item, idx) => {
             return (
               <button key={idx} className="flex items-center justify-center" onClick={() => setSelectedObj(item)}>
+                <Image src={item.img_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
+              </button>
+            )
+          })}
+        </div>
+        <div ref={horizontalProfilesRef} className={`flex md:hidden gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
+          {profiles?.map((item, idx) => {
+            return (
+              <button key={idx} className="flex items-center justify-center" onClick={() => { setSelectedObj(item); setShowMobileChatContent(true) }}>
                 <Image src={item.img_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
               </button>
             )

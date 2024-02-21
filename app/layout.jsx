@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html className="overflow-x-hidden" lang="en">
       <AntdRegistry>
-        <body className={inter.className + " select-none bg-primary"} suppressHydrationWarning={true}>
+        <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
           <StoreProvider>
             <Header />
             {children}
