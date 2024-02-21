@@ -14,7 +14,8 @@ import Working from "./Working"
 import Footer from "./Footer"
 
 const Home = () => {
-  const { state: { isOpenMobileNavbar } } = useStore();
+  const { state } = useStore();
+  const { firstState: { isOpenMobileNavbar } } = state;
   const [showScrollTopBtn, setShowScrollTopBtn] = useState(false)
 
   useEffect(() => {
@@ -40,12 +41,12 @@ const Home = () => {
   }, [])
 
   const handleScrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
   }
 
   return (
     <>
-      <div className={`min-h-dvh w-dvw overflow-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top flex flex-col ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
+      <div className={`min-h-dvh w-full overflow-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top flex flex-col ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
         <Banner />
         <Services />
         <UserFriendly />

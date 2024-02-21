@@ -43,7 +43,7 @@ const HomeCounter = () => {
   }, []);
 
   return (
-    <div className="mt-[50px] sm:mt-[120px] 2xl:mt-[200px] w-full flex justify-center px-4 sm:px-0" data-aos="fade-in" data-aos-duration={2}>
+    <div className="mt-[50px] sm:mt-[120px] 2xl:mt-[265px] w-full flex justify-center px-4 sm:px-0" data-aos="fade-in" data-aos-duration={2}>
       <div className="w-full sm:w-9/12 h-[370px] lg:h-[240px] flex justify-center items-center text-white rounded-[5px] lg:rounded-[20px] relative overflow-hidden">
         <Image src={counterBgDesktopImage} alt="" width={1000} height={1000} className="w-full h-full select-none pointer-events-none object-cover object-left hidden lg:block" />
         <Image src={counterBgMobileImage} alt="" width={1000} height={1000} className="w-full h-full select-none pointer-events-none object-cover object-top block lg:hidden" />
