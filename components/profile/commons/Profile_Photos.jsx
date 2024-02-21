@@ -1,7 +1,43 @@
+"use client"
 import Image from "next/image"
 import no_picture from "../../../public/assets/no_picture.svg"
+import { useEffect, useState } from "react"
 
 const Profile_Photos = ({ title, list }) => {
+
+    // const [animation, setAnimation] = useState("")
+
+
+    // useEffect(() => {
+    //     window.scrollTo({ top: 0, behavior: "smooth" })
+
+    //     const handleResize = () => {
+    //         const width = window.innerWidth;
+    //         if (width <= 640) {
+    //             inx % 2 === 0 ? setAnimation("fade-left") : setAnimation("fade-right")
+    //         } else if (width <= 768) {
+    //             inx % 2 === 0 ? setAnimation("fade-right") : setAnimation("fade-left")
+    //         } else if (width <= 1669) {
+    //             if (inx % 3 === 0) {
+    //                 setAnimation('fade-right');
+    //             } else if (inx % 3 === 1) {
+    //                 setAnimation('zoom-in');
+    //             } else {
+    //                 setAnimation('fade-left');
+
+    //             }
+    //         } else {
+    //             setAnimation("zoom-in")
+    //         }
+    //     }
+
+    //     handleResize();
+    //     window.addEventListener('resize', handleResize);
+    //     console.log(animation)
+
+    //     return () => window.removeEventListener('resize', handleResize);
+    // }, [])
+
     return (
         <div className="mb-[40px]">
             <h1 className="text-[24px] font-bold lg:text-[30px] " data-aos='zoom-in'>{title}</h1>
