@@ -147,7 +147,7 @@ const Mob_Filter = () => {
                     )}
                     />
                 </div>
-                <div className='mt-[25px] flex justify-center items-center relative country-container_filter w-full'>
+                <div className='mt-[15px] flex justify-center items-center relative country-container_filter w-full'>
                     <Controller name="region" control={control} render={({ field }) => (
                         <ConfigProvider theme={{ ...customDropdownTheme, components: { Select: { ...customDropdownTheme.components.Select, } } }}>
                             <Select {...field} placeholder="Select Region" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
@@ -165,7 +165,7 @@ const Mob_Filter = () => {
                         </ConfigProvider>
                     )} />
                 </div>
-                <div className='mt-[25px]'>
+                <div className='mt-[32px]'>
                     <Mob_Checkbox setValue={setValue} control={control} text={"Has a profile picture"} watch={watch} name={"has_profile_picture"} />
                 </div>
                 <div className="mt-[21px]">
