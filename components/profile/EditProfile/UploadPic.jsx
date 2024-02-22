@@ -67,7 +67,8 @@ const UploadPic = ({ control, setValue, name }) => {
         },
         token: {
             paddingSM: "1px",
-            boxShadowSecondary: "none"
+            boxShadowSecondary: "none",
+            colorBgElevated: "#000",
         }
     }
 
@@ -79,11 +80,12 @@ const UploadPic = ({ control, setValue, name }) => {
                         <ConfigProvider theme={customStyles}>
                             <Popconfirm
                                 title="Delete the photo"
+                                placement="bottomLeft"
                                 description="Are you sure to delete this photo?"
                                 onConfirm={() => deletePicHandler(index)}
-                                onCancel={() => deletePicHandler(index)}
                                 okText="Yes"
                                 cancelText="No"
+                                arrow={{ pointAtCenter: true }}
                             >
                                 <button className='absolute backdrop-blur-3xl shadow-inner bg-secondary -top-2 -right-2 h-[18px] w-[18px] rounded-full  flex items-center justify-center' type='button'>
                                     <Image src={cross} width={6} height={6} alt="delete" className='' />
@@ -107,7 +109,7 @@ const UploadPic = ({ control, setValue, name }) => {
                     </>}
                 />
             </div>
-        </div>
+        </div >
     )
 }
 

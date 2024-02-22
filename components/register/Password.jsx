@@ -69,8 +69,8 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         autoComplete='new-password' />
                     {
                         showCPass ?
-                            <Image src={eye_close} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "cpass")} /> :
-                            <Image src={eye_open} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open", "cpass")} />
+                            <Image src={eye_close} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "cpass")} /> :
+                            <Image src={eye_open} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open", "cpass")} />
                     }
                 </div>
             </div>

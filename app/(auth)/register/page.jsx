@@ -23,7 +23,7 @@ import { client_routes } from "@/app/lib/helpers"
 
 const Register = () => {
 
-	const { register, handleSubmit, control, watch, setValue } = useForm()
+	const { register, handleSubmit, control, watch, setValue, getFieldState, } = useForm()
 
 	const [nextStep, setNextStep] = useState(1)
 
@@ -75,24 +75,23 @@ const Register = () => {
 		}
 	]
 
-
 	return (
 		<>
 			{/* Mobile View */}
 
-			<main className="sm:hidden block h-screen">
+			<main className="sm:hidden block h-dvh ">
 				<div className="h-full w-full relative">
-					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
+					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto overflow-x-hidden">
 						{
 							nextStep === 1 && <Image src={chevronLeft} alt="back-btn" width={26} height={26} onClick={() => navigate.push(client_routes.home)} />
 						}
-						<div className="flex justify-center text-white items-center mt-[70px]">
-							<form className="flex flex-col items-center w-full" onSubmit={handleSubmit(registerhandler)}>
+						<div className="flex h-[calc(100%-32px)] justify-center text-white  ">
+							<form className="flex flex-col items-center w-full my-auto" onSubmit={handleSubmit(registerhandler)} >
 								{
 									nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
 								}
 								{
-									nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 2 && <UserName register={register} getFieldState={getFieldState} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
 									nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
@@ -115,10 +114,10 @@ const Register = () => {
 
 			{/* Web view */}
 
-			<main className="hidden sm:flex h-screen">
+			<main className="hidden sm:flex h-screen ">
 				<div className="h-full w-full relative">
 					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
-						<div className="text-white h-[725px] sm:w-[90%] xl:w-[60%] py-[50px] rounded-[5px] sm:bg-primary/80 sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center flex-col ">
+						<div className="text-white h-[725px] sm:w-[90%] xl:w-[60%] my-auto py-[50px] rounded-[5px] sm:bg-primary/80 sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center flex-col ">
 							<h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">SUGAR<span className="font-normal sm:ms-2 md:ms-3">ELITE</span></h1>
 
 							{/* step status tarcker starts */}

@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React from 'react'
 import username from "../../public/assets/username.svg"
 import gmail from "../../public/assets/gmail.svg"
 import email from "../../public/assets/email.svg"
@@ -12,6 +12,8 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
         username: watch("username"),
         email: watch("email")
     }
+
+
 
     return (
         <>
@@ -32,13 +34,14 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         placeholder='Username'
                         className='w-full bg-transparent  placeholder:text-[rgba(255,255,255,0.5)]  text-[16px] text-white text-opacity-[70%] font-medium outline-none '
                         autoComplete='off'
+                        required
                     />
                 </div>
                 <div className=' flex items-center h-[42px] border border-[#535353] ps-[12px] sm:ps-[20px] rounded-[5px]'>
                     <Image src={email} width={20} height={20} alt='email ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                     <input
                         type="email"
-                        {...register('email', { required: true })}
+                        {...register('email', { required: "Email needed" })}
                         onChange={(e) => setValue("email", e.target.value)}
                         placeholder='E-mail'
                         className='w-full placeholder:text-[rgba(255,255,255,0.5)]  bg-transparent text-[16px] text-white text-opacity-[70%] font-medium outline-none'
