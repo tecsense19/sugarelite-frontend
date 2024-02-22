@@ -140,11 +140,23 @@ button:disabled {
 
 
 .ant-popover-inner {
-  @apply !rounded-[5px] !p-[8px]
+  @apply !rounded-[5px] !p-[8px] !text-white
 }
 
 .ant-popconfirm-description {
-  @apply !m-0
+  @apply !m-0 !text-[white]
+}
+
+.ant-popconfirm-title {
+  @apply !text-white
+}
+
+.ant-popover {
+  @apply !z-[1]
+}
+
+.ant-popover.ant-popconfirm {
+  @apply w-[180px] sm:w-auto !important
 }
 
 

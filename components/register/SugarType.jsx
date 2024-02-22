@@ -40,8 +40,8 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                 </div>
                 <p className="text-2xl sm:text-[20px] pt-5 sm:pt-[13px] font-medium">I am a</p>
             </div>
-            <div className="text-center mt-[60px] sm:mt-[28px] w-[20rem] sm:w-full md:w-[85%]">
-                <div className="flex gap-6 sm:gap-3 flex-wrap justify-center sm:flex-nowrap ">
+            <div className="text-center mt-[50px] sm:mt-[28px] w-[20rem] sm:w-full md:w-[85%]">
+                <div className="flex gap-x-6 gap-y-2 sm:gap-3 flex-wrap justify-center sm:flex-nowrap ">
                     {
                         typeArray.map((type, inx) => (
                             <div className={`${isValid === type.sugarType && "bg-secondary"} py-3 px-5 sm:px-3 sm:py-2 rounded-[5px] sm:w-full  sm:flex justify-center `} key={inx}>

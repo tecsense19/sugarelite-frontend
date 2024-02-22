@@ -87,22 +87,11 @@ const SideContent = ({ control, params }) => {
                     </div>
                 </div>
 
-                {/* searched profile content starts  */}
-                {/* 
-                <div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center md:flex-row flex-col gap-3'>
-                    {
-                        params?.id &&
-                        <SearchedProfile />
-                    }
-                </div> */}
-
-                {/* searched profile content ends  */}
-
                 <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                     <div className="p-4 text-[16px] font-light">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, cumque quas. Sint reiciendis commodi libero, sequi ipsam nam sed iusto odio perferendis voluptates eveniet ducimus nostrum quidem est. Voluptatum, voluptatibus?
                     </div>
-                    <div className="bg-primary-dark-3 xl:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
+                    <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
                         <p className="text-[18px] font-medium">Biography</p>
                         <p className="text-[12px] font-medium text-white text-opacity-80">No Cinema</p>
                     </div>
