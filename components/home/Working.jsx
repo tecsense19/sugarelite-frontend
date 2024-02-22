@@ -29,8 +29,8 @@ const Working = () => {
             </div>
           </div>
           <div className="row-start-1 2xl:col-span-1 lg:col-span-2 2xl:row-span-2 flex justify-center items-center" data-aos="fade-in" data-aos-duration="800">
-            <Image src={workingHomeDesktopImg} alt="" height={1000} width={1000} className="sm:w-8/12 lg:w-6/12 2xl:w-full hidden sm:block" />
-            <Image src={workingHomeMobileImg} alt="" height={1000} width={1000} className="w-10/12 sm:hidden" />
+            <Image src={workingHomeDesktopImg} alt="" height={1000} width={1000} className="sm:w-8/12 lg:w-6/12 2xl:w-full hidden sm:block pointer-events-none" />
+            <Image src={workingHomeMobileImg} alt="" height={1000} width={1000} className="w-10/12 sm:hidden pointer-events-none" />
           </div>
           <div className="bg-primary-dark-2 px-3 py-10 sm:px-10 lg:py-[30px] rounded-[5px] flex flex-col items-center lg:items-end" data-aos="flip-left" data-aos-duration="500">
             <div className="h-[47px] w-[47px] lg:h-[75px] lg:w-[75px] bg-secondary rounded-full flex justify-center items-center">
