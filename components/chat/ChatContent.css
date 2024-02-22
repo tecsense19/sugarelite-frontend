@@ -37,3 +37,12 @@
   background: #555;
   /* Color of the scrollbar handle on hover */
 }
+
+/* message popover */
+.message-container .ant-popover-content {
+  @apply !right-[6px] !bottom-[9px];
+}
+
+.message-container .ant-popover-arrow {
+  @apply !bottom-[1px];
+}

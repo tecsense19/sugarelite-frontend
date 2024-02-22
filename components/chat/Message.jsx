@@ -1,11 +1,20 @@
-import Image from 'next/image'
-import React from 'react'
+import Image from 'next/image';
+import { useState } from 'react';
+import optionsIcon from "../../public/assets/chat_options_icon.svg";
+import { ConfigProvider, Popover } from 'antd';
+import deleteIcon from "../../public/assets/delete.svg";
+import editIcon from "../../public/assets/edit.svg";
 
 const Message = ({ user, item, messages, idx }) => {
+  const [showOptions, setShowOptions] = useState(false);
+
+  const handleShowOptionsChange = (val) => {
+    setShowOptions(val)
+  }
   return (
     <>
       {user.id === item.from.id
-        ? <div className="flex items-end max-w-[80%] md:max-w-[75%] flex-col lg:flex-row">
+        ? <div className="flex items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row message-container">
           {messages[idx - 1]
             ? <>
               {item.from.id !== messages[idx - 1].from.id
@@ -15,10 +24,30 @@ const Message = ({ user, item, messages, idx }) => {
             </>
             : <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
           }
-          <div className="px-5 py-[10px] rounded-[15px] max-w-full lg:max-w-[calc(100%-60px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start">
-            <div className="flex justify-start items-end">
-              <div className="text-[20px] font-medium leading-[20px]"> {item.from.name} </div>
-              <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {item.time} </div>
+          <div className="ps-5 pe-[5px] lg:pe-[6px] py-[10px] rounded-[15px] max-w-full lg:max-w-[calc(100%-60px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start">
+            <div className="flex justify-between items-center">
+              <div className='flex justify-start items-end'>
+                <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {item.from.name} </div>
+                <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {item.time} </div>
+              </div>
+              <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
+                <Popover placement="leftBottom" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
+                  <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
+                    <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
+                      <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                      <div className="text-[14px] font-medium leading-[20px]">Delete</div>
+                    </button>
+                    <button className="bg-primary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
+                      <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
+                      <div className="text-[14px] font-medium leading-[20px]">Edit</div>
+                    </button>
+                  </div>
+                )}>
+                  <button className="h-[20px] w-[20px] flex justify-center items-center ms-6 lg:-translate-y-1">
+                    <Image src={optionsIcon} alt="" height={20} width={20} priority className="pointer-events-none" />
+                  </button>
+                </Popover>
+              </ConfigProvider>
             </div>
             <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
               {item.message}
@@ -34,7 +63,7 @@ const Message = ({ user, item, messages, idx }) => {
             : <Image src={item.from.img_url.src} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
           }
         </div>
-        : <div className="flex items-start lg:items-end max-w-[80%] md:max-w-[75%] flex-col lg:flex-row">
+        : <div className="flex items-start lg:items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row">
           {messages[idx - 1]
             ? <>
               {item.from.id !== messages[idx - 1].from.id
@@ -55,7 +84,7 @@ const Message = ({ user, item, messages, idx }) => {
           }
           <div className="ps-3 pe-5 md:px-5 py-[10px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[15px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-primary-dark-3">
             <div className="flex justify-start items-end">
-              <div className="text-[20px] font-medium leading-[20px]"> {item.from.name} </div>
+              <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {item.from.name} </div>
               <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {item.time} </div>
             </div>
             <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
