@@ -10,9 +10,13 @@ import twitterImg from "../../public/assets/twitter_footer_img.svg";
 import twitterActiveImg from "../../public/assets/twitter_footer_active_img.svg";
 import correctIcon from "../../public/assets/correct_icon.svg";
 import sendIcon from "../../public/assets/send_icon.svg";
-import { Collapse, ConfigProvider } from 'antd';
+import { Collapse, ConfigProvider, notification } from 'antd';
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 const Footer = () => {
+  const { register, handleSubmit, formState: { isValid } } = useForm()
+  const [api, contextHolder] = notification.useNotification();
 
   const socialButtons = [
     { image: facebookImg, activeImg: facebookActiveImg },
@@ -49,8 +53,30 @@ const Footer = () => {
     return tempArr;
   }
 
+  const handleNewLetterSubmit = (data) => {
+    console.log(data);
+  }
+
+  const handleWrongEmail = () => {
+    if (isValid === false) {
+      openNotification('topRight', "error", "Invalid Email !")
+    } else {
+      openNotification('topRight', "success", "Submited !")
+    }
+  }
+
+  const openNotification = (placement, type, text) => {
+    api[type]({
+      message: text,
+      placement,
+      duration: 2,
+      bottom: 0
+    });
+  };
+
   return (
     <div className="mt-[50px] md:mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
+      {contextHolder}
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
         <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 2xl:grid-cols-12 gap-x-[55px]">
           <div className="2xl:col-span-3">
@@ -105,9 +131,10 @@ const Footer = () => {
           {/* Desktop Middle Content End */}
           <div className="2xl:col-span-3 mt-10 2xl:mt-0">
             <div className="text-[24px] font-extrabold leading-[30px]">News Letter</div>
-            <form onSubmit={(e) => e.preventDefault()} className="mt-5 2xl:mt-10 relative flex items-center">
-              <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" />
-              <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)]">
+            <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
+              <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" autoComplete="off"
+                {...register("email", { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, required: true })} />
+              <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)]" onClick={handleWrongEmail}>
                 <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />
               </button>
             </form>

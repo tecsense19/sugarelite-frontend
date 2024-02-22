@@ -16,6 +16,17 @@ input:-webkit-autofill:active {
   -webkit-text-size-adjust: 20px;
 }
 
+.news-letter input:-webkit-autofill,
+.news-letter input:-webkit-autofill:hover,
+.news-letter input:-webkit-autofill:focus,
+.news-letter input:-webkit-autofill:active {
+  -webkit-background-clip: unset;
+  -webkit-backdrop-filter: none;
+  -webkit-text-fill-color: #2d2d2d !important;
+  @apply !bg-white;
+  -webkit-text-size-adjust: 17px;
+}
+
 .font-myriad {
   font-family: "Myriad Pro Regular";
 }

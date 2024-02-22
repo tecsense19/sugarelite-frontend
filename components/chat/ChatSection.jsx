@@ -105,7 +105,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
                     {messages.map((item, idx) => {
                       return (
                         <div key={idx} className={`flex my-[2px] ${user.id === item.from.id ? "justify-end" : "justify-start"}`}>
-                          <Message user={user} item={item} messages={messages} idx={idx} />
+                          <Message containerElement={msgContainerRef} user={user} item={item} messages={messages} idx={idx} />
                         </div>
                       )
                     })}

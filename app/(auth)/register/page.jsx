@@ -24,7 +24,7 @@ import { register_action } from "@/app/lib/actions"
 
 const Register = () => {
 
-	const { register, handleSubmit, control, watch, setValue, } = useForm()
+	const { register, handleSubmit, control, watch, setValue } = useForm()
 
 	const [nextStep, setNextStep] = useState(1)
 

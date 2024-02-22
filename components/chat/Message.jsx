@@ -1,16 +1,30 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import optionsIcon from "../../public/assets/chat_options_icon.svg";
 import { ConfigProvider, Popover } from 'antd';
 import deleteIcon from "../../public/assets/delete.svg";
 import editIcon from "../../public/assets/edit.svg";
 
-const Message = ({ user, item, messages, idx }) => {
+const Message = ({ user, item, messages, idx, containerElement }) => {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
   }
+  useEffect(() => {
+    const closeOptions = () => {
+      handleShowOptionsChange(false)
+    }
+    if (containerElement.current) {
+      containerElement.current.addEventListener("scroll", () => closeOptions())
+    }
+    return () => {
+      if (containerElement.current) {
+        containerElement.current.removeEventListener("scroll", () => closeOptions())
+      }
+    }
+  }, [])
+
   return (
     <>
       {user.id === item.from.id
