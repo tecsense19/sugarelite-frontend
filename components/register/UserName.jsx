@@ -13,8 +13,6 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
         email: watch("email")
     }
 
-
-
     return (
         <>
             <div className="text-center flex flex-col items-center ">
@@ -55,7 +53,11 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         BACK
                     </div>
                 </button>
-                <button className="w-full h-[42px] bg-secondary rounded  relative text-white text-opacity-[70%]" onClick={nextStepHandler} type="button" disabled={!isValid.email || !isValid.username || !isValid.email.includes("@")}>
+                <button className="w-full h-[42px] bg-secondary rounded relative text-white text-opacity-[70%]"
+                    onClick={nextStepHandler}
+                    type="button"
+                    disabled={!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase()
+                        .match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)}>
                     <div className="flex justify-center gap-[5px] font-bold sm:ms-4">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

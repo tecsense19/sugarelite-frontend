@@ -20,18 +20,21 @@ import check_mark from "../../../public/assets/check_mark.svg"
 import gmail from "../../../public/assets/gmail.svg"
 import { useRouter } from "next/navigation"
 import { client_routes } from "@/app/lib/helpers"
+import { register_action } from "@/app/lib/actions"
 
 const Register = () => {
 
-	const { register, handleSubmit, control, watch, setValue, getFieldState, } = useForm()
+	const { register, handleSubmit, control, watch, setValue, } = useForm()
 
 	const [nextStep, setNextStep] = useState(1)
 
 	const navigate = useRouter()
 
-	const registerhandler = (data) => {
-		data = { ...data, "date": dayjs(data.date).format("DD/MM/YYYY") }
-		console.log(data)
+	const registerhandler = async (data) => {
+		data = { ...data, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
+		const res = await register_action(data)
+		console.log(res)
+
 	}
 
 	const nextStepHandler = () => {
@@ -75,6 +78,7 @@ const Register = () => {
 		}
 	]
 
+
 	return (
 		<>
 			{/* Mobile View */}
@@ -91,7 +95,7 @@ const Register = () => {
 									nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
 								}
 								{
-									nextStep === 2 && <UserName register={register} getFieldState={getFieldState} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
 									nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />

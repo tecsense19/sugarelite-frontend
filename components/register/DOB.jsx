@@ -8,7 +8,7 @@ import chevron_right from "../../public/assets/chevron_right.svg"
 import calendar from "../../public/assets/calendar.svg"
 
 const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
-    const isValid = watch("date")
+    const isValid = watch("birthdate")
     const dateFormat = 'DD/MM/YYYY';
     return (
         <>
@@ -22,7 +22,7 @@ const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <div className="relative flex justify-end items-center">
                     <Controller
-                        name="date"
+                        name="birthdate"
                         control={control}
                         render={({ field }) => (
                             <ConfigProvider
@@ -73,7 +73,7 @@ const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
                         BACK
                     </div>
                 </button>
-                <button className="w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" type="submit" disabled={!isValid} onClick={nextStepHandler}>
+                <button className="w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" type="submit" disabled={!isValid} >
                     <div className="sm:flex justify-center gap-[5px] font-bold ms-4">
                         SUBMIT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

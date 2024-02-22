@@ -162,7 +162,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                         BACK
                     </div>
                 </button>
-                <button className=" w-full  rounded bg-secondary h-[42px]  relative text-white text-opacity-[70%]" type="button" disabled={!isValid.region || !isValid.country} onClick={nextStepHandler}>
+                <button className=" w-full  rounded bg-secondary h-[42px]  relative text-white text-opacity-[70%]" type="button" disabled={!isValid.region || !isValid.country || isValid.region === "Select your Region"} onClick={nextStepHandler}>
                     <div className="flex justify-center font-bold gap-[5px] sm:ms-4">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

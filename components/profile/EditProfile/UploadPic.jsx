@@ -72,6 +72,8 @@ const UploadPic = ({ control, setValue, name }) => {
         }
     }
 
+
+
     return (
         <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[14px]'>
             {

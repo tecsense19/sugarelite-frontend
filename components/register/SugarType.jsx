@@ -10,7 +10,7 @@ import chevron_right from '../../public/assets/chevron_right.svg'
 
 const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
 
-    const isValid = watch("sugarType")
+    const isValid = watch("sugar_type")
 
 
     const typeArray = [
@@ -49,7 +49,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                                     <p className="mb-[9px] font-bold text-[16px]">{type.sugarType}</p>
                                     <Image src={type.img} alt={type.sugarType} width={90} height={90} className=" min-w-[90px] rounded-full" priority />
                                 </label>
-                                <input type="radio" {...register("sugarType")} onChange={(e) => setValue("sugarType", e.target.value)} value={type.sugarType} className="hidden" id={type.sugarType} />
+                                <input type="radio" {...register("sugar_type")} onChange={(e) => setValue("sugar_type", e.target.value)} value={type.sugarType} className="hidden" id={type.sugarType} />
                             </div>
                         ))
                     }

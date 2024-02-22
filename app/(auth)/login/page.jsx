@@ -2,7 +2,7 @@
 import { Checkbox, ConfigProvider } from "antd"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import unLockImg from "../../../public/assets/password.svg"
 import lockImg from "../../../public/assets/lock.svg";
@@ -13,10 +13,11 @@ import eyeCloseImg from "../../../public/assets/eye_close.svg";
 import eyeOpenImg from "../../../public/assets/eye_open.svg";
 import bgMobileImg from "../../../public/assets/Group 427318831.png";
 import bgDesktopImg from "../../../public/assets/large_image.png";
+import { login_action } from "@/app/lib/actions"
 
 const Login = () => {
 
-  const { register, setValue, handleSubmit, control, watch } = useForm()
+  const { register, setValue, handleSubmit, control, watch, formState: { isValid } } = useForm()
   const [showPass, setShowPass] = useState(false)
 
   const showPasswordHandler = (handle) => {
@@ -27,8 +28,9 @@ const Login = () => {
     }
   }
 
-  const loginHandler = (data) => {
-    console.log(data)
+  const loginHandler = async (data) => {
+    const res = await login_action(data)
+    console.log(res)
   }
 
 
@@ -47,7 +49,7 @@ const Login = () => {
                   <Image src={emailImg} width={20} height={20} alt='email' className='me-[10px] w-[20px] h-[20px]' />
                   <input
                     type="email"
-                    {...register('email', { required: true })}
+                    {...register('email', { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })}
                     onChange={(e) => setValue("email", e.target.value)}
                     placeholder='Email id'
                     className='w-full placeholder:text-[rgba(255,255,255,0.5)] bg-transparent text-[16px] text-white text-opacity-[70%] font-medium outline-none'
@@ -58,8 +60,8 @@ const Login = () => {
                   <Image src={showPass ? unLockImg : lockImg} width={20} height={20} alt='password ' className='me-[10px] w-[20px] h-[20px]' />
                   <input
                     type={showPass ? "text" : "password"}
-                    {...register('cpassword', { required: true })}
-                    onChange={(e) => setValue("cpassword", e.target.value)}
+                    {...register('password', { required: true, minLength: 5 })}
+                    onChange={(e) => setValue("password", e.target.value)}
                     placeholder='Password'
                     className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[70%] outline-none ' autoComplete='new-password' />
                   {
@@ -80,7 +82,7 @@ const Login = () => {
                 </div>
                 <span className="underline pb-1 cursor-pointer select-none">Forgotten Password</span>
               </div>
-              <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium" type="submit">
+              <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium" type="submit" onClick={() => console.log(isValid)}>
                 Log in
               </button>
             </form>
