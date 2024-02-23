@@ -17,11 +17,11 @@ const Buttons_Profile = () => {
 
     return (
         <>
-            <button onClick={() => requestHandler("send_message")} className='bg-[#3DC73A] w-full md:w-[calc(100%/2-10px)] lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-right'>
+            <button onClick={() => requestHandler("send_message")} className='bg-[#3DC73A] w-full max-w-[273px] md:w-[calc(100%/2-10px)] lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-right'>
                 <Image src={message_circle} width={22} height={22} alt='message' />
                 <span className='xl:text-[20px] font-[600] leading-[normal]'>SEND MESSAGE</span>
             </button>
-            <button onClick={() => requestHandler("request")} className='bg-secondary w-full md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
+            <button onClick={() => requestHandler("request")} className='bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
                 <Image src={lock_1} width={22} height={22} alt='message' />
                 <span className='xl:text-[20px] font-[600] leading-[normal]'>REQUEST VIEW ALBUM</span>
             </button>

@@ -28,9 +28,6 @@ const ProfileId = ({ params }) => {
           </button>
         </div>
 
-        {/* Medium screen */}
-
-
       </main>
     </>
   )

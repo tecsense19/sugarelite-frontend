@@ -82,6 +82,7 @@ const Footer = () => {
     });
   };
 
+
   return (
     <div className="mt-[50px] md:mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
       {contextHolder}

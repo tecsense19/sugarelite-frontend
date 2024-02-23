@@ -43,7 +43,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
-                <div className=' mb-3 flex h-[42px] items-center border border-[#535353] ps-[12px] sm:ps-[20px] rounded-[5px]'>
+                <div className='mb-3 flex h-[42px] items-center border border-[#535353] ps-[12px] sm:ps-[20px] rounded-[5px]'>
                     <Image src={showPass ? password : lock} width={20} height={20} alt='password ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                     <input
                         type={showPass ? "text" : "password"}
@@ -51,7 +51,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         onChange={(e) => setValue("password", e.target.value)}
                         placeholder='Password'
                         className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[50%] outline-none '
-                        autoComplete='password' />
+                        autoComplete='new-password' />
                     {
                         showPass ?
                             <Image src={eye_close} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "password")} /> :

@@ -7,9 +7,13 @@ import calendar_3 from "../../public/assets/calendar_3.svg"
 import chevron_right from "../../public/assets/chevron_right.svg"
 import calendar from "../../public/assets/calendar.svg"
 
-const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
+const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) => {
+
     const isValid = watch("birthdate")
     const dateFormat = 'DD/MM/YYYY';
+
+
+
     return (
         <>
             <div className="text-center flex flex-col items-center">
@@ -74,9 +78,19 @@ const DOB = ({ nextStepHandler, prevStepHandler, watch, control }) => {
                     </div>
                 </button>
                 <button className="w-full h-[42px] rounded bg-secondary relative text-white text-opacity-[70%]" type="submit" disabled={!isValid} >
-                    <div className="sm:flex justify-center gap-[5px] font-bold ms-4">
-                        SUBMIT
-                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
+                    <div className="sm:flex justify-center gap-[5px] font-bold ">
+                        {
+                            !isLoading ?
+                                <>
+                                    SUBMIT
+                                    <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
+                                </>
+                                :
+                                <div className="flex justify-center items-center ">
+                                    <div className="loader"></div>
+                                </div>
+                        }
+
                     </div>
                 </button>
             </div>

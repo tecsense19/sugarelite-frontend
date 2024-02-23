@@ -23,16 +23,16 @@ const Mob_Filter = () => {
 
     const typeArray = [
         {
-            sugarType: "EliteDaddy",
+            sugarType: "Elite Daddy",
         },
         {
-            sugarType: "EliteBoy",
+            sugarType: "Elite Boy",
         },
         {
-            sugarType: "EliteMama",
+            sugarType: "Elite Mama",
         },
         {
-            sugarType: "EliteBabe",
+            sugarType: "Elite Babe",
         }
     ]
 
