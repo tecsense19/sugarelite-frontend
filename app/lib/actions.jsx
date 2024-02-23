@@ -31,3 +31,15 @@ export const login_action = async (form) => {
     const data = await res.json()
     return data
 }
+
+export const newsletter_action = async (email) => {
+    // console.log("email", email);
+    const formData = new FormData()
+    formData.append("email", email)
+    const res = await fetch(server_routes.newsLetter, {
+        method: "POST",
+        body: formData
+    })
+    const data = await res.json()
+    return data
+}

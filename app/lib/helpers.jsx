@@ -18,6 +18,7 @@ const base_path = server_domain + "/api/V1";
 export const server_routes = {
   register: base_path + "/profile/register",
   login: base_path + "/login",
+  newsLetter: base_path + "/newsletter"
 }
 
 export const aosInit = () => {
