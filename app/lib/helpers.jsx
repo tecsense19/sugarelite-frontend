@@ -9,7 +9,10 @@ export const client_routes = {
   edit_profile: "/profile/edit",
   profile_id: "profile/:id",
   discover: "/discover",
-  chat: "/chat"
+  chat: "/chat",
+  disclaimer: "/disclaimer",
+  privacyPolicy: "/privacy-policy",
+  termsOfUse: "/terms-of-use"
 }
 
 const server_domain = "https://admin-sugarelite.tec-sense.co.in";
@@ -18,9 +21,19 @@ const base_path = server_domain + "/api/V1";
 export const server_routes = {
   register: base_path + "/profile/register",
   login: base_path + "/login",
-  newsLetter: base_path + "/newsletter"
+  newsLetter: base_path + "/newsletter",
+  checkUser: base_path + "/checkUser"
 }
 
 export const aosInit = () => {
   AOS.init()
+}
+
+export const client_notification = (api, placement, type, msg, duration) => {
+  api[type]({
+    message: msg,
+    placement,
+    duration: duration,
+    bottom: 0
+  });
 }

@@ -1,16 +1,35 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import username from "../../public/assets/username.svg"
 import gmail from "../../public/assets/gmail.svg"
 import email from "../../public/assets/email.svg"
 import chevron_right from "../../public/assets/chevron_right.svg"
+import { checkuser_action } from '@/app/lib/actions'
+import { Alert } from 'antd'
 
 const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue }) => {
+
+    const [showUserAlreadyExistAlert, setShowUserAlreadyExistAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(false);
 
     const isValid = {
         username: watch("username"),
         email: watch("email")
+    }
+
+    const handleUsernameSubmit = async () => {
+        let tempEmail = watch("email");
+        const res = await checkuser_action(tempEmail);
+        if (res.success === false) {
+            setAlertMessage(res.message);
+            setShowUserAlreadyExistAlert(true);
+            setTimeout(() => {
+                setShowUserAlreadyExistAlert(false);
+            }, 3000)
+        }
+        console.log(res);
+        // nextStepHandler()
     }
 
     return (
@@ -45,8 +64,12 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         className='w-full placeholder:text-[rgba(255,255,255,0.5)]  bg-transparent text-[16px] text-white text-opacity-[70%] font-medium outline-none'
                         autoComplete='off' />
                 </div>
+                {showUserAlreadyExistAlert
+                    ? <Alert message={alertMessage} type="error" showIcon className="!mt-0 !bg-transparent !text-red-500 text-[16px] !border-0 !rounded-[5px]" />
+                    : <></>
+                }
             </div>
-            <div className={`mt-14 w-full sm:grid grid-cols-2 gap-x-[37px] `}>
+            <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
                 <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={() => { prevStepHandler() }} type="button">
                     <div className="flex justify-center gap-[5px] font-bold">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
@@ -54,7 +77,7 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                     </div>
                 </button>
                 <button className="w-full h-[42px] bg-secondary rounded relative text-white text-opacity-[70%]"
-                    onClick={nextStepHandler}
+                    onClick={handleUsernameSubmit}
                     type="button"
                     disabled={!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase()
                         .match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)}>

@@ -10,13 +10,18 @@ import twitterImg from "../../public/assets/twitter_footer_img.svg";
 import twitterActiveImg from "../../public/assets/twitter_footer_active_img.svg";
 import correctIcon from "../../public/assets/correct_icon.svg";
 import sendIcon from "../../public/assets/send_icon.svg";
-import { Collapse, ConfigProvider, notification } from 'antd';
+import { Alert, Collapse, ConfigProvider } from 'antd';
 import { useForm } from "react-hook-form";
 import { newsletter_action } from "@/app/lib/actions";
+import Link from "next/link";
+import { client_routes } from "@/app/lib/helpers";
+import { useState } from "react";
 
 const Footer = () => {
-  const { register, handleSubmit, formState: { isValid } } = useForm()
-  const [api, contextHolder] = notification.useNotification();
+  const { register, handleSubmit, setValue, formState: { isValid } } = useForm()
+  const [showNewsLetterAlert, setShowNewsLetterAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   const socialButtons = [
     { image: facebookImg, activeImg: facebookActiveImg },
@@ -57,34 +62,34 @@ const Footer = () => {
     const res = await newsletter_action(data.email)
     // console.log("res ::", res);
     if (res.success) {
-      openNotification('topRight', "success", res.message)
+      openAlert("success", res.message)
+      setValue("email", "")
     } else {
       if (res.error) {
-        openNotification('topRight', "error", res.error)
+        openAlert("error", res.error)
       } else {
-        openNotification('topRight', "error", res.message)
+        openAlert("error", res.message)
       }
     }
   }
 
   const handleWrongEmail = () => {
     if (isValid === false) {
-      openNotification('topRight', "error", "Invalid Email !")
+      openAlert("error", "Invalid Email !")
     }
   }
 
-  const openNotification = (placement, type, msg, duration = 3) => {
-    api[type]({
-      message: msg,
-      placement,
-      duration: duration,
-      bottom: 0
-    });
+  const openAlert = (type, msg, duration = 3) => {
+    setShowNewsLetterAlert(true)
+    setAlertMessage(msg);
+    setAlertType(type)
+    setTimeout(() => {
+      setShowNewsLetterAlert(false)
+    }, duration * 1000);
   };
 
   return (
     <div className="mt-[50px] md:mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
-      {contextHolder}
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
         <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 2xl:grid-cols-12 gap-x-[55px]">
           <div className="2xl:col-span-3">
@@ -146,13 +151,17 @@ const Footer = () => {
                 <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />
               </button>
             </form>
+            {showNewsLetterAlert
+              ? <Alert message={alertMessage} type={alertType} showIcon className="!mt-4 !bg-primary !text-white !border-0 !rounded-[5px]" />
+              : <></>
+            }
           </div>
         </div>
 
         <div className="w-full mt-[50px] 2xl:mt-[80px] border-t-[1px] border-white/25 lg:border-white/50 flex flex-col-reverse lg:flex-row justify-center items-center text-white/75 lg:text-white">
           <div className="text-[14px] font-normal leading-[normal] mt-[15px] lg:mt-[18px]">Copyright © 2024 SugarElite All Rights Reserved.</div>
-          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  Terms of Use  |   Privacy Policy   |   Disclaimer</div>
-          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden">Terms of Use  |   Privacy Policy   |   Disclaimer</div>
+          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  <Link href={client_routes.termsOfUse} className="hover:text-secondary">Terms of Use</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">Privacy Policy</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">Disclaimer</Link></div>
+          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden"><Link href={client_routes.termsOfUse} className="hover:text-secondary">Terms of Use</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">Privacy Policy</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">Disclaimer</Link></div>
         </div>
       </div>
     </div>
