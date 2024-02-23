@@ -81,7 +81,7 @@ const MainContent = ({ params }) => {
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
 
-            <div className='hidden lg:flex items-center  mt-[16px] mb-[40px] gap-[30px]  2xl:gap-[50px]'>
+            <div className='hidden lg:flex items-center mt-[16px] mb-[40px] gap-[30px]  2xl:gap-[50px]'>
                 {
                     params?.id &&
                     <Buttons_Profile />

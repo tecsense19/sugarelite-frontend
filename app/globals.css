@@ -177,7 +177,7 @@ button:disabled {
 }
 
 .ant-notification-notice-wrapper {
-  @apply !bg-primary;
+  @apply !bg-primary-dark-3
 }
 
 .ant-notification-notice-close-icon {
@@ -220,27 +220,25 @@ button:disabled {
   }
 }
 
-.lds-hourglass {
-  display: inline-block;
+.loader {
+  display: flex;
   position: relative;
-  width: 35px;
-  height: auto;
 }
 
-.lds-hourglass:after {
+.loader:after {
   content: " ";
   display: block;
   border-radius: 50%;
   width: 0;
   height: 0;
-  margin: 8px;
+  margin: auto;
   box-sizing: border-box;
   border: 15px solid #fff;
   border-color: #fff transparent #fff transparent;
-  animation: lds-hourglass 1.2s infinite;
+  animation: loader 1.2s infinite;
 }
 
-@keyframes lds-hourglass {
+@keyframes loader {
   0% {
     transform: rotate(0);
     animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);

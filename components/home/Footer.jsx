@@ -88,6 +88,7 @@ const Footer = () => {
     }, duration * 1000);
   };
 
+
   return (
     <div className="mt-[50px] md:mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
       <div className="w-full px-4 sm:px-0 sm:w-8/12">

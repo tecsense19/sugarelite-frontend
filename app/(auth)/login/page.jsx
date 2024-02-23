@@ -1,5 +1,5 @@
 "use client"
-import { Checkbox, ConfigProvider } from "antd"
+import { Checkbox, ConfigProvider, notification } from "antd"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -14,12 +14,20 @@ import eyeOpenImg from "../../../public/assets/eye_open.svg";
 import bgMobileImg from "../../../public/assets/Group 427318831.png";
 import bgDesktopImg from "../../../public/assets/large_image.png";
 import { login_action } from "@/app/lib/actions"
+import { client_notification, client_routes } from "@/app/lib/helpers"
+import CryptoJS from "crypto-js"
+import { setCookie } from "nookies"
+import { useRouter } from "next/navigation"
 
 const Login = () => {
 
   const { register, setValue, handleSubmit, control, watch, formState: { isValid } } = useForm()
   const [showPass, setShowPass] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useRouter()
+
+  const [api, contextHolder] = notification.useNotification();
 
   const showPasswordHandler = (handle) => {
     if (handle === "open") {
@@ -31,11 +39,16 @@ const Login = () => {
 
   const loginHandler = async (data) => {
     const res = await login_action(data)
-    console.log(res)
     if (!res.success) {
       setIsLoading(false)
-      alert(res.message)
+      client_notification(api, "topRight", "error", res.message, 2)
+      return;
     }
+    setIsLoading(false)
+    client_notification(api, "topRight", "success", res.message, 2)
+    const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
+    setCookie(null, "user", token, { maxAge: 3600, secure: true, })
+    navigate.push(client_routes.profile)
   }
 
   const loadingHandler = () => {
@@ -47,6 +60,7 @@ const Login = () => {
 
   return (
     <main className="flex h-dvh">
+      {contextHolder}
       <div className="h-full w-full relative">
         <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
           <div className="text-white w-full h-full sm:h-[78%] sm:rounded-[5px] sm:w-[85%] md:w-[75%] sm:min-h-[625px] sm:bg-primary/80 sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] lg:max-w-[762px] flex justify-center items-center flex-col ">
@@ -95,7 +109,7 @@ const Login = () => {
               </div>
               <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center" type="submit" onClick={loadingHandler}>
                 {!isLoading ? "Log in" :
-                  <div className="lds-hourglass"></div>
+                  <div className="loader"></div>
                 }
               </button>
             </form>

@@ -19,22 +19,33 @@ import calendar_3 from "../../../public/assets/calendar_3.svg"
 import check_mark from "../../../public/assets/check_mark.svg"
 import gmail from "../../../public/assets/gmail.svg"
 import { useRouter } from "next/navigation"
-import { client_routes } from "@/app/lib/helpers"
+import { client_notification, client_routes } from "@/app/lib/helpers"
 import { register_action } from "@/app/lib/actions"
+import { notification } from "antd"
 
 const Register = () => {
 
 	const { register, handleSubmit, control, watch, setValue } = useForm()
 
+	const [api, contextHolder] = notification.useNotification();
+
 	const [nextStep, setNextStep] = useState(1)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const navigate = useRouter()
 
 	const registerhandler = async (data) => {
 		data = { ...data, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
+		setIsLoading(true)
 		const res = await register_action(data)
-		console.log(res)
-
+		if (!res.success || res.error) {
+			setIsLoading(false)
+			client_notification(api, "topRight", "error", res?.error || res?.message, 2)
+		} else {
+			setIsLoading(false)
+			client_notification(api, "topRight", "success", res?.message, 2)
+			setNextStep(6)
+		}
 	}
 
 	const nextStepHandler = () => {
@@ -84,6 +95,7 @@ const Register = () => {
 			{/* Mobile View */}
 
 			<main className="sm:hidden block h-dvh ">
+				{contextHolder}
 				<div className="h-full w-full relative">
 					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto overflow-x-hidden">
 						{
@@ -104,7 +116,7 @@ const Register = () => {
 									nextStep === 4 && <Region setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
-									nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} isLoading={isLoading} />
 								}
 								{
 									nextStep === 6 && <Success />
@@ -154,7 +166,7 @@ const Register = () => {
 									nextStep === 4 && <Region register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
 								}
 								{
-									nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} isLoading={isLoading} />
 								}
 								{
 									nextStep === 6 && <Success />
