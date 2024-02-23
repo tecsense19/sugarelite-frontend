@@ -64,7 +64,7 @@ const Filters = () => {
   return (
     // Filter Section
     <div className="bg-primary-dark-3 h-full max-h-full overflow-y-auto min-w-[350px] xl:min-w-[380px] p-[30px] text-white filter-container hidden md:block" style={{ scrollbarWidth: "none" }} data-aos="fade-right" data-aos-duration="800">
-      <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px]" style={{ lineHeight: "normal" }}>
+      <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px]" style={{ lineHeight: "normal" }} onClick={() => reset()}>
         RESET SEARCH
       </button>
       <form onSubmit={handleSubmit(submitHandler)}>

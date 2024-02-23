@@ -4,7 +4,7 @@ const Profile_Styles = ({ title, list }) => {
     return (
         <div className="mb-[40px]">
             <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in' data-aos-anchor-placement="bottom">{title}</h1>
-            <div className="mt-[25px] grid gap-[20px] xl:gap-[30px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+            <div className="mt-[25px] grid gap-[14px] md:gap-y-[46px] grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
                 {
                     list.map((style, inx) => {
                         return <div key={inx} className='aspect-auto' data-aos='zoom-in' data-aos-anchor-placement="bottom">

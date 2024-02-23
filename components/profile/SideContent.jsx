@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import SearchedProfile from './searched_Profile/Buttons_Profile'
 import arrow_left from "../../public/assets/arrow_left.svg"
@@ -13,9 +13,11 @@ import premium from "../../public/assets/premium.svg"
 import PopOver from './commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 
-const SideContent = ({ control, params }) => {
+const SideContent = ({ control }) => {
 
     const path = usePathname()
+
+    const [profilPic, setProfilePic] = useState(profile_person)
 
     const getBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -34,7 +36,8 @@ const SideContent = ({ control, params }) => {
             obj.name = files[0].name
             obj.photo_url = file
         }
-        console.log(obj)
+        // console.log(obj)
+        setProfilePic(obj.photo_url)
     }
 
     return (
@@ -48,7 +51,7 @@ const SideContent = ({ control, params }) => {
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
-                    <Image src={profile_person} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
+                    <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
 
                     {/* Edit Profile option starts */}

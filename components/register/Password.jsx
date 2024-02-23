@@ -50,7 +50,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         {...register('password', { required: true })}
                         onChange={(e) => setValue("password", e.target.value)}
                         placeholder='Password'
-                        className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[50%] outline-none '
+                        className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[50%] outline-none '
                         autoComplete='password' />
                     {
                         showPass ?
@@ -65,7 +65,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         {...register('cpassword', { required: true })}
                         onChange={(e) => setValue("cpassword", e.target.value)}
                         placeholder='Confirm Password'
-                        className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[50%] outline-none '
+                        className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[50%] outline-none '
                         autoComplete='new-password' />
                     {
                         showCPass ?
@@ -75,13 +75,13 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 </div>
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
-                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
+                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded-[5px] text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center gap-[5px] font-bold">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
-                <button className="bg-secondary w-full h-[42px] rounded border border-[#53535350] relative text-white text-opacity-[70%]" onClick={nextStepHandler} type="button" disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 5}>
+                <button className="bg-secondary w-full h-[42px] rounded-[5px] border border-[#53535350] relative text-white text-opacity-[70%]" onClick={nextStepHandler} type="button" disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6}>
                     <div className="flex justify-center gap-[5px] font-bold sm:ms-4 ">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

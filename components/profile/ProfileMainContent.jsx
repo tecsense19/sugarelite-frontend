@@ -1,12 +1,18 @@
 "use client"
-import { aosInit } from '@/app/lib/helpers'
+import { aosInit, client_routes } from '@/app/lib/helpers'
 import 'aos/dist/aos.css';
 import React, { useEffect } from 'react'
 import Profile_Photos from './commons/Profile_Photos';
 import Profile_Styles from './commons/Profile_Styles';
+import editImg from "/public/assets/edit.svg";
 import Divider from './commons/Divider';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-const ProfileMainContent = ({ params }) => {
+const ProfileMainContent = () => {
+
+    const navigate = useRouter()
 
     const profile = {
         photos: [""],
@@ -75,6 +81,9 @@ const ProfileMainContent = ({ params }) => {
 
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
+            <Link href={client_routes.edit_profile} className="hidden absolute bg-secondary top-[96px] z-[1] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px]" data-aos='zoom-in'>
+                <Image src={editImg} alt="edit" width={30} height={30} priority />
+            </Link>
             <Profile_Photos title={"Public Photos"} />
             <Divider />
             <Profile_Photos title={"Private Photos"} />

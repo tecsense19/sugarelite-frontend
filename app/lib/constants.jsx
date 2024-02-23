@@ -10,12 +10,12 @@ export const profile_select_options_appearance = [
         text: "ethnicity"
     },
     {
-        options: ["Athletic", "Chubby"],
+        options: ["Athletic", "Chubby", "Powerful", "Normal Appearance", "Slender", "Very muscular"],
         name: "body_structure",
         text: "body structure"
     },
     {
-        options: [""],
+        options: ["Yes", "No"],
         name: "piercings",
         text: "piercings"
     },
@@ -25,17 +25,17 @@ export const profile_select_options_appearance = [
         text: "height (cm.)"
     },
     {
-        options: [""],
+        options: ["Single", "In a relationship", "Gift", "Open Relationship", "It complicated"],
         name: "civil_status",
         text: "civil status"
     },
     {
-        options: [""],
+        options: ["Bard", "Sort", "Blond", "Brunt", "Cry", "Red", "White", "Blue", "Lilla", "Other things"],
         name: "hair_color",
         text: "hair color"
     },
     {
-        options: [""],
+        options: ["Yes", "No"],
         name: "tattos",
         text: "tattos"
     },

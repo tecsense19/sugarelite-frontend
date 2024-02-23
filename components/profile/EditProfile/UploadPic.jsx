@@ -38,9 +38,19 @@ const UploadPic = ({ control, setValue, name }) => {
         if (files[0]) {
             let file = await getBase64(files[0])
             obj.name = files[0].name
-            obj.photo_url = file
-            setPhotoList((prev) => [...prev, obj])
+            let alreadyUploaded = false;
+            for (let item of photoList) {
+                if (item.name === obj.name) {
+                    alreadyUploaded = true;
+                    break;
+                }
+            }
+            if (!alreadyUploaded) {
+                obj.photo_url = file
+                setPhotoList((prev) => [...prev, obj])
+            }
         }
+        e.target.value = null
     }
 
     const deletePicHandler = (index) => {

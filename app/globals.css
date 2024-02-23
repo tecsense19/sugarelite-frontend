@@ -32,7 +32,7 @@ input:-webkit-autofill:active {
 }
 
 button:disabled {
-  @apply !bg-opacity-50
+  @apply !bg-secondary/50
 }
 
 .region_dropdown .ant-select-selector {
@@ -171,6 +171,19 @@ button:disabled {
 }
 
 
+/* / Notification CSS / */
+.ant-notification-notice-message {
+  @apply !mb-0 !text-white;
+}
+
+.ant-notification-notice-wrapper {
+  @apply !bg-primary;
+}
+
+.ant-notification-notice-close-icon {
+  @apply !text-white
+}
+
 
 /* Animista */
 
@@ -204,5 +217,41 @@ button:disabled {
     -webkit-transform: translateY(0);
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 35px;
+  height: auto;
+}
+
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 15px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  100% {
+    transform: rotate(1800deg);
   }
 }

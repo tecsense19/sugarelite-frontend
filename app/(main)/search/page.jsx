@@ -7,10 +7,14 @@ import settingsIcon from "/public/assets/settings_icon.svg";
 import { useStore } from "@/store/store"
 import Mob_Filter from "@/components/search/Mob_Filter"
 import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { client_routes } from "@/app/lib/helpers"
 
 const Search = () => {
 
   const { state: { filterState: { isFilterOpen } }, dispatch } = useStore()
+
+  const navigate = useRouter()
 
   const filterHandler = () => {
     if (isFilterOpen) {
@@ -38,7 +42,7 @@ const Search = () => {
     <div className="font-bold md:h-dvh pt-0 md:pt-[66px] flex flex-col md:flex-row">
       {
         !isFilterOpen ? <div className="md:hidden text-white p-4 flex justify-between items-center my-2 ">
-          <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer ' />
+          <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer ' onClick={() => navigate.push(client_routes.profile)} />
           <span className="text-[24px] font-semibold leading-[22.8px]">Results</span>
           <button onClick={filterHandler}>
             <Image src={settingsIcon} alt='down_arrow' width={20} height={20} priority className='text-white pointer-events-none' />

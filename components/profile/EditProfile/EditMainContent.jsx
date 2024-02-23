@@ -2,8 +2,11 @@
 import React, { useEffect } from 'react'
 import SelectBox from './SelectBox'
 import { profile_select_options_appearance, profile_select_options_lifestyle } from '@/app/lib/constants'
-import { aosInit } from '@/app/lib/helpers'
+import { aosInit, client_routes } from '@/app/lib/helpers'
 import UploadPic from './UploadPic'
+import Link from 'next/link'
+import Image from 'next/image'
+import arrow_left from "/public/assets/arrow_left.svg";
 
 const EditMainContent = ({ control, setValue }) => {
 
@@ -13,6 +16,9 @@ const EditMainContent = ({ control, setValue }) => {
 
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
+            <Link href={client_routes.profile} className="hidden absolute z-[1] bg-secondary top-[96px] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px]" data-aos='fade-left'>
+                <Image src={arrow_left} alt="edit" width={30} height={30} className="w-auto h-auto pointer-events-none" />
+            </Link>
             <div className="border-white lg:border-b border-opacity-20 lg:pb-[40px]" data-aos='zoom-in'>
                 <h1 className="text-[24px] font-bold lg:text-[30px]" data-aos='zoom-in'>Public Photos</h1>
                 <div className="mt-[20px] lg:mt-[25px]">

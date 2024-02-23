@@ -34,18 +34,27 @@ const PopOver = ({ children }) => {
         {
             name: "Chat",
             icon: ChatIcon,
+            path: client_routes.chat
         },
         {
             name: "Notifications",
             icon: NotificationIcon,
+            path: ""
+        },
+        {
+            name: "Profile",
+            icon: EditIcon,
+            path: client_routes.profile
         },
         {
             name: "Edit Profile",
             icon: EditIcon,
+            path: client_routes.edit_profile
         },
         {
             name: "Logout",
             icon: LogoutIcon,
+            path: ""
         }
     ]
 
@@ -53,6 +62,15 @@ const PopOver = ({ children }) => {
         window.addEventListener("resize", (() => setShowOptions(false)))
         return window.removeEventListener("resize", (() => setShowOptions(false)))
     }, [])
+
+    const navigateHandler = (nav) => {
+
+        if (nav.path) {
+            navigate.push(nav.path)
+        } else {
+            console.log(nav)
+        }
+    }
 
     return (
         <>
@@ -78,10 +96,11 @@ const PopOver = ({ children }) => {
                         <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
                             <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
                                 {
+
                                     navs.map((nav, inx) => (
-                                        <button key={inx} className="bg-primary hover:border-0 hover:bg-secondary hover:text-white text-white/70 border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" >
+                                        <button key={inx} className={`bg-primary hover:border-0 hover:bg-secondary hover:text-white text-white/70 border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm ${nav.path === path && "bg-secondary border-none text-white/100"}`} onClick={() => navigateHandler(nav)}>
                                             <Image src={nav.icon} alt="" height={14} width={14} priority className="ms-2 pointer-events-none" />
-                                            <div className="text-[14px] font-medium leading-[20px]  ">{nav.name}</div>
+                                            <div className="text-[14px] font-medium leading-[20px]">{nav.name}</div>
                                         </button>
                                     ))
                                 }

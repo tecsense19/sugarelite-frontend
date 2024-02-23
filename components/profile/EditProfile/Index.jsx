@@ -18,7 +18,6 @@ const Index = () => {
                 <SideContent control={control} setValue={setValue} />
                 <EditMainContent control={control} setValue={setValue} />
             </form>
-
         </>
     )
 }

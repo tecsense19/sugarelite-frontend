@@ -2,7 +2,7 @@
 import { Checkbox, ConfigProvider } from "antd"
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import unLockImg from "../../../public/assets/password.svg"
 import lockImg from "../../../public/assets/lock.svg";
@@ -19,6 +19,7 @@ const Login = () => {
 
   const { register, setValue, handleSubmit, control, watch, formState: { isValid } } = useForm()
   const [showPass, setShowPass] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const showPasswordHandler = (handle) => {
     if (handle === "open") {
@@ -31,6 +32,16 @@ const Login = () => {
   const loginHandler = async (data) => {
     const res = await login_action(data)
     console.log(res)
+    if (!res.success) {
+      setIsLoading(false)
+      alert(res.message)
+    }
+  }
+
+  const loadingHandler = () => {
+    if (isValid) {
+      setIsLoading(true)
+    }
   }
 
 
@@ -60,7 +71,7 @@ const Login = () => {
                   <Image src={showPass ? unLockImg : lockImg} width={20} height={20} alt='password ' className='me-[10px] w-[20px] h-[20px]' />
                   <input
                     type={showPass ? "text" : "password"}
-                    {...register('password', { required: true, minLength: 5 })}
+                    {...register('password', { required: true, })}
                     onChange={(e) => setValue("password", e.target.value)}
                     placeholder='Password'
                     className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[70%] outline-none ' autoComplete='new-password' />
@@ -82,8 +93,10 @@ const Login = () => {
                 </div>
                 <span className="underline pb-1 cursor-pointer select-none">Forgotten Password</span>
               </div>
-              <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium" type="submit" onClick={() => console.log(isValid)}>
-                Log in
+              <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center" type="submit" onClick={loadingHandler}>
+                {!isLoading ? "Log in" :
+                  <div className="lds-hourglass"></div>
+                }
               </button>
             </form>
             <div className="mt-[50px] text-center">
