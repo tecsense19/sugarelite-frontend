@@ -12,7 +12,7 @@ import correctIcon from "../../public/assets/correct_icon.svg";
 import sendIcon from "../../public/assets/send_icon.svg";
 import { Collapse, ConfigProvider, notification } from 'antd';
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { newsletter_action } from "@/app/lib/actions";
 
 const Footer = () => {
   const { register, handleSubmit, formState: { isValid } } = useForm()
@@ -53,23 +53,31 @@ const Footer = () => {
     return tempArr;
   }
 
-  const handleNewLetterSubmit = (data) => {
-    console.log(data);
+  const handleNewLetterSubmit = async (data) => {
+    const res = await newsletter_action(data.email)
+    // console.log("res ::", res);
+    if (res.success) {
+      openNotification('topRight', "success", res.message)
+    } else {
+      if (res.error) {
+        openNotification('topRight', "error", res.error)
+      } else {
+        openNotification('topRight', "error", res.message)
+      }
+    }
   }
 
   const handleWrongEmail = () => {
     if (isValid === false) {
       openNotification('topRight', "error", "Invalid Email !")
-    } else {
-      openNotification('topRight', "success", "Submited !")
     }
   }
 
-  const openNotification = (placement, type, text) => {
+  const openNotification = (placement, type, msg, duration = 3) => {
     api[type]({
-      message: text,
+      message: msg,
       placement,
-      duration: 2,
+      duration: duration,
       bottom: 0
     });
   };
