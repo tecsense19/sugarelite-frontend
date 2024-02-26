@@ -12,7 +12,9 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) =>
     const isValid = watch("birthdate")
     const dateFormat = 'DD/MM/YYYY';
 
-
+    const ageController = (current) => {
+        return current && current > dayjs().subtract(1, 'year');
+    }
 
     return (
         <>
@@ -57,8 +59,11 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) =>
                             >
                                 <DatePicker
                                     {...field}
-                                    maxDate={dayjs('09/02/2024', dateFormat)}
+                                    maxDate={dayjs(dayjs().subtract(1, 'year'), dateFormat)}
                                     showNow={false}
+                                    disabledDate={ageController}
+                                    // maxDate={dayjs('2020-06-30', dateFormat)}
+
                                     placeholder="dd/mm/yyyy"
                                     format={dateFormat}
                                     dropdownStyle={{ backgroundColor: '#232323', }}

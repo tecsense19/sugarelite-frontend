@@ -74,7 +74,12 @@ button:disabled {
 }
 
 .ant-picker-cell-disabled {
-  @apply !text-opacity-[25%]
+  @apply !text-opacity-[25%] !bg-none
+}
+
+.ant-picker-header-super-next-btn.ant-picker-header-super-next-btn-disabled,
+.ant-picker-header-next-btn.ant-picker-header-next-btn-disabled {
+  @apply !bg-transparent
 }
 
 .ant-picker-suffix,

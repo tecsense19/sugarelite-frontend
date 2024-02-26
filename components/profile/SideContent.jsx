@@ -36,7 +36,6 @@ const SideContent = ({ control, user }) => {
             obj.name = files[0].name
             obj.photo_url = file
         }
-        // console.log(obj)
         setProfilePic(obj.photo_url)
     }
 
@@ -52,7 +51,7 @@ const SideContent = ({ control, user }) => {
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
                     <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
-                    <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+                    <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
 
                     {/* Edit Profile option starts */}
 
@@ -78,11 +77,13 @@ const SideContent = ({ control, user }) => {
                 </div>
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
-                        <div className='flex items-center relative'>
-                            <span className="text-[30px] font-bold me-[20px] leading-[30px]">{user ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Rajesh, 23"}</span>
+                        <div className='flex items-center'>
+                            <div className="text-[30px] font-bold me-[20px] leading-[30px] relative">{user ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Rajesh, 23"}
+                                <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
+                            </div>
                             <Image src={premium} alt='edit' width={30} height={30} priority />
                             <span className='text-[16px] font-semibold ms-2'>Premium</span>
-                            {/* <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div> */}
+
                         </div>
                         <div className='mt-[11px]'>
                             <span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px] leading-[normal]">LIVING IN</span>
