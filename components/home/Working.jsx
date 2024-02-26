@@ -8,7 +8,7 @@ import heartIcon from "../../public/assets/heart_icon.svg";
 
 const Working = () => {
   return (
-    <div className="mt-[50px] lg:mt-[120px] w-full flex justify-center px-4 sm:px-0">
+    <div className="mt-[50px] mb-[50px] md:mb-[120px] lg:mt-[120px] w-full flex justify-center px-4 sm:px-0">
       <div className="w-full sm:w-9/12 flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center" data-aos="fade-in" data-aos-duration="500">
           <div className="text-[clamp(26px,5vw,60px)] font-extrabold leading-[normal] -tracking-[0.5px] lg:-tracking-[1px] text-center">

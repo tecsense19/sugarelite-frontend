@@ -55,6 +55,11 @@
   /* Width of the scrollbar */
 }
 
+.second-child::-webkit-scrollbar,
+.horizontal-profiles::-webkit-scrollbar {
+  display: none;
+}
+
 /* Track (the area behind the scrollbar) */
 .second-child::-webkit-scrollbar-track {
   @apply bg-white/10 rounded-lg;

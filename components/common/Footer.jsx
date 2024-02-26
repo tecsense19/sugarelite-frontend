@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import logo from "../../public/assets/logo_home_footer.svg";
 import facebookImg from "../../public/assets/facebook_footer_img.svg";
@@ -47,7 +49,7 @@ const Footer = () => {
           {item.features.map((name, index) => {
             return (
               <div key={`${item.title}_${index}`} className="flex items-center justify-start gap-x-3 2xl:gap-x-5">
-                <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100" />
+                <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
                 <div className="text-[clamp(16px,2vw,17px)] font-normal leading-[normal] text-white/70 md:text-white">{name}</div>
               </div>
             )
@@ -90,7 +92,7 @@ const Footer = () => {
 
 
   return (
-    <div className="mt-[50px] md:mt-[120px] w-full flex justify-center items-center bg-black pb-[30px] home-footer-container" data-aos="fade-up">
+    <div className="w-full flex justify-center items-center bg-black pb-[30px] home-footer-container text-white" data-aos="fade-up">
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
         <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 2xl:grid-cols-12 gap-x-[55px]">
           <div className="2xl:col-span-3">
@@ -132,7 +134,7 @@ const Footer = () => {
                     {item.features.map((name, index) => {
                       return (
                         <div key={`${item.title}_${index}`} className="flex items-center justify-start gap-x-3 2xl:gap-x-5">
-                          <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100" />
+                          <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
                           <div className="text-[clamp(16px,2vw,17px)] font-normal leading-[normal] text-white/70 md:text-white">{name}</div>
                         </div>
                       )
