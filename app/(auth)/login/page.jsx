@@ -18,7 +18,7 @@ import { client_notification, client_routes } from "@/app/lib/helpers"
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { useRouter } from "next/navigation"
-import Login_Component from "@/components/login/Login_Component"
+// import Login_Component from "@/components/login/Login_Component"
 
 const Login = () => {
 
