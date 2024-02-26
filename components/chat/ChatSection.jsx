@@ -40,9 +40,9 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
       { message: "I am also good.", from: profiles[0], to: profiles[1], time: formattedTime },
       { message: "I am also good.", from: profiles[0], to: profiles[1], time: formattedTime },
     ])
-    scrollMsgsToBottom()
     setTimeout(() => {
       let container = msgContainerRef.current
+      scrollMsgsToBottom()
       if (container) {
         container.addEventListener("scroll", handleChatScrollBtn)
       }
