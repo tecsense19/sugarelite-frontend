@@ -87,7 +87,7 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles, showMobileChatContent
         <div ref={horizontalProfilesRef} className={`horizontal-profiles flex gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
           {profiles?.map((item, idx) => {
             return (
-              <button key={idx} className="flex items-center justify-center" onClick={() => {
+              <button key={idx} className="flex items-center justify-center scroll-smooth" onClick={() => {
                 setSelectedObj(item);
                 if (window.innerWidth < 768) {
                   setShowMobileChatContent(true);

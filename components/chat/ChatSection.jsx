@@ -73,16 +73,16 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   }
 
   const scrollMsgsToBottom = () => {
-    setTimeout(() => {
-      if (msgContainerRef.current) {
-        const objDiv = msgContainerRef.current;
-        const maxScroll = objDiv.scrollHeight - objDiv.clientHeight;
-        if (objDiv) {
-          objDiv.scrollTop = maxScroll;
-        }
-        setShowScrollToBottom(false);
+    // setTimeout(() => {
+    if (msgContainerRef.current) {
+      const objDiv = msgContainerRef.current;
+      const maxScroll = objDiv.scrollHeight - objDiv.clientHeight;
+      if (objDiv) {
+        objDiv.scrollTop = maxScroll;
       }
-    })
+      setShowScrollToBottom(false);
+    }
+    // })
   }
 
   const closeAll = () => {
@@ -105,7 +105,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
               <ChatSectionHeader setDrawerOpen={setDrawerOpen} selectedObj={selectedObj} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} />
               <div className="h-[calc(100%-60px)] md:h-[calc(100%-101px)] flex flex-col justify-end">
                 <div className="relative w-full h-full overflow-y-hidden p-4 md:py-5 md:px-10 flex flex-col justify-end">
-                  <div ref={msgContainerRef} className="relative w-full overflow-y-auto chat-container" style={{ scrollbarWidth: "none" }}>
+                  <div ref={msgContainerRef} className="relative w-full overflow-y-auto chat-container scroll-smooth" style={{ scrollbarWidth: "none" }}>
                     {messages.map((item, idx) => {
                       return (
                         <div key={idx} className={`flex my-[2px] ${user.id === item.from.id ? "justify-end" : "justify-start"}`}>
