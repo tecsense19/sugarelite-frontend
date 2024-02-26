@@ -26,12 +26,14 @@ const SideContent = ({ params }) => {
 			<div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
 				<div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
 					<Image src={profile_img_5} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
-					<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+					<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
 				</div>
 				<div className="lg:self-start mt-[20px] lg:mt-[30px]">
 					<div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
 						<div className='flex items-center '>
-							<span className="text-[30px] font-bold me-[20px]">{params.id}. Dhaval</span>
+							<div className="text-[30px] font-bold me-[20px] relative">{params.id}. Dhaval
+								<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-[#1DD719] absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
+							</div>
 							<Image src={premium} alt='edit' width={30} height={30} priority />
 							<span className='text-[16px] font-semibold ms-2'>Premium</span>
 						</div>

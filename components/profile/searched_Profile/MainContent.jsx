@@ -2,13 +2,9 @@
 
 import { aosInit } from '@/app/lib/helpers';
 import 'aos/dist/aos.css';
-import Image from 'next/image'
 import React, { useEffect } from 'react'
 import Buttons_Profile from './Buttons_Profile';
 import Profile_Photos from '../commons/Profile_Photos'
-import Profile_Styles from '../commons/Profile_Styles';
-import more_horizontal from "../../../public/assets/more_horizontal.svg"
-import PopOver from '../commons/PopOver';
 import Divider from '../commons/Divider';
 
 const MainContent = ({ params }) => {
@@ -87,14 +83,39 @@ const MainContent = ({ params }) => {
                     <Buttons_Profile />
                 }
             </div>
-
             <Profile_Photos title={"Public Photos"} list={''} />
             <Divider />
             <Profile_Photos title={"Private Photos"} list={''} />
             <Divider />
-            <Profile_Styles title={"Appearance"} list={profile.appearance} />
+
+            <div className="mb-[40px]">
+                <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in' data-aos-anchor-placement="bottom">Appearance</h1>
+                <div className="mt-[25px] lg:ps-[15px] flex justify-between sm:justify-normal sm:gap-x-[30px] xl:gap-x-[70px] gap-y-5 sm:gap-y-[46px] w-full max-w-[1050px] flex-wrap ">
+                    {
+                        profile.appearance.map((style, inx) => {
+                            return <div key={inx} className=' min-w-[150px] ' data-aos='zoom-in' data-aos-anchor-placement="bottom" >
+                                <p className='font-medium  text-[13px] md:text-[16px] text-white text-opacity-50 uppercase mb-[7px]'>{style.type}</p>
+                                <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value}</p>
+                            </div>
+                        })
+                    }
+                </div>
+            </div>
             <Divider />
-            <Profile_Styles title={"Lifestyle"} list={profile.lifestyle} />
+
+            <div className="mb-[40px]">
+                <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in' data-aos-anchor-placement="bottom">Lifestyle</h1>
+                <div className="mt-[25px] lg:ps-[15px] flex justify-between sm:justify-normal sm:gap-x-[30px] xl:gap-x-[70px] gap-y-5 sm:gap-y-[46px] w-full max-w-[1050px] flex-wrap ">
+                    {
+                        profile.lifestyle.map((style, inx) => {
+                            return <div key={inx} className=' min-w-[150px] ' data-aos='zoom-in' data-aos-anchor-placement="bottom" >
+                                <p className='font-medium  text-[13px] md:text-[16px] text-white text-opacity-50 uppercase mb-[7px]'>{style.type}</p>
+                                <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value}</p>
+                            </div>
+                        })
+                    }
+                </div>
+            </div>
 
         </div>
     )
