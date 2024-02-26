@@ -5,7 +5,7 @@ import Image from 'next/image';
 import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
 import closeIcon from "../../public/assets/cross_icon.svg";
 import starIcon from "../../public/assets/star_icon.svg";
-import heartIcon from "../../public/assets/heart_swipe_icon.svg";
+import heartIcon from "/public/assets/heart_swipe_icon.svg";
 
 const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, activeIndex, currentPhotoNumber }) => {
   const cardRef = useRef(null);
@@ -139,7 +139,7 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
                     <Image src={starIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button>
                   <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-secondary rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onHeartClick) }}>
-                    <Image src={heartIcon} alt="" height={24.2} width={22} priority className="pointer-events-none" />
+                    <Image src={heartIcon} alt="" height={24} width={22} priority className="pointer-events-none h-[24px] w-[22px] aspect-auto" />
                   </button>
                 </div>
               </div>

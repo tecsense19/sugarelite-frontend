@@ -22,7 +22,7 @@ const MainHeader = () => {
         <div className="flex justify-between items-center w-full">
           <div className={`flex items-center ${pathname === client_routes.search ? "ms-[110px]" : "ms-[32px]"}`}>
             <button onClick={() => router.push(client_routes.home)}>
-              <Image height={35} width={177} src={logo} alt="" className="pointer-events-none aspect-auto" priority />
+              <Image height={35} width={177} src={logo} alt="" className="pointer-events-none h-[35px] w-[177px]" priority />
             </button>
           </div>
           <div className="flex items-center me-[72px]">
