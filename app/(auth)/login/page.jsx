@@ -18,6 +18,7 @@ import { client_notification, client_routes } from "@/app/lib/helpers"
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { useRouter } from "next/navigation"
+import Login_Component from "@/components/login/Login_Component"
 
 const Login = () => {
 
@@ -107,6 +108,7 @@ const Login = () => {
                 </div>
                 <span className="underline pb-1 cursor-pointer select-none">Forgotten Password</span>
               </div>
+              {/* <Login_Component register={register} /> */}
               <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center" type="submit" onClick={loadingHandler}>
                 {!isLoading ? "Log in" :
                   <div className="loader"></div>
