@@ -82,7 +82,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
         }
         setShowScrollToBottom(false);
       }
-    }, 200)
+    })
   }
 
   const closeAll = () => {
