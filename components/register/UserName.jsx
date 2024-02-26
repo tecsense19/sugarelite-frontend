@@ -21,15 +21,16 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
     const handleUsernameSubmit = async () => {
         let tempEmail = watch("email");
         const res = await checkuser_action(tempEmail);
+        console.log(res);
         if (res.success === false) {
             setAlertMessage(res.message);
             setShowUserAlreadyExistAlert(true);
             setTimeout(() => {
                 setShowUserAlreadyExistAlert(false);
             }, 3000)
+        } else {
+            nextStepHandler()
         }
-        console.log(res);
-        // nextStepHandler()
     }
 
     return (
