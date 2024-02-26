@@ -11,7 +11,7 @@ import upArrowIcon from "../../public/assets/up_arrow.svg";
 import UniqueProfile from "./UniqueProfile"
 import HomeCounter from "./HomeCounter"
 import Working from "./Working"
-import Footer from "./Footer"
+import Footer from "../common/Footer"
 
 const Home = () => {
   const { state } = useStore();
