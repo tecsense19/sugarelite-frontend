@@ -147,6 +147,7 @@ const SwipePage = () => {
       </div>
       <div className="h-[10%] md:flex items-start justify-center gap-x-5 hidden" data-aos="fade-up" data-aos-anchor="#anchor" data-aos-duration="800">
         {/* <button className="bg-white/80 h-10 px-[23px] text-primary font-semibold text-[20px] leading-[22px] rounded-[5px]"> Hide </button> */}
+
         <div className="font-semibold text-[20px] leading-[22px] flex items-center gap-x-[14px]">
           <div className="h-10 w-10 rounded-[5px] flex justify-center items-center border-[1.5px] border-white/80">
             <Image src={backIcon} alt="" width={24} height={24} className='pointer-events-none' priority />
