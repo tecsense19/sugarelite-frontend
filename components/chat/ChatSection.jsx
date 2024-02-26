@@ -43,8 +43,10 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
     scrollMsgsToBottom()
     setTimeout(() => {
       let container = msgContainerRef.current
-      container.addEventListener("scroll", handleChatScrollBtn)
-    })
+      if (container) {
+        container.addEventListener("scroll", handleChatScrollBtn)
+      }
+    }, 200)
     window.addEventListener("resize", closeAll)
     return () => {
       window.removeEventListener("resize", closeAll)
@@ -60,11 +62,13 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
 
   const handleChatScrollBtn = () => {
     const objDiv = msgContainerRef.current;
-    const maxScroll = objDiv.scrollHeight - objDiv.clientHeight;
-    if (objDiv.scrollTop < (maxScroll - 100)) {
-      setShowScrollToBottom(true)
-    } else {
-      setShowScrollToBottom(false)
+    if (objDiv) {
+      const maxScroll = objDiv.scrollHeight - objDiv.clientHeight;
+      if (objDiv.scrollTop < (maxScroll - 100)) {
+        setShowScrollToBottom(true)
+      } else {
+        setShowScrollToBottom(false)
+      }
     }
   }
 
@@ -78,7 +82,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
         }
         setShowScrollToBottom(false);
       }
-    })
+    }, 200)
   }
 
   const closeAll = () => {
