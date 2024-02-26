@@ -62,7 +62,7 @@ const SideContent = ({ control, user }) => {
                                 name='profile'
                                 control={control}
                                 render={({ field }) => <>
-                                    <label htmlFor="profile" className='flex flex-col justify-center items-center h-full cursor-pointer'>
+                                    <label htmlFor="profile" className='flex flex-col justify-center items-center h-full  rounded-full cursor-pointer'>
                                         <Image src={edit} alt='edit' width={36} height={36} priority />
                                         <span className='font-medium text-[16px]'>Edit Profile</span>
                                     </label>
