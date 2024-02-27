@@ -12,6 +12,7 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
 
     const [showUserAlreadyExistAlert, setShowUserAlreadyExistAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState(false);
+    let handleSubmitCalls = true
 
     const isValid = {
         username: watch("username"),
@@ -19,17 +20,21 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
     }
 
     const handleUsernameSubmit = async () => {
-        let tempEmail = watch("email");
-        const res = await checkuser_action(tempEmail);
-        console.log(res);
-        if (res.success === false) {
-            setAlertMessage(res.message);
-            setShowUserAlreadyExistAlert(true);
-            setTimeout(() => {
-                setShowUserAlreadyExistAlert(false);
-            }, 3000)
-        } else {
-            nextStepHandler()
+        if (handleSubmitCalls) {
+            handleSubmitCalls = false
+            let tempEmail = watch("email");
+            const res = await checkuser_action(tempEmail);
+            console.log(res);
+            if (res.success === false) {
+                setAlertMessage(res.message);
+                setShowUserAlreadyExistAlert(true);
+                setTimeout(() => {
+                    setShowUserAlreadyExistAlert(false);
+                }, 3000)
+            } else {
+                handleSubmitCalls = true
+                nextStepHandler()
+            }
         }
     }
 
