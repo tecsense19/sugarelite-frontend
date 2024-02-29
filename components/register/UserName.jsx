@@ -8,10 +8,12 @@ import chevron_right from "../../public/assets/chevron_right.svg"
 import { checkuser_action } from '@/app/lib/actions'
 import { Alert } from 'antd'
 
-const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue }) => {
+const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) => {
 
     const [showUserAlreadyExistAlert, setShowUserAlreadyExistAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+
     let handleSubmitCalls = true
 
     const isValid = {
@@ -22,18 +24,17 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
     const handleUsernameSubmit = async () => {
         if (handleSubmitCalls) {
             handleSubmitCalls = false
+            setShowUserAlreadyExistAlert(false)
             let tempEmail = watch("email");
             const res = await checkuser_action(tempEmail);
-            console.log(res);
             if (res.success === false) {
+                setIsLoading(false)
                 setAlertMessage(res.message);
                 setShowUserAlreadyExistAlert(true);
-                setTimeout(() => {
-                    setShowUserAlreadyExistAlert(false);
-                }, 3000)
             } else {
                 handleSubmitCalls = true
-                nextStepHandler()
+                setIsLoading(false)
+                setNextStep(3)
             }
         }
     }
@@ -65,10 +66,16 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                     <input
                         type="email"
                         {...register('email', { required: "Email needed" })}
-                        onChange={(e) => setValue("email", e.target.value)}
+                        onChange={(e) => { setShowUserAlreadyExistAlert(false); setValue("email", e.target.value) }}
                         placeholder='E-mail'
                         className='w-full placeholder:text-[rgba(255,255,255,0.5)]  bg-transparent text-[16px] text-white text-opacity-[70%] font-medium outline-none'
-                        autoComplete='off' />
+                        autoComplete='off'
+                    />
+                    {
+                        isLoading && <div className='me-3'>
+                            <span className='loader'></span>
+                        </div>
+                    }
                 </div>
                 {showUserAlreadyExistAlert
                     ? <Alert message={alertMessage} type="error" showIcon className="!mt-0 !bg-transparent !text-red-500 text-[16px] !border-0 !rounded-[5px]" />
@@ -83,7 +90,7 @@ const UserName = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                     </div>
                 </button>
                 <button className="w-full h-[42px] bg-secondary rounded relative text-white text-opacity-[70%]"
-                    onClick={handleUsernameSubmit}
+                    onClick={() => { setIsLoading(true); handleUsernameSubmit() }}
                     type="button"
                     disabled={!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase()
                         .match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)}>

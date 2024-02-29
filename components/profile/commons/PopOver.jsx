@@ -54,7 +54,7 @@ const PopOver = ({ children }) => {
         {
             name: "Logout",
             icon: LogoutIcon,
-            path: ""
+            path: client_routes.login
         }
     ]
 

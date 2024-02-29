@@ -65,3 +65,16 @@ export const checkuser_action = async (email) => {
     const data = await res.json()
     return data
 }
+
+
+export const forgot_password_action = async (form) => {
+    const res = await fetch(server_routes.forgotPassword, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}

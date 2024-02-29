@@ -107,7 +107,7 @@ const Register = () => {
 									nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
 								}
 								{
-									nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} />
 								}
 								{
 									nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
@@ -157,7 +157,7 @@ const Register = () => {
 									nextStep === 1 && <SugarType setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} />
 								}
 								{
-									nextStep === 2 && <UserName setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+									nextStep === 2 && <UserName setValue={setValue} register={register} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} />
 								}
 								{
 									nextStep === 3 && <Password setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />

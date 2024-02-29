@@ -22,7 +22,8 @@ export const server_routes = {
   register: base_path + "/profile/register",
   login: base_path + "/login",
   newsLetter: base_path + "/newsletter",
-  checkUser: base_path + "/checkUser"
+  checkUser: base_path + "/checkUser",
+  forgotPassword: base_path + "/forgot/password"
 }
 
 export const aosInit = () => {
