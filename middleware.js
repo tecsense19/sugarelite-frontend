@@ -3,7 +3,8 @@ import { client_routes } from "./app/lib/helpers"
 
 export const middleware = (request) => {
 
-    const url = request.nextUrl.origin === "http://localhost:3000" ? "http://localhost:3000" : "https://sugarelite.tec-sense.co.in"
+    // const url = request.nextUrl.origin === "http://localhost:3000" ? "http://localhost:3000" : "https://sugarelite.tec-sense.co.in"
+    const url = "https://sugarelite.tec-sense.co.in"
 
     const path = request.nextUrl.pathname
     const user = request.cookies.get("user")?.value
