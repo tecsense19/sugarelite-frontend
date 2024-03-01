@@ -11,6 +11,8 @@ import React, { useEffect, useState } from 'react'
 import "../../chat/ChatContent.css"
 import { usePathname, useRouter } from 'next/navigation'
 import { client_routes } from '@/app/lib/helpers'
+import { destroyCookie } from "nookies"
+import { logout_user } from '@/app/lib/actions'
 
 const PopOver = ({ children }) => {
     const [showOptions, setShowOptions] = useState(false);
@@ -54,7 +56,7 @@ const PopOver = ({ children }) => {
         {
             name: "Logout",
             icon: LogoutIcon,
-            path: client_routes.login
+            path: null
         }
     ]
 
@@ -64,11 +66,13 @@ const PopOver = ({ children }) => {
     }, [])
 
     const navigateHandler = (nav) => {
-
         if (nav.path) {
             navigate.push(nav.path)
         } else {
-            console.log(nav)
+            if (nav.name === "Logout") {
+                logout_user()
+                navigate.push(client_routes.home)
+            }
         }
     }
 

@@ -78,3 +78,8 @@ export const forgot_password_action = async (form) => {
     const data = await res.json()
     return data
 }
+
+
+export const logout_user = () => {
+    cookies().delete("user")
+}
