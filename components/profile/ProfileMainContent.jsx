@@ -8,71 +8,87 @@ import editImg from "/public/assets/edit.svg";
 import Divider from './commons/Divider';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
-const ProfileMainContent = () => {
+const ProfileMainContent = ({ user }) => {
 
-    const navigate = useRouter()
+    // const profile = {
+    //     appearance: [
+    //         {
+    //             type: "sex",
+    //             value: user.sex ? user.sex : "ask me",
+    //         },
+    //         {
+    //             type: "ethnicity",
+    //             value: user.ethnicity ? user.ethnicity : "ask me"
+    //         },
+    //         {
+    //             type: "body structure",
+    //             value: user.body_structure ? user.body_structure : "ask me"
+    //         },
+    //         {
+    //             type: "piercings",
+    //             value: user.piercings ? user.piercings : "ask me"
+    //         },
+    //         {
+    //             type: "height (cm.)",
+    //             value: user.height ? user.height : "ask me"
+    //         },
+    //         {
+    //             type: "civil status",
+    //             value: user.civil_status ? user.civil_status : "ask me"
+    //         },
+    //         {
+    //             type: "hair color",
+    //             value: user.hair_color ? user.hair_color : "ask me"
+    //         },
+    //         {
+    //             type: "tattoos",
+    //             value: user.tattoos ? user.tattoos : "ask me"
+    //         },
+    //         {
+    //             type: "weight (kg.)",
+    //             value: user.weight ? user.weight : "ask me"
+    //         }
+    //     ],
+    //     lifestyle: [
+    //         {
+    //             type: "education",
+    //             value: user.education ? user.education : "ask me"
+    //         },
+    //         {
+    //             type: "smoking habits",
+    //             value: user.smoking ? user.smoking : "ask me"
+    //         },
+    //         {
+    //             type: "employment",
+    //             value: user.employment ? user.employment : "ask me"
+    //         },
+    //         {
+    //             type: "drinking habits",
+    //             value: user.drinks ? user.drinks : "ask me"
+    //         }
+    //     ]
+    // }
 
     const profile = {
-        photos: [""],
         appearance: [
-            {
-                type: "sex",
-                value: "Male",
-            },
-            {
-                type: "ethnicity",
-                value: "ask me"
-            },
-            {
-                type: "body structure",
-                value: "ask me"
-            },
-            {
-                type: "piercings",
-                value: "ask me"
-            },
-            {
-                value: 'ask me',
-                type: "height (cm.)"
-            },
-            {
-                type: "civil status",
-                value: "ask me"
-            },
-            {
-                type: "hair color",
-                value: "ask me"
-            },
-            {
-                type: "tattos",
-                value: "ask me"
-            },
-            {
-                value: "ask me",
-                type: "weight (kg.)"
-            }
+            { type: "sex", value: user?.sex || "ask me" },
+            { type: "ethnicity", value: user?.ethnicity || "ask me" },
+            { type: "body structure", value: user?.body_structure || "ask me" },
+            { type: "piercings", value: user?.piercings || "ask me" },
+            { type: "height (cm.)", value: user?.height || "ask me" },
+            { type: "civil status", value: user?.civil_status || "ask me" },
+            { type: "hair color", value: user?.hair_color || "ask me" },
+            { type: "tattoos", value: user?.tattoos || "ask me" },
+            { type: "weight (kg.)", value: user?.weight || "ask me" }
         ],
         lifestyle: [
-            {
-                type: "education",
-                value: "ask me",
-            },
-            {
-                type: "smoking habits",
-                value: "ask me"
-            },
-            {
-                type: "employment",
-                value: "ask me"
-            },
-            {
-                type: "drinking habits",
-                value: "ask me"
-            }
+            { type: "education", value: user?.education || "ask me" },
+            { type: "smoking habits", value: user?.smoking || "ask me" },
+            { type: "employment", value: user?.employment || "ask me" },
+            { type: "drinking habits", value: user?.drinks || "ask me" }
         ]
-    }
+    };
 
     useEffect(() => {
         aosInit()
@@ -84,9 +100,9 @@ const ProfileMainContent = () => {
             <Link href={client_routes.edit_profile} className="hidden absolute bg-secondary top-[96px] z-[1] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px]" data-aos='zoom-in'>
                 <Image src={editImg} alt="edit" width={30} height={30} priority />
             </Link>
-            <Profile_Photos title={"Public Photos"} />
+            <Profile_Photos title={"Public Photos"} list={user?.public_images} />
             <Divider />
-            <Profile_Photos title={"Private Photos"} />
+            <Profile_Photos title={"Private Photos"} list={user?.total_private_images} />
             <Divider />
             <Profile_Styles title={"Appearance"} list={profile.appearance} />
             <Divider />

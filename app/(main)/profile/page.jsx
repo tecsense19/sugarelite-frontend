@@ -11,7 +11,7 @@ const Profile = () => {
     <>
       <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full">
         <SideContent user={user} />
-        <ProfileMainContent />
+        <ProfileMainContent user={user} />
       </main>
     </>
   )

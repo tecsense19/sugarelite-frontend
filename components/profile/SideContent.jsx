@@ -16,7 +16,6 @@ import { client_routes } from '@/app/lib/helpers'
 const SideContent = ({ control, user }) => {
 
     const path = usePathname()
-
     const [profilPic, setProfilePic] = useState(profile_person)
 
     const getBase64 = (file) =>
@@ -39,6 +38,19 @@ const SideContent = ({ control, user }) => {
         setProfilePic(obj.photo_url)
     }
 
+    const calculateAge = (dob) => {
+        const today = new Date();
+        const birthDate = new Date(dob);
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        // Adjust age if birthday hasn't occurred yet this year
+        if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    };
+
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
@@ -51,7 +63,10 @@ const SideContent = ({ control, user }) => {
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
                     <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
-                    <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+                    {
+                        user && user?.online &&
+                        <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+                    }
 
                     {/* Edit Profile option starts */}
 
@@ -78,16 +93,24 @@ const SideContent = ({ control, user }) => {
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
                         <div className='flex items-center'>
-                            <div className="text-[30px] font-bold me-[20px] leading-[30px] relative">{user ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Rajesh, 23"}
-                                <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
+                            <div className="text-[30px] font-bold me-[20px] leading-[30px] relative">
+                                {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + calculateAge(user.birthdate)}
+                                {
+                                    user && user?.online &&
+                                    <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
+                                }
                             </div>
-                            <Image src={premium} alt='edit' width={30} height={30} priority />
-                            <span className='text-[16px] font-semibold ms-2'>Premium</span>
+                            {user && user?.premium &&
+                                <>
+                                    <Image src={premium} alt='edit' width={30} height={30} priority />
+                                    <span className='text-[16px] font-semibold ms-2'>Premium</span>
+                                </>
+                            }
 
                         </div>
                         <div className='mt-[11px]'>
-                            <span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px] leading-[normal]">LIVING IN</span>
-                            <span className="text-[16px] font-semibold text-opacity-80 text-white mt-[11px]">Ask me, Del Valle</span>
+                            <span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px] leading-[normal] uppercase">{user && user?.country},</span>
+                            <span className="text-[16px] font-semibold text-opacity-80 text-white mt-[11px]">{user && user?.region}</span>
                         </div>
                     </div>
                 </div>
