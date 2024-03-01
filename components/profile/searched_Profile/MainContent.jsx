@@ -1,11 +1,11 @@
 "use client"
 
-import { aosInit } from '@/app/lib/helpers';
 import 'aos/dist/aos.css';
 import React, { useEffect } from 'react'
 import Buttons_Profile from './Buttons_Profile';
 import Profile_Photos from '../commons/Profile_Photos'
 import Divider from '../commons/Divider';
+import Aos from 'aos';
 
 const MainContent = ({ params }) => {
 
@@ -70,7 +70,7 @@ const MainContent = ({ params }) => {
     }
 
     useEffect(() => {
-        aosInit()
+        Aos.init()
         window.scrollTo({ top: 0, behavior: "smooth" })
     }, [])
 

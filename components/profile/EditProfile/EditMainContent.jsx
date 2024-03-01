@@ -2,16 +2,17 @@
 import React, { useEffect } from 'react'
 import SelectBox from './SelectBox'
 import { profile_select_options_appearance, profile_select_options_lifestyle } from '@/app/lib/constants'
-import { aosInit, client_routes } from '@/app/lib/helpers'
+import { client_routes } from '@/app/lib/helpers'
 import UploadPic from './UploadPic'
 import Link from 'next/link'
 import Image from 'next/image'
 import arrow_left from "/public/assets/arrow_left.svg";
+import Aos from 'aos'
 
 const EditMainContent = ({ control, setValue }) => {
 
     useEffect(() => {
-        aosInit()
+        Aos.init()
     }, [])
 
     return (

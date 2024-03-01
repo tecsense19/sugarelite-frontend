@@ -1,4 +1,3 @@
-import AOS from 'aos';
 
 export const client_routes = {
   home: "/",
@@ -26,9 +25,6 @@ export const server_routes = {
   forgotPassword: base_path + "/forgot/password"
 }
 
-export const aosInit = () => {
-  AOS.init()
-}
 
 export const client_notification = (api, placement, type, msg, duration) => {
   api[type]({

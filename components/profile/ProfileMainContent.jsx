@@ -1,5 +1,5 @@
 "use client"
-import { aosInit, client_routes } from '@/app/lib/helpers'
+import { client_routes } from '@/app/lib/helpers'
 import 'aos/dist/aos.css';
 import React, { useEffect } from 'react'
 import Profile_Photos from './commons/Profile_Photos';
@@ -8,6 +8,7 @@ import editImg from "/public/assets/edit.svg";
 import Divider from './commons/Divider';
 import Link from 'next/link';
 import Image from 'next/image';
+import AOS from 'aos';
 
 const ProfileMainContent = ({ user }) => {
 
@@ -91,7 +92,7 @@ const ProfileMainContent = ({ user }) => {
     };
 
     useEffect(() => {
-        aosInit()
+        AOS.init()
         window.scrollTo({ top: 0, behavior: "smooth" })
     }, [])
 
