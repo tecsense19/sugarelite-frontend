@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
+import Img1 from "../../public/assets/profile_img_1.png";
 import premium from "/public/assets/premium.svg"
 import starIcon from "../../public/assets/chat_option_star_icon.svg";
 import reportIcon from "../../public/assets/chat_report_icon.svg";
@@ -47,21 +48,21 @@ const ChatProfile = ({ selectedObj, setShowMobileProfile }) => {
 
       <div className="w-full flex justify-start items-center flex-col h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="flex justify-center items-center relative">
-          <Image src={selectedObj.img_url.src} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority />
-          <Image src={selectedObj.img_url.src} width={140} height={140} alt="person" className={`md:hidden rounded-full select-none pointer-events-none`} priority />
+          <Image src={Img1} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority />
+          <Image src={Img1} width={140} height={140} alt="person" className={`md:hidden rounded-full select-none pointer-events-none`} priority />
         </div>
         <div data-aos='zoom-in'>
           <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${selectedObj.is_premium ? "md:items-start" : "md:items-center"}`}>
             <div className='flex items-center'>
-              <span className="text-[24px] md:text-[26px] font-bold leading-[30px]">{selectedObj.name}, {selectedObj.age}</span>
+              <span className="text-[24px] md:text-[26px] font-bold leading-[30px]">{selectedObj.username}, {selectedObj.age}</span>
               {selectedObj.is_premium && <>
                 <Image src={premium} alt='premium' width={30} height={30} priority className='pointer-events-none ms-3 md:ms-4' />
                 <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>Premium</span>
               </>}
             </div>
             <div className='mt-[11px] flex items-center'>
-              <span className="text-[18px] font-semibold text-white/80 me-[14px] leading-[normal]">LIVING IN</span>
-              <span className="text-[16px] font-semibold text-white/80 leading-[normal]">Ask me, Del Valle</span>
+              <span className="text-[18px] font-semibold text-white/80 me-[14px] leading-[normal]">{selectedObj.country},</span>
+              <span className="text-[16px] font-semibold text-white/80 leading-[normal]">{selectedObj.region}</span>
             </div>
           </div>
         </div>

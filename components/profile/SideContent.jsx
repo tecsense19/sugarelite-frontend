@@ -43,7 +43,6 @@ const SideContent = ({ control, user }) => {
         const birthDate = new Date(dob);
         let age = today.getFullYear() - birthDate.getFullYear();
 
-        // Adjust age if birthday hasn't occurred yet this year
         if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
             age--;
         }
@@ -94,7 +93,7 @@ const SideContent = ({ control, user }) => {
                     <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
                         <div className='flex items-center'>
                             <div className="text-[30px] font-bold me-[20px] leading-[30px] relative">
-                                {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + calculateAge(user.birthdate)}
+                                {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
                                 {
                                     user && user?.online &&
                                     <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>

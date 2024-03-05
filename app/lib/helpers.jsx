@@ -22,7 +22,10 @@ export const server_routes = {
   login: base_path + "/login",
   newsLetter: base_path + "/newsletter",
   checkUser: base_path + "/checkUser",
-  forgotPassword: base_path + "/forgot/password"
+  forgotPassword: base_path + "/forgot/password",
+  allProfiles: base_path + "/profile/list",
+  chatList: base_path + "/chat/list",
+  sendMessage: base_path + "/chat/send",
 }
 
 

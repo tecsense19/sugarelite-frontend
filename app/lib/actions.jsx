@@ -83,3 +83,27 @@ export const forgot_password_action = async (form) => {
 export const logout_user = () => {
     cookies().delete("user")
 }
+
+export const all_profiles_action = async () => {
+    const res = await fetch(server_routes.allProfiles)
+    const data = await res.json()
+    return data
+}
+
+export const chat_list_action = async () => {
+    const res = await fetch(server_routes.chatList)
+    const data = await res.json()
+    return data
+}
+
+export const send_message_action = async (form) => {
+    const res = await fetch(server_routes.sendMessage, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}

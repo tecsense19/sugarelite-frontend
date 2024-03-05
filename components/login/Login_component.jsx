@@ -18,8 +18,11 @@ import { client_notification, client_routes } from "@/app/lib/helpers"
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { useRouter } from "next/navigation"
+import { useStore } from "@/store/store"
 
 const Login = ({ setIsForgotOpen }) => {
+
+    const { dispatch } = useStore()
 
     const { register, setValue, handleSubmit, control, watch, formState: { isValid } } = useForm()
     const [showPass, setShowPass] = useState(false)
@@ -45,6 +48,7 @@ const Login = ({ setIsForgotOpen }) => {
             return;
         }
         setIsLoading(false)
+        dispatch({ type: "Current_User", payload: res.data })
         client_notification(api, "topRight", "success", res.message, 2)
         const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
         setCookie(null, "user", token, { maxAge: 3600, secure: true, })
@@ -108,7 +112,7 @@ const Login = ({ setIsForgotOpen }) => {
                                 </div>
                                 <span className="underline pb-1 cursor-pointer select-none" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
                             </div>
-                            <button className="rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center" type="submit" onClick={loadingHandler}>
+                            <button className={`rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center ${isLoading && "pointer-events-none"}`} type="submit" onClick={loadingHandler}>
                                 {!isLoading ? "Log in" :
                                     <div className="loader"></div>
                                 }

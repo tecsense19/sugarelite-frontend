@@ -1,5 +1,7 @@
 "use client"
 import React, { createContext, useContext, useReducer } from 'react';
+import { parseCookies } from 'nookies';
+import CryptoJS from "crypto-js"
 
 const initialState = {
   isOpenMobileNavbar: false,
@@ -27,21 +29,40 @@ const filterReducer = (state, action) => {
   }
 }
 
+const currentUserReducer = (state, action) => {
+  switch (action.type) {
+    case 'Current_User':
+      return { ...state, user: action.payload };
+    default:
+      return state;
+  }
+}
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState }, action) => ({
   firstState: reducer(firstState, action),
-  filterState: filterReducer(filterState, action)
+  filterState: filterReducer(filterState, action),
+  userState: currentUserReducer(userState, action)
 });
 
 
 export const StoreProvider = ({ children }) => {
-  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  const token = parseCookies("user")?.user
+  let user;
+
+  if (token) {
+    const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
+    user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  }
+
   const [state, dispatch] = useReducer(rootReducer, {
     firstState: initialState,
     filterState: {
       isFilterOpen: false,
-    }
+    },
+    userState: user ? user : null
   });
 
   return (

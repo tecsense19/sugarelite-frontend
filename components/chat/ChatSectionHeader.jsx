@@ -1,6 +1,7 @@
 import { ConfigProvider, Popover } from "antd";
 import { useState } from "react";
 import Image from "next/image";
+import Img1 from "/public/assets/profile_img_1.png";
 import starIcon from "../../public/assets/chat_option_star_icon.svg";
 import reportIcon from "../../public/assets/chat_report_icon.svg";
 import blockIcon from "../../public/assets/chat_block_icon.svg";
@@ -27,10 +28,10 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
         </button>
         <div className="flex items-center">
           <button className="flex items-center 2xl:pointer-events-none" onClick={onProfileClick}>
-            <Image src={selectedObj.img_url.src} alt="" height={60} width={60} priority className="hidden md:flex pointer-events-none rounded-full" />
-            <Image src={selectedObj.img_url.src} alt="" height={40} width={40} priority className="md:hidden pointer-events-none rounded-full" />
+            <Image src={Img1} alt="" height={60} width={60} priority className="hidden md:flex pointer-events-none rounded-full" />
+            <Image src={Img1} alt="" height={40} width={40} priority className="md:hidden pointer-events-none rounded-full" />
             <div className="flex flex-col md:flex-row">
-              <div className="text-[18px] md:text-[22px] font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">{selectedObj.name}</div>
+              <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">{selectedObj.username}</div>
               <div className="mt-2 md:mt-0">
                 {selectedObj.online
                   ? <div className="ms-[10px] flex items-center">
@@ -38,7 +39,7 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
                     <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">Active</div>
                   </div>
                   : <>
-                    {selectedObj.last_activity === "near"
+                    {selectedObj.last_activity_at === "near"
                       ? <div className="ms-[10px] flex items-center">
                         <div className="h-[9px] w-[9px] bg-[#FEBF0F] rounded-full" />
                         <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">5 mins ago</div>

@@ -40,10 +40,11 @@ const tempProfiles = [
   { id: 14, public_images: [Img14, Img4], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
 ]
 
-const SwipePage = () => {
+const SwipePage = ({ allUsers, currentUser }) => {
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [profiles, setProfiles] = useState(tempProfiles)
+  const [profiles, setProfiles] = useState(allUsers)
+  // const [profiles, setProfiles] = useState(tempProfiles)
 
   useEffect(() => {
     setActiveIndex(profiles.length - 1)
@@ -100,8 +101,10 @@ const SwipePage = () => {
   }
 
   const handleResetProfiles = () => {
-    setProfiles(tempProfiles)
-    setActiveIndex(tempProfiles.length - 1)
+    setProfiles(allUsers)
+    setActiveIndex(allUsers.length - 1)
+    // setProfiles(tempProfiles)
+    // setActiveIndex(tempProfiles.length - 1)
   }
 
   return (
@@ -122,13 +125,23 @@ const SwipePage = () => {
         <div className='relative items-center h-full w-full flex justify-center'>
           {profiles.length
             ? <div className="relative max-w-[300px] max-h-[500px] sm:max-w-[330px] sm:max-h-[550px] h-[550px] w-[330px] flex items-start">
-              {profiles?.map((profile, idx) => {
+              {/* {profiles?.map((profile, idx) => {
                 return (
                   <React.Fragment key={idx}>
                     <SwipeCard profile={profile} profiles={profiles} i={idx} onSwipe={handleSwipe} onLeftClick={onLeftClick} onRightClick={onRightClick} activeIndex={activeIndex} currentPhotoNumber={currentPhotoNumber} />
                   </React.Fragment>
                 )
-              })}
+              })} */}
+              {
+                profiles.map((profile, idx) => {
+                  // console.log(profile)
+                  return (
+                    <React.Fragment key={idx}>
+                      <SwipeCard profile={profile} i={idx} onSwipe={handleSwipe} onLeftClick={onLeftClick} onRightClick={onRightClick} activeIndex={activeIndex} currentPhotoNumber={currentPhotoNumber} />
+                    </React.Fragment>
+                  )
+                })
+              }
             </div>
             : <div className="flex flex-col items-center">
               <div className="text-white text-[18px] font-semibold">No profiles available !</div>

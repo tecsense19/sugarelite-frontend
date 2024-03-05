@@ -17,24 +17,25 @@ import chatArrowRight from "../../public/assets/chat_arrow_right.png";
 import arrowLeft from "../../public/assets/arrow_left.svg";
 import ChatListItems from "./ChatListItems";
 
-const ChatList = ({ setSelectedObj, setProfiles, profiles, showMobileChatContent, setShowMobileChatContent }) => {
+const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobileChatContent, messages }) => {
+
   const horizontalProfilesRef = useRef(null);
   const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
   const [showProfileScrollLeftBtn, setShowProfileScrollLeftBtn] = useState(false)
   const [showProfileScrollRightBtn, setShowProfileScrollRightBtn] = useState(false)
 
   useEffect(() => {
-    setProfiles([
-      { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?", is_premium: true, age: 21 },
-      { id: 2, img_url: Img2, name: "Belinda", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 2, last_msg: "How are you john?", is_premium: false, age: 23 },
-      { id: 3, img_url: Img3, name: "Jennifer", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 4, last_msg: "Ok, by see you", is_premium: true, age: 26 },
-      { id: 4, img_url: Img4, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: true, age: 24 },
-      { id: 5, img_url: Img5, name: "Madeline", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "How are you ?", is_premium: false, age: 27 },
-      { id: 6, img_url: Img6, name: "Reagan", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here", is_premium: false, age: 29 },
-      { id: 7, img_url: Img7, name: "Catherine", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here", is_premium: false, age: 21 },
-      { id: 8, img_url: Img8, name: "Priscilla", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: false, age: 22 },
-      { id: 9, img_url: Img9, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: false, age: 26 }
-    ])
+    // setProfiles([
+    //   { id: 1, img_url: Img1, name: "Kinjal", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 3, last_msg: "How are you john?", is_premium: true, age: 21 },
+    //   { id: 2, img_url: Img2, name: "Belinda", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 2, last_msg: "How are you john?", is_premium: false, age: 23 },
+    //   { id: 3, img_url: Img3, name: "Jennifer", time: timeBefore30Mins, online: true, last_activity: "", unread_count: 4, last_msg: "Ok, by see you", is_premium: true, age: 26 },
+    //   { id: 4, img_url: Img4, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: true, age: 24 },
+    //   { id: 5, img_url: Img5, name: "Madeline", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "How are you ?", is_premium: false, age: 27 },
+    //   { id: 6, img_url: Img6, name: "Reagan", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here", is_premium: false, age: 29 },
+    //   { id: 7, img_url: Img7, name: "Catherine", time: timeBefore30Mins, online: false, last_activity: "near", unread_count: 0, last_msg: "sample text here", is_premium: false, age: 21 },
+    //   { id: 8, img_url: Img8, name: "Priscilla", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: false, age: 22 },
+    //   { id: 9, img_url: Img9, name: "Lucinda", time: timeBefore30Mins, online: false, last_activity: "", unread_count: 0, last_msg: "I will meet Jennifer", is_premium: false, age: 26 }
+    // ])
     const AOS = require("aos");
     AOS.init();
 
@@ -93,7 +94,7 @@ const ChatList = ({ setSelectedObj, setProfiles, profiles, showMobileChatContent
                   setShowMobileChatContent(true);
                 }
               }}>
-                <Image src={item.img_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
+                <Image src={Img1} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
               </button>
             )
           })}

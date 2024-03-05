@@ -1,28 +1,37 @@
-"use client"
+import { all_profiles_action, chat_list_action, decrypt_user } from "@/app/lib/actions"
+import ChatIndex from "@/components/chat/ChatIndex"
 
-import ChatContent from "@/components/chat/ChatContent"
-import ChatList from "@/components/chat/ChatList"
-import { useState } from "react"
+const Chat = async () => {
 
-const Chat = () => {
-  const [selectedObj, setSelectedObj] = useState("");
-  const [profiles, setProfiles] = useState([]);
-  const [showMobileChatContent, setShowMobileChatContent] = useState(false);
+  const currentUser = decrypt_user()
 
-  return (
-    <>
-      <div className="font-bold h-dvh pt-0 md:pt-[66px] text-white hidden md:flex">
-        <ChatList setSelectedObj={setSelectedObj} setProfiles={setProfiles} profiles={profiles} setShowMobileChatContent={setShowMobileChatContent} />
-        <ChatContent selectedObj={selectedObj} profiles={profiles} />
-      </div>
-      <div className="font-bold h-dvh pt-0 md:pt-[66px] text-white md:hidden flex">
-        {showMobileChatContent
-          ? <ChatContent selectedObj={selectedObj} profiles={profiles} showMobileChatContent={showMobileChatContent} setShowMobileChatContent={setShowMobileChatContent} />
-          : <ChatList setSelectedObj={setSelectedObj} setProfiles={setProfiles} profiles={profiles} showMobileChatContent={showMobileChatContent} setShowMobileChatContent={setShowMobileChatContent} />
-        }
-      </div>
-    </>
-  )
+  const allUsers = await all_profiles_action()
+  const users = allUsers.data.filter((i) => parseInt(i.id) !== currentUser.id)
+
+  const chatList = await chat_list_action()
+
+  const user_chats = chatList.data.filter((i) => (i.message_from === currentUser.id) || (i.message_to === currentUser.id))
+
+  const allUserIds = Array.from(new Set([
+    ...user_chats.filter(i => i.message_from !== currentUser.id).map(i => i.message_from),
+    ...user_chats.filter(i => i.message_to !== currentUser.id).map(i => i.message_to)
+  ]));
+
+  let friendsList = []
+
+  allUserIds.forEach((id) => {
+    const user = users.filter(user => user.id === id)
+    friendsList.push(user[0])
+  })
+
+
+  if (allUsers.success && chatList.success) {
+    return (
+      <>
+        <ChatIndex users={friendsList} currentUser={currentUser} chatList={chatList.data} />
+      </>
+    )
+  }
 }
 
 export default Chat

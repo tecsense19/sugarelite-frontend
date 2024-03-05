@@ -1,6 +1,7 @@
 import { ChatItem } from "react-chat-elements"
 
 const ChatListItems = ({ profiles, setSelectedObj, showMobileChatContent, setShowMobileChatContent }) => {
+
   return (
     <>
       <div className="mt-5 px-5 md:mt-[30px] md:px-[30px]">
@@ -13,10 +14,10 @@ const ChatListItems = ({ profiles, setSelectedObj, showMobileChatContent, setSho
               onClick={() => { setSelectedObj(item); setShowMobileChatContent(true) }}
               key={idx}
               className="rounded-[5px] overflow-hidden border-[1px] border-white/30"
-              statusColor={item.online ? "#3DC73A" : (item.last_activity === "near" ? "#FEBF0F" : "")}
-              avatar={item.img_url.src}
+              statusColor={item.online ? "#3DC73A" : (item.last_activity_at === "near" ? "#FEBF0F" : "")}
+              avatar={'/assets/profile_img_1.png'}
               alt=''
-              title={item.name}
+              title={item.username}
               subtitle={item.last_msg}
               date={item.time}
               unread={item.unread_count}
@@ -32,9 +33,9 @@ const ChatListItems = ({ profiles, setSelectedObj, showMobileChatContent, setSho
               key={idx}
               className="rounded-[5px] overflow-hidden border-[1px] border-white/30"
               statusColor={item.online ? "#3DC73A" : (item.last_activity === "near" ? "#FEBF0F" : "")}
-              avatar={item.img_url.src}
+              avatar={'/assets/profile_img_1.png'}
               alt=''
-              title={item.name}
+              title={item.username}
               subtitle={item.last_msg}
               date={item.time}
               unread={item.unread_count}

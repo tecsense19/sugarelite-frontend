@@ -4,8 +4,10 @@ import optionsIcon from "../../public/assets/chat_options_icon.svg";
 import { ConfigProvider, Popover } from 'antd';
 import deleteIcon from "../../public/assets/delete.svg";
 import editIcon from "../../public/assets/edit.svg";
+import Img1 from "/public/assets/profile_img_1.png";
 
-const Message = ({ user, item, messages, idx, containerElement }) => {
+const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
+
   const [showOptions, setShowOptions] = useState(false);
 
   const handleShowOptionsChange = (val) => {
@@ -25,24 +27,51 @@ const Message = ({ user, item, messages, idx, containerElement }) => {
     }
   }, [])
 
+  const getChatTime = (stamp) => {
+
+    const time = new Date(parseInt(stamp));
+    const hrs = time.getHours();
+    const mins = (time.getMinutes() < 10) ? `0${time.getMinutes()}` : time.getMinutes();
+
+    let period = 'AM';
+    let formattedHrs = hrs;
+
+
+    if (hrs === 12) {
+      period = 'PM';
+    }
+    else if (hrs === 0) {
+      formattedHrs = 12;
+      period = 'AM';
+    }
+    else if (hrs > 12) {
+      period = 'PM';
+      formattedHrs = hrs - 12;
+    }
+
+    const formattedTime = `${formattedHrs < 10 ? `0${formattedHrs}` : formattedHrs}:${mins} ${period}`;
+
+    return formattedTime;
+  }
+
   return (
     <>
-      {user.id === item.from.id
+      {user.id === item.message_from
         ? <div className="flex items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row message-container">
           {messages[idx - 1]
             ? <>
-              {item.from.id !== messages[idx - 1].from.id
-                ? <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
+              {item.message_from !== messages[idx - 1].message_from
+                ? <Image src={Img1} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
                 : <></>
               }
             </>
-            : <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
+            : <Image src={Img1} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
           }
           <div className="ps-5 pe-[5px] lg:pe-[6px] py-[10px] rounded-[15px] max-w-full lg:max-w-[calc(100%-60px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start">
             <div className="flex justify-between items-center">
               <div className='flex justify-start items-end'>
-                <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {item.from.name} </div>
-                <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {item.time} </div>
+                <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {user.username} </div>
+                <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
               </div>
               <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
                 <Popover placement="leftBottom" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
@@ -64,45 +93,45 @@ const Message = ({ user, item, messages, idx, containerElement }) => {
               </ConfigProvider>
             </div>
             <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
-              {item.message}
+              {item?.text}
             </div>
           </div>
           {messages[idx + 1]
             ? <>
-              {item.from.id !== messages[idx + 1].from.id
-                ? <Image src={item.from.img_url.src} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
+              {item.message_from !== messages[idx + 1].message_from
+                ? <Image src={Img1} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
                 : <div className="hidden lg:block w-[70px]"></div>
               }
             </>
-            : <Image src={item.from.img_url.src} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
+            : <Image src={Img1} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
           }
         </div>
-        : <div className="flex items-start lg:items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row">
+        : <div className="flex items-start lg:items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row ">
           {messages[idx - 1]
             ? <>
-              {item.from.id !== messages[idx - 1].from.id
-                ? <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
+              {item.message_from !== messages[idx - 1].message_from
+                ? <Image src={Img1} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
                 : <></>
               }
             </>
-            : <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
+            : <Image src={Img1} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
           }
           {messages[idx + 1]
             ? <>
-              {item.from.id !== messages[idx + 1].from.id
-                ? <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
+              {item.message_from !== messages[idx + 1].message_from
+                ? <Image src={Img1} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
                 : <div className="hidden lg:block w-[60px]"></div>
               }
             </>
-            : <Image src={item.from.img_url.src} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
+            : <Image src={Img1} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
           }
           <div className="ps-3 pe-5 md:px-5 py-[10px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[15px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-primary-dark-3">
             <div className="flex justify-start items-end">
-              <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {item.from.name} </div>
-              <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {item.time} </div>
+              <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {toUser.username} </div>
+              <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
             </div>
             <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
-              {item.message}
+              {item?.text}
             </div>
           </div>
         </div>
