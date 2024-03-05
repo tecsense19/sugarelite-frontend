@@ -35,6 +35,9 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
 
     return () => {
       window.removeEventListener("resize", closeAll)
+      if (socket) {
+        socket.disconnect();
+      }
     }
   }, [])
 
