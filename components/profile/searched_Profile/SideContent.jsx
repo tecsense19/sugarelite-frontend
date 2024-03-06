@@ -10,7 +10,7 @@ import premium from "../../../public/assets/premium.svg"
 import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 
-const SideContent = ({ params }) => {
+const SideContent = ({ user }) => {
 
 	const path = usePathname()
 
@@ -25,28 +25,46 @@ const SideContent = ({ params }) => {
 			</div>
 			<div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
 				<div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
-					<Image src={profile_img_5} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
-					<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+					{
+						user.avatar_url ?
+							<Image src={(user?.avatar_url).includes("https://admin-sugarelite.tec-sense.co.in/storage") ? user.avatar_url : profile_img_5} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority quality={100} />
+							:
+							<p className='bg-primary-dark-4 md:bg-primary h-full w-full  rounded-full lg:rounded-[10px] select-none flex justify-center items-center capitalize text-[650%] md:text-[8rem]'>
+								{user.username.charAt(0)}
+							</p>
+					}
+					{
+						user?.online &&
+						<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+					}
 				</div>
 				<div className="lg:self-start mt-[20px] lg:mt-[30px]">
 					<div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
-						<div className='flex items-center '>
-							<div className="text-[30px] font-bold me-[20px] relative">{params.id}. Dhaval
-								<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-[#1DD719] absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
+						<div className='flex items-center justify-center'>
+							<div className="text-[24px] leading-[30px] md:text-[30px] font-bold  relative">{user?.username},{user.age}
+								{
+									user?.online &&
+									<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-[#1DD719] absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
+								}
 							</div>
-							<Image src={premium} alt='edit' width={30} height={30} priority />
-							<span className='text-[16px] font-semibold ms-2'>Premium</span>
+							{
+								user?.premium &&
+								<>
+									<Image src={premium} alt='edit' className='ms-[20px]' width={30} height={30} priority />
+									<span className='text-[16px] font-semibold ms-2'>Premium</span>
+								</>
+							}
 						</div>
 						<div className='mt-[11px]'>
-							<span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px]">LIVING IN</span>
-							<span className="text-[16px] font-semibold text-opacity-80 text-white mt-[11px]">Ask me, Del Valle</span>
+							<span className="text-[18px] md:text-[20px] font-semibold text-opacity-80 text-white me-[14px]">{user?.country},</span>
+							<span className="text-[16px] font-semibold text-opacity-80 text-white mt-[11px]">{user?.region}</span>
 						</div>
 					</div>
 				</div>
 				<div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center items-center md:flex-row flex-col gap-3'>
 					<ButtonProfile />
 				</div>
-				<div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
+				<div className="w-full bg-primary-dark-4 mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
 					<div className="p-4 text-[16px] font-light">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, cumque quas. Sint reiciendis commodi libero, sequi ipsam nam sed iusto odio perferendis voluptates eveniet ducimus nostrum quidem est. Voluptatum, voluptatibus?
 					</div>
@@ -56,7 +74,7 @@ const SideContent = ({ params }) => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div >
 	)
 }
 

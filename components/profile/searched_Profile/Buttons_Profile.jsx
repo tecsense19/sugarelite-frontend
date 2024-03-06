@@ -28,7 +28,7 @@ const Buttons_Profile = () => {
 
             <div className=' justify-center items-center hidden md:flex 2xl:hidden'>
                 <PopOver>
-                    <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer  " />
+                    <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
             </div>
 

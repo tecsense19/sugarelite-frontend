@@ -3,13 +3,17 @@ import { client_routes } from "./app/lib/helpers"
 
 export const middleware = (request) => {
 
-    const url = request.nextUrl.origin === "http://localhost:3000" ? "http://localhost:3000" : "https://sugarelite.tec-sense.co.in"
-    // const url = "https://sugarelite.tec-sense.co.in"
+    const local_path = "http://localhost:3000"
+    const development = "https://sugarelite-frontend-development.vercel.app"
+    const main = "https://sugarelite.tec-sense.co.in"
+
+    const origin = request.nextUrl.origin
+
+    const url = origin === local_path ? local_path : (origin === development ? development : main)
 
     const path = request.nextUrl.pathname
     const user = request.cookies.get("user")?.value
 
-    // const public_routes = [client_routes.disclaimer, client_routes.termsOfUse, client_routes.privacyPolicy, client_routes.home]
 
     const public_routes = [client_routes.login, client_routes.register]
     const private_routes = [client_routes.chat, client_routes.discover, client_routes.edit_profile, client_routes.profile, client_routes.profile_id, client_routes.search]

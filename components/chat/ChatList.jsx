@@ -16,8 +16,14 @@ import Img9 from "../../public/assets/profile_img_9.png";
 import chatArrowRight from "../../public/assets/chat_arrow_right.png";
 import arrowLeft from "../../public/assets/arrow_left.svg";
 import ChatListItems from "./ChatListItems";
+import { useRouter } from "next/navigation";
+import { client_routes } from "@/app/lib/helpers";
+import PopOver from "../profile/commons/PopOver";
+import more_horizontal from "/public/assets/more_horizontal.svg"
 
 const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobileChatContent, messages }) => {
+
+  const navigate = useRouter()
 
   const horizontalProfilesRef = useRef(null);
   const timeBefore30Mins = new Date().setMinutes(new Date().getMinutes() - 30);
@@ -72,11 +78,14 @@ const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobi
 
   return (
     <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[14px] md:py-[30px]' data-aos="fade-right" data-aos-duration="800">
-      <div className="md:hidden relative flex justify-center items-center">
-        <button className="flex justify-center items-center absolute left-4">
+      <div className="md:hidden relative flex justify-between px-4 items-center">
+        <button className="flex justify-center items-center " onClick={() => navigate.replace(client_routes.profile)}>
           <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
         </button>
         <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>
+        <PopOver>
+          <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
+        </PopOver>
       </div>
       <div className="text-[20px] md:text-[26px] font-semibold md:font-bold leading-[30px] px-4 md:px-[30px] mt-5 md:mt-0">
         Favorites

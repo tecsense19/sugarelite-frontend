@@ -90,6 +90,18 @@ export const all_profiles_action = async () => {
     return data
 }
 
+export const search_profile_action = async (id) => {
+    try {
+        const res = await fetch(server_routes.allProfiles + `?id=${id}`)
+        if (res.ok) {
+            const data = await res.json()
+            return data
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const chat_list_action = async () => {
     const res = await fetch(server_routes.chatList)
     const data = await res.json()

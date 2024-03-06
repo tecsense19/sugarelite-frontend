@@ -79,7 +79,7 @@ const PopOver = ({ children }) => {
     return (
         <>
             {
-                (path !== client_routes.profile && path !== client_routes.edit_profile) ?
+                (path !== client_routes.profile && path !== client_routes.edit_profile && path !== client_routes.chat) ?
                     <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
                         <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
                             <div className="text-white flex flex-col p-[10px] gap-y-[6px]">

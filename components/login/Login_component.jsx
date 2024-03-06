@@ -52,7 +52,7 @@ const Login = ({ setIsForgotOpen }) => {
         client_notification(api, "topRight", "success", res.message, 2)
         const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
         setCookie(null, "user", token, { maxAge: 3600, secure: true, })
-        navigate.push(client_routes.profile)
+        navigate.replace(client_routes.profile)
     }
 
     const loadingHandler = () => {
