@@ -44,7 +44,8 @@ const Cards = ({ allUsers }) => {
         allUsers?.map((item, idx) => {
           return (
             <div key={idx} onClick={() => navigate.push(`/profile/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] xs:h-auto  w-full flex justify-center items-center">
-              <Image src={Img1} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
+              <Image src={item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in/storage") ? item.avatar_url : Img1} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
+
               <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
                 <div className="flex justify-end">
                   {item.online && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-[#1DD719]" />}
