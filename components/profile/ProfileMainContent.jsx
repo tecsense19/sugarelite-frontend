@@ -91,6 +91,14 @@ const ProfileMainContent = ({ user }) => {
         ]
     };
 
+    const images_filter = (type) => {
+        if (user?.get_all_profileimg?.length) {
+            const array = user.get_all_profileimg.filter(i => i.image_type === type)
+            return array
+        }
+        return null
+    }
+
     useEffect(() => {
         AOS.init()
         window.scrollTo({ top: 0, behavior: "smooth" })
@@ -101,9 +109,9 @@ const ProfileMainContent = ({ user }) => {
             <Link href={client_routes.edit_profile} className="hidden absolute bg-secondary top-[96px] z-[1] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px]" data-aos='zoom-in'>
                 <Image src={editImg} alt="edit" width={30} height={30} priority />
             </Link>
-            <Profile_Photos title={"Public Photos"} list={user?.public_images} />
+            <Profile_Photos title={"Public Photos"} list={images_filter('public')} />
             <Divider />
-            <Profile_Photos title={"Private Photos"} list={user?.total_private_images} />
+            <Profile_Photos title={"Private Photos"} list={images_filter('private')} />
             <Divider />
             <Profile_Styles title={"Appearance"} list={profile.appearance} />
             <Divider />
