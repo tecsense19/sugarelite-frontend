@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   let arr = []
   function gen() {
     res.data.forEach(element => {
-      arr.push(element.id)
+      arr.push({ id: element.id.toString() })
     });
   }
   gen()
