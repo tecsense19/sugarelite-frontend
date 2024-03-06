@@ -85,7 +85,7 @@ export const logout_user = () => {
 }
 
 export const all_profiles_action = async () => {
-    const res = await fetch(server_routes.allProfiles, { cache: "no-cache" })
+    const res = await fetch(server_routes.allProfiles, { next: { revalidate: 60 } })
     const data = await res.json()
     return data
 }

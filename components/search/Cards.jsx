@@ -20,8 +20,6 @@ const Cards = ({ allUsers }) => {
 
   const navigate = useRouter()
 
-
-
   // const profiles = [
   //   { id: 1, img: Img1, is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
   //   { id: 2, img: Img2, is_active: false, name: "Inga Green", age: 22, is_premium: true, desc: "Obcaecati cumque et" },
@@ -45,6 +43,11 @@ const Cards = ({ allUsers }) => {
           return (
             <div key={idx} onClick={() => navigate.push(`/profile/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] xs:h-auto  w-full flex justify-center items-center">
               <Image src={item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in/storage") ? item.avatar_url : Img1} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
+              {/* {item.avatar_url ?
+                <Image src={item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in/storage") && item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
+                :
+                <p className="h-[20rem] w-full">Name</p>
+              } */}
 
               <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
                 <div className="flex justify-end">
