@@ -3,6 +3,7 @@
 import { cookies } from "next/headers"
 import { server_routes } from "./helpers"
 import CryptoJS from "crypto-js"
+import { loadStripe } from "@stripe/stripe-js"
 
 
 export const getCountries = async () => {
@@ -110,6 +111,31 @@ export const chat_list_action = async () => {
 
 export const send_message_action = async (form) => {
     const res = await fetch(server_routes.sendMessage, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}
+
+export const private_image_access = async (form) => {
+    const res = await fetch(server_routes.private_image_access, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}
+
+// Stripe Actions
+export const stripe_action = async (form) => {
+    const res = await fetch(server_routes.stripe_subscription, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

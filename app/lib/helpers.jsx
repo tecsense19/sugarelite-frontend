@@ -11,7 +11,8 @@ export const client_routes = {
   chat: "/chat",
   disclaimer: "/disclaimer",
   privacyPolicy: "/privacy-policy",
-  termsOfUse: "/terms-of-use"
+  termsOfUse: "/terms-of-use",
+  subscription: "/subscription"
 }
 
 const server_domain = "https://admin-sugarelite.tec-sense.co.in";
@@ -26,6 +27,10 @@ export const server_routes = {
   allProfiles: base_path + "/profile/list",
   chatList: base_path + "/chat/list",
   sendMessage: base_path + "/chat/send",
+  friends_list: base_path + "/profile/friends",
+  friends_request: base_path + "/friends",
+  private_image_access: base_path + "/privateimages/access",
+  stripe_subscription: base_path + "/create/subscription"
 }
 
 

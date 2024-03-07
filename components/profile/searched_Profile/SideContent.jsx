@@ -62,7 +62,7 @@ const SideContent = ({ user }) => {
 					</div>
 				</div>
 				<div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center items-center md:flex-row flex-col gap-3'>
-					<ButtonProfile />
+					<ButtonProfile user={user} />
 				</div>
 				<div className="w-full bg-primary-dark-4 mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
 					<div className="p-4 text-[16px] font-light">

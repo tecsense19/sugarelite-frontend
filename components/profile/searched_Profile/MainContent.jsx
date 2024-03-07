@@ -108,7 +108,7 @@ const MainContent = ({ user }) => {
             <div className='hidden lg:flex items-center mt-[16px] mb-[40px] gap-[30px]  2xl:gap-[50px]'>
                 {
                     // params?.id &&
-                    <Buttons_Profile />
+                    <Buttons_Profile user={user} />
                 }
             </div>
             <Profile_Photos title={"Public Photos"} list={images_filter("public")} />
