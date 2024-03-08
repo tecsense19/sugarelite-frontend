@@ -30,13 +30,13 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
           <button className="flex items-center 2xl:pointer-events-none" onClick={onProfileClick}>
             {
               selectedObj.avatar_url ?
-                <Image src={selectedObj.avatar_url} alt="" height={60} width={60} priority className="hidden md:flex pointer-events-none rounded-full" />
+                <Image src={selectedObj.avatar_url} alt="" height={60} width={60} priority className="hidden min-h-[60px] md:flex pointer-events-none rounded-full" />
                 : <p className="h-[60px] w-[60px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[24px] ">{selectedObj.username.charAt(0)}</p>
             }
 
             {
               selectedObj.avatar_url ?
-                <Image src={selectedObj.avatar_url} alt="" height={40} width={40} priority className="md:hidden pointer-events-none rounded-full" />
+                <Image src={selectedObj.avatar_url} alt="" height={40} width={40} priority className="md:hidden min-h-[40px] pointer-events-none rounded-full" />
                 : <p className="h-10 w-10 md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[22px] ">{selectedObj.username.charAt(0)}</p>
             }
 

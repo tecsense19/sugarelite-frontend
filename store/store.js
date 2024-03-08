@@ -47,6 +47,15 @@ const messageToReducer = (state = [], action) => {
   }
 }
 
+const chatReducer = (state, action) => {
+  switch (action.type) {
+    case 'Update_Chats':
+      return [...state, action.payload]
+    default:
+      return state;
+  }
+}
+
 const allUsersDataReducer = (state, action) => {
   switch (action.type) {
     case 'all_users_data':
@@ -58,14 +67,16 @@ const allUsersDataReducer = (state, action) => {
 }
 
 
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
   toMessageState: messageToReducer(toMessageState, action),
   allUsersState: allUsersDataReducer(allUsersState, action),
+  chatsState: chatReducer(chatsState, action)
 });
 
 
@@ -86,7 +97,8 @@ export const StoreProvider = ({ children }) => {
     },
     userState: user ? user : null,
     toMessageState: [],
-    allUsersState: null
+    allUsersState: null,
+    chatsState: []
   });
 
   return (

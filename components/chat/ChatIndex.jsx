@@ -10,7 +10,7 @@ const ChatIndex = ({ users, currentUser, chatList }) => {
     const [profiles, setProfiles] = useState(users);
     const [selectedObj, setSelectedObj] = useState("");
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
-    const { state: { toMessageState }, dispatch } = useStore()
+    const { state: { toMessageState, chatsState }, dispatch } = useStore()
 
     useEffect(() => {
         if (toMessageState.length) {
@@ -25,6 +25,17 @@ const ChatIndex = ({ users, currentUser, chatList }) => {
             setSelectedObj(list[0])
         }
     }, [toMessageState])
+
+
+    useEffect(() => {
+        if (chatsState.length) {
+            // console.log(chatsState)
+        }
+    }, [chatsState])
+
+
+
+
 
     const messages = chatList.filter(
         message =>

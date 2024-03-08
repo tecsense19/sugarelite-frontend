@@ -11,9 +11,11 @@ import Message from "./Message";
 import ChatSectionHeader from "./ChatSectionHeader";
 import { useForm } from "react-hook-form";
 import { send_message_action } from "@/app/lib/actions";
-// import { io } from 'socket.io-client';
+import { io } from 'socket.io-client';
+import { socket_server } from "@/app/lib/helpers";
+import { useStore } from "@/store/store";
 
-// let socket;
+let socket;
 
 
 const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobileChatContent, currentUser, chat }) => {
@@ -23,6 +25,8 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showMobileProfile, setShowMobileProfile] = useState(false);
 
+  const { state: { toMessageState, chatsState }, dispatch } = useStore()
+
   const msgContainerRef = useRef(null)
 
   const { register, handleSubmit, reset } = useForm()
@@ -30,14 +34,14 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
 
 
   useEffect(() => {
-    // socket = io()
+    socket = io(socket_server)
     window.addEventListener("resize", closeAll)
 
     return () => {
       window.removeEventListener("resize", closeAll)
-      // if (socket) {
-      //   socket.disconnect();
-      // }
+      if (socket) {
+        socket.disconnect();
+      }
     }
   }, [])
 
@@ -71,14 +75,15 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   }
 
   const sendMessageHandler = async ({ message }) => {
-    // socket = io()
+    socket = io(socket_server)
     if (message.length && currentUser && selectedObj) {
       let obj = { sender_id: currentUser.id, receiver_id: selectedObj.id, message: message, type: "regular" }
       const res = await send_message_action(obj)
       if (res.success) {
         scrollMsgsToBottom()
         reset()
-        // socket.emit("send-message", res.message)
+        socket.emit("send-message", res.message)
+        dispatch({ type: "Update_Chats", payload: res.message })
       } else {
         console.log(res.message)
       }
@@ -146,31 +151,6 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
             <div className="w-full 2xl:w-[calc(100%-400px)] flex flex-col h-full" data-aos='fade-up'>
               <ChatSectionHeader setDrawerOpen={setDrawerOpen} selectedObj={selectedObj} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} />
               <div className="h-[calc(100%-60px)] md:h-[calc(100%-101px)] flex flex-col justify-end ">
-                {/* <div className="relative w-full h-full overflow-y-hidden p-4 md:py-5 md:px-10 flex flex-col justify-end border border-red-600">
-                  <div ref={msgContainerRef} className="relative w-full overflow-y-auto chat-container scroll-smooth" style={{ scrollbarWidth: "none" }}>
-                    {chat && chat.map((item, idx) => {
-                      return (
-                        <div key={idx}>
-                          {
-                            <div className={`py-[30px] md:py-10 relative flex justify-center w-full ${getChatDate(item.milisecondtime) ? "block" : "hidden"} `}>
-                              <p className="absolute top-1/2 -translate-y-1/2 bg-white/30 h-[1px] w-full"></p>
-                              <p className="text-center font-medium bg-primary z-10 px-2 text-[14px] md:text-[18px] leading-[20px] text-white/50">{currentDate}</p>
-                            </div>
-                          }
-                          <div className={`flex my-[2px] ${user.id === item.message_from ? "justify-end" : "justify-start"}`}>
-                            <Message containerElement={msgContainerRef} user={currentUser} item={item} messages={chat} idx={idx} toUser={selectedObj} />
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  {showScrollToBottom &&
-                    <button className="absolute right-4 bottom-4 md:right-10 md:bottom-5 bg-black rounded-full flex justify-center items-center h-10 w-10" onClick={scrollMsgsToBottom} data-aos="fade-up">
-                      <Image src={chatScrollBottom} alt="" height={22} width={22} priority className="select-none pointer-events-none" />
-                    </button>
-                  }
-                </div> */}
-
                 <div className="h-full w-full  p-4 md:py-5 md:px-10 overflow-hidden">
                   <div className="relative w-full  h-full flex flex-col justify-end">
                     <div ref={msgContainerRef} onScroll={handleChatScrollBtn} className="flex flex-col-reverse overflow-y-auto scroll-smooth" style={{ scrollbarWidth: "none" }}>
