@@ -2,18 +2,34 @@
 
 import ChatContent from "@/components/chat/ChatContent"
 import ChatList from "@/components/chat/ChatList"
-import { useState } from "react"
+import { useStore } from "@/store/store"
+import { useEffect, useState } from "react"
 
 const ChatIndex = ({ users, currentUser, chatList }) => {
 
-    const [selectedObj, setSelectedObj] = useState("");
     const [profiles, setProfiles] = useState(users);
+    const [selectedObj, setSelectedObj] = useState("");
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
+    const { state: { toMessageState }, dispatch } = useStore()
+
+    useEffect(() => {
+        if (toMessageState.length) {
+            const list = [...profiles]
+            toMessageState.forEach(element => {
+                const array = list.filter((i) => i.id === element.id)
+                if (!array.length) {
+                    list.unshift(element)
+                }
+            });
+            setProfiles(list)
+            setSelectedObj(list[0])
+        }
+    }, [toMessageState])
 
     const messages = chatList.filter(
         message =>
-            (message.message_from === currentUser.id && message.message_to === selectedObj.id) ||
-            (message.message_from === selectedObj.id && message.message_to === currentUser.id)
+            (message.sender_id === currentUser.id && message.receiver_id === selectedObj.id) ||
+            (message.sender_id === selectedObj.id && message.receiver_id === currentUser.id)
     );
 
     return (

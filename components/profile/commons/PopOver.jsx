@@ -6,6 +6,7 @@ import BlockIcon from "/public/assets/chat_block_icon.svg"
 import ChatIcon from "../../../public/assets/message.svg"
 import LogoutIcon from "../../../public/assets/logout.svg"
 import EditIcon from "../../../public/assets/edit.svg"
+import searchIcon from "/public/assets/search.svg"
 import NotificationIcon from "../../../public/assets/Mask group (1).svg"
 import React, { useEffect, useState } from 'react'
 import "../../chat/ChatContent.css"
@@ -39,9 +40,9 @@ const PopOver = ({ children }) => {
             path: client_routes.chat
         },
         {
-            name: "Notifications",
-            icon: NotificationIcon,
-            path: ""
+            name: "Search",
+            icon: searchIcon,
+            path: client_routes.search
         },
         {
             name: "Profile",

@@ -133,6 +133,18 @@ export const private_image_access = async (form) => {
     return data
 }
 
+export const friends_list_action = async (id) => {
+    const res = await fetch(server_routes.friends_list, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id)
+    })
+    const data = await res.json()
+    return data
+}
+
 // Stripe Actions
 export const stripe_action = async (form) => {
     const res = await fetch(server_routes.stripe_subscription, {

@@ -15,7 +15,7 @@ const ChatListItems = ({ profiles, setSelectedObj, showMobileChatContent, setSho
               key={idx}
               className="rounded-[5px] overflow-hidden border-[1px] border-white/30"
               statusColor={item.online ? "#3DC73A" : (item.last_activity_at === "near" ? "#FEBF0F" : "")}
-              avatar={'/assets/profile_img_1.png'}
+              avatar={item.avatar_url}
               alt=''
               title={item.username}
               subtitle={item.last_msg}
@@ -33,7 +33,7 @@ const ChatListItems = ({ profiles, setSelectedObj, showMobileChatContent, setSho
               key={idx}
               className="rounded-[5px] overflow-hidden border-[1px] border-white/30"
               statusColor={item.online ? "#3DC73A" : (item.last_activity === "near" ? "#FEBF0F" : "")}
-              avatar={'/assets/profile_img_1.png'}
+              avatar={item.avatar_url}
               alt=''
               title={item.username}
               subtitle={item.last_msg}

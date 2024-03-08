@@ -103,7 +103,11 @@ const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobi
                   setShowMobileChatContent(true);
                 }
               }}>
-                <Image src={Img1} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
+                {
+                  item.avatar_url ?
+                    <Image src={item.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
+                    : <p className="h-10 w-10 flex items-center justify-center bg-primary rounded-full text-[18px] ">{item.username.charAt(0)}</p>
+                }
               </button>
             )
           })}

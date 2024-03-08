@@ -17,16 +17,16 @@ const ChatContent = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
 
 
   function socketInitializer() {
-    fetch("/api/socket");
+    //   // fetch("/api/socket");
 
-    socket = io();
+    socket = io("http://localhost:8080");
 
     socket.on("receive-message", async (data) => {
-      if (data.message_from === currentUser.id) {
+      if (data.sender_id === currentUser.id) {
         setChats((pre) => [...pre, data]);
       }
-      if ((data.message_to === currentUser.id)) {
-        if (data.message_from === selectedObj.id) {
+      if ((data.receiver_id === currentUser.id)) {
+        if (data.sender_id === selectedObj.id) {
           setChats((pre) => [...pre, data]);
 
         } else {

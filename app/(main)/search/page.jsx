@@ -6,7 +6,7 @@ const Search = async () => {
   const all_users = await all_profiles_action()
   const current_user = decrypt_user()
 
-  const users = all_users.data.filter((i) => i.id !== current_user.id)
+  const users = all_users.data.filter((i) => i.id !== current_user?.id)
 
   if (all_users.success) {
     return (

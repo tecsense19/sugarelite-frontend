@@ -25,14 +25,13 @@ export async function generateStaticParams() {
 const ProfileId = async ({ params }) => {
 
   const queried_user = await search_profile_action(params.id)
-  // console.log(queried_user?.data)
 
   if (queried_user?.success) {
     return (
       <>
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full relative">
-          <SideContent params={params} user={queried_user.data} />
-          <MainContent params={params} user={queried_user.data} />
+          <SideContent params={params} user={queried_user.data[0]} />
+          <MainContent params={params} user={queried_user.data[0]} />
 
           {/* report and block functionality */}
 

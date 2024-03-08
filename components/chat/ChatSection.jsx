@@ -11,9 +11,9 @@ import Message from "./Message";
 import ChatSectionHeader from "./ChatSectionHeader";
 import { useForm } from "react-hook-form";
 import { send_message_action } from "@/app/lib/actions";
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 
-let socket;
+// let socket;
 
 
 const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobileChatContent, currentUser, chat }) => {
@@ -30,14 +30,14 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
 
 
   useEffect(() => {
-    socket = io()
+    // socket = io()
     window.addEventListener("resize", closeAll)
 
     return () => {
       window.removeEventListener("resize", closeAll)
-      if (socket) {
-        socket.disconnect();
-      }
+      // if (socket) {
+      //   socket.disconnect();
+      // }
     }
   }, [])
 
@@ -71,14 +71,16 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   }
 
   const sendMessageHandler = async ({ message }) => {
-    socket = io()
+    // socket = io()
     if (message.length && currentUser && selectedObj) {
-      let obj = { message_from: currentUser.id, message_to: selectedObj.id, message: message, type: "regular" }
+      let obj = { sender_id: currentUser.id, receiver_id: selectedObj.id, message: message, type: "regular" }
       const res = await send_message_action(obj)
       if (res.success) {
         scrollMsgsToBottom()
         reset()
-        socket.emit("send-message", res.message)
+        // socket.emit("send-message", res.message)
+      } else {
+        console.log(res.message)
       }
     }
   }
@@ -175,14 +177,14 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
                       <div>
                         {chat && chat.map((item, idx) => {
                           return (
-                            <div key={idx} className="">
+                            <div key={idx}>
                               {
                                 <div className={`py-[30px] md:py-10 relative flex justify-center w-full ${getChatDate(item.milisecondtime) ? "block" : "hidden"} `}>
                                   <p className="absolute top-1/2 -translate-y-1/2 bg-white/30 h-[1px] w-full"></p>
                                   <p className="text-center font-medium bg-primary z-10 px-2 text-[14px] md:text-[18px] leading-[20px] text-white/50">{currentDate}</p>
                                 </div>
                               }
-                              <div className={`flex my-[2px] ${user.id === item.message_from ? "justify-end" : "justify-start"}`}>
+                              <div className={`flex my-[2px] ${user.id === item.sender_id ? "justify-end" : "justify-start"}`}>
                                 <Message containerElement={msgContainerRef} user={currentUser} item={item} messages={chat} idx={idx} toUser={selectedObj} />
                               </div>
                             </div>

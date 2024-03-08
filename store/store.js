@@ -38,12 +38,34 @@ const currentUserReducer = (state, action) => {
   }
 }
 
+const messageToReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'Message_To':
+      return [...state, action.payload]
+    default:
+      return state;
+  }
+}
+
+const allUsersDataReducer = (state, action) => {
+  switch (action.type) {
+    case 'all_users_data':
+      // console.log(action.payload);
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
-  userState: currentUserReducer(userState, action)
+  userState: currentUserReducer(userState, action),
+  toMessageState: messageToReducer(toMessageState, action),
+  allUsersState: allUsersDataReducer(allUsersState, action),
 });
 
 
@@ -62,7 +84,9 @@ export const StoreProvider = ({ children }) => {
     filterState: {
       isFilterOpen: false,
     },
-    userState: user ? user : null
+    userState: user ? user : null,
+    toMessageState: [],
+    allUsersState: null
   });
 
   return (

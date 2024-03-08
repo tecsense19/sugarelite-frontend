@@ -51,7 +51,7 @@ const Login = ({ setIsForgotOpen }) => {
         dispatch({ type: "Current_User", payload: res.data })
         client_notification(api, "topRight", "success", res.message, 2)
         const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
-        setCookie(null, "user", token, { maxAge: 3600, secure: true, })
+        setCookie(null, "user", token, { maxAge: 36000, secure: true, })
         navigate.replace(client_routes.profile)
     }
 

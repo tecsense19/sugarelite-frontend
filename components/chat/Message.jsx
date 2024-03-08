@@ -27,6 +27,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
     }
   }, [])
 
+
   const getChatTime = (stamp) => {
 
     const time = new Date(parseInt(stamp));
@@ -53,14 +54,13 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
 
     return formattedTime;
   }
-
   return (
     <>
-      {user.id === item.message_from
+      {user.id === item.sender_id
         ? <div className="flex items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row message-container">
           {messages[idx - 1]
             ? <>
-              {item.message_from !== messages[idx - 1].message_from
+              {item.sender_id !== messages[idx - 1].sender_id
                 ? <Image src={Img1} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
                 : <></>
               }
@@ -98,7 +98,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
           </div>
           {messages[idx + 1]
             ? <>
-              {item.message_from !== messages[idx + 1].message_from
+              {item.sender_id !== messages[idx + 1].sender_id
                 ? <Image src={Img1} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
                 : <div className="hidden lg:block w-[70px]"></div>
               }
@@ -109,8 +109,8 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
         : <div className="flex items-start lg:items-end max-w-[85%] md:max-w-[75%] flex-col lg:flex-row ">
           {messages[idx - 1]
             ? <>
-              {item.message_from !== messages[idx - 1].message_from
-                ? <Image src={Img1} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
+              {item.sender_id !== messages[idx - 1].sender_id
+                ? <Image src={user.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
                 : <></>
               }
             </>
@@ -118,7 +118,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
           }
           {messages[idx + 1]
             ? <>
-              {item.message_from !== messages[idx + 1].message_from
+              {item.sender_id !== messages[idx + 1].sender_id
                 ? <Image src={Img1} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
                 : <div className="hidden lg:block w-[60px]"></div>
               }

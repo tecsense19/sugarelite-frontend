@@ -50,6 +50,7 @@ const SideContent = ({ control, user }) => {
         return age;
     };
 
+
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
@@ -61,7 +62,17 @@ const SideContent = ({ control, user }) => {
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
-                    <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
+                    {user
+                        ? <>
+                            {user.avatar_url
+                                ? <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
+                                : <div className={`bg-primary-dark-2 lg:bg-primary h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none flex justify-center items-center text-[50px] ${path === client_routes.edit_profile && "opacity-50"}`}>
+                                    {user.username.charAt(0)}
+                                </div>
+                            }
+                        </>
+                        : <></>
+                    }
                     {
                         user && user?.online &&
                         <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
@@ -90,9 +101,9 @@ const SideContent = ({ control, user }) => {
 
                 </div>
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
-                    <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left" data-aos='zoom-in'>
                         <div className='flex items-center'>
-                            <div className="text-[30px] font-bold me-[20px] leading-[30px] relative">
+                            <div className="text-[30px] font-bold leading-[30px] relative">
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
                                 {
                                     user && user?.online &&

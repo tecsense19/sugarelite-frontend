@@ -28,25 +28,37 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
         </button>
         <div className="flex items-center">
           <button className="flex items-center 2xl:pointer-events-none" onClick={onProfileClick}>
-            <Image src={Img1} alt="" height={60} width={60} priority className="hidden md:flex pointer-events-none rounded-full" />
-            <Image src={Img1} alt="" height={40} width={40} priority className="md:hidden pointer-events-none rounded-full" />
-            <div className="flex flex-col md:flex-row">
+            {
+              selectedObj.avatar_url ?
+                <Image src={selectedObj.avatar_url} alt="" height={60} width={60} priority className="hidden md:flex pointer-events-none rounded-full" />
+                : <p className="h-[60px] w-[60px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[24px] ">{selectedObj.username.charAt(0)}</p>
+            }
+
+            {
+              selectedObj.avatar_url ?
+                <Image src={selectedObj.avatar_url} alt="" height={40} width={40} priority className="md:hidden pointer-events-none rounded-full" />
+                : <p className="h-10 w-10 md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[22px] ">{selectedObj.username.charAt(0)}</p>
+            }
+
+
+            <div className="flex flex-col md:flex-row justify-center items-center ">
               <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">{selectedObj.username}</div>
-              <div className="mt-2 md:mt-0">
-                {selectedObj.online
-                  ? <div className="ms-[10px] flex items-center">
+              <div className="">
+                {
+                  selectedObj.online && <div className="ms-[10px] flex items-center mt-2 md:mt-0">
                     <div className="h-[6px] w-[6px] md:h-[9px] md:w-[9px] bg-[#3DC73A] rounded-full" />
                     <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">Active</div>
                   </div>
-                  : <>
-                    {selectedObj.last_activity_at === "near"
-                      ? <div className="ms-[10px] flex items-center">
-                        <div className="h-[9px] w-[9px] bg-[#FEBF0F] rounded-full" />
-                        <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">5 mins ago</div>
-                      </div>
-                      : <></>
-                    }
-                  </>
+
+                  // : <>
+                  //   {selectedObj.last_activity_at === "near"
+                  //     ? <div className="ms-[10px] flex items-center">
+                  //       <div className="h-[9px] w-[9px] bg-[#FEBF0F] rounded-full" />
+                  //       <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">5 mins ago</div>
+                  //     </div>
+                  //     : <></>
+                  //   }
+                  // </>
                 }
               </div>
             </div>

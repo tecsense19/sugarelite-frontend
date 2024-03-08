@@ -48,8 +48,18 @@ const ChatProfile = ({ selectedObj, setShowMobileProfile }) => {
 
       <div className="w-full flex justify-start items-center flex-col h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="flex justify-center items-center relative">
-          <Image src={Img1} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority />
-          <Image src={Img1} width={140} height={140} alt="person" className={`md:hidden rounded-full select-none pointer-events-none`} priority />
+          {
+            selectedObj.avatar_url ?
+              <Image src={selectedObj?.avatar_url} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority />
+              : <p className="h-[180px] w-[180px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[84px] ">{selectedObj.username.charAt(0)}</p>
+          }
+          {
+            selectedObj.avatar_url ?
+              <Image src={selectedObj?.avatar_url} width={140} height={140} alt="person" className={`md:hidden rounded-full select-none pointer-events-none`} priority />
+              : <p className="h-[140px] w-[140px]  md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[64px] ">{selectedObj.username.charAt(0)}</p>
+          }
+          {/* <Image src={Img1} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority /> */}
+
         </div>
         <div data-aos='zoom-in'>
           <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${selectedObj.is_premium ? "md:items-start" : "md:items-center"}`}>

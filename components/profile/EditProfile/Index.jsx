@@ -4,7 +4,7 @@ import SideContent from '../SideContent'
 import EditMainContent from './EditMainContent'
 import { useForm } from 'react-hook-form'
 
-const Index = () => {
+const Index = ({ user }) => {
 
     const { handleSubmit, control, setValue } = useForm()
 
@@ -15,8 +15,8 @@ const Index = () => {
     return (
         <>
             <form onSubmit={handleSubmit(editHanlder)} className='w-full overflow-x-hidden flex flex-col lg:flex-row'>
-                <SideContent control={control} setValue={setValue} />
-                <EditMainContent control={control} setValue={setValue} />
+                <SideContent user={user} control={control} setValue={setValue} />
+                <EditMainContent user={user} control={control} setValue={setValue} />
             </form>
         </>
     )
