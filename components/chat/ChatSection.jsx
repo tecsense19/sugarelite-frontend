@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { send_message_action } from "@/app/lib/actions";
 import { io } from 'socket.io-client';
 import { socket_server } from "@/app/lib/helpers";
-import { useStore } from "@/store/store";
 
 let socket;
 
@@ -25,7 +24,6 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showMobileProfile, setShowMobileProfile] = useState(false);
 
-  const { state: { toMessageState, chatsState }, dispatch } = useStore()
 
   const msgContainerRef = useRef(null)
 
@@ -83,7 +81,6 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
         scrollMsgsToBottom()
         reset()
         socket.emit("send-message", res.message)
-        dispatch({ type: "Update_Chats", payload: res.message })
       } else {
         console.log(res.message)
       }
