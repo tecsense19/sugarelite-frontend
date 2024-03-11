@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ConfigProvider, Drawer } from "antd";
 import { useEffect, useRef, useState } from "react";
-// import Img1 from "../../public/assets/profile_img_1.png";
 import smileIcon from "../../public/assets/smile_icon.svg";
 import attachmentIcon from "../../public/assets/attachment_icon.svg";
 import sendIcon from "../../public/assets/send_icon.svg";
@@ -13,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { send_message_action } from "@/app/lib/actions";
 import { io } from 'socket.io-client';
 import { socket_server } from "@/app/lib/helpers";
+import TypingAnimation from "./TypingAnimation/TypingAnimation";
 
 let socket;
 
@@ -23,16 +23,22 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showMobileProfile, setShowMobileProfile] = useState(false);
+  const [isTyping, setIsTyping] = useState(false)
 
 
   const msgContainerRef = useRef(null)
 
-  const { register, handleSubmit, reset } = useForm()
-
-
+  const { register, handleSubmit, reset, watch } = useForm()
 
   useEffect(() => {
     socket = io(socket_server)
+
+    socket.on("show-animation", (obj) => {
+      if (currentUser.id === obj.id) {
+        setIsTyping(obj.decision)
+      }
+    })
+
     window.addEventListener("resize", closeAll)
 
     return () => {
@@ -42,6 +48,14 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (watch('message')) {
+      socket.emit("typing", { id: selectedObj.id, decision: true })
+    } else {
+      socket.emit("typing", { id: selectedObj.id, decision: false })
+    }
+  }, [watch("message")])
 
   const handleChatScrollBtn = () => {
     if (msgContainerRef.current) {
@@ -80,6 +94,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
       if (res.success) {
         scrollMsgsToBottom()
         reset()
+        socket.emit("typing", { id: selectedObj.id, decision: false })
         socket.emit("send-message", res.message)
       } else {
         console.log(res.message)
@@ -167,7 +182,14 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
                             </div>
                           )
                         })}
+                        <div className={`mt-[30px] lg:mt-5 gap-2 md:gap-4 items-center ${isTyping ? "flex" : "hidden"}`} >
+                          {
+                            selectedObj.avatar_url ? <Image src={selectedObj.avatar_url} height={30} width={30} alt="avatar" className="md:h-[40px] md:w-[40px]" /> : <p className="h-[30px] w-[30px] md:h-[40px] md:w-[40px] bg-primary-dark-3 flex items-center justify-center rounded-full" data-aos='zoom-in'>{selectedObj.username.charAt(0)}</p>
+                          }
+                          <TypingAnimation />
+                        </div>
                       </div>
+
                     </div>
                     {showScrollToBottom &&
                       <button className="absolute right-0 bottom-0 bg-black rounded-full flex justify-center items-center h-10 w-10" onClick={scrollMsgsToBottom} data-aos='fade-up'>

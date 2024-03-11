@@ -13,6 +13,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
   }
+
   useEffect(() => {
     const closeOptions = () => {
       handleShowOptionsChange(false)
@@ -26,7 +27,6 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
       }
     }
   }, [])
-
 
   const getChatTime = (stamp) => {
 
@@ -53,14 +53,6 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
     const formattedTime = `${formattedHrs < 10 ? `0${formattedHrs}` : formattedHrs}:${mins} ${period}`;
 
     return formattedTime;
-  }
-
-
-  const getIcon = (icon) => {
-    console.log(icon)
-    if (icon) {
-      return
-    }
   }
 
   return (

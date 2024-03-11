@@ -1,7 +1,6 @@
 import { ConfigProvider, Popover } from "antd";
 import { useState } from "react";
 import Image from "next/image";
-import Img1 from "/public/assets/profile_img_1.png";
 import starIcon from "../../public/assets/chat_option_star_icon.svg";
 import reportIcon from "../../public/assets/chat_report_icon.svg";
 import blockIcon from "../../public/assets/chat_block_icon.svg";
@@ -22,7 +21,7 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
 
   return (
     <>
-      <div className="w-full md:border-b-[1px] border-white/30 px-4 md:px-10 pt-4 pb-1 md:py-5 flex justify-between items-center">
+      <div className="w-full  md:border-b-[1px] border-white/30 px-4 md:px-10 pt-4 pb-1 md:py-5 flex justify-between items-center">
         <button className="flex md:hidden items-center justify-center" onClick={() => setShowMobileChatContent(false)}>
           <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
         </button>
