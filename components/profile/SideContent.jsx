@@ -16,7 +16,7 @@ import { client_routes } from '@/app/lib/helpers'
 const SideContent = ({ control, user }) => {
 
     const path = usePathname()
-    const [profilPic, setProfilePic] = useState(profile_person)
+    const [profilPic, setProfilePic] = useState("")
 
     const getBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -62,7 +62,7 @@ const SideContent = ({ control, user }) => {
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
-                    {user
+                    {!profilPic
                         ? <>
                             {user.avatar_url
                                 ? <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
@@ -71,7 +71,9 @@ const SideContent = ({ control, user }) => {
                                 </div>
                             }
                         </>
-                        : <></>
+                        : <>
+                            <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
+                        </>
                     }
                     {
                         user && user?.online &&

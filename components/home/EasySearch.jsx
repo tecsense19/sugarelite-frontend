@@ -4,6 +4,7 @@ import easySearchDesktopImg from "../../public/assets/easy_search_desktop.png";
 import easySearchMobileImg from "../../public/assets/easy_search_mobile.svg";
 import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
+import Link from "next/link";
 
 const EasySearch = () => {
   const router = useRouter();
@@ -35,14 +36,14 @@ const EasySearch = () => {
             </div>
           </div>
           <div className="hidden lg:flex justify-end">
-            <button className="mt-[36px] rounded-[5px] bg-secondary h-[48px] px-[30px] text-[18px] font-semibold tracking-[-0.18px] hidden lg:block" onClick={() => router.push(client_routes.register)}>
+            <Link href={client_routes.register} className="mt-[36px] rounded-[5px] bg-secondary h-[48px] px-[30px] text-[18px] font-semibold tracking-[-0.18px] hidden lg:inline-flex justify-center items-center transition-all ease-linear duration-75 hover:scale-105">
               CREATE PROFILE
-            </button>
+            </Link>
           </div>
           <div className="lg:hidden w-full flex justify-center">
-            <button className="mt-[38px] rounded-sm bg-secondary h-[42px] px-[18px] text-[16px] font-medium" onClick={() => router.push(client_routes.register)}>
+            <Link href={client_routes.register} className="mt-[38px] rounded-sm bg-secondary h-[42px] px-[18px] text-[16px] font-medium inline-flex justify-center items-center">
               CREATE PROFILE
-            </button>
+            </Link>
           </div>
         </div>
       </div>

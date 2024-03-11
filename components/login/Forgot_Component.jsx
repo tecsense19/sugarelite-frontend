@@ -71,7 +71,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
 
                             </div>
 
-                            <button className={`rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center ${isLoading && "pointer-events-none"}`} type="submit" onClick={loadingHandler} >
+                            <button className={`rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit" onClick={loadingHandler} >
                                 {!isLoading ? "Recover Password" :
                                     <div className="loader"></div>
                                 }
@@ -79,7 +79,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
                         </form>
                         <div className="mt-[50px] text-center">
                             <p className="text-[14px] text-white text-opacity-50 mb-[10px]">If you know Password? Back to</p>
-                            <button onClick={() => setIsForgotOpen(false)} className="text-secondary font-semibold text-[16px]">Log In</button>
+                            <button onClick={() => setIsForgotOpen(false)} className="text-secondary font-semibold text-[16px] transition-all duration-150 hover:text-secondary/70">Log In</button>
                         </div>
                     </div>
                 </div>

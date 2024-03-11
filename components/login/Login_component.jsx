@@ -110,9 +110,9 @@ const Login = ({ setIsForgotOpen }) => {
                                     )} />
                                     <label htmlFor="remember" className="select-none cursor-pointer">Remember me</label>
                                 </div>
-                                <span className="underline pb-1 cursor-pointer select-none" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
+                                <span className="underline pb-1 cursor-pointer select-none transition-all duration-150 hover:text-secondary" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
                             </div>
-                            <button className={`rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center ${isLoading && "pointer-events-none"}`} type="submit" onClick={loadingHandler}>
+                            <button className={`rounded-[5px] bg-secondary w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit" onClick={loadingHandler}>
                                 {!isLoading ? "Log in" :
                                     <div className="loader"></div>
                                 }
@@ -120,7 +120,7 @@ const Login = ({ setIsForgotOpen }) => {
                         </form>
                         <div className="mt-[50px] text-center">
                             <p className="text-[14px] text-white text-opacity-50 mb-[10px]">Don’t have an account?</p>
-                            <Link href={"/register"} className="text-secondary font-semibold text-[16px]">Sign Up</Link>
+                            <Link href={"/register"} className="text-secondary font-semibold text-[16px] transition-all duration-150 hover:text-secondary/70">Sign Up</Link>
                         </div>
                     </div>
                 </div>

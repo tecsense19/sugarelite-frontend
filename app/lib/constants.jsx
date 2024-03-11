@@ -36,8 +36,8 @@ export const profile_select_options_appearance = [
     },
     {
         options: ["Yes", "No"],
-        name: "tattos",
-        text: "tattos"
+        name: "tattoos",
+        text: "tattoos"
     },
     {
         options: Array.from({ length: 80 }).map((_, inx) => inx + 40),
@@ -77,7 +77,7 @@ export const profile_select_options_lifestyle = [
     },
     {
         options: ["Tit", "Sometimes", "On festive occasions", "Rarely", "No"],
-        name: "drinking",
+        name: "drinks",
         text: "drinking habits"
     },
 ]

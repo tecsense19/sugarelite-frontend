@@ -80,6 +80,16 @@ export const forgot_password_action = async (form) => {
     return data
 }
 
+export const edit_profile_action = async (form) => {
+    const res = await fetch(server_routes.register, {
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        body: form
+    })
+    console.log(res)
+}
 
 export const logout_user = () => {
     cookies().delete("user")

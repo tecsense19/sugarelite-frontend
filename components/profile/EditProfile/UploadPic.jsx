@@ -5,9 +5,9 @@ import React, { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import cross from "../../../public/assets/cross.svg"
 
-const UploadPic = ({ control, setValue, name }) => {
+const UploadPic = ({ control, name, photoList, setPhotoList }) => {
 
-    const [photoList, setPhotoList] = useState([])
+    // const [photoList, setPhotoList] = useState([])
 
     const getBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -20,20 +20,6 @@ const UploadPic = ({ control, setValue, name }) => {
     const photoHandler = async (e) => {
         let obj = {}
         const { files } = e.target
-        // if (!files.length) {
-        //     return;
-        // }
-
-        // const arr = Object.values(files)
-        // if (arr.length) {
-        //     arr.forEach((i) => {
-        //         let file = getBase64(i)
-        //         obj.name = i.name
-        //         obj.photo_url = file
-        //         console.log(obj)
-        //         // setPhotoList((prev) => [...prev, obj])
-        //     })
-        // }
 
         if (files[0]) {
             let file = await getBase64(files[0])
@@ -47,11 +33,14 @@ const UploadPic = ({ control, setValue, name }) => {
             }
             if (!alreadyUploaded) {
                 obj.photo_url = file
+                obj.file = files[0]
                 setPhotoList((prev) => [...prev, obj])
             }
         }
         e.target.value = null
     }
+
+
 
     const deletePicHandler = (index) => {
         const desiredArr = photoList.filter((photo, inx) => inx !== index)
@@ -88,7 +77,7 @@ const UploadPic = ({ control, setValue, name }) => {
         <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[14px]'>
             {
                 photoList && photoList.map((photo, index) => {
-                    return <div className="aspect-square relative  popup_upload_pic" key={index} data-aos='zoom-in'>
+                    return <div className="aspect-square relative popup_upload_pic" key={index} data-aos='zoom-in'>
                         <ConfigProvider theme={customStyles}>
                             <Popconfirm
                                 title="Delete the photo"
@@ -109,17 +98,17 @@ const UploadPic = ({ control, setValue, name }) => {
                 })
             }
             <div className="aspect-square" data-aos='zoom-in'>
-                <Controller
+                {/* <Controller
                     name={name}
                     control={control}
-                    render={({ field }) => <>
-                        <input type='file' {...field} id={name} onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' multiple />
-                        <label htmlFor={name} className='h-full w-full border-dashed border border-[#ffffff70] flex flex-col gap-[10px] justify-center items-center rounded-[5px] cursor-pointer '>
-                            <span className='text-[20px] text-white text-opacity-70 -mt-[8px]'>+</span>
-                            <span className='text-[16px] font-medium text-white text-opacity-70'>Upload</span>
-                        </label>
-                    </>}
-                />
+                    render={({ field }) => <> */}
+                <input type='file' id={name} onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' />
+                <label htmlFor={name} className='h-full w-full border-dashed border border-[#ffffff70] hover:border-secondary transition-all duration-200 group flex flex-col gap-[10px] justify-center items-center rounded-[5px] cursor-pointer '>
+                    <span className='text-[20px] text-white text-opacity-70 -mt-[8px] transition-all duration-200 group-hover:text-secondary'>+</span>
+                    <span className='text-[16px] font-medium text-white text-opacity-70 transition-all duration-200 group-hover:text-secondary'>Upload</span>
+                </label>
+                {/* </>}
+                /> */}
             </div>
         </div >
     )

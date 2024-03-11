@@ -156,13 +156,13 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 </div>
             </div>
             <div className='mt-14 w-full  sm:grid grid-cols-2 gap-x-[37px]'>
-                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
+                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%] transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center font-bold gap-[5px]">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
-                <button className=" w-full  rounded bg-secondary h-[42px]  relative text-white text-opacity-[70%]" type="button" disabled={!isValid.region || !isValid.country || isValid.region === "Select your Region"} onClick={nextStepHandler}>
+                <button className={`w-full rounded bg-secondary h-[42px] relative text-white text-opacity-[70%] ${(!isValid.region || !isValid.country || isValid.region === "Select your Region") ? "" : "transition-all duration-150 hover:scale-[1.02]"}`} type="button" disabled={!isValid.region || !isValid.country || isValid.region === "Select your Region"} onClick={nextStepHandler}>
                     <div className="flex justify-center font-bold gap-[5px] sm:ms-4">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

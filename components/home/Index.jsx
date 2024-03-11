@@ -57,8 +57,8 @@ const Home = () => {
         <Footer />
       </div>
       {showScrollTopBtn &&
-        <button className="fade-down fixed bottom-5 right-5 w-10 h-10 bg-secondary rounded-full flex justify-center items-center" onClick={handleScrollTop} data-aos="fade-up">
-          <Image src={upArrowIcon} alt="" height={22} width={22} priority className="select-none pointer-events-none" />
+        <button className="fade-down fixed bottom-5 right-5 w-10 h-10 bg-secondary rounded-full flex justify-center items-center group" onClick={handleScrollTop} data-aos="fade-up">
+          <Image src={upArrowIcon} alt="" height={22} width={22} priority className="select-none pointer-events-none transition-all ease-linear duration-75 group-hover:scale-110" />
         </button>
       }
     </>

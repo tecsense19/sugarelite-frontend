@@ -41,10 +41,10 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                 <p className="text-2xl sm:text-[20px] pt-5 sm:pt-[13px] font-medium">I am a</p>
             </div>
             <div className="text-center mt-[50px] sm:mt-[28px] w-[20rem] sm:w-full md:w-[85%]">
-                <div className="flex gap-x-6 gap-y-2 sm:gap-3 flex-wrap justify-center sm:flex-nowrap ">
+                <div className="flex gap-x-6 gap-y-2 sm:gap-3 flex-wrap justify-center sm:flex-nowrap">
                     {
                         typeArray.map((type, inx) => (
-                            <div className={`${isValid === type.sugarType && "bg-secondary"} py-3 px-5 sm:px-3 sm:py-2 rounded-[5px] sm:w-full  sm:flex justify-center `} key={inx}>
+                            <div className={`${isValid === type.sugarType && "bg-secondary"} border border-transparent hover:border-secondary py-3 px-5 sm:px-3 sm:py-2 rounded-[5px] sm:w-full  sm:flex justify-center transition-all ease-linear duration-200`} key={inx}>
                                 <label htmlFor={type.sugarType} className=" cursor-pointer ">
                                     <p className="mb-[9px] font-bold text-[16px]">{type.sugarType}</p>
                                     <Image src={type.img} alt={type.sugarType} width={90} height={90} className=" min-w-[90px] rounded-full" priority />
@@ -57,7 +57,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                 </div>
 
             </div>
-            <button className="bg-secondary w-full max-w-[26rem] sm:max-w-full text-white text-opacity-[70%] h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] " onClick={nextStepHandler} type="button" disabled={!isValid}>
+            <button className={`bg-secondary w-full max-w-[26rem] sm:max-w-full text-white text-opacity-[70%] h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
                 <div className="flex justify-center gap-[5px] font-bold ms-4">
                     NEXT
                     <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

@@ -106,8 +106,8 @@ const ProfileMainContent = ({ user }) => {
 
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
-            <Link href={client_routes.edit_profile} className="hidden absolute bg-secondary top-[96px] z-[1] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px]" data-aos='zoom-in'>
-                <Image src={editImg} alt="edit" width={30} height={30} priority />
+            <Link href={client_routes.edit_profile} className="hidden absolute bg-secondary top-[96px] z-[1] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px] group" data-aos='zoom-in'>
+                <Image src={editImg} alt="edit" width={30} height={30} priority className='pointer-events-none transition-all duration-150 group-hover:scale-110' />
             </Link>
             <Profile_Photos title={"Public Photos"} list={images_filter('public')} />
             <Divider />

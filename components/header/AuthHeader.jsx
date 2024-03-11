@@ -8,6 +8,7 @@ import logo2 from "../../public/assets/Logo (2).svg"
 import logo from "../../public/assets/Logo.svg"
 import close from "../../public/assets/close.svg"
 import align_right from "../../public/assets/align-right.svg"
+import Link from "next/link";
 
 const AuthHeader = () => {
   const { dispatch } = useStore();
@@ -24,7 +25,7 @@ const AuthHeader = () => {
 
   return (
     <>
-      {/* Mobile View */}
+      {/* {/ Mobile View /} */}
       {(pathname !== client_routes.login && pathname !== client_routes.register) &&
         <header className="md:hidden top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
           <div className="flex bg-black text-white items-center justify-center">
@@ -35,11 +36,13 @@ const AuthHeader = () => {
                     <Image src={logo2} alt="" height={22} width={102} className="pointer-events-none select-none h-[22px] w-[102px]" priority />
                   </button>
                 </div>
-                <div className="flex items-center">
-                  <button className="outline-none relative w-6 h-6 flex justify-center items-center" onClick={handleOpenChange}>
+                <div className="flex items-center gap-x-[8.6px]">
+                  <Link href={client_routes.register} className="w-[78.5px] h-[31px] flex justify-center items-center bg-secondary text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Register</Link>
+                  <Link href={client_routes.login} className="w-[57px] h-[31px] flex justify-center items-center bg-neutral border border-white/30 text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Login</Link>
+                  {/* <button className="outline-none relative w-6 h-6 flex justify-center items-center" onClick={handleOpenChange}>
                     <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-100" : "scale-y-0"}`} src={close} alt="" priority />
                     <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-0" : "scale-y-100"}`} src={align_right} alt="" priority />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -54,7 +57,7 @@ const AuthHeader = () => {
         </header>
       }
 
-      {/* Web View */}
+      {/* {/ Web View /} */}
       <header className="hidden md:flex h-[80px] bg-black text-white items-center justify-center top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
         <div className="w-11/12 xl:w-9/12 flex justify-between items-center">
           <div className="flex items-center">
@@ -63,12 +66,12 @@ const AuthHeader = () => {
             </button>
           </div>
           <div className="flex items-center">
-            <button className="px-[35px] h-[42px] text-center bg-secondary rounded-[5px] text-[18px] font-[450] tracking-[-0.18] me-4" onClick={() => router.push(client_routes.register)}>
+            <Link href={client_routes.register} className="px-[35px] h-[42px] text-center bg-secondary rounded-[5px] text-[18px] font-[450] tracking-[-0.18] me-4 transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center">
               Register Now
-            </button>
-            <button className="px-[35px] h-[42px] text-center bg-neutral border border-white/30 rounded-[5px] text-[18px] font-[450] tracking-[-0.18]" onClick={() => router.push(client_routes.login)}>
+            </Link>
+            <Link href={client_routes.login} className="px-[35px] h-[42px] text-center bg-neutral border border-white/30 rounded-[5px] text-[18px] font-[450] tracking-[-0.18] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center">
               Login
-            </button>
+            </Link>
           </div>
         </div>
       </header>

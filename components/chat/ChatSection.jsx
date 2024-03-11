@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ConfigProvider, Drawer } from "antd";
+import { ConfigProvider, Drawer, notification } from "antd";
 import { useEffect, useRef, useState } from "react";
 import smileIcon from "../../public/assets/smile_icon.svg";
 import attachmentIcon from "../../public/assets/attachment_icon.svg";
@@ -11,7 +11,7 @@ import ChatSectionHeader from "./ChatSectionHeader";
 import { useForm } from "react-hook-form";
 import { send_message_action } from "@/app/lib/actions";
 import { io } from 'socket.io-client';
-import { socket_server } from "@/app/lib/helpers";
+import { client_notification, socket_server } from "@/app/lib/helpers";
 import TypingAnimation from "./TypingAnimation/TypingAnimation";
 
 let socket;
@@ -24,6 +24,8 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [showMobileProfile, setShowMobileProfile] = useState(false);
   const [isTyping, setIsTyping] = useState(false)
+
+  const [api, contextHolder] = notification.useNotification();
 
 
   const msgContainerRef = useRef(null)
@@ -97,7 +99,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
         socket.emit("typing", { id: selectedObj.id, decision: false })
         socket.emit("send-message", res.message)
       } else {
-        console.log(res.message)
+        client_notification(api, "topRight", "error", res?.message, 5)
       }
     }
   }
@@ -157,6 +159,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
 
   return (
     <>
+      {contextHolder}
       {user &&
         <div className="flex h-full">
           {(showMobileProfile === false || window.innerWidth > 768) &&

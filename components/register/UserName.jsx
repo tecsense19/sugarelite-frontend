@@ -83,17 +83,16 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 }
             </div>
             <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
-                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%]" onClick={() => { prevStepHandler() }} type="button">
+                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded text-white text-opacity-[70%] transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button">
                     <div className="flex justify-center gap-[5px] font-bold">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
-                <button className="w-full h-[42px] bg-secondary rounded relative text-white text-opacity-[70%]"
+                <button className={`w-full h-[42px] bg-secondary rounded relative text-white text-opacity-[70%] ${(!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) ? "" : "transition-all duration-150 hover:scale-[1.02]"}`}
                     onClick={() => { setIsLoading(true); handleUsernameSubmit() }}
                     type="button"
-                    disabled={!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase()
-                        .match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)}>
+                    disabled={!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)}>
                     <div className="flex justify-center gap-[5px] font-bold sm:ms-4">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

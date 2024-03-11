@@ -114,7 +114,7 @@ const Footer = () => {
               })}
             </div>
           </div>
-          {/* Mobile Middle Content Start */}
+          {/* {/ Mobile Middle Content Start /} */}
           <div className="block md:hidden mt-9 text-[26px] font-semibold leading-[30px]">
             Information
           </div>
@@ -123,8 +123,8 @@ const Footer = () => {
               <Collapse items={getMobileMiddleContent()} bordered={false} defaultActiveKey={['1']} expandIconPosition="end" />
             </ConfigProvider>
           </div>
-          {/* Mobile Middle Content End */}
-          {/* Desktop Middle Content Start */}
+          {/* {/ Mobile Middle Content End /} */}
+          {/* {/ Desktop Middle Content Start /} */}
           <div className="2xl:col-span-6 md:flex justify-between mt-10 2xl:mt-0 hidden">
             {footerMiddleContent.map((item, idx) => {
               return (
@@ -133,9 +133,9 @@ const Footer = () => {
                   <div className="mt-5 2xl:mt-10 flex flex-col gap-y-3 2xl:gap-y-5">
                     {item.features.map((name, index) => {
                       return (
-                        <div key={`${item.title}_${index}`} className="flex items-center justify-start gap-x-3 2xl:gap-x-5">
+                        <div key={`${item.title}_${index}`} className="flex items-center justify-start gap-x-3 2xl:gap-x-5 group cursor-pointer">
                           <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                          <div className="text-[clamp(16px,2vw,17px)] font-normal leading-[normal] text-white/70 md:text-white">{name}</div>
+                          <div className="text-[clamp(16px,2vw,17px)] font-normal leading-[normal] group-hover:text-secondary text-white/70 md:text-white transition-all ease-linear duration-75">{name}</div>
                         </div>
                       )
                     })}
@@ -144,13 +144,13 @@ const Footer = () => {
               )
             })}
           </div>
-          {/* Desktop Middle Content End */}
+          {/* {/ Desktop Middle Content End /} */}
           <div className="2xl:col-span-3 mt-10 2xl:mt-0">
             <div className="text-[24px] font-extrabold leading-[30px]">News Letter</div>
             <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
               <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" autoComplete="off"
                 {...register("email", { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, required: true })} />
-              <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)]" onClick={handleWrongEmail}>
+              <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)] transition-all ease-linear duration-75 hover:scale-105" onClick={handleWrongEmail}>
                 <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />
               </button>
             </form>

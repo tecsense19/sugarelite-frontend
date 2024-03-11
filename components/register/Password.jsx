@@ -75,13 +75,13 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 </div>
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
-                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded-[5px] text-white text-opacity-[70%]" onClick={prevStepHandler} type="button">
+                <button className="border sm:border-none border-[#535353] sm:bg-black w-full h-[42px] mb-3 rounded-[5px] text-white text-opacity-[70%] transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center gap-[5px] font-bold">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                         BACK
                     </div>
                 </button>
-                <button className="bg-secondary w-full h-[42px] rounded-[5px] border border-[#53535350] relative text-white text-opacity-[70%]" onClick={nextStepHandler} type="button" disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6}>
+                <button className={`bg-secondary w-full h-[42px] rounded-[5px] border border-[#53535350] relative text-white text-opacity-[70%] ${((isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6) ? "" : "transition-all duration-150 hover:scale-[1.02]"}`} onClick={nextStepHandler} type="button" disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6}>
                     <div className="flex justify-center gap-[5px] font-bold sm:ms-4 ">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
