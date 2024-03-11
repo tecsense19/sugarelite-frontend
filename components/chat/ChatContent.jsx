@@ -10,6 +10,8 @@ let socket;
 
 const ChatContent = ({ selectedObj, profiles, showMobileChatContent, setShowMobileChatContent, currentUser, messages }) => {
 
+
+
   const [chats, setChats] = useState(messages)
 
   useEffect(() => {

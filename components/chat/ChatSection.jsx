@@ -61,9 +61,9 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
   }
 
   const closeAll = () => {
-    if (setShowMobileChatContent) {
-      setShowMobileChatContent(false);
-    }
+    // if (setShowMobileChatContent) {
+    //   setShowMobileChatContent(false);
+    // }
     setShowMobileProfile(false);
     setDrawerOpen(false)
   }
