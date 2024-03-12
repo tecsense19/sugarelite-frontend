@@ -4,11 +4,19 @@ import { client_routes } from "@/app/lib/helpers"
 import { usePathname } from "next/navigation"
 import AuthHeader from "./AuthHeader"
 import MainHeader from "./MainHeader"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useStore } from "@/store/store"
 
-const Header = ({ user }) => {
+const Header = ({ decryptedUser }) => {
   const pathname = usePathname()
-  // console.log(user)
+
+  const { state: { userState } } = useStore()
+
+  const [user, setUser] = useState(userState ? userState : decryptedUser)
+
+  useEffect(() => {
+    setUser(userState ? userState : decryptedUser)
+  }, [userState])
 
   useEffect(() => {
     const AOS = require("aos");
@@ -17,15 +25,10 @@ const Header = ({ user }) => {
 
   return (
     <>
-      {/* {(pathname === client_routes.login || pathname === client_routes.register || pathname === client_routes.home)
-        ? <AuthHeader />
-        : <> */}
       {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname === client_routes.discover || pathname === client_routes.chat)
         ? <MainHeader user={user} />
         : <AuthHeader />
       }
-      {/* </>
-      } */}
     </>
   )
 }

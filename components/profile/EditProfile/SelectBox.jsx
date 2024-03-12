@@ -7,7 +7,7 @@ import chevron_down from "../../../public/assets/chevron-down.svg"
 const { Option } = Select;
 
 
-const SelectBox = ({ name, options, text, control, inx }) => {
+const SelectBox = ({ name, options, text, control, inx, decryptedUser }) => {
 
     const customStyles = {
         components: {
@@ -77,6 +77,7 @@ const SelectBox = ({ name, options, text, control, inx }) => {
             <Controller
                 name={name}
                 control={control}
+                defaultValue={decryptedUser[name] ? decryptedUser[name] : "ask me"}
                 render={({ field }) => (
                     <ConfigProvider
                         theme={customStyles}

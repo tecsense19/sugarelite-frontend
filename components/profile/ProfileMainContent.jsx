@@ -1,7 +1,7 @@
 "use client"
 import { client_routes } from '@/app/lib/helpers'
 import 'aos/dist/aos.css';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Profile_Photos from './commons/Profile_Photos';
 import Profile_Styles from './commons/Profile_Styles';
 import editImg from "/public/assets/edit.svg";
@@ -9,67 +9,16 @@ import Divider from './commons/Divider';
 import Link from 'next/link';
 import Image from 'next/image';
 import AOS from 'aos';
+import { useStore } from '@/store/store';
 
-const ProfileMainContent = ({ user }) => {
+const ProfileMainContent = ({ decryptedUser }) => {
 
-    // const profile = {
-    //     appearance: [
-    //         {
-    //             type: "sex",
-    //             value: user.sex ? user.sex : "ask me",
-    //         },
-    //         {
-    //             type: "ethnicity",
-    //             value: user.ethnicity ? user.ethnicity : "ask me"
-    //         },
-    //         {
-    //             type: "body structure",
-    //             value: user.body_structure ? user.body_structure : "ask me"
-    //         },
-    //         {
-    //             type: "piercings",
-    //             value: user.piercings ? user.piercings : "ask me"
-    //         },
-    //         {
-    //             type: "height (cm.)",
-    //             value: user.height ? user.height : "ask me"
-    //         },
-    //         {
-    //             type: "civil status",
-    //             value: user.civil_status ? user.civil_status : "ask me"
-    //         },
-    //         {
-    //             type: "hair color",
-    //             value: user.hair_color ? user.hair_color : "ask me"
-    //         },
-    //         {
-    //             type: "tattoos",
-    //             value: user.tattoos ? user.tattoos : "ask me"
-    //         },
-    //         {
-    //             type: "weight (kg.)",
-    //             value: user.weight ? user.weight : "ask me"
-    //         }
-    //     ],
-    //     lifestyle: [
-    //         {
-    //             type: "education",
-    //             value: user.education ? user.education : "ask me"
-    //         },
-    //         {
-    //             type: "smoking habits",
-    //             value: user.smoking ? user.smoking : "ask me"
-    //         },
-    //         {
-    //             type: "employment",
-    //             value: user.employment ? user.employment : "ask me"
-    //         },
-    //         {
-    //             type: "drinking habits",
-    //             value: user.drinks ? user.drinks : "ask me"
-    //         }
-    //     ]
-    // }
+    const { state: { userState } } = useStore()
+    useEffect(() => {
+        setUser(userState ? userState : decryptedUser)
+    }, [userState])
+
+    const [user, setUser] = useState(userState ? userState : decryptedUser)
 
     const profile = {
         appearance: [

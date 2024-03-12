@@ -32,7 +32,7 @@ const filterReducer = (state, action) => {
 const currentUserReducer = (state, action) => {
   switch (action.type) {
     case 'Current_User':
-      return { ...state, user: action.payload };
+      return action.payload;
     default:
       return state;
   }

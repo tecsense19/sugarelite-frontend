@@ -5,6 +5,7 @@ import sugarBoy from '../../public/assets/sugar_boy.svg'
 import sugarMama from '../../public/assets/sugar_mama.svg'
 import sugarBabe from '../../public/assets/sugar_babe.svg'
 import boy_2 from '../../public/assets/boy_2.svg'
+import sugar_type from "/public/assets/sugar_type.svg"
 import chevron_right from '../../public/assets/chevron_right.svg'
 
 
@@ -35,8 +36,8 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
     return (
         <>
             <div className="text-center ">
-                <div className="bg-secondary h-20 w-20 flex justify-center items-center rounded-full">
-                    <Image src={boy_2} alt="boy" width={48} height={48} className="pointer-events-none select-none" />
+                <div className="flex justify-center items-center rounded-full">
+                    <Image src={sugar_type} alt="boy" width={165} height={125} className="pointer-events-none select-none" />
                 </div>
                 <p className="text-2xl sm:text-[20px] pt-5 sm:pt-[13px] font-medium">I am a</p>
             </div>
@@ -44,9 +45,9 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                 <div className="flex gap-x-6 gap-y-2 sm:gap-3 flex-wrap justify-center sm:flex-nowrap">
                     {
                         typeArray.map((type, inx) => (
-                            <div className={`${isValid === type.sugarType && "bg-secondary"} border border-transparent hover:border-secondary py-3 px-5 sm:px-3 sm:py-2 rounded-[5px] sm:w-full  sm:flex justify-center transition-all ease-linear duration-200`} key={inx}>
+                            <div className={`${isValid === type.sugarType && "bg-white"} border border-transparent hover:border-white py-3 px-5 sm:px-3 sm:py-2 rounded-[5px] sm:w-full  sm:flex justify-center transition-all ease-linear duration-200`} key={inx}>
                                 <label htmlFor={type.sugarType} className=" cursor-pointer ">
-                                    <p className="mb-[9px] font-bold text-[16px]">{type.sugarType}</p>
+                                    <p className={`mb-[9px] font-bold text-[16px] ${isValid === type.sugarType ? "text-primary-dark-5" : ""}`}>{type.sugarType}</p>
                                     <Image src={type.img} alt={type.sugarType} width={90} height={90} className=" min-w-[90px] rounded-full" priority />
                                 </label>
                                 <input type="radio" {...register("sugar_type")} onChange={(e) => setValue("sugar_type", e.target.value)} value={type.sugarType} className="hidden" id={type.sugarType} />
@@ -57,8 +58,8 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                 </div>
 
             </div>
-            <button className={`bg-secondary w-full max-w-[26rem] sm:max-w-full text-white text-opacity-[70%] h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
-                <div className="flex justify-center gap-[5px] font-bold ms-4">
+            <button className={`bg-white w-full max-w-[26rem] sm:max-w-full text-primary-dark-5 h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
+                <div className="flex justify-center gap-[5px] font-bold">
                     NEXT
                     <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                 </div>

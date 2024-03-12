@@ -6,7 +6,7 @@ const EditProfile = () => {
   return (
     <>
       <main className="lg:pt-[66px] bg-primary w-full">
-        <Index user={user} />
+        <Index decryptedUser={user} />
       </main>
     </>
   )

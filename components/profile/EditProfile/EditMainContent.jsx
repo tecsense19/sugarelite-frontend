@@ -9,7 +9,7 @@ import Image from 'next/image'
 import arrow_left from "/public/assets/arrow_left.svg";
 import Aos from 'aos'
 
-const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoList, privatePhotoList, setPrivatePhotoList }) => {
+const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoList, privatePhotoList, setPrivatePhotoList, decryptedUser, removalArray, setRemovalArray }) => {
 
     useEffect(() => {
         Aos.init()
@@ -23,13 +23,13 @@ const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoLis
             <div className="border-white lg:border-b border-opacity-20 lg:pb-[40px]" data-aos='zoom-in'>
                 <h1 className="text-[24px] font-bold lg:text-[30px]" data-aos='zoom-in'>Public Photos</h1>
                 <div className="mt-[20px] lg:mt-[25px]">
-                    <UploadPic control={control} name="public_photos" photoList={publicPhotoList} setPhotoList={setPublicPhotoList} />
+                    <UploadPic control={control} name="public_photos" photoList={publicPhotoList} setPhotoList={setPublicPhotoList} uploadedImages={decryptedUser.get_all_profileimg && decryptedUser.get_all_profileimg.filter((i) => i.image_type === "public")} setRemovalArray={setRemovalArray} />
                 </div>
             </div>
             <div className="border-white lg:border-b border-opacity-20 pt-[40px] lg:pb-[40px]  w-full" data-aos='zoom-in'>
                 <h1 className="text-[24px] font-bold lg:text-[30px]" data-aos='zoom-in'>Private Photos</h1>
                 <div className="mt-[20px] lg:mt-[25px]">
-                    <UploadPic control={control} name="private_photos" photoList={privatePhotoList} setPhotoList={setPrivatePhotoList} />
+                    <UploadPic control={control} name="private_photos" photoList={privatePhotoList} setPhotoList={setPrivatePhotoList} uploadedImages={decryptedUser.get_all_profileimg && decryptedUser.get_all_profileimg.filter((i) => i.image_type === "private")} setRemovalArray={setRemovalArray} />
                 </div>
             </div>
             <div className="border-white lg:border-b border-opacity-20 py-[40px]" data-aos='zoom-in'>
@@ -37,7 +37,7 @@ const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoLis
                 <div className="mt-[25px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-[20px] lg:gap-[30px]">
                     {
                         profile_select_options_appearance.map((type, inx) => {
-                            return <SelectBox name={type.name} options={type.options} text={type.text} key={inx} control={control} inx={inx} />
+                            return <SelectBox name={type.name} options={type.options} text={type.text} key={inx} control={control} inx={inx} decryptedUser={decryptedUser} />
                         })
                     }
                 </div>
@@ -47,7 +47,7 @@ const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoLis
                 <div className="mt-[25px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-[20px] lg:gap-[30px]">
                     {
                         profile_select_options_lifestyle.map((type, inx) => {
-                            return <SelectBox name={type.name} options={type.options} text={type.text} key={inx} control={control} inx={inx} />
+                            return <SelectBox name={type.name} options={type.options} text={type.text} key={inx} control={control} inx={inx} decryptedUser={decryptedUser} />
                         })
                     }
                 </div>

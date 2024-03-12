@@ -62,7 +62,7 @@ const Filters = ({ allUsers }) => {
   }, [])
 
   const submitHandler = () => {
-    console.log("Submit ::", watch())
+    // console.log("Submit ::", watch())
     const selectedMenu = watch();
     let dummyData = allUsers;
     // For name
@@ -170,14 +170,14 @@ const Filters = ({ allUsers }) => {
 
   const handleReset = () => {
     reset()
-    dispatch({ type: "all_users_data", payload: allUsers })
-    setDummyUsers(allUsers)
+    // dispatch({ type: "all_users_data", payload: allUsers })
+    // setDummyUsers(allUsers)
   }
 
   return (
     // Filter Section
     <div className="bg-primary-dark-3 h-full max-h-full overflow-y-auto min-w-[350px] xl:min-w-[380px] p-[30px] text-white filter-container hidden md:block" style={{ scrollbarWidth: "none" }} data-aos="fade-right" data-aos-duration="800">
-      <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px]" style={{ lineHeight: "normal" }} onClick={() => handleReset()}>
+      <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px] transition-all duration-150 hover:scale-[1.02]" style={{ lineHeight: "normal" }} onClick={() => handleReset()}>
         RESET SEARCH
       </button>
       <form onSubmit={handleSubmit(submitHandler)}>
@@ -296,7 +296,7 @@ const Filters = ({ allUsers }) => {
             )} />
           </label>
         </div>
-        <button type='submit' className='mt-[30px] text-white/80 text-[16px] font-[600] bg-secondary h-[56px] text-center w-full rounded-[5px]' style={{ lineHeight: "normal" }}>
+        <button type='submit' className='mt-[30px] text-white/80 text-[16px] font-[600] bg-secondary h-[56px] text-center w-full rounded-[5px] transition-all duration-150 hover:scale-[1.02]' style={{ lineHeight: "normal" }}>
           SAVE SEARCH
         </button>
         <div className='mt-[14px] text-[16px] font-[450] w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: {dummyUsers.length}</div>

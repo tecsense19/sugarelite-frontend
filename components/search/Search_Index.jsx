@@ -55,7 +55,7 @@ const Search_Index = ({ allUsers }) => {
                     </div>
             }
             <Filters allUsers={allUsers} />
-            {!isFilterOpen ? <Cards allUsers={allUsers} /> : <Mob_Filter />}
+            {!isFilterOpen ? <Cards allUsers={allUsers} /> : <Mob_Filter allUsers={allUsers} />}
         </div>
     )
 }

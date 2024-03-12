@@ -9,15 +9,15 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import dayjs from 'dayjs';
 import { useForm } from "react-hook-form"
-import chevronLeft from "../../../public/assets/chevron_left.svg"
-import bgMobileImg from "../../../public/assets/Group 427318831.png"
-import large_image from "../../../public/assets/large_image.png"
-import boy_small from "../../../public/assets/boy_small.svg"
-import pad_lock from "../../../public/assets/pad_lock.svg"
-import treasure_map from "../../../public/assets/treasure_map.svg"
-import calendar_3 from "../../../public/assets/calendar_3.svg"
-import check_mark from "../../../public/assets/check_mark.svg"
-import gmail from "../../../public/assets/gmail.svg"
+import chevronLeft from "/public/assets/chevron_left.svg"
+import bgMobileImg from "/public/assets/Group 427318831.png"
+import large_image from "/public/assets/large_image.png"
+import boy_small from "/public/assets/boy_small.svg"
+import pad_lock from "/public/assets/pad_lock.svg"
+import treasure_map from "/public/assets/treasure_map.svg"
+import calendar_3 from "/public/assets/calendar_3.svg"
+import check_mark from "/public/assets/check_mark.svg"
+import gmail from "/public/assets/gmail.svg"
 import { useRouter } from "next/navigation"
 import { client_notification, client_routes } from "@/app/lib/helpers"
 import { register_action } from "@/app/lib/actions"
@@ -96,7 +96,7 @@ const Register = () => {
 
 			<main className="sm:hidden block h-dvh ">
 				{contextHolder}
-				<div className="h-full w-full relative">
+				<div className={`h-full w-full relative ${nextStep === 6 ? "bg-white" : "bg-tinder"}`}>
 					<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto overflow-x-hidden">
 						{
 							nextStep === 1 && <Image src={chevronLeft} alt="back-btn" width={26} height={26} onClick={() => navigate.push(client_routes.home)} />
@@ -124,7 +124,7 @@ const Register = () => {
 							</form>
 						</div>
 					</div>
-					<Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full sm:hidden block object-cover object-top select-none pointer-events-none" />
+					{/* <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full sm:hidden block object-cover object-top select-none pointer-events-none" /> */}
 				</div>
 			</main>
 

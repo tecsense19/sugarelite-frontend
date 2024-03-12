@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import SearchedProfile from './searched_Profile/Buttons_Profile'
 import arrow_left from "../../public/assets/arrow_left.svg"
@@ -12,8 +12,17 @@ import edit from "../../public/assets/edit.svg"
 import premium from "../../public/assets/premium.svg"
 import PopOver from './commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
+import { useStore } from '@/store/store'
 
-const SideContent = ({ control, user }) => {
+const SideContent = ({ control, decryptedUser, setAvatar, register }) => {
+
+    const { state: { userState } } = useStore()
+
+    const [user, setUser] = useState(userState ? userState : decryptedUser)
+
+    useEffect(() => {
+        setUser(userState ? userState : decryptedUser)
+    }, [userState])
 
     const path = usePathname()
     const [profilPic, setProfilePic] = useState("")
@@ -36,6 +45,7 @@ const SideContent = ({ control, user }) => {
             obj.photo_url = file
         }
         setProfilePic(obj.photo_url)
+        setAvatar(files[0])
     }
 
     const calculateAge = (dob) => {
@@ -64,10 +74,10 @@ const SideContent = ({ control, user }) => {
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
                     {!profilPic
                         ? <>
-                            {user.avatar_url
+                            {user?.avatar_url
                                 ? <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
                                 : <div className={`bg-primary-dark-2 lg:bg-primary h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none flex justify-center items-center text-[50px] ${path === client_routes.edit_profile && "opacity-50"}`}>
-                                    {user.username.charAt(0)}
+                                    {user?.username.charAt(0)}
                                 </div>
                             }
                         </>
@@ -104,7 +114,7 @@ const SideContent = ({ control, user }) => {
                 </div>
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col items-center lg:items-start text-center lg:text-left" data-aos='zoom-in'>
-                        <div className='flex items-center'>
+                        <div className='flex items-center gap-6'>
                             <div className="text-[30px] font-bold leading-[30px] relative">
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
                                 {
@@ -113,10 +123,10 @@ const SideContent = ({ control, user }) => {
                                 }
                             </div>
                             {user && user?.premium &&
-                                <>
+                                <div className='flex items-center'>
                                     <Image src={premium} alt='edit' width={30} height={30} priority />
                                     <span className='text-[16px] font-semibold ms-2'>Premium</span>
-                                </>
+                                </div>
                             }
 
                         </div>
@@ -126,16 +136,31 @@ const SideContent = ({ control, user }) => {
                         </div>
                     </div>
                 </div>
+                {
+                    path === client_routes.profile &&
+                    <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
+                        <div className="p-4 text-[16px] font-light">
+                            {decryptedUser.bio ? decryptedUser.bio : "No Bio Added"}
+                        </div>
+                        <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
+                            <p className="text-[18px] font-medium">Biography</p>
+                        </div>
+                    </div>
+                }
 
-                <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
-                    <div className="p-4 text-[16px] font-light">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, cumque quas. Sint reiciendis commodi libero, sequi ipsam nam sed iusto odio perferendis voluptates eveniet ducimus nostrum quidem est. Voluptatum, voluptatibus?
+
+                {
+                    path === client_routes.edit_profile &&
+                    <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
+                        <div className=" text-[16px] font-light">
+                            <textarea {...register("bio")} id="bio" rows={5} placeholder='Enter Bio' className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
+                        </div>
+                        <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
+                            <p className="text-[18px] font-medium">Biography</p>
+                        </div>
                     </div>
-                    <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
-                        <p className="text-[18px] font-medium">Biography</p>
-                        <p className="text-[12px] font-medium text-white text-opacity-80">No Cinema</p>
-                    </div>
-                </div>
+                }
+
             </div>
         </div>
     )

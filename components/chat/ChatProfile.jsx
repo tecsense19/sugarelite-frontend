@@ -78,12 +78,12 @@ const ChatProfile = ({ selectedObj, setShowMobileProfile }) => {
         </div>
 
         <div className="w-full mt-[30px]" data-aos='zoom-in'>
-          <div className="bg-primary-dark-4 rounded-t-[5px] p-5 md:px-4 md:pt-4 md:pb-10 text-[16px] font-light leading-[22px] md:leading-[24px]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, cumque quas. Sint reiciendis commodi libero, sequi ipsam nam sed iusto odio perferendis voluptates eveniet ducimus nostrum quidem est. Voluptatum, voluptatibus?
+          <div className="bg-primary-dark-4 rounded-t-[5px] p-5 md:px-4 md:pt-4 md:pb-4 text-[16px] font-light leading-[22px] md:leading-[24px]">
+            {selectedObj.bio ? selectedObj.bio : "No Bio added"}
           </div>
           <div className="bg-primary-dark-3 2xl:bg-primary px-5 md:px-[24px] py-[13px] md:pt-[11px] md:pb-[15px] rounded-b-[5px]">
             <p className="text-[18px] font-medium leading-[normal] text-white/80">Biography</p>
-            <p className="mt-[7px] text-[12px] font-medium leading-[normal] text-white/80">No Cinema</p>
+            {/* <p className="mt-[7px] text-[12px] font-medium leading-[normal] text-white/80">No Cinema</p> */}
           </div>
         </div>
       </div>

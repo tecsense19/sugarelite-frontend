@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { server_routes } from "./helpers"
 import CryptoJS from "crypto-js"
 import { loadStripe } from "@stripe/stripe-js"
+import { setCookie } from "nookies"
 
 
 export const getCountries = async () => {
@@ -45,6 +46,13 @@ export const newsletter_action = async (email) => {
     })
     const data = await res.json()
     return data
+}
+
+export const encrypt_user = (token) => {
+    if (token) {
+        console.log(token)
+        cookies().set("user", token)
+    }
 }
 
 export const decrypt_user = () => {

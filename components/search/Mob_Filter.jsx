@@ -6,12 +6,16 @@ import { Controller, useForm } from "react-hook-form"
 import chevron_down from "/public/assets/chevron-down.svg"
 import Image from "next/image"
 import Mob_Checkbox from "./Mob_Checkbox"
+import { useStore } from "@/store/store"
 
 const { Option } = Select;
 
-const Mob_Filter = () => {
+const Mob_Filter = ({ allUsers }) => {
 
     const { register, handleSubmit, control, watch, reset, setValue } = useForm()
+    const [dummyUsers, setDummyUsers] = useState(allUsers);
+
+    const { dispatch } = useStore()
 
     const sugarType = watch("sugar_type")
 
@@ -22,30 +26,126 @@ const Mob_Filter = () => {
     })
 
     const typeArray = [
-        {
-            sugarType: "Elite Daddy",
-        },
-        {
-            sugarType: "Elite Boy",
-        },
-        {
-            sugarType: "Elite Mama",
-        },
-        {
-            sugarType: "Elite Babe",
-        }
+        { name: "Elite Daddy", value: "eliteDaddy" },
+        { name: "Elite Boy", value: "eliteBoy" },
+        { name: "Elite Mama", value: "eliteMama" },
+        { name: "Elite Babe", value: "eliteBabe" }
     ]
 
     const countries = [
-        { img: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg", name: "Denmark", value: "denmark" },
-        { img: "https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg", name: "India", value: "india" },
-        { img: "https://upload.wikimedia.org/wikipedia/commons/7/72/Flag_of_the_Republic_of_China.svg", name: "China", value: "china" },
-        { img: "https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg", name: "Japan", value: "japan" },
-        { img: "https://upload.wikimedia.org/wikipedia/en/4/4c/Flag_of_Sweden.svg", name: "Sweden", value: "sweden" }
+        { img: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg", name: "Denmark", value: "Denmark" },
+        { img: "https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg", name: "India", value: "India" },
+        { img: "https://upload.wikimedia.org/wikipedia/commons/7/72/Flag_of_the_Republic_of_China.svg", name: "China", value: "China" },
+        { img: "https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg", name: "Japan", value: "Japan" },
+        { img: "https://upload.wikimedia.org/wikipedia/en/4/4c/Flag_of_Sweden.svg", name: "Sweden", value: "Sweden" }
     ]
 
     const submitHandler = (data) => {
-        console.log(data)
+        // console.log("Submit ::", watch())
+        const selectedMenu = watch();
+        let dummyData = allUsers;
+        // For name
+        dummyData = dummyData.filter((item) => {
+            if (item.username.toLowerCase().includes(selectedMenu.name.toLowerCase())) {
+                return true
+            } else {
+                return false
+            }
+        })
+
+        // For age
+        dummyData = dummyData.filter((item) => {
+            if (item.age) {
+                if (selectedMenu.age_from <= item.age && selectedMenu.age_to >= item.age) {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        })
+
+        // For sugartype
+        if (selectedMenu.sugar_type) {
+            dummyData = dummyData.filter((item) => {
+                if (selectedMenu.sugar_type === item.sugar_type) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+
+        // For Country
+        if (selectedMenu.country) {
+            dummyData = dummyData.filter((item) => {
+                if (selectedMenu.country === item.country) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+
+        // For Region
+        if (selectedMenu.region) {
+            dummyData = dummyData.filter((item) => {
+                if (selectedMenu.region === item.region) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+
+        // For has profile picture
+        if (selectedMenu.has_profile_picture) {
+            dummyData = dummyData.filter((item) => {
+                if (item.avatar_url) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+
+        // For has public picture
+        if (selectedMenu.has_public_photos) {
+            dummyData = dummyData.filter((item) => {
+                if (item.get_all_profileimg && item.get_all_profileimg.length) {
+                    let flag = false;
+                    for (let tempObj of item.get_all_profileimg) {
+                        if (tempObj.image_type === "public") {
+                            flag = true;
+                            break
+                        }
+                    }
+                    if (flag) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return false
+                }
+            })
+        }
+
+        // For is verified
+        if (selectedMenu.is_verified) {
+            dummyData = dummyData.filter((item) => {
+                if (item.premium !== "false") {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        // console.log("dummyData :: ", dummyData)
+        dispatch({ type: "all_users_data", payload: dummyData })
+        setDummyUsers(dummyData)
+        dispatch({ type: "Filter_Close" })
     }
 
     const customSliderTheme = {
@@ -95,9 +195,9 @@ const Mob_Filter = () => {
                 </div>
                 <div className="mt-[25px]">
                     <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age from ( {watch("age_from")} )</div>
-                    <Controller name="age_from" control={control} defaultValue={18} render={({ field }) => (
+                    <Controller name="age_from" control={control} defaultValue={1} render={({ field }) => (
                         <ConfigProvider theme={customSliderTheme}>
-                            <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_from > 19 ? "!ms-0" : "!ms-[10px]"} ${age.age_from > 97 && "!me-[10px]"}`} min={18} max={99}
+                            <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_from > 2 ? "!ms-0" : "!ms-[10px]"} ${age.age_from > 97 && "!me-[10px]"}`} min={1} max={99}
                                 onChange={(val) => { (val <= watch("age_to")) ? setValue("age_from", val) : setValue("age_to", val); setValue("age_from", val) }}
                             />
                         </ConfigProvider>
@@ -105,9 +205,9 @@ const Mob_Filter = () => {
                 </div>
                 <div className="mt-[25px]">
                     <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age to ( {watch("age_to")} )</div>
-                    <Controller name="age_to" control={control} defaultValue={30} render={({ field }) => (
+                    <Controller name="age_to" control={control} defaultValue={99} render={({ field }) => (
                         <ConfigProvider theme={customSliderTheme}>
-                            <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_to > 19 ? "!ms-0" : "!ms-[10px]"} ${age.age_to > 97 && "!me-[10px]"}`} min={18} max={99}
+                            <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_to > 2 ? "!ms-0" : "!ms-[10px]"} ${age.age_to > 97 && "!me-[10px]"}`} min={1} max={99}
                                 onChange={(val) => { (watch("age_from") <= val) ? setValue("age_to", val) : setValue("age_from", val); setValue("age_to", val) }} />
                         </ConfigProvider>
                     )} />
@@ -117,16 +217,16 @@ const Mob_Filter = () => {
                     <div className="grid grid-cols-2 w-full gap-4 text-center mt-[15px]">
                         {
                             typeArray.map((type, inx) => (
-                                <label htmlFor={type.sugarType} key={inx} className={`w-full border-primary_border border rounded-[50px] h-[30px] flex items-center justify-center cursor-pointer ${sugarType === type.sugarType && "bg-secondary border-0"}`}>
-                                    <input type="radio" className="hidden" id={type.sugarType} {...register("sugar_type")} value={type.sugarType} />
-                                    <span className="text-center text-[16px] font-medium leading-[normal] cursor-pointer">{type.sugarType}</span>
+                                <label htmlFor={type.value} key={inx} className={`w-full border-primary_border border rounded-[50px] h-[30px] flex items-center justify-center cursor-pointer ${sugarType === type.value && "bg-secondary border-0"}`}>
+                                    <input type="radio" className="hidden" id={type.value} {...register("sugar_type")} value={type.value} />
+                                    <span className="text-center text-[16px] font-medium leading-[normal] cursor-pointer">{type.name}</span>
                                 </label>
                             ))
                         }
                     </div>
                 </div>
                 <div className='mt-[25px] flex justify-center items-center relative country-container_filter w-full'>
-                    <Controller name="country" control={control} defaultValue={countries[0]} render={({ field }) => (
+                    <Controller name="country" control={control} render={({ field }) => (
                         <ConfigProvider theme={customDropdownTheme}>
                             <Select {...field} placeholder="Select Country" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                                 className="w-full text-[16px] font-[400] text-white/80"
@@ -177,7 +277,7 @@ const Mob_Filter = () => {
                 <button className='mt-[30px] text-white/80 text-[16px] font-[600] bg-secondary h-[42px] text-center w-full rounded-[5px]' style={{ lineHeight: "normal" }}>
                     SAVE SEARCH
                 </button>
-                <div className='mt-[15px] text-[16px] font-medium w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: 499</div>
+                <div className='mt-[15px] text-[16px] font-medium w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: {dummyUsers.length}</div>
             </form>
         </div>
     )

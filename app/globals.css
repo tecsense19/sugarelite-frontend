@@ -32,7 +32,7 @@ input:-webkit-autofill:active {
 }
 
 button:disabled {
-  @apply !bg-secondary/50
+  @apply !bg-white/50
 }
 
 .region_dropdown .ant-select-selector {
@@ -257,4 +257,9 @@ button:disabled {
   100% {
     transform: rotate(1800deg);
   }
+}
+
+.bg-tinder {
+  /* background: linear-gradient(270deg, #FF695B 0%, #FE426F 100%); */
+  @apply bg-gradient-to-l from-tinder-1 from-0% to-tinder-2 to-100%;
 }

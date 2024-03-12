@@ -67,7 +67,7 @@ const MainHeader = ({ user }) => {
                 </Link>
                 : <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
                   {user?.avatar_url
-                    ? <Image height={40} width={40} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer" priority onClick={() => router.push(client_routes.profile)} />
+                    ? <Image height={40} width={40} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full" priority onClick={() => router.push(client_routes.profile)} />
                     : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{user?.username.charAt(0)}</div>
                   }
                 </Link>

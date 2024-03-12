@@ -6,11 +6,12 @@ import SideContent from "@/components/profile/SideContent"
 const Profile = () => {
 
   const user = decrypt_user()
+
   return (
     <>
       <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full">
-        <SideContent user={user} />
-        <ProfileMainContent user={user} />
+        <SideContent decryptedUser={user} />
+        <ProfileMainContent decryptedUser={user} />
       </main>
     </>
   )

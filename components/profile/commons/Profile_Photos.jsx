@@ -2,11 +2,6 @@
 import Image from "next/image"
 
 const Profile_Photos = ({ title, list }) => {
-
-    // console.log(list)
-
-
-
     return (
         <div className="mb-[40px]">
             <h1 className="text-[24px] font-bold lg:text-[30px] " data-aos='zoom-in' data-aos-anchor-placement="bottom">{title}</h1>

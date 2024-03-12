@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <AntdRegistry>
         <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
           <StoreProvider>
-            <Header user={user} />
+            <Header decryptedUser={user} />
             {children}
           </StoreProvider>
         </body>
