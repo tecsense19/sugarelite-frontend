@@ -49,7 +49,7 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) =>
                                         colorBgContainerDisabled: "transparent",
                                         colorBorder: "white",
                                         colorBgContainer: "transparent",
-                                        colorPrimary: "white",
+                                        colorPrimary: "#535353",
                                         borderRadius: '5px',
                                         colorTextPlaceholder: "rgba(225,225,225,.7)",
                                         colorIcon: "black",
