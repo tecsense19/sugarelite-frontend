@@ -10,12 +10,15 @@ import profile_icon from "../../public/assets/Profile-icon.svg"
 import { useStore } from "@/store/store"
 import { logout_user } from "@/app/lib/actions"
 import Link from "next/link"
+import Notification from "../common/Notification"
+import { useState } from "react"
 
-const MainHeader = ({ user }) => {
+const MainHeader = ({ user, notifications, allUsers }) => {
   const pathname = usePathname()
   const router = useRouter()
 
   const { state: { userState }, dispatch } = useStore()
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const handleLogout = () => {
     logout_user()
@@ -39,7 +42,7 @@ const MainHeader = ({ user }) => {
           </div>
           <div className="flex items-center me-[72px]">
             <div className="flex flex-row gap-x-[30px] me-[35px]">
-              <button className="transition-all duration-150 hover:scale-110">
+              <button className="transition-all duration-150 hover:scale-110" onClick={() => setIsDrawerOpen(isDrawerOpen ? false : true)}>
                 <Image height={20} width={20} src={notification} alt="" />
               </button>
               <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110">
@@ -67,7 +70,7 @@ const MainHeader = ({ user }) => {
                 </Link>
                 : <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
                   {user?.avatar_url
-                    ? <Image height={40} width={40} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full" priority onClick={() => router.push(client_routes.profile)} />
+                    ? <Image height={40} width={40} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full aspect-square" priority onClick={() => router.push(client_routes.profile)} />
                     : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{user?.username.charAt(0)}</div>
                   }
                 </Link>
@@ -75,6 +78,7 @@ const MainHeader = ({ user }) => {
           </div>
         </div>
       </header>
+      <Notification open={isDrawerOpen} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} />
     </>
   )
 }

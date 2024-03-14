@@ -30,6 +30,8 @@ const Index = ({ decryptedUser }) => {
     const [privatePhotoList, setPrivatePhotoList] = useState([])
     const [removalArray, setRemovalArray] = useState([])
     const [avatar, setAvatar] = useState(decryptedUser.avatar_url)
+    const [isLoading, setIsLoading] = useState(false)
+    const [progress, setProgress] = useState(0)
 
     const [api, contextHolder] = notification.useNotification();
 
@@ -50,6 +52,8 @@ const Index = ({ decryptedUser }) => {
 
 
     const editHanlder = async (data) => {
+        setIsLoading(true)
+        window.scrollTo({ top: 0, behavior: "smooth" })
         let obj = {}
         for (let key in data) {
             if (data[key]) {
@@ -74,20 +78,22 @@ const Index = ({ decryptedUser }) => {
             }
         }
 
-
-        console.log(formData.get("avatar_url"))
         try {
             const { data } = await axios.post(server_routes.register, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
+                },
+                onUploadProgress: (e) => {
+                    let progressBar = Math.round((e.loaded * 100) / e.total)
+                    setProgress(progressBar)
                 }
             })
             if (data.success) {
-                console.log(data.user)
                 dispatch({ type: "Current_User", payload: data.user })
                 client_notification(api, "topRight", 'success', data.message, 4)
                 const token = CryptoJS.AES.encrypt(JSON.stringify(data.user), "SecretKey").toString()
                 setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+                setIsLoading(false)
                 navigate.replace(client_routes.profile)
             }
         } catch (error) {
@@ -100,7 +106,7 @@ const Index = ({ decryptedUser }) => {
             {contextHolder}
             <form onSubmit={handleSubmit(editHanlder)} className='w-full overflow-x-hidden flex flex-col lg:flex-row'>
                 <SideContent decryptedUser={user} control={control} setValue={setValue} setAvatar={setAvatar} register={register} />
-                <EditMainContent decryptedUser={user} control={control} setValue={setValue} publicPhotoList={publicPhotoList} setPrivatePhotoList={setPrivatePhotoList} privatePhotoList={privatePhotoList} setPublicPhotoList={setPublicPhotoList} setRemovalArray={setRemovalArray} />
+                <EditMainContent progress={progress} decryptedUser={user} control={control} setValue={setValue} publicPhotoList={publicPhotoList} setPrivatePhotoList={setPrivatePhotoList} privatePhotoList={privatePhotoList} setPublicPhotoList={setPublicPhotoList} setRemovalArray={setRemovalArray} isLoading={isLoading} />
             </form>
         </>
     )

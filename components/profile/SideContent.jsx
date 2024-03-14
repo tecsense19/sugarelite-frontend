@@ -13,8 +13,10 @@ import premium from "../../public/assets/premium.svg"
 import PopOver from './commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import { useStore } from '@/store/store'
+import lock_1 from "/public/assets/lock_1.svg"
+import prohibition from "/public/assets/prohibition.svg"
 
-const SideContent = ({ control, decryptedUser, setAvatar, register }) => {
+const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileToggle }) => {
 
     const { state: { userState } } = useStore()
 
@@ -122,7 +124,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register }) => {
                                     <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
                                 }
                             </div>
-                            {user && user?.premium &&
+                            {user && user?.is_subscribe &&
                                 <div className='flex items-center'>
                                     <Image src={premium} alt='edit' width={30} height={30} priority />
                                     <span className='text-[16px] font-semibold ms-2'>Premium</span>
@@ -140,7 +142,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register }) => {
                     path === client_routes.profile &&
                     <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                         <div className="p-4 text-[16px] font-light">
-                            {decryptedUser.bio ? decryptedUser.bio : "No Bio Added"}
+                            <p className='line-clamp-3'>{decryptedUser.bio ? decryptedUser.bio : "No Bio Added"}</p>
                         </div>
                         <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
                             <p className="text-[18px] font-medium">Biography</p>
@@ -153,11 +155,26 @@ const SideContent = ({ control, decryptedUser, setAvatar, register }) => {
                     path === client_routes.edit_profile &&
                     <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                         <div className=" text-[16px] font-light">
-                            <textarea {...register("bio")} id="bio" rows={5} placeholder='Enter Bio' className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
+                            <textarea {...register("bio")} defaultValue={decryptedUser.bio} id="bio" rows={5} placeholder='Enter Bio' className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
                         </div>
                         <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
                             <p className="text-[18px] font-medium">Biography</p>
                         </div>
+                    </div>
+                }
+
+                {
+                    path === client_routes.profile &&
+                    <div className='w-full flex flex-col gap-y-[10px] mt-[26px] lg:mt-0 sm:max-w-[75%] md:max-w-full'>
+                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-primary-dark-4 w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("photo")}>
+                            <Image src={lock_1} width={24} height={24} alt='message' className='inline-block h-[22px] lg:h-[24px]' />
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>photo access</span>
+                        </button>
+                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-[#CD0000] w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("block")}>
+                            <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>block list</span>
+                        </button>
+
                     </div>
                 }
 

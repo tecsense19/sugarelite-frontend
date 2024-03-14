@@ -151,6 +151,12 @@ export const private_image_access = async (form) => {
     return data
 }
 
+export const private_album_notification = async () => {
+    const res = await fetch(server_routes.private_album_notification, { cache: "no-cache" })
+    const data = await res.json()
+    return data
+}
+
 export const friends_list_action = async (id) => {
     const res = await fetch(server_routes.friends_list, {
         method: "POST",

@@ -9,7 +9,7 @@ import Image from 'next/image'
 import arrow_left from "/public/assets/arrow_left.svg";
 import Aos from 'aos'
 
-const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoList, privatePhotoList, setPrivatePhotoList, decryptedUser, removalArray, setRemovalArray }) => {
+const EditMainContent = ({ control, progress, publicPhotoList, setPublicPhotoList, privatePhotoList, setPrivatePhotoList, decryptedUser, setRemovalArray, isLoading }) => {
 
     useEffect(() => {
         Aos.init()
@@ -23,13 +23,13 @@ const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoLis
             <div className="border-white lg:border-b border-opacity-20 lg:pb-[40px]" data-aos='zoom-in'>
                 <h1 className="text-[24px] font-bold lg:text-[30px]" data-aos='zoom-in'>Public Photos</h1>
                 <div className="mt-[20px] lg:mt-[25px]">
-                    <UploadPic control={control} name="public_photos" photoList={publicPhotoList} setPhotoList={setPublicPhotoList} uploadedImages={decryptedUser.get_all_profileimg && decryptedUser.get_all_profileimg.filter((i) => i.image_type === "public")} setRemovalArray={setRemovalArray} />
+                    <UploadPic progress={progress} control={control} name="public_photos" photoList={publicPhotoList} setPhotoList={setPublicPhotoList} uploadedImages={decryptedUser.get_all_profileimg && decryptedUser.get_all_profileimg.filter((i) => i.image_type === "public")} setRemovalArray={setRemovalArray} />
                 </div>
             </div>
             <div className="border-white lg:border-b border-opacity-20 pt-[40px] lg:pb-[40px]  w-full" data-aos='zoom-in'>
                 <h1 className="text-[24px] font-bold lg:text-[30px]" data-aos='zoom-in'>Private Photos</h1>
                 <div className="mt-[20px] lg:mt-[25px]">
-                    <UploadPic control={control} name="private_photos" photoList={privatePhotoList} setPhotoList={setPrivatePhotoList} uploadedImages={decryptedUser.get_all_profileimg && decryptedUser.get_all_profileimg.filter((i) => i.image_type === "private")} setRemovalArray={setRemovalArray} />
+                    <UploadPic progress={progress} control={control} name="private_photos" photoList={privatePhotoList} setPhotoList={setPrivatePhotoList} uploadedImages={decryptedUser.get_all_profileimg && decryptedUser.get_all_profileimg.filter((i) => i.image_type === "private")} setRemovalArray={setRemovalArray} />
                 </div>
             </div>
             <div className="border-white lg:border-b border-opacity-20 py-[40px]" data-aos='zoom-in'>
@@ -52,8 +52,16 @@ const EditMainContent = ({ control, setValue, publicPhotoList, setPublicPhotoLis
                     }
                 </div>
             </div>
-            <div className='text-center pb-[50px]' data-aos='zoom-in' data-aos-anchor-placement="bottom">
-                <button className='text-[16px] font-[600] lg:font-[500] bg-secondary h-[42px] w-[191px] rounded-[5px] transition-all duration-150 hover:scale-105' type='submit'>SAVE PROFILE</button>
+            <div className='text-center pb-[50px] flex' data-aos='zoom-in' data-aos-anchor-placement="bottom">
+                {
+                    !isLoading &&
+                    <button className='text-[16px] mx-auto font-[600] lg:font-[500] bg-secondary h-[42px] w-[191px] rounded-[5px] transition-all duration-150 hover:scale-105' type='submit'>SAVE PROFILE</button>
+                }
+                {
+                    isLoading && <div className='text-[16px] flex justify-center font-[600] lg:font-[500] bg-secondary h-[42px] w-[191px] rounded-[5px] transition-all duration-150 hover:scale-105 mx-auto' type='submit'>
+                        <p className='loader'></p>
+                    </div>
+                }
             </div>
         </div>
     )

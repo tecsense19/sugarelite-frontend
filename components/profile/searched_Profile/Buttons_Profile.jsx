@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import message_circle from "../../../public/assets/message_circle.svg"
 import lock_1 from "../../../public/assets/lock_1.svg"
 import PopOver from '../commons/PopOver'
@@ -8,11 +8,25 @@ import more_horizontal from "../../../public/assets/more_horizontal.svg"
 import { private_image_access } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
 import { notification } from 'antd'
-import { client_notification, client_routes } from '@/app/lib/helpers'
+import { client_notification, client_routes, socket_server } from '@/app/lib/helpers'
 import { useRouter } from 'next/navigation'
+import { io } from 'socket.io-client'
+
+let socket;
 
 const Buttons_Profile = ({ user }) => {
-    // console.log(user.username)
+
+    useEffect(() => {
+        socket = io(socket_server)
+
+
+        return () => {
+            if (socket) {
+                socket.disconnect()
+            }
+        }
+    }, [])
+
 
     const { state: { userState, toMessageState }, dispatch } = useStore()
 
@@ -24,6 +38,7 @@ const Buttons_Profile = ({ user }) => {
         if (type === "request_view_album") {
             const res = await private_image_access({ sender_id: userState?.id, receiver_id: user.id })
             if (res.success) {
+                console.log(res)
                 client_notification(api, "topRight", "success", res?.message, 4)
             }
         } else {

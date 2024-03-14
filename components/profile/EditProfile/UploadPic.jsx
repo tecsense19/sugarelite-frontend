@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import cross from "../../../public/assets/cross.svg"
 
-const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalArray }) => {
+const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalArray, progress }) => {
 
     // const [photoList, setPhotoList] = useState([])
 
@@ -76,7 +76,6 @@ const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalAr
             colorBgElevated: "#000",
         }
     }
-    // console.log(uploadedImages)
 
     return (
         <div className='grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-[14px]'>
@@ -121,6 +120,7 @@ const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalAr
                             </Popconfirm>
                         </ConfigProvider>
                         <Image src={photo.photo_url ? photo.photo_url : photo.public_images} width={1000} height={1000} alt="person" className="h-full w-full select-none pointer-events-none border-dashed border border-[#ffffff70] rounded-[5px] object-contain object-center overflow-hidden" />
+                        <progress id="progressBar" value={progress} max="100" className='absolute w-full h-2 bottom-0 rounded-[5px]'></progress>
                     </div>
                 })
             }

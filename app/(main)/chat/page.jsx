@@ -30,7 +30,7 @@ const Chat = async () => {
   if (allUsers.success && chatList.success) {
     return (
       <>
-        <ChatIndex users={friendsList} currentUser={currentUser} chatList={user_chats} />
+        <ChatIndex users={friendsList} decryptedUser={currentUser} chatList={user_chats} />
       </>
     )
   }

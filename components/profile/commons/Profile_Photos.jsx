@@ -1,7 +1,9 @@
 "use client"
 import Image from "next/image"
+import Loader from "/public/assets/loading.gif"
 
 const Profile_Photos = ({ title, list }) => {
+
     return (
         <div className="mb-[40px]">
             <h1 className="text-[24px] font-bold lg:text-[30px] " data-aos='zoom-in' data-aos-anchor-placement="bottom">{title}</h1>
@@ -9,7 +11,7 @@ const Profile_Photos = ({ title, list }) => {
                 {
                     list && list.map((img, index) => {
                         return (
-                            <div className="aspect-square relative " key={index} data-aos='zoom-in' data-aos-anchor-placement="bottom">
+                            <div id={`img_${index}`} className="aspect-square relative" key={index} data-aos='zoom-in' data-aos-anchor-placement="bottom">
                                 {!img.public_images.includes("http://localhost/SugarElite/storage/app/public/") &&
                                     <Image src={img.public_images} width={1000} height={1000} alt="person" className="h-full border border-dashed border-[#8A8A8A] w-full select-none pointer-events-none  rounded-[5px] object-contain object-center overflow-hidden" />
                                 }

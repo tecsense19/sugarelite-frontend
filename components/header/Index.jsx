@@ -7,7 +7,7 @@ import MainHeader from "./MainHeader"
 import { useEffect, useState } from "react"
 import { useStore } from "@/store/store"
 
-const Header = ({ decryptedUser }) => {
+const Header = ({ decryptedUser, notifications, allUsers }) => {
   const pathname = usePathname()
 
   const { state: { userState } } = useStore()
@@ -25,8 +25,8 @@ const Header = ({ decryptedUser }) => {
 
   return (
     <>
-      {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname === client_routes.discover || pathname === client_routes.chat)
-        ? <MainHeader user={user} />
+      {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname === client_routes.discover || pathname === client_routes.chat || pathname === client_routes.subscription)
+        ? <MainHeader user={user} notifications={notifications} allUsers={allUsers} />
         : <AuthHeader />
       }
     </>

@@ -5,7 +5,15 @@ import ChatList from "@/components/chat/ChatList"
 import { useStore } from "@/store/store"
 import { useEffect, useState } from "react"
 
-const ChatIndex = ({ users, currentUser, chatList }) => {
+const ChatIndex = ({ users, decryptedUser, chatList }) => {
+
+    const { state: { userState } } = useStore()
+
+    const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
+
+    useEffect(() => {
+        setCurrentUser(userState ? userState : decryptedUser)
+    }, [userState])
 
     const [profiles, setProfiles] = useState(users);
     const [selectedObj, setSelectedObj] = useState("");

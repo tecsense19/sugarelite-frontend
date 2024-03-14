@@ -7,19 +7,19 @@ import PopOver from "@/components/profile/commons/PopOver"
 import more_horizontal from "../../../../public/assets/more_horizontal.svg"
 import { all_profiles_action, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
-import { client_routes } from "@/app/lib/helpers"
+import { client_routes, server_routes } from "@/app/lib/helpers"
 
-export async function generateStaticParams() {
-  const res = await all_profiles_action()
-  let arr = []
-  function gen() {
-    res.data.forEach(element => {
-      arr.push({ id: element.id.toString() })
-    });
-  }
-  gen()
-  return arr
-}
+// export async function generateStaticParams() {
+//   const res = await all_profiles_action()
+//   let arr = []
+//   function gen() {
+//     res.data.forEach(element => {
+//       arr.push({ id: element.id.toString() })
+//     });
+//   }
+//   gen()
+//   return arr
+// }
 
 
 const ProfileId = async ({ params }) => {
@@ -41,7 +41,7 @@ const ProfileId = async ({ params }) => {
               <Image src={ReportIcon} alt="report" width={18} height={18} />
               <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">RAPPORTER</span>
             </button>
-            <button className="w-full h-[38px] 2xl:h-[42px] bg-[#EF4444] rounded-[5px] flex justify-start items-center px-[19px]">
+            <button className="w-full h-[38px] 2xl:h-[42px] bg-[#CD0000] rounded-[5px] flex justify-start items-center px-[19px]">
               <Image src={BlockIcon} alt="block" width={18} height={18} />
               <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">BLOCKER</span>
             </button>

@@ -27,6 +27,14 @@ input:-webkit-autofill:active {
   -webkit-text-size-adjust: 17px;
 }
 
+progress::-webkit-progress-value {
+  @apply bg-secondary rounded-[5px]
+}
+
+progress::-webkit-progress-bar {
+  @apply rounded-[5px] bg-transparent
+}
+
 .font-myriad {
   font-family: "Myriad Pro Regular";
 }
@@ -142,6 +150,16 @@ button:disabled {
 
 .country-container_filter .ant-select-selection-search {
   @apply !px-[8px]
+}
+
+/* notification drawer */
+
+.ant-drawer-content-wrapper {
+  @apply w-full lg:w-[467px] !important
+}
+
+.ant-drawer:focus-visible {
+  @apply !outline-none
 }
 
 /* swipe card start */

@@ -6,17 +6,24 @@ import reportIcon from "../../public/assets/chat_report_icon.svg";
 import blockIcon from "../../public/assets/chat_block_icon.svg";
 import optionsIcon from "../../public/assets/chat_options_icon.svg";
 import arrowLeft from "../../public/assets/arrow_left.svg";
+import { useRouter } from "next/navigation";
+import { client_routes } from "@/app/lib/helpers";
 
-const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatContent, setShowMobileProfile }) => {
+const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatContent, setShowMobileProfile, showMobileProfile }) => {
   const [showOptions, setShowOptions] = useState(false);
+  const navigate = useRouter()
 
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
   }
 
   const onProfileClick = () => {
-    setDrawerOpen(true)
-    setShowMobileProfile(true)
+    if (window.innerWidth < 1537) {
+      setDrawerOpen(true)
+      setShowMobileProfile(true)
+    } else {
+      navigate.replace(`${client_routes.profile}/${selectedObj.id}`)
+    }
   }
 
   return (
@@ -26,7 +33,7 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
           <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
         </button>
         <div className="flex items-center">
-          <button className="flex items-center 2xl:pointer-events-none" onClick={onProfileClick}>
+          <button className="flex items-center" onClick={onProfileClick}>
             {
               selectedObj.avatar_url ?
                 <Image src={selectedObj.avatar_url} alt="" height={60} width={60} priority className="hidden min-h-[60px] md:flex pointer-events-none rounded-full" />

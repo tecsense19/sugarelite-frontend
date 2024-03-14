@@ -119,7 +119,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
                   <>
                     {
                       user.avatar_url ? <>
-                        <Image src={Img1} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
+                        <Image src={user.avatar_url} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
                       </> : <>
                         <p className='h-[50px] w-[50px] bg-primary-dark text-[24px] justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
                       </>

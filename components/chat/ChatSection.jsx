@@ -164,7 +164,7 @@ const ChatSection = ({ selectedObj, profiles, showMobileChatContent, setShowMobi
         <div className="flex h-full">
           {(showMobileProfile === false || window.innerWidth > 768) &&
             <div className="w-full 2xl:w-[calc(100%-400px)] flex flex-col h-full" data-aos='fade-up'>
-              <ChatSectionHeader setDrawerOpen={setDrawerOpen} selectedObj={selectedObj} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} />
+              <ChatSectionHeader showMobileProfile={showMobileProfile} setDrawerOpen={setDrawerOpen} selectedObj={selectedObj} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} />
               <div className="h-[calc(100%-60px)] md:h-[calc(100%-101px)] flex flex-col justify-end ">
                 <div className="h-full w-full  p-4 md:py-5 md:px-10 overflow-hidden">
                   <div className="relative w-full  h-full flex flex-col justify-end">
