@@ -1,5 +1,5 @@
 "use client"
-import { client_routes } from "@/app/lib/helpers"
+import { client_routes, socket_server } from "@/app/lib/helpers"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import logo from "../../public/assets/Logo (1).svg"
@@ -11,7 +11,8 @@ import { useStore } from "@/store/store"
 import { logout_user } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
 
 const MainHeader = ({ user, notifications, allUsers }) => {
   const pathname = usePathname()
@@ -25,6 +26,9 @@ const MainHeader = ({ user, notifications, allUsers }) => {
     dispatch({ type: "Current_User", payload: "" })
     router.push(client_routes.home)
   }
+
+
+
   return (
     <>
       {/* {/ Mobile View /} */}
@@ -48,13 +52,8 @@ const MainHeader = ({ user, notifications, allUsers }) => {
               <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110">
                 <Image height={20} width={20} src={messages} alt="" className="" />
               </Link>
-              {/* <label className="bg-primary px-3 py-[7px] rounded-[5px] h-[32px] w-[193px] mx-[30px] flex items-center">
-                <Image height={18} width={18} src={search} className="mr-3" alt="" priority />
-                <input type="text" placeholder="Search" className="w-full bg-transparent outline-none border-0 text-[12px] font-light" style={{ lineHeight: "normal" }} />
-              </label> */}
               <Link href={client_routes.search} className="py-[7px] rounded-[5px] h-[32px] flex items-center transition-all duration-150 hover:scale-110">
                 <Image height={18} width={18} src={search} className="" alt="" priority />
-                {/* {/ <input type="text" placeholder="Search" className="w-full bg-transparent outline-none border-0 text-[12px] font-light" style={{ lineHeight: "normal" }} /> /} */}
               </Link>
             </div>
             <button className="h-8 w-[78px] me-[35px] rounded-[5px] flex items-center justify-center bg-secondary text-[12px] font-semibold leading-[normal] transition-all duration-150 hover:scale-105" onClick={handleLogout}>

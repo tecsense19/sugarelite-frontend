@@ -66,17 +66,29 @@ const allUsersDataReducer = (state, action) => {
   }
 }
 
+const notificationReducer = (state, action) => {
+  switch (action.type) {
+    case 'Open_Notification':
+      return action.payload;
+    case 'Close_Notification':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
   toMessageState: messageToReducer(toMessageState, action),
   allUsersState: allUsersDataReducer(allUsersState, action),
-  chatsState: chatReducer(chatsState, action)
+  chatsState: chatReducer(chatsState, action),
+  notificationOpenState: notificationReducer(notificationOpenState, action)
 });
 
 
@@ -98,7 +110,8 @@ export const StoreProvider = ({ children }) => {
     userState: user ? user : null,
     toMessageState: [],
     allUsersState: null,
-    chatsState: []
+    chatsState: [],
+    notificationOpenState: false
   });
 
   return (

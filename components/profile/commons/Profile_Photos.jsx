@@ -21,7 +21,7 @@ const Profile_Photos = ({ title, list }) => {
                 }
             </div>
             {
-                !list && <p className="text-center w-full text-white/50" data-aos='zoom-in' data-aos-anchor-placement="bottom">No {title}</p>
+                !list?.length && <p className="text-center w-full text-white/50" data-aos='zoom-in' data-aos-anchor-placement="bottom">No {title}</p>
             }
         </div>
     )

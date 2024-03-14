@@ -1,91 +1,8 @@
-import React, { use, useEffect, useState } from 'react'
-import img1 from "/public/assets/profile_img_1.png"
-import arrow_left from "/public/assets/arrow_left.svg"
 import Image from 'next/image'
-import { all_profiles_action, search_profile_action } from '@/app/lib/actions'
-// import { useStore } from '@/store/store'
+import React from 'react'
+import arrow_left from "/public/assets/arrow_left.svg"
 
-const AccessToggler = ({ type, setProfileToggle, decryptedUser, allUsers, currentUser, accessList }) => {
-
-    const [data, setData] = useState([]);
-    const [userAccessList, setUserAccessList] = useState([])
-
-    useEffect(() => {
-        fetchData()
-    }, [type])
-
-    const fetchData = async () => {
-        const res = await search_profile_action(currentUser.id)
-        if (res.success) {
-            if (type === "photo") {
-                setUserAccessList(res.data[0].allow_privateImage_access_users)
-            } else {
-                setUserAccessList(res.data[0].is_blocked_users)
-            }
-        }
-    }
-
-    useEffect(() => {
-        setDataUsers()
-    }, [type])
-
-    const setDataUsers = () => {
-        let filtered = []
-        userAccessList.forEach(element => {
-            const arr = allUsers.filter((i) => i.id === element.user_id)
-            filtered.push(arr[0])
-        })
-        setData(filtered)
-    }
-
-    console.log(type)
-    console.log(accessList)
-
-    // console.log(userAccessList)
-
-    // useEffect(() => {
-    //     fetchData()
-    // }, [])
-
-    // async function fetchData(){
-    //     const users = await all_profiles_action()
-
-    // }
-
-    // const fetchData = async () => {
-    //     let tempData = await allUsers.filter((item) => {
-    //         let flag = false;
-    //         if (type === "photo") {
-    //             for (let i of accessList.allow_privateImage_access_users) {
-    //                 if (i === item.id) {
-    //                     flag = true;
-    //                     break;
-    //                 }
-    //             }
-    //         } else {
-    //             for (let i of accessList.is_blocked_users) {
-    //                 if (i === item.id) {
-    //                     flag = true;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //         return flag;
-    //     })
-    //     console.log("tempData ::", tempData)
-    //     setData(tempData)
-    // }
-
-    const handleSubmit = (id) => {
-        // let currentUser = userState ? userState : decryptedUser;
-        console.log(id);
-        if (type === "photo") {
-            let obj = {
-                sender_id: currentUser.id,
-            }
-        }
-    }
-
+const BlockList = ({ setProfileToggle, type }) => {
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]">
 
@@ -107,7 +24,7 @@ const AccessToggler = ({ type, setProfileToggle, decryptedUser, allUsers, curren
                         }
                     </div>
                 </div>
-                <div className='mt-[70px]'>
+                {/* <div className='mt-[70px]'>
                     <div className='text-[20px] font-normal leading-[20px]'>
                         {type === "photo"
                             ? "Your Accepted request"
@@ -163,12 +80,10 @@ const AccessToggler = ({ type, setProfileToggle, decryptedUser, allUsers, curren
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
 }
 
-export default AccessToggler
-
-
+export default BlockList

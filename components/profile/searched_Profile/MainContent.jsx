@@ -6,8 +6,9 @@ import Buttons_Profile from './Buttons_Profile';
 import Profile_Photos from '../commons/Profile_Photos'
 import Divider from '../commons/Divider';
 import Aos from 'aos';
+import { useStore } from '@/store/store';
 
-const MainContent = ({ user }) => {
+const MainContent = ({ user, allUsers, pendingList, accessList }) => {
 
     // const profile = {
     //     photos: [""],
@@ -68,6 +69,8 @@ const MainContent = ({ user }) => {
     //         }
     //     ]
     // }
+    const { state: { userState } } = useStore()
+
 
     const profile = {
         appearance: [
@@ -102,19 +105,25 @@ const MainContent = ({ user }) => {
         window.scrollTo({ top: 0, behavior: "smooth" })
     }, [])
 
+
+
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
 
-            <div className='hidden lg:flex items-center mt-[16px] mb-[40px] gap-[30px]  2xl:gap-[50px]'>
+            <div className='hidden lg:flex items-center mt-[16px] mb-[40px] gap-[20px]'>
                 {
-                    // params?.id &&
-                    <Buttons_Profile user={user} />
+                    <Buttons_Profile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} />
                 }
             </div>
             <Profile_Photos title={"Public Photos"} list={images_filter("public")} />
             <Divider />
-            <Profile_Photos title={"Private Photos"} list={images_filter("private")} />
-            <Divider />
+            {
+                accessList && accessList.some((i) => i.user_id === user.id) &&
+                <>
+                    <Profile_Photos title={"Private Photos"} list={images_filter("private")} />
+                    <Divider />
+                </>
+            }
 
             <div className="mb-[40px]">
                 <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in' data-aos-anchor-placement="bottom">Appearance</h1>

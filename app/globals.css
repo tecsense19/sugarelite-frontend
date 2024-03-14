@@ -155,7 +155,7 @@ button:disabled {
 /* notification drawer */
 
 .ant-drawer-content-wrapper {
-  @apply w-full lg:w-[467px] !important
+  @apply w-full md:w-[467px] !important
 }
 
 .ant-drawer:focus-visible {

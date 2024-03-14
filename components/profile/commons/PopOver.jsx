@@ -40,6 +40,11 @@ const PopOver = ({ children }) => {
             path: client_routes.chat
         },
         {
+            name: "Notifications",
+            icon: NotificationIcon,
+            path: ""
+        },
+        {
             name: "Search",
             icon: searchIcon,
             path: client_routes.search
@@ -73,6 +78,8 @@ const PopOver = ({ children }) => {
             if (nav.name === "Logout") {
                 logout_user()
                 navigate.push(client_routes.home)
+            } else {
+                console.log('first')
             }
         }
     }

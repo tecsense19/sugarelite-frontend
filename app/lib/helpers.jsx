@@ -18,8 +18,8 @@ export const client_routes = {
 const server_domain = "https://admin-sugarelite.tec-sense.co.in";
 const base_path = server_domain + "/api/V1";
 
-// export const socket_server = "https://sugarelite-socket-server.onrender.com"
-export const socket_server = "http://localhost:8080"
+export const socket_server = "https://sugarelite-socket-server.onrender.com"
+// export const socket_server = "http://localhost:8080"
 
 export const server_routes = {
   register: base_path + "/profile/register",
@@ -34,7 +34,8 @@ export const server_routes = {
   friends_request: base_path + "/friends",
   private_album_notification: base_path + "/push/privatealbum",
   private_image_access: base_path + "/privateimages/access",
-  stripe_subscription: base_path + "/create/subscription"
+  stripe_subscription: base_path + "/create/subscription",
+  block_user: base_path + "/block/user"
 }
 
 

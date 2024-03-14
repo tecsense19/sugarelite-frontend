@@ -1,9 +1,13 @@
 "use client"
 import { private_image_access } from '@/app/lib/actions';
+import { socket_server } from '@/app/lib/helpers';
 import { useStore } from '@/store/store';
 import { ConfigProvider, Drawer, } from 'antd';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { io } from "socket.io-client"
+
+let socket;
 
 const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 
@@ -12,8 +16,10 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
     }
 
     const { state: { userState } } = useStore()
+
     const [myNotifications, setMyNotifications] = useState(notifications.length && notifications.filter((i) => i.receiver_id === user.id))
-    console.log(myNotifications)
+
+    const [socketNotifications, setSocketNotifications] = useState([])
 
     const getUserData = (id, type) => {
         let value;
@@ -25,15 +31,54 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
         return value
     }
 
-    const acceptHandler = async (id) => {
-        console.log("sender ::", userState.id)
-        console.log("reciever ::", id)
-        if (userState.username) {
+    useEffect(() => {
+        socket = io(socket_server)
+        socket.on("album-notification", (obj) => {
+            if (user.id === obj.receiver_id) {
+                setSocketNotifications((prev) => [obj.sender_id, ...prev])
+            }
+        })
+
+        return () => {
+            if (socket) {
+                socket.disconnect()
+            }
+        }
+    }, [])
+
+
+    const acceptHandler = async (id, type) => {
+        if (userState.username && type !== "socket") {
             const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 1 })
-            console.log(res)
+            // console.log(res)
             if (res.success) {
                 const arr = myNotifications.filter((i) => i.sender_id !== id)
                 setMyNotifications(arr)
+            }
+        } else if (userState.username && type === "socket") {
+            const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 1 })
+            // console.log(res)
+            if (res.success) {
+                const arr = socketNotifications.filter((i) => i !== id)
+                setSocketNotifications(arr)
+            }
+        }
+    }
+
+    const declineHandler = async (id, type) => {
+        if (type === "normal") {
+            const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 0 })
+            if (res.success) {
+                console.log(res)
+                // const arr = myNotifications.filter((i) => i.sender_id !== id)
+                // setMyNotifications(arr)
+            }
+        } else {
+            const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 0 })
+            if (res.success) {
+                console.log(res)
+                // const arr = myNotifications.filter((i) => i.sender_id !== id)
+                // setMyNotifications(arr)
             }
         }
     }
@@ -54,7 +99,34 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
                     <p className='text-[26px] font-bold leading-[30px] px-[30px] py-[20px]'>Notification</p>
                     <div className='flex flex-col'>
                         {
-                            myNotifications
+                            socketNotifications.length ? socketNotifications.map((i, inx) => {
+                                return <div className='w-full h-[150px] px-[30px] py-[18px]' key={inx}>
+                                    <div className='flex items-start gap-[29px]'>
+                                        <div className='flex  gap-4'>
+                                            {getUserData(i, "avatar_url") ?
+                                                <Image src={getUserData(i, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full bg-white max-h-[50px]' /> : <>
+                                                    <p className='h-[50px] w-[50px] rounded-full bg-primary flex justify-center items-center text-[22px]'>{getUserData(i, "username").charAt(0)}</p>
+                                                </>
+                                            }
+                                            <div>
+                                                <p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i, "username")}</p>
+                                                <p className='text-[16px] font-light leading-[20px] w-[260px] mt-[6px]'>{getUserData(i, "username")} has requested permission to view your profile photo.</p>
+                                                <div className='mt-[14px] flex gap-[10px]'>
+                                                    <button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px] transition-all duration-150 ease-linear hover:scale-105' onClick={() => acceptHandler(i, "socket")}>Accept</button>
+                                                    <button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i, "socket")}>Decline</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='flex flex-col items-center'>
+                                            <p className='text-[16px] font-medium leading-[20px] '>45 min</p>
+                                            <p className='mt-5 h-[9px] w-[9px] rounded-full bg-secondary text-center'></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }) : <></>
+                        }
+                        {
+                            (myNotifications)
                                 ? myNotifications && myNotifications.map((i, inx) => {
                                     return (
                                         <div className='w-full h-[150px] px-[30px] py-[18px]' key={inx}>
@@ -69,8 +141,8 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
                                                         <p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i.sender_id, "username")}</p>
                                                         <p className='text-[16px] font-light leading-[20px] w-[260px] mt-[6px]'>{getUserData(i.sender_id, "username")} has requested permission to view your profile photo.</p>
                                                         <div className='mt-[14px] flex gap-[10px]'>
-                                                            <button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px]' onClick={() => acceptHandler(i.sender_id)}>Accept</button>
-                                                            <button className='py-[6px] rounded-[5px] px-4 bg-black'>Decline</button>
+                                                            <button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium transition-all duration-150 ease-linear hover:scale-105 leading-[20px]' onClick={() => acceptHandler(i.sender_id, "normal")}>Accept</button>
+                                                            <button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.sender_id, "normal")}>Decline</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -83,7 +155,7 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
                                         </div>
                                     )
                                 })
-                                : <>You are completely upto date</>
+                                : <div className='w-full text-center h-full flex justify-center items-center px-[30px] py-[18px]'>You are completely upto date</div>
                         }
                     </div>
                 </Drawer>

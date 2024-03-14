@@ -3,8 +3,6 @@
 import { cookies } from "next/headers"
 import { server_routes } from "./helpers"
 import CryptoJS from "crypto-js"
-import { loadStripe } from "@stripe/stripe-js"
-import { setCookie } from "nookies"
 
 
 export const getCountries = async () => {
@@ -104,7 +102,7 @@ export const logout_user = () => {
 }
 
 export const all_profiles_action = async () => {
-    const res = await fetch(server_routes.allProfiles, { next: { revalidate: 60 } })
+    const res = await fetch(server_routes.allProfiles, { cache: "no-cache" })
     const data = await res.json()
     return data
 }
@@ -164,6 +162,18 @@ export const friends_list_action = async (id) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(id)
+    })
+    const data = await res.json()
+    return data
+}
+
+export const block_user_action = async (form) => {
+    const res = await fetch(server_routes.block_user, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
     })
     const data = await res.json()
     return data

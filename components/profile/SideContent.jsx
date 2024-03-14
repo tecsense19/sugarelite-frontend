@@ -62,7 +62,6 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
         return age;
     };
 
-
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
@@ -124,7 +123,8 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                                     <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
                                 }
                             </div>
-                            {user && user?.is_subscribe &&
+                            {
+                                user && user?.is_subscribe === 1 &&
                                 <div className='flex items-center'>
                                     <Image src={premium} alt='edit' width={30} height={30} priority />
                                     <span className='text-[16px] font-semibold ms-2'>Premium</span>
@@ -170,7 +170,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                             <Image src={lock_1} width={24} height={24} alt='message' className='inline-block h-[22px] lg:h-[24px]' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>photo access</span>
                         </button>
-                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-[#CD0000] w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("block")}>
+                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-danger w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("block")}>
                             <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>block list</span>
                         </button>
