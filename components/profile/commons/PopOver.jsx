@@ -11,12 +11,13 @@ import NotificationIcon from "../../../public/assets/Mask group (1).svg"
 import React, { useEffect, useState } from 'react'
 import "../../chat/ChatContent.css"
 import { usePathname, useRouter } from 'next/navigation'
-import { client_routes } from '@/app/lib/helpers'
-import { destroyCookie } from "nookies"
+import { client_routes, server_routes } from '@/app/lib/helpers'
 import { logout_user } from '@/app/lib/actions'
+import { useStore } from '@/store/store'
 
 const PopOver = ({ children }) => {
     const [showOptions, setShowOptions] = useState(false);
+    const { state: { userState, notificationOpenState }, dispatch } = useStore()
 
     const path = usePathname()
     const navigate = useRouter()
@@ -78,8 +79,20 @@ const PopOver = ({ children }) => {
             if (nav.name === "Logout") {
                 logout_user()
                 navigate.push(client_routes.home)
+                dispatch({ type: "Current_User", payload: "" })
+                fetch(server_routes.logout, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ id: userState.id })
+                })
             } else {
-                console.log('first')
+                if (notificationOpenState) {
+                    dispatch({ type: "Close_Notification", payload: false })
+                } else {
+                    dispatch({ type: "Open_Notification", payload: true })
+                }
             }
         }
     }

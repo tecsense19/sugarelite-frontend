@@ -77,18 +77,40 @@ const notificationReducer = (state, action) => {
   }
 }
 
+const accessPendingReducer = (state, action) => {
+  switch (action.type) {
+    case 'Add_User':
+      return [...state, action.payload];
+    case "Remove_User":
+      return state.filter(user => user !== action.payload.id);
+    default:
+      return state;
+  }
+}
+
+const accessDecisionReducer = (state, action) => {
+  switch (action.type) {
+    case 'Add_Decision_User':
+      return [...state, ...action.payload]
+    default:
+      return state;
+  }
+}
+
 
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, accessPendingState, decisionState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
   toMessageState: messageToReducer(toMessageState, action),
   allUsersState: allUsersDataReducer(allUsersState, action),
   chatsState: chatReducer(chatsState, action),
-  notificationOpenState: notificationReducer(notificationOpenState, action)
+  notificationOpenState: notificationReducer(notificationOpenState, action),
+  accessPendingState: accessPendingReducer(accessPendingState, action),
+  decisionState: accessDecisionReducer(decisionState, action)
 });
 
 
@@ -111,7 +133,9 @@ export const StoreProvider = ({ children }) => {
     toMessageState: [],
     allUsersState: null,
     chatsState: [],
-    notificationOpenState: false
+    notificationOpenState: false,
+    accessPendingState: [],
+    decisionState: []
   });
 
   return (

@@ -24,6 +24,7 @@ export const socket_server = "https://sugarelite-socket-server.onrender.com"
 export const server_routes = {
   register: base_path + "/profile/register",
   login: base_path + "/login",
+  logout: base_path + "/logout",
   newsLetter: base_path + "/newsletter",
   checkUser: base_path + "/checkUser",
   forgotPassword: base_path + "/forgot/password",

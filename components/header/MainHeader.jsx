@@ -1,12 +1,11 @@
 "use client"
-import { client_routes, socket_server } from "@/app/lib/helpers"
+import { client_routes, server_routes } from "@/app/lib/helpers"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import logo from "../../public/assets/Logo (1).svg"
 import notification from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
-import profile_icon from "../../public/assets/Profile-icon.svg"
 import { useStore } from "@/store/store"
 import { logout_user } from "@/app/lib/actions"
 import Link from "next/link"
@@ -14,21 +13,33 @@ import Notification from "../common/Notification"
 import { useEffect, useState } from "react"
 
 
-const MainHeader = ({ user, notifications, allUsers }) => {
+const MainHeader = ({ decryptedUser, notifications, allUsers }) => {
+
   const pathname = usePathname()
   const router = useRouter()
 
-  const { state: { userState }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState }, dispatch } = useStore()
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
+  const [user, setUser] = useState(userState ? userState : decryptedUser)
+
+  useEffect(() => {
+    setUser(userState ? userState : decryptedUser)
+  }, [userState])
 
   const handleLogout = () => {
     logout_user()
-    dispatch({ type: "Current_User", payload: "" })
     router.push(client_routes.home)
+    dispatch({ type: "Current_User", payload: "" })
+    fetch(server_routes.logout, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: user.id })
+    })
   }
-
-
-
   return (
     <>
       {/* {/ Mobile View /} */}
@@ -60,24 +71,27 @@ const MainHeader = ({ user, notifications, allUsers }) => {
               Logout
             </button>
             {
-              (userState?.user)
-                ? <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
-                  {userState?.user.avatar_url
-                    ? <Image height={40} width={40} src={userState?.user.avatar_url} alt="profile_pic" className="cursor-pointer" priority onClick={() => router.push(client_routes.profile)} />
-                    : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{userState?.user.username.charAt(0)}</div>
-                  }
-                </Link>
-                : <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
-                  {user?.avatar_url
-                    ? <Image height={40} width={40} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full aspect-square" priority onClick={() => router.push(client_routes.profile)} />
-                    : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{user?.username.charAt(0)}</div>
-                  }
-                </Link>
+              // (userState)
+              //   ? <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
+              //     {userState?.avatar_url
+              //       ? <Image height={40} width={40} src={userState?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full aspect-square" priority onClick={() => router.push(client_routes.profile)} />
+              //       : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{userState?.username.charAt(0)}</div>
+              //     }
+              //   </Link>
+              //   :
+              <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
+                {user?.avatar_url
+                  ? <Image height={40} width={40} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full aspect-square" priority onClick={() => router.push(client_routes.profile)} />
+                  : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{user?.username.charAt(0)}</div>
+                }
+              </Link>
             }
           </div>
         </div>
       </header>
-      <Notification open={isDrawerOpen} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} />
+      {
+        user && <Notification open={isDrawerOpen || notificationOpenState} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} />
+      }
     </>
   )
 }

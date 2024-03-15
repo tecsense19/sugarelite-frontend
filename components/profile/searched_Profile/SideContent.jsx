@@ -34,7 +34,7 @@ const SideContent = ({ user, allUsers, pendingList, accessList }) => {
 							</p>
 					}
 					{
-						user?.online &&
+						user?.online === 1 &&
 						<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
 					}
 				</div>
@@ -43,12 +43,12 @@ const SideContent = ({ user, allUsers, pendingList, accessList }) => {
 						<div className={`flex items-center ${!user?.premium ? "justify-center lg:justify-start" : "justify-start"} gap-2 `}>
 							<div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative">{user?.username},{user?.age}
 								{
-									user?.online &&
+									user?.online === 1 &&
 									<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-[#1DD719] absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
 								}
 							</div>
 							{
-								user?.premium &&
+								user?.is_subscribe === 1 &&
 								<div className='flex items-center'>
 									<Image src={premium} alt='edit' className='ms-[20px]' width={30} height={30} priority />
 									<span className='text-[16px] font-semibold ms-2'>Premium</span>

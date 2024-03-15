@@ -3,11 +3,9 @@ import SideContent from "@/components/profile/searched_Profile/SideContent"
 import ReportIcon from "/public/assets/chat_report_icon.svg"
 import BlockIcon from "/public/assets/chat_block_icon.svg"
 import Image from "next/image"
-import PopOver from "@/components/profile/commons/PopOver"
-import more_horizontal from "../../../../public/assets/more_horizontal.svg"
 import { all_profiles_action, decrypt_user, private_album_notification, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
-import { client_routes, server_routes } from "@/app/lib/helpers"
+import { client_routes } from "@/app/lib/helpers"
 
 
 const ProfileId = async ({ params }) => {
@@ -16,11 +14,10 @@ const ProfileId = async ({ params }) => {
 
   const queried_user = await search_profile_action(params.id)
   const allUsers = await all_profiles_action()
-  const pendingList = await private_album_notification()
 
-
-  if (queried_user?.success && allUsers.success) {
+  if (queried_user?.success && allUsers.success && currentUser) {
     const accessList = allUsers.data.filter((i) => i.id === currentUser?.id)[0].allow_privateImage_access_users
+    const pendingList = await private_album_notification()
     return (
       <>
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full relative">

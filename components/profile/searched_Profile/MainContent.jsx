@@ -1,76 +1,27 @@
 "use client"
 
 import 'aos/dist/aos.css';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Buttons_Profile from './Buttons_Profile';
 import Profile_Photos from '../commons/Profile_Photos'
 import Divider from '../commons/Divider';
 import Aos from 'aos';
 import { useStore } from '@/store/store';
 
+
 const MainContent = ({ user, allUsers, pendingList, accessList }) => {
 
-    // const profile = {
-    //     photos: [""],
-    //     appearance: [
-    //         {
-    //             type: "sex",
-    //             value: "Male",
-    //         },
-    //         {
-    //             type: "ethnicity",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             type: "body structure",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             type: "piercings",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             value: 'ask me',
-    //             type: "height (cm.)"
-    //         },
-    //         {
-    //             type: "civil status",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             type: "hair color",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             type: "tattos",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             value: "ask me",
-    //             type: "weight (kg.)"
-    //         }
-    //     ],
-    //     lifestyle: [
-    //         {
-    //             type: "education",
-    //             value: "ask me",
-    //         },
-    //         {
-    //             type: "smoking habits",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             type: "employment",
-    //             value: "ask me"
-    //         },
-    //         {
-    //             type: "drinking habits",
-    //             value: "ask me"
-    //         }
-    //     ]
-    // }
-    const { state: { userState } } = useStore()
+    const { state: { decisionState, userState } } = useStore()
+    const [socketAccessList, setSocketAccessList] = useState([])
 
+    // useEffect(() => {
+    //     if (decisionState.length) {
+    //         const res = decisionState.filter((i) => (i.sender_id === user.id && i.userId === userState?.id))
+    //         console.log(res)
+    //     }
+    //     console.log("first")
+    // }, [])
+    // console.log(decisionState)
 
     const profile = {
         appearance: [
