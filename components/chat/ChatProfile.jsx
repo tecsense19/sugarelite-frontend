@@ -15,6 +15,7 @@ const ChatProfile = ({ selectedObj, setShowMobileProfile }) => {
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
   }
+
   return (
     <div className='w-full h-full flex flex-col bg-primary 2xl:bg-primary-dark-3 pt-[14px] md:pt-[50px] px-4 md:px-[30px] text-white'>
       <div className='flex md:hidden justify-between items-center mb-[30px]'>
@@ -50,27 +51,27 @@ const ChatProfile = ({ selectedObj, setShowMobileProfile }) => {
         <div className="flex justify-center items-center relative">
           {
             selectedObj.avatar_url ?
-              <Image src={selectedObj?.avatar_url} width={180} height={180} alt="person" className={`hidden md:block rounded-full min-h-[180px] select-none pointer-events-none`} priority />
-              : <p className="h-[180px] w-[180px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[84px] ">{selectedObj.username.charAt(0)}</p>
+              <Image src={selectedObj?.avatar_url} width={180} height={180} alt="person" className={`hidden md:block rounded-full h-[180px] min-h-[180px] select-none pointer-events-none`} priority />
+              : <p className="h-[180px] w-[180px] hidden uppercase md:flex items-center justify-center bg-primary-dark rounded-full text-[84px] ">{selectedObj.username.charAt(0)}</p>
           }
           {
             selectedObj.avatar_url ?
-              <Image src={selectedObj?.avatar_url} width={140} height={140} alt="person" className={`md:hidden min-h-[140px] rounded-full select-none pointer-events-none`} priority />
-              : <p className="h-[140px] w-[140px]  md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[64px] ">{selectedObj.username.charAt(0)}</p>
+              <Image src={selectedObj?.avatar_url} width={140} height={140} alt="person" className={`md:hidden min-h-[140px] h-[140px] rounded-full select-none pointer-events-none`} priority />
+              : <p className="h-[140px] w-[140px]  md:hidden uppercase flex items-center justify-center bg-primary-dark rounded-full text-[64px] ">{selectedObj.username.charAt(0)}</p>
           }
           {/* <Image src={Img1} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority /> */}
 
         </div>
         <div data-aos='zoom-in'>
-          <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${selectedObj.is_premium ? "md:items-start" : "md:items-center"}`}>
+          <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${selectedObj.is_subscribe === 1 ? "md:items-start" : "md:items-center"}`}>
             <div className='flex items-center'>
               <span className="text-[24px] md:text-[26px] font-bold leading-[30px]">{selectedObj.username}, {selectedObj.age}</span>
-              {selectedObj.is_premium && <>
+              {selectedObj.is_subscribe === 1 && <>
                 <Image src={premium} alt='premium' width={30} height={30} priority className='pointer-events-none ms-3 md:ms-4' />
                 <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>Premium</span>
               </>}
             </div>
-            <div className='mt-[11px] flex items-center'>
+            <div className='mt-[11px] flex items-center self-center'>
               <span className="text-[18px] font-semibold text-white/80 me-[14px] leading-[normal]">{selectedObj.country},</span>
               <span className="text-[16px] font-semibold text-white/80 leading-[normal]">{selectedObj.region}</span>
             </div>

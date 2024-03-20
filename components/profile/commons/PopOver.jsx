@@ -1,5 +1,5 @@
 "use client"
-import { ConfigProvider, Popover } from 'antd'
+import { ConfigProvider, Popover, notification } from 'antd'
 import Image from 'next/image'
 import ReportIcon from "/public/assets/chat_report_icon.svg"
 import BlockIcon from "/public/assets/chat_block_icon.svg"
@@ -11,26 +11,29 @@ import NotificationIcon from "../../../public/assets/Mask group (1).svg"
 import React, { useEffect, useState } from 'react'
 import "../../chat/ChatContent.css"
 import { usePathname, useRouter } from 'next/navigation'
-import { client_routes, server_routes } from '@/app/lib/helpers'
-import { logout_user } from '@/app/lib/actions'
+import { client_notification, client_routes, server_routes } from '@/app/lib/helpers'
+import { block_user_action, logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
 
-const PopOver = ({ children }) => {
+const PopOver = ({ children, user }) => {
     const [showOptions, setShowOptions] = useState(false);
     const { state: { userState, notificationOpenState }, dispatch } = useStore()
-
     const path = usePathname()
     const navigate = useRouter()
+    const [api, contextHolder] = notification.useNotification()
 
     const handleShowOptionsChange = (val) => {
         setShowOptions(val)
     }
 
-    const warnHandler = (type) => {
-        if (type === 'report') {
-            console.log("Account reported")
+    const blockHandler = async (type) => {
+        if (type === "block") {
+            const res = await block_user_action({ sender_id: userState?.id, receiver_id: user.id, is_blocked: 1 })
+            if (res.success) {
+                client_notification(api, 'topRight', "success", res.message, 4)
+            }
         } else {
-            console.log("Account blocked")
+
         }
     }
 
@@ -99,16 +102,17 @@ const PopOver = ({ children }) => {
 
     return (
         <>
+            {contextHolder}
             {
                 (path !== client_routes.profile && path !== client_routes.edit_profile && path !== client_routes.chat) ?
                     <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
                         <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
                             <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
-                                <button className="bg-[#D97706] w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={() => warnHandler("report")}>
+                                <button className="bg-[#D97706] w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={() => blockHandler("report")}>
                                     <Image src={ReportIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
                                     <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
                                 </button>
-                                <button className="bg-[#EF4444]  w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={() => warnHandler("block")}>
+                                <button className="bg-[#EF4444]  w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={() => blockHandler("block")}>
                                     <Image src={BlockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
                                     <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
                                 </button>

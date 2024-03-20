@@ -9,8 +9,10 @@ import profile_img_5 from "../../../public/assets/profile_img_5.png"
 import premium from "../../../public/assets/premium.svg"
 import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
+import Buttons_Profile from './Buttons'
+import Buttons from './Buttons'
 
-const SideContent = ({ user, allUsers, pendingList, accessList }) => {
+const SideContent = ({ user, allUsers, pendingList, accessList, currentUser, privateAlbumState }) => {
 
 	const path = usePathname()
 
@@ -62,7 +64,10 @@ const SideContent = ({ user, allUsers, pendingList, accessList }) => {
 					</div>
 				</div>
 				<div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center items-center md:flex-row flex-col gap-3'>
-					<ButtonProfile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} />
+					{/* <ButtonProfile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} /> */}
+					{
+						<Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} />
+					}
 				</div>
 				<div className="w-full bg-primary-dark-4 mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
 					<div className="p-4 text-[16px] font-light">

@@ -19,9 +19,10 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 	const { state: { userState }, dispatch } = useStore()
 	const [api, contextHolder] = notification.useNotification();
 
-	const [myNotifications, setMyNotifications] = useState(notifications.length && notifications.filter((i) => i.receiver_id === user.id))
+	const [myNotifications, setMyNotifications] = useState(notifications.length ? notifications.filter((i) => i.receiver_id === user.id) : [])
 
 	const [socketNotifications, setSocketNotifications] = useState([])
+
 
 	const getTime = (id) => {
 		const time = new Date(id)
@@ -62,19 +63,19 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 		}
 		else {
 			allUsers.forEach((i) => {
-				if (i.id === id) {
+				if (i.id === id.sender_id) {
 					value = i[type]
 				}
 			})
 			return value
 		}
 	}
-
 	useEffect(() => {
 		socket = io(socket_server)
 		socket.on("album-notification", (obj) => {
 			if (user.id === obj.receiver_id) {
-				setSocketNotifications((prev) => [obj.sender_id, ...prev])
+				console.log(obj)
+				setSocketNotifications((prev) => [obj, ...prev])
 			}
 		})
 
@@ -83,25 +84,29 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 				socket.disconnect()
 			}
 		}
-	}, [])
+	}, [socket])
 
 
 	const acceptHandler = async (id, type) => {
 		if (userState.username && type !== "socket") {
-			const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 1 })
+			const res = await private_image_access({ request_id: id, is_approved: 1 })
+			console.log(id)
+			console.log(res)
 			if (res.success) {
-				const arr = myNotifications.filter((i) => i.sender_id !== id)
+				const arr = myNotifications.filter((i) => i.id !== id)
 				setMyNotifications(arr)
 				client_notification(api, "topRight", "success", res?.message, 3)
-				socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
+				// socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
 			}
 		} else if (userState.username && type === "socket") {
-			const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 1 })
+
+			const res = await private_image_access({ request_id: id, is_approved: 1 })
+			console.log(res)
 			if (res.success) {
-				const arr = socketNotifications.filter((i) => i !== id)
+				const arr = socketNotifications.filter((i) => i.id !== id)
 				setSocketNotifications(arr)
 				client_notification(api, "topRight", "success", res?.message, 3)
-				socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
+				// socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
 			}
 		}
 	}
@@ -164,8 +169,8 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 														<p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i, "username")}</p>
 														<p className='text-[16px] font-light leading-[20px]  mt-[6px]'>{getUserData(i, "username")} has requested permission to view your profile photo.</p>
 														<div className='mt-[14px] flex gap-[10px]'>
-															<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px] transition-all duration-150 ease-linear hover:scale-105' onClick={() => acceptHandler(i, "socket")}>Accept</button>
-															<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i, "socket")}>Decline</button>
+															<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px] transition-all duration-150 ease-linear hover:scale-105' onClick={() => acceptHandler(i.id, "socket")}>Accept</button>
+															<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.id, "socket")}>Decline</button>
 														</div>
 													</div>
 												</div>
@@ -184,17 +189,17 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 												<div className='w-full h-[150px] px-[30px] py-[18px]' key={inx}>
 													<div className='flex items-start justify-between gap-[29px]'>
 														<div className='flex  gap-4'>
-															{getUserData(i.sender_id, "avatar_url") ?
-																<Image src={getUserData(i.sender_id, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full min-w-[50px] max-h-[50px]' /> : <>
-																	<p className='h-[50px] min-w-[50px] rounded-full bg-primary flex justify-center items-center text-[22px]'>{getUserData(i.sender_id, "username").charAt(0)}</p>
+															{getUserData(i, "avatar_url") ?
+																<Image src={getUserData(i, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full min-w-[50px] max-h-[50px]' /> : <>
+																	<p className='h-[50px] min-w-[50px] rounded-full bg-primary flex justify-center items-center text-[22px]'>{getUserData(i, "username").charAt(0)}</p>
 																</>
 															}
 															<div>
-																<p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i.sender_id, "username")}</p>
-																<p className='text-[16px] font-light leading-[20px]  mt-[6px]'>{getUserData(i.sender_id, "username")} has requested permission to view your profile photo.</p>
+																<p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i, "username")}</p>
+																<p className='text-[16px] font-light leading-[20px]  mt-[6px]'>{getUserData(i, "username")} has requested permission to view your profile photo.</p>
 																<div className='mt-[14px] flex gap-[10px]'>
-																	<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium transition-all duration-150 ease-linear hover:scale-105 leading-[20px]' onClick={() => acceptHandler(i.sender_id, "normal")}>Accept</button>
-																	<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.sender_id, "normal")}>Decline</button>
+																	<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium transition-all duration-150 ease-linear hover:scale-105 leading-[20px]' onClick={() => acceptHandler(i.id, "normal")}>Accept</button>
+																	<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.id, "normal")}>Decline</button>
 																</div>
 															</div>
 														</div>
@@ -213,12 +218,12 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 						</>
 						:
 						<div className='w-full text-center h-full text-[20px]  px-[10px] py-[18px]'>
-							<div className='text-[26px] font-bold leading-[30px] px-[30px] py-[20px] flex md:hidden items-center justify-between'>
+							<div className='text-[26px] font-bold leading-[30px] px-[10px] py-[0px] flex md:hidden items-center justify-between'>
 								Notification
 								<Image src={Cross} width={30} height={30} alt='cross' className='md:hidden cursor-pointer' onClick={() => dispatch({ type: "Close_Notification", payload: false })} />
 							</div>
-							<div className='h-[calc(100%-70px)] flex justify-center items-center w-full'>
-								You are upto date
+							<div className='h-[calc(100%-70px)] flex justify-center items-center w-full font-semibold'>
+								You are completely up to Date !
 							</div>
 						</div>
 					}

@@ -9,7 +9,7 @@ import arrowLeft from "../../public/assets/arrow_left.svg";
 import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
 
-const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatContent, setShowMobileProfile, showMobileProfile }) => {
+const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatContent, setShowMobileProfile, showMobileProfile, setSelectedObj }) => {
   const [showOptions, setShowOptions] = useState(false);
   const navigate = useRouter()
 
@@ -29,21 +29,21 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
   return (
     <>
       <div className="w-full  md:border-b-[1px] border-white/30 px-4 md:px-10 pt-4 pb-1 md:py-5 flex justify-between items-center">
-        <button className="flex md:hidden items-center justify-center" onClick={() => setShowMobileChatContent(false)}>
+        <button className="flex md:hidden items-center justify-center" onClick={() => { setShowMobileChatContent(false); setSelectedObj('') }}>
           <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
         </button>
         <div className="flex items-center">
           <button className="flex items-center" onClick={onProfileClick}>
             {
               selectedObj.avatar_url ?
-                <Image src={selectedObj.avatar_url} alt="" height={60} width={60} priority className="hidden min-h-[60px] md:flex pointer-events-none rounded-full" />
-                : <p className="h-[60px] w-[60px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[24px] ">{selectedObj.username.charAt(0)}</p>
+                <Image src={selectedObj.avatar_url} alt="" height={60} width={60} priority className="hidden min-h-[60px] h-[60px] min-w-[60px] md:flex pointer-events-none rounded-full" />
+                : <p className="h-[60px] uppercase w-[60px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[24px] ">{selectedObj.username.charAt(0)}</p>
             }
 
             {
               selectedObj.avatar_url ?
-                <Image src={selectedObj.avatar_url} alt="" height={40} width={40} priority className="md:hidden min-h-[40px] pointer-events-none rounded-full" />
-                : <p className="h-10 w-10 md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[22px] ">{selectedObj.username.charAt(0)}</p>
+                <Image src={selectedObj.avatar_url} alt="" height={40} width={40} priority className="md:hidden min-h-[40px] h-[40px] pointer-events-none rounded-full" />
+                : <p className="h-10 uppercase w-10 md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[22px] ">{selectedObj.username.charAt(0)}</p>
             }
 
 
@@ -51,20 +51,10 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
               <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">{selectedObj.username}</div>
               <div className="">
                 {
-                  selectedObj.online && <div className="ms-[10px] flex items-center mt-2 md:mt-0">
+                  selectedObj.online === 1 && <div className="ms-[10px] flex items-center mt-2 md:mt-0">
                     <div className="h-[6px] w-[6px] md:h-[9px] md:w-[9px] bg-[#3DC73A] rounded-full" />
                     <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">Active</div>
                   </div>
-
-                  // : <>
-                  //   {selectedObj.last_activity_at === "near"
-                  //     ? <div className="ms-[10px] flex items-center">
-                  //       <div className="h-[9px] w-[9px] bg-[#FEBF0F] rounded-full" />
-                  //       <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">5 mins ago</div>
-                  //     </div>
-                  //     : <></>
-                  //   }
-                  // </>
                 }
               </div>
             </div>

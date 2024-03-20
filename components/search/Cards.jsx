@@ -1,33 +1,18 @@
 "use client"
 
 import Image from "next/image";
-import Img1 from "../../public/assets/profile_img_1.png";
-import Img2 from "../../public/assets/profile_img_2.png";
-import Img3 from "../../public/assets/profile_img_3.png";
-import Img4 from "../../public/assets/profile_img_4.png";
-import Img5 from "../../public/assets/profile_img_5.png";
-import Img6 from "../../public/assets/profile_img_6.png";
-import Img7 from "../../public/assets/profile_img_7.png";
-import Img8 from "../../public/assets/profile_img_8.png";
-import Img9 from "../../public/assets/profile_img_9.png";
-import Img10 from "../../public/assets/profile_img_10.png";
-import Img11 from "../../public/assets/profile_img_11.png";
-import Img12 from "../../public/assets/profile_img_12.png";
 import womanPlaceolderImg from "/public/assets/woman.png";
 import manPlaceolderImg from "/public/assets/man.png";
 import placeholder from "/public/assets/place_holder.png";
 import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { client_routes } from "@/app/lib/helpers";
 import { useStore } from "@/store/store";
 
 const Cards = ({ allUsers }) => {
 
-  const navigate = useRouter()
   const { state: { allUsersState } } = useStore()
-  // console.log("allUsersState :", allUsersState)
-  // console.log("allUsers ::", allUsers)
+  const navigate = useRouter()
 
   const calculateAge = (dob) => {
     const today = new Date();
@@ -51,7 +36,7 @@ const Cards = ({ allUsers }) => {
               allUsersState?.map((item, idx) => {
 
                 return (
-                  <Link prefetch={false} key={idx} href={`${client_routes.profile}/${item.id}`} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem] xs:h-auto  w-full flex justify-center items-center">
+                  <div key={idx} onClick={() => navigate.push(`${client_routes.profile}/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem] xs:h-auto  w-full flex justify-center items-center">
                     {item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in")
                       ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                       : <div className="w-full h-full flex items-center justify-center">
@@ -73,12 +58,12 @@ const Cards = ({ allUsers }) => {
                           <div className="text-[clamp(16px,2vw,22px)] lg:text-[clamp(19px,2vw,22px)] leading-[normal] lg:leading-[30px] font-bold">
                             <span className="hidden sm:inline">{item.username}</span><span className="sm:hidden inline">{item.username.split(' ')[0]}</span>,{calculateAge(item.age)}
                           </div>
-                          {item.is_subscribe && <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none" />}
+                          {item.is_subscribe === 1 && <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none" />}
                         </div>
                         <div className="mt-1 md:mt-[2px] text-[clamp(12px,1.5vw,16px)]  lg:text-[clamp(14px,1.5vw,16px)] leading-[14px] font-semibold text-white/50">{item?.region}</div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 )
               })
             }
@@ -87,7 +72,7 @@ const Cards = ({ allUsers }) => {
               {allUsers &&
                 allUsers?.map((item, idx) => {
                   return (
-                    <Link key={idx} href={`${client_routes.profile}/${item.id}`} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem]   xs:h-auto  w-full flex justify-center items-center">
+                    <div key={idx} onClick={() => navigate.push(`${client_routes.profile}/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem]   xs:h-auto  w-full flex justify-center items-center">
                       {item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in")
                         ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                         : <div className="w-full h-full flex items-center justify-center">
@@ -113,7 +98,7 @@ const Cards = ({ allUsers }) => {
                           <div className="mt-1 md:mt-[2px] text-[clamp(12px,1.5vw,16px)]  lg:text-[clamp(14px,1.5vw,16px)] leading-[14px] font-semibold text-white/50">{item?.region}</div>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   )
                 })}
             </>

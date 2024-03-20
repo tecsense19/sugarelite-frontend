@@ -3,7 +3,6 @@ import ChatIndex from "@/components/chat/ChatIndex"
 
 const Chat = async () => {
 
-
   const currentUser = decrypt_user()
 
   const allUsers = await all_profiles_action()
@@ -21,19 +20,34 @@ const Chat = async () => {
 
   let friendsList = []
 
+
   allUserIds.forEach((id) => {
     const user = users.filter(user => user.id === id)
     friendsList.push(user[0])
   })
 
 
+  const tempList = []
+  allUserIds.forEach((id) => {
+    const userChats = user_chats.filter(chat => chat.sender_id === id || chat.receiver_id === id);
+    const latestMsg = userChats.reduce((latest, current) => {
+      return latest.id > current.id ? latest : current;
+    }, {});
+
+    const user = users.find(user => user.id === id);
+    tempList.push({ user, latestMsg });
+  })
+
+  tempList.sort((a, b) => b.latestMsg.id - a.latestMsg.id);
+
   if (allUsers.success && chatList.success) {
     return (
       <>
-        <ChatIndex users={friendsList} decryptedUser={currentUser} chatList={user_chats} />
+        <ChatIndex users={friendsList} decryptedUser={currentUser} chatList={user_chats} tempList={tempList} />
       </>
     )
   }
+
 }
 
 export default Chat

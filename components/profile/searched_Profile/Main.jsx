@@ -2,48 +2,13 @@
 
 import 'aos/dist/aos.css';
 import React, { useEffect, useState } from 'react'
-import Buttons_Profile from './Buttons_Profile';
 import Profile_Photos from '../commons/Profile_Photos'
 import Divider from '../commons/Divider';
 import Aos from 'aos';
-import { useStore } from '@/store/store';
-import { io } from 'socket.io-client';
-import { socket_server } from '@/app/lib/helpers';
 import Buttons from './Buttons';
 
-const useSocket = () => {
-    const [socket, setSocket] = useState(null);
 
-    useEffect(() => {
-        const newSocket = io(socket_server);
-        setSocket(newSocket);
-
-        return () => {
-            newSocket.disconnect();
-        };
-    }, []);
-
-    return socket;
-};
-
-
-
-const MainContent = ({ user, allUsers, pendingList, accessList, currentUser, privateAlbumState }) => {
-
-    const socket = useSocket();
-
-    const { state: { decisionState, userState }, dispatch } = useStore()
-
-    useEffect(() => {
-        if (!socket) return;
-
-        socket.on("access-notify", (obj) => {
-            if (obj.userId === userState?.id) {
-                dispatch({ type: "Add_Decision_User", payload: obj })
-            }
-        });
-
-    }, [socket])
+const Main = ({ user, currentUser, privateAlbumState, socket }) => {
 
     const profile = {
         appearance: [
@@ -82,17 +47,14 @@ const MainContent = ({ user, allUsers, pendingList, accessList, currentUser, pri
 
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
-
             <div className='hidden lg:flex items-center mt-[16px] mb-[40px] gap-[20px]'>
                 {
-                    // <Buttons_Profile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} />
-                    <Buttons user={user} accessList={accessList} currentUser={currentUser} privateAlbumState={privateAlbumState} />
+                    <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} />
                 }
             </div>
             <Profile_Photos title={"Public Photos"} list={images_filter("public")} />
             <Divider />
             {
-                // (accessList || decisionState.length >= 1) && (accessList.some((i) => i.user_id === user.id) || decisionState.some((i) => (i.sender_id === user.id && i.type === "accept"))) &&
                 privateAlbumState === "access" &&
                 <>
                     <Profile_Photos title={"Private Photos"} list={images_filter("private")} />
@@ -133,4 +95,4 @@ const MainContent = ({ user, allUsers, pendingList, accessList, currentUser, pri
     )
 }
 
-export default MainContent
+export default Main

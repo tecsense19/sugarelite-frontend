@@ -149,8 +149,15 @@ export const private_image_access = async (form) => {
     return data
 }
 
-export const private_album_notification = async () => {
-    const res = await fetch(server_routes.private_album_notification, { cache: "no-cache" })
+export const private_album_notification = async (id) => {
+    // const res = await fetch(server_routes.private_album_notification, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(id)
+    // })
+    const res = await fetch(`${server_routes.private_album_notification}?user_id=${id}`)
     const data = await res.json()
     return data
 }
@@ -169,6 +176,17 @@ export const friends_list_action = async (id) => {
 
 export const block_user_action = async (form) => {
     const res = await fetch(server_routes.block_user, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}
+export const report_user_action = async (form) => {
+    const res = await fetch(server_routes.report_user, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

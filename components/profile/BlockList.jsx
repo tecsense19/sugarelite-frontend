@@ -1,8 +1,36 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import arrow_left from "/public/assets/arrow_left.svg"
+import { useStore } from '@/store/store'
+import { block_user_action } from '@/app/lib/actions'
 
-const BlockList = ({ setProfileToggle, type }) => {
+const BlockList = ({ setProfileToggle, type, allUsers, blockList }) => {
+
+    const [data, setData] = useState([])
+    const { state: { userState } } = useStore()
+
+    useEffect(() => {
+        const matchedProfiles = allUsers.filter(user1 => {
+            return blockList.some(user2 => user2.user_id === user1.id);
+        });
+        setData(matchedProfiles)
+    }, [blockList])
+
+    const handleSubmit = async (id) => {
+        const res = await block_user_action({ sender_id: userState?.id, receiver_id: id, is_blocked: 0 })
+        if (res.success) {
+            const arr = data.filter((i) => i.id !== id)
+            console.log(arr)
+            setData(arr)
+        }
+    }
+    console.log(data)
+
+    const getDateOfAccess = (id) => {
+        const user = blockList.filter((i) => i.user_id === id)
+        const time = new Date(user[0].time)
+        return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
+    }
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]">
 
@@ -24,7 +52,7 @@ const BlockList = ({ setProfileToggle, type }) => {
                         }
                     </div>
                 </div>
-                {/* <div className='mt-[70px]'>
+                <div className='mt-[70px]'>
                     <div className='text-[20px] font-normal leading-[20px]'>
                         {type === "photo"
                             ? "Your Accepted request"
@@ -46,22 +74,22 @@ const BlockList = ({ setProfileToggle, type }) => {
                                     ? <>
                                         {data.map((item, inx) => (
                                             <tr key={inx} className='bg-primary-dark-6 h-[80px] px-10'>
-                                                <td className='text-center px-2 h-full items-center'>
-                                                    <div className='flex justify-center items-center'>
+                                                <td className='text-center h-full items-center '>
+                                                    <div className='flex ms-10 items-center'>
                                                         {item.avatar_url
-                                                            ? <Image src={item.img} alt='' height={50} width={50} className='rounded-full pointer-events-none' />
+                                                            ? <Image src={item.avatar_url} alt='' height={50} width={50} className='rounded-full pointer-events-none h-[50px] w-[50px]' />
                                                             : <div className='h-[50px] w-[50px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
                                                         }
                                                         <div className='ms-[14px] text-[20px] font-normal leading-[20px] flex items-center'>{item.username}</div>
                                                     </div>
                                                 </td>
-                                                <td className='text-center px-2 h-full text-[18px] font-normal leading-[20px] 2xl:table-cell hidden'>
+                                                <td className=' ps-6 h-full text-[18px] font-normal leading-[20px] 2xl:table-cell hidden '>
                                                     {type === "photo"
                                                         ? `${item.username} requested to view your photo.`
                                                         : `You have blocked the profile of ${item.username}.`
                                                     }
                                                 </td>
-                                                <td className='text-center px-2 h-full text-[20px] font-normal leading-[20px]'>{item.date}</td>
+                                                <td className='text-center px-2 h-full text-[20px] font-normal leading-[20px] '>{getDateOfAccess(item.id)}</td>
                                                 <td className='text-center px-2 h-full '>
                                                     <button className='bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px]' onClick={() => handleSubmit(item.id)}>
                                                         {type === "photo"
@@ -80,7 +108,7 @@ const BlockList = ({ setProfileToggle, type }) => {
                             </tbody>
                         </table>
                     </div>
-                </div> */}
+                </div>
             </div>
         </div>
     )

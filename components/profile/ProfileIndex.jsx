@@ -2,13 +2,30 @@
 import SideContent from './SideContent'
 import ProfileMainContent from './ProfileMainContent'
 import { useEffect, useState } from 'react'
-import AccessToggler from './AccessToggler'
 import { useStore } from '@/store/store'
-import { all_profiles_action, search_profile_action } from '@/app/lib/actions'
 import AlbumAccessList from './AlbumAccessList'
 import BlockList from './BlockList'
+import { socket_server } from '@/app/lib/helpers'
+import { io } from 'socket.io-client'
+
+const useSocket = () => {
+    const [socket, setSocket] = useState(null);
+
+    useEffect(() => {
+        const newSocket = io(socket_server);
+        setSocket(newSocket);
+
+        return () => {
+            newSocket.disconnect();
+        };
+    }, []);
+
+    return socket;
+};
 
 const ProfileIndex = ({ decryptedUser, allUsers, accessList }) => {
+
+    const socket = useSocket();
 
     const { state: { userState } } = useStore()
 
@@ -20,16 +37,14 @@ const ProfileIndex = ({ decryptedUser, allUsers, accessList }) => {
 
     const [profileToggle, setProfileToggle] = useState('')
 
+    // console.log(allUsers)
 
 
     return (
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full">
             <SideContent decryptedUser={user} setProfileToggle={setProfileToggle} />
-            {/* {
-                !profileToggle ? <ProfileMainContent decryptedUser={user} /> : <AccessToggler type={profileToggle} setProfileToggle={setProfileToggle} decryptedUser={user} allUsers={allUsers} currentUser={user} accessList={userAccessList} />
-            } */}
             {
-                !profileToggle ? <ProfileMainContent decryptedUser={user} /> : profileToggle === "photo" ? <AlbumAccessList type={profileToggle} setProfileToggle={setProfileToggle} /> : <BlockList type={profileToggle} setProfileToggle={setProfileToggle} />
+                !profileToggle ? <ProfileMainContent decryptedUser={user} /> : profileToggle === "photo" ? <AlbumAccessList albumAccessList={accessList.allow_privateImage_access_users} user={user} type={profileToggle} allUsers={allUsers} setProfileToggle={setProfileToggle} socket={socket} /> : <BlockList type={profileToggle} setProfileToggle={setProfileToggle} user={user} blockList={accessList.is_blocked_users} allUsers={allUsers} socket={socket} />
             }
         </main>
     )

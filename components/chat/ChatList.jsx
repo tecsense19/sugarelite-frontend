@@ -4,15 +4,6 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image";
 import 'react-chat-elements/dist/main.css'
 import "./ChatList.css";
-import Img1 from "../../public/assets/profile_img_1.png";
-import Img2 from "../../public/assets/profile_img_2.png";
-import Img3 from "../../public/assets/profile_img_3.png";
-import Img4 from "../../public/assets/profile_img_4.png";
-import Img5 from "../../public/assets/profile_img_5.png";
-import Img6 from "../../public/assets/profile_img_6.png";
-import Img7 from "../../public/assets/profile_img_7.png";
-import Img8 from "../../public/assets/profile_img_8.png";
-import Img9 from "../../public/assets/profile_img_9.png";
 import chatArrowRight from "../../public/assets/chat_arrow_right.png";
 import arrowLeft from "../../public/assets/arrow_left.svg";
 import ChatListItems from "./ChatListItems";
@@ -21,7 +12,7 @@ import { client_routes } from "@/app/lib/helpers";
 import PopOver from "../profile/commons/PopOver";
 import more_horizontal from "/public/assets/more_horizontal.svg"
 
-const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobileChatContent, messages }) => {
+const ChatList = ({ setSelectedObj, showMobileChatContent, setShowMobileChatContent, chatList, currentUser, socket, selectedObj }) => {
 
   const navigate = useRouter()
 
@@ -29,8 +20,8 @@ const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobi
   const [showProfileScrollLeftBtn, setShowProfileScrollLeftBtn] = useState(false)
   const [showProfileScrollRightBtn, setShowProfileScrollRightBtn] = useState(false)
 
-  useEffect(() => {
 
+  useEffect(() => {
     const AOS = require("aos");
     AOS.init();
 
@@ -51,7 +42,7 @@ const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobi
 
   useEffect(() => {
     handleScroll()
-  }, [profiles])
+  }, [chatList])
 
   const handleScroll = () => {
     if (horizontalProfilesRef.current) {
@@ -74,10 +65,10 @@ const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobi
   return (
     <>
       <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[14px] md:py-[30px]' data-aos="fade-right" data-aos-duration="800">
-        {profiles && profiles.length
+        {chatList && chatList.length
           ? <>
             <div className="md:hidden relative flex justify-between px-4 items-center">
-              <button className="flex justify-center items-center " onClick={() => navigate.replace(client_routes.profile)}>
+              <button className="flex justify-center items-center " onClick={() => { navigate.replace(client_routes.profile); setSelectedObj("") }}>
                 <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
               </button>
               <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>
@@ -93,39 +84,31 @@ const ChatList = ({ setSelectedObj, profiles, showMobileChatContent, setShowMobi
                 <Image src={chatArrowRight} alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none rotate-180" />
               </button>
               <div ref={horizontalProfilesRef} className={`horizontal-profiles flex gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
-                {profiles?.map((item, idx) => {
+                {chatList?.map((item, idx) => {
                   return (
                     <button key={idx} className="flex items-center justify-center scroll-smooth" onClick={() => {
-                      setSelectedObj(item);
+                      setSelectedObj(item.user);
                       if (window.innerWidth < 768) {
                         setShowMobileChatContent(true);
                       }
                     }}>
                       {
-                        item.avatar_url ?
-                          <Image src={item.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
-                          : <p className="h-10 w-10 flex items-center justify-center bg-primary rounded-full text-[18px] ">{item.username.charAt(0)}</p>
+                        item.user.avatar_url ?
+                          <Image src={item.user.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
+                          : <p className="h-10 w-10 flex items-center justify-center bg-primary rounded-full text-[18px] uppercase">{item.user.username.charAt(0)}</p>
                       }
                     </button>
                   )
                 })}
               </div>
-              {/* <div ref={horizontalProfilesRef} className={`flex md:hidden gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
-        {profiles?.map((item, idx) => {
-          return (
-            <button key={idx} className="flex items-center justify-center" onClick={() => { setSelectedObj(item); setShowMobileChatContent(true) }}>
-              <Image src={item.img_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
-            </button>
-          )
-        })}
-      </div> */}
               <button className={`absolute right-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollRightBtn ? "flex" : "hidden"}`} onClick={() => handleHorizontalScrollBtn(40)}>
                 <Image src={chatArrowRight} alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none" />
               </button>
             </div>
-            <ChatListItems profiles={profiles} setSelectedObj={setSelectedObj} showMobileChatContent={showMobileChatContent} setShowMobileChatContent={setShowMobileChatContent} />
+            <ChatListItems selectedObj={selectedObj} setSelectedObj={setSelectedObj} socket={socket} showMobileChatContent={showMobileChatContent} setShowMobileChatContent={setShowMobileChatContent} chatList={chatList} currentUser={currentUser} />
           </>
-          : <div className="flex h-full justify-center w-full items-center">No Chats Found!</div>
+          :
+          <div className="flex h-full justify-center w-full items-center">No Chats Found!</div>
         }
       </div>
     </>

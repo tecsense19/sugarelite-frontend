@@ -37,6 +37,8 @@ const Buttons_Profile = ({ user, allUsers, pendingList, accessList }) => {
     const [privateAlbumState, setPrivateAlbumState] = useState(null)
     const [api, contextHolder] = notification.useNotification();
 
+
+
     useEffect(() => {
         if (!socket) return;
 
@@ -57,9 +59,9 @@ const Buttons_Profile = ({ user, allUsers, pendingList, accessList }) => {
         });
     }, [socket]);
 
-    useEffect(() => {
-        dispatch({ type: "Add_Decision_User", payload: decisionListSocket })
-    }, [decisionListSocket])
+    // useEffect(() => {
+    //     dispatch({ type: "Add_Decision_User", payload: decisionListSocket })
+    // }, [decisionListSocket])
 
 
     useEffect(() => {

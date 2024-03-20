@@ -66,9 +66,9 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
                   && <>
                     {
                       user.avatar_url ? <>
-                        <Image src={user.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
+                        <Image src={user.avatar_url} alt="avatar" height={40} width={40} priority className="lg:hidden h-[40px] pointer-events-none rounded-full mb-[10px]" />
                       </> : <>
-                        <p className='h-10 w-10 bg-primary-dark flex justify-center items-center lg:hidden pointer-events-none rounded-full mb-[10px]'>{user.username.charAt(0)}</p>
+                        <p className='h-10 uppercase w-10 bg-primary-dark flex justify-center items-center lg:hidden pointer-events-none rounded-full mb-[10px]'>{user.username.charAt(0)}</p>
                       </>
                     }
                   </>
@@ -78,7 +78,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
                   user.avatar_url ? <>
                     <Image src={user.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
                   </> : <>
-                    <p className='h-10 w-10 bg-primary-dark flex justify-center items-center lg:hidden pointer-events-none rounded-full mb-[10px]'>{user.username.charAt(0)}</p>
+                    <p className='h-10 w-10 uppercase bg-primary-dark flex justify-center items-center lg:hidden pointer-events-none rounded-full mb-[10px]'>{user.username.charAt(0)}</p>
                   </>
                 }
               </>
@@ -121,7 +121,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
                       user.avatar_url ? <>
                         <Image src={user.avatar_url} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
                       </> : <>
-                        <p className='h-[50px] w-[50px] bg-primary-dark text-[24px] justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
+                        <p className='h-[50px] uppercase w-[50px] bg-primary-dark text-[24px] justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
                       </>
                     }
                   </>
@@ -131,9 +131,9 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
               : <>
                 {
                   user.avatar_url ? <>
-                    <Image src={Img1} alt="" height={50} width={50} priority className="hidden lg:block pointer-events-none rounded-full ms-5" />
+                    <Image src={Img1} alt="" height={50} width={50} priority className="hidden h-[50px] w-[50px] lg:block pointer-events-none rounded-full ms-5" />
                   </> : <>
-                    <p className='h-[50px] w-[50px] bg-primary-dark text-[24px] justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
+                    <p className='h-[50px] w-[50px] bg-primary-dark text-[24px] uppercase justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
                   </>
                 }
               </>
@@ -148,8 +148,8 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
                   <>
                     {
                       toUser.avatar_url ? <>
-                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
-                      </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
+                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] pointer-events-none rounded-full mb-[10px]" />
+                      </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center uppercase items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
                     }
                   </>
                 }
@@ -157,8 +157,8 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
               : <>
                 {
                   toUser.avatar_url ? <>
-                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none rounded-full mb-[10px]" />
-                  </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
+                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] pointer-events-none rounded-full mb-[10px]" />
+                  </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] uppercase flex justify-center items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
                 }
               </>
             }
@@ -167,11 +167,10 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
               ? <>
                 {item.sender_id !== messages[idx + 1].sender_id
                   ? <>
-                    {/* <Image src={Img1} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" /> */}
                     {
                       toUser.avatar_url ? <>
-                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
-                      </> : <p className="hidden lg:flex pointer-events-none rounded-full me-5 justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
+                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden h-[40px] lg:block pointer-events-none rounded-full me-5" />
+                      </> : <p className="hidden lg:flex pointer-events-none rounded-full me-5 uppercase justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
                     }
                   </>
                   : <div className="hidden lg:block w-[60px]"></div>
@@ -180,8 +179,8 @@ const Message = ({ user, item, messages, idx, containerElement, toUser }) => {
               : <>
                 {
                   toUser.avatar_url ? <>
-                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block pointer-events-none rounded-full me-5" />
-                  </> : <p className="hidden lg:flex pointer-events-none rounded-full me-5 justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
+                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block h-10 pointer-events-none rounded-full me-5" />
+                  </> : <p className="hidden lg:flex pointer-events-none rounded-full uppercase me-5 justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
                 }
               </>
             }

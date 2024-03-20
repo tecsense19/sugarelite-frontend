@@ -16,7 +16,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
 
   const user = decrypt_user()
-  const notifications = await private_album_notification()
+  const notifications = await private_album_notification({ user_id: user?.id })
   const allUsers = await all_profiles_action()
 
   return (

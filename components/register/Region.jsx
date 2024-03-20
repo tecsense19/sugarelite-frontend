@@ -2,7 +2,7 @@
 import { getCountries } from "@/app/lib/actions"
 import { ConfigProvider, Select } from "antd"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Controller } from "react-hook-form"
 import treasure_map from "/public/assets/treasure_map.svg"
 import chevronDown from "/public/assets/chevron-down.svg"
@@ -66,7 +66,6 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
     }, [])
 
     useEffect(() => {
-        setValue("region", "Select your Region")
         const filteredArray = countries.filter((country) => country.name === watch("country"))
         if (filteredArray[0]?.name && !filteredArray[0]?.states.length) {
             setValue("region", "No region")
