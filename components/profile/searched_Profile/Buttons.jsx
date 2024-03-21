@@ -27,7 +27,8 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
                 client_notification(api, "topRight", "success", res?.message, 4)
             }
         } else {
-            dispatch({ type: "Message_To", payload: user })
+            // dispatch({ type: "Message_To", payload: user })
+            dispatch({ type: "Add_Profile", payload: { obj: { id: 1, sender_id: currentUser?.id, receiver_id: user.id, text: `You started Chat with ${user.username}`, updated_at: new Date() }, type: "normal", user: user } })
             navigate.push(client_routes.chat)
         }
     }

@@ -116,7 +116,7 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
           <Image src={profile.public_images ? (activeIndex === i ? profile.public_images[currentPhotoNumber] : profile.public_images[0]) : Img2} alt={profile.username} width={1000} height={1000} className='h-full w-full rounded-xl object-cover object-center pointer-events-none' priority />
           <div className="absolute inset-0 w-full h-full flex flex-col justify-end items-center pt-[14px] pb-[17px] px-[17px]">
             <div className='relative h-full w-full flex flex-col justify-between'>
-              {profile.is_active && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-[#1DD719] rounded-full'></div>}
+              {profile.is_active && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>}
               <div className='flex w-full justify-center gap-x-[5.5px]'>
                 {
                   profile?.public_images?.map((item, idx) => {

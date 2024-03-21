@@ -108,11 +108,39 @@ const accessDecisionReducer = (state = [], action) => {
   }
 }
 
+const chatProfileReducer = (state, action) => {
+  switch (action.type) {
+    case 'Add_Profile':
+      const newProfile = action.payload.obj;
+      if (state.some(profile => profile.obj.id === newProfile.id)) {
+        return state;
+      } else {
+        return [...state, action.payload];
+      }
+    default:
+      return state;
+  }
+}
+
+const newMsgReducer = (state, action) => {
+  switch (action.type) {
+    case 'Add_Message':
+      const newProfile = action.payload;
+      if (state.some(profile => profile.id === newProfile.id)) {
+        return state;
+      } else {
+        return [...state, action.payload];
+      }
+    default:
+      return state;
+  }
+}
+
 
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, accessPendingState, decisionState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, newMsgState, accessPendingState, decisionState, chatProfileState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
@@ -121,7 +149,9 @@ const rootReducer = ({ firstState, filterState, userState, toMessageState, allUs
   chatsState: chatReducer(chatsState, action),
   notificationOpenState: notificationReducer(notificationOpenState, action),
   accessPendingState: accessPendingReducer(accessPendingState, action),
-  decisionState: accessDecisionReducer(decisionState, action)
+  decisionState: accessDecisionReducer(decisionState, action),
+  chatProfileState: chatProfileReducer(chatProfileState, action),
+  newMsgState: newMsgReducer(newMsgState, action)
 });
 
 
@@ -146,7 +176,9 @@ export const StoreProvider = ({ children }) => {
     chatsState: [],
     notificationOpenState: false,
     accessPendingState: [],
-    decisionState: []
+    decisionState: [],
+    chatProfileState: [],
+    newMsgState: []
   });
 
   return (

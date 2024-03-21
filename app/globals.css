@@ -207,6 +207,10 @@ button:disabled {
   @apply !text-white
 }
 
+.bg-subscription {
+  background: linear-gradient(88deg, #F1BB22 -28.79%, #F6DB8E 117.13%);
+}
+
 
 /* Animista */
 

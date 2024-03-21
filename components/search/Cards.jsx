@@ -51,7 +51,7 @@ const Cards = ({ allUsers }) => {
 
                     <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
                       <div className="flex justify-end">
-                        {item.online === 1 && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-[#1DD719]" />}
+                        {item.online === 1 && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-success" />}
                       </div>
                       <div className="">
                         <div className="flex items-center">
@@ -86,7 +86,7 @@ const Cards = ({ allUsers }) => {
                       }
                       <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
                         <div className="flex justify-end">
-                          {item.online === 1 && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-[#1DD719]" />}
+                          {item.online === 1 && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-success" />}
                         </div>
                         <div className="">
                           <div className="flex items-center">

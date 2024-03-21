@@ -1,53 +1,30 @@
-import { all_profiles_action, chat_list_action, decrypt_user, friends_list_action } from "@/app/lib/actions"
-import ChatIndex from "@/components/chat/ChatIndex"
+import { all_profiles_action, chat_list_action, decrypt_user } from "@/app/lib/actions";
+import MsgIndex from "@/components/msg/MsgIndex";
 
 const Chat = async () => {
+    const currentUser = decrypt_user();
+    const allUsers = await all_profiles_action();
+    const chatList = await chat_list_action();
 
-  const currentUser = decrypt_user()
+    if (!allUsers.success || !chatList.success || !currentUser) {
+        return null;
+    }
 
-  const allUsers = await all_profiles_action()
+    const users = allUsers.data.filter(user => parseInt(user.id) !== currentUser?.id);
+    const user_chats = chatList.data.filter(chat => chat.sender_id === currentUser?.id || chat.receiver_id === currentUser?.id);
 
-  const users = allUsers.data.filter((i) => parseInt(i.id) !== currentUser?.id)
+    const allUserIds = Array.from(new Set([
+        ...user_chats.map(chat => chat.sender_id !== currentUser?.id ? chat.sender_id : chat.receiver_id)
+    ]));
 
-  const chatList = await chat_list_action()
+    const tempList = allUserIds.map(id => {
+        const userChats = user_chats.filter(chat => chat.sender_id === id || chat.receiver_id === id);
+        const latestMsg = userChats.reduce((latest, current) => latest.id > current.id ? latest : current, {});
+        const user = users.find(u => u.id === id);
+        return { user, latestMsg };
+    }).sort((a, b) => b.latestMsg.id - a.latestMsg.id);
 
-  const user_chats = chatList.data.filter((i) => (i.sender_id === currentUser?.id) || (i.receiver_id === currentUser?.id))
+    return <MsgIndex decryptedUser={currentUser} profilesList={tempList} userChats={user_chats} />;
+};
 
-  const allUserIds = Array.from(new Set([
-    ...user_chats.filter(i => i.sender_id !== currentUser?.id).map(i => i.sender_id),
-    ...user_chats.filter(i => i.receiver_id !== currentUser?.id).map(i => i.receiver_id)
-  ]));
-
-  let friendsList = []
-
-
-  allUserIds.forEach((id) => {
-    const user = users.filter(user => user.id === id)
-    friendsList.push(user[0])
-  })
-
-
-  const tempList = []
-  allUserIds.forEach((id) => {
-    const userChats = user_chats.filter(chat => chat.sender_id === id || chat.receiver_id === id);
-    const latestMsg = userChats.reduce((latest, current) => {
-      return latest.id > current.id ? latest : current;
-    }, {});
-
-    const user = users.find(user => user.id === id);
-    tempList.push({ user, latestMsg });
-  })
-
-  tempList.sort((a, b) => b.latestMsg.id - a.latestMsg.id);
-
-  if (allUsers.success && chatList.success) {
-    return (
-      <>
-        <ChatIndex users={friendsList} decryptedUser={currentUser} chatList={user_chats} tempList={tempList} />
-      </>
-    )
-  }
-
-}
-
-export default Chat
+export default Chat;

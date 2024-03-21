@@ -4,16 +4,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
-import SearchedProfile from './searched_Profile/Buttons_Profile'
 import arrow_left from "../../public/assets/arrow_left.svg"
 import more_horizontal from "../../public/assets/more_horizontal.svg"
-import profile_person from "../../public/assets/profile_person.png"
 import edit from "../../public/assets/edit.svg"
 import premium from "../../public/assets/premium.svg"
 import PopOver from './commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import { useStore } from '@/store/store'
 import lock_1 from "/public/assets/lock_1.svg"
+import subscription_logo from "/public/assets/subscription_logo.png"
 import prohibition from "/public/assets/prohibition.svg"
 
 const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileToggle }) => {
@@ -88,7 +87,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                     }
                     {
                         user && user?.online &&
-                        <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-[#1DD719] absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+                        <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-success absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
                     }
 
                     {/* Edit Profile option starts */}
@@ -120,7 +119,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
                                 {
                                     user && user?.online &&
-                                    <div className='h-3 w-3 lg:hidden bg-[#1DD719] absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
+                                    <div className='h-3 w-3 lg:hidden bg-success absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
                                 }
                             </div>
                             {
@@ -174,7 +173,10 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                             <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>block list</span>
                         </button>
-
+                        <Link href={client_routes.subscription} prefetch={true} className='flex justify-center items-center gap-[10.25px] rounded-[5px] bg-subscription w-full h-[42px] lg:h-[56px]'>
+                            <Image src={subscription_logo} width={22.75} height={26} alt='message' className='inline-block mb-[6px]' />
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center text-primary-dark-3'>Subscription</span>
+                        </Link>
                     </div>
                 }
 

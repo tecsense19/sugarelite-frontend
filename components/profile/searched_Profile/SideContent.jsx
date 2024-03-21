@@ -37,7 +37,7 @@ const SideContent = ({ user, allUsers, pendingList, accessList, currentUser, pri
 					}
 					{
 						user?.online === 1 &&
-						<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-[#1DD719] absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
+						<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-success absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
 					}
 				</div>
 				<div className="lg:self-start mt-[20px] lg:mt-[30px]">
@@ -46,7 +46,7 @@ const SideContent = ({ user, allUsers, pendingList, accessList, currentUser, pri
 							<div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative">{user?.username},{user?.age}
 								{
 									user?.online === 1 &&
-									<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-[#1DD719] absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
+									<div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-success absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
 								}
 							</div>
 							{
