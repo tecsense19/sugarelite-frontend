@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@headlessui/react": "^1.7.18",
     "@stripe/react-stripe-js": "^2.5.1",
     "@stripe/stripe-js": "^3.0.7",
@@ -18,6 +20,7 @@
     "axios": "^1.6.7",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
+    "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.8.0",
     "hammerjs": "^2.0.8",
     "next": "14.1.0",
