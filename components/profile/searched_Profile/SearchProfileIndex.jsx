@@ -7,9 +7,11 @@ import { useEffect, useState } from "react"
 import Side from "./side"
 import Main from "./Main"
 import { io } from "socket.io-client"
-import { socket_server } from "@/app/lib/helpers"
+import { client_notification, client_routes, socket_server } from "@/app/lib/helpers"
 import { useStore } from "@/store/store"
 import { block_user_action } from "@/app/lib/actions"
+import { useRouter } from "next/navigation"
+import { notification } from "antd"
 
 const useSocket = () => {
     const [socket, setSocket] = useState(null);
@@ -28,49 +30,56 @@ const useSocket = () => {
 
 
 const SearchProfileIndex = ({ queried_user, currentUser }) => {
+
     const socket = useSocket()
     const accessList = queried_user.allow_privateImage_access_users
     const [privateAlbumState, setPrivateAlbumState] = useState(null)
-    const { state: { decisionState }, dispatch } = useStore()
+    const navigate = useRouter()
+    const [api, contextHolder] = notification.useNotification()
+    const { dispatch } = useStore()
 
-    // console.log("accessList  :", accessList)
 
     useEffect(() => {
-        const isAccepted = accessList.some((i) => i.user_id === currentUser.id)
-        // console.log(currentUser.id, currentUser.username)
-        if (isAccepted) {
+        const isAccessed = accessList.some((i) => i.user_id === currentUser.id)
+        if (isAccessed) {
             setPrivateAlbumState("access")
         }
     }, [accessList])
 
-    useEffect(() => {
-        if (decisionState.length) {
-            const arr = decisionState.filter((i) => (i.user_id === currentUser.id && i.reciever_id === queried_user.id))
-            console.log(arr)
-        }
-    }, [decisionState])
+    // useEffect(() => {
+    //     if (!socket) return
 
-    useEffect(() => {
-        if (!socket) return;
+    //     const blockUserHandler = (obj) => {
+    //         if (obj.sender_id === currentUser.id) {
+    //             dispatch({ type: "Add_Blocked_User", payload: obj })
+    //         }
+    //         else if (obj.receiver_id === currentUser.id) {
+    //             dispatch({ type: "Add_Blocked_User", payload: obj })
+    //         }
+    //     };
 
-        socket.on("access-notify", (obj) => {
-            if (obj.userId === currentUser?.id) {
-                dispatch({ type: "Add_Decision_User", payload: obj })
-            }
-        });
-    }, [socket]);
+    //     socket.on("blocked-status", blockUserHandler);
+
+    //     return () => {
+    //         socket.off("blocked-status", blockUserHandler);
+    //     };
+    // }, [socket])
 
     const blockHandler = async (type) => {
         if (type === "block") {
             const res = await block_user_action({ sender_id: currentUser.id, receiver_id: queried_user.id, is_blocked: 1 })
-            console.log(res)
+            if (res.success) {
+                client_notification(api, "topRight", "success", res.message, 4)
+                console.log(socket.emit)
+                socket.emit("user-blocked", res.data)
+                // navigate.push(client_routes.profile)
+            }
         }
     }
 
-
-
     return (
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full relative">
+            {contextHolder}
             <Side currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} />
             <Main currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} />
 

@@ -137,6 +137,32 @@ export const send_message_action = async (form) => {
     return data
 }
 
+export const private_image_request = async (form) => {
+    const formData = new FormData()
+    formData.append("sender_id", form.sender_id)
+    formData.append("receiver_id", form.receiver_id)
+    formData.append("is_approved", form.is_approved)
+
+    const res = await fetch(server_routes.private_image_request, {
+        method: "POST",
+        body: formData
+    })
+    const data = await res.json()
+    return data
+}
+
+export const private_album_notification = async (id) => {
+    const res = await fetch(server_routes.private_album_notification, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id)
+    })
+    const data = await res.json()
+    return data
+}
+
 export const private_image_access = async (form) => {
     const res = await fetch(server_routes.private_image_access, {
         method: "POST",
@@ -149,18 +175,7 @@ export const private_image_access = async (form) => {
     return data
 }
 
-export const private_album_notification = async (id) => {
-    // const res = await fetch(server_routes.private_album_notification, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(id)
-    // })
-    const res = await fetch(`${server_routes.private_album_notification}?user_id=${id}`)
-    const data = await res.json()
-    return data
-}
+
 
 export const friends_list_action = async (id) => {
     const res = await fetch(server_routes.friends_list, {

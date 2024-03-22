@@ -25,7 +25,7 @@ const Header = ({ decryptedUser, notifications, allUsers }) => {
 
   return (
     <>
-      {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname === client_routes.discover || pathname === client_routes.chat || pathname === client_routes.msg || pathname === client_routes.subscription)
+      {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname.includes("/query/") || pathname === client_routes.discover || pathname === client_routes.chat || pathname === client_routes.msg || pathname === client_routes.subscription)
         ? <MainHeader decryptedUser={user} notifications={notifications} allUsers={allUsers} />
         : <AuthHeader />
       }

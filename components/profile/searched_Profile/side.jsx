@@ -21,7 +21,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket }) => {
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
                 <Link href={path === client_routes.edit_profile ? client_routes.profile : client_routes.search}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
                 <p className="text-[24px] font-semibold select-none">Profile</p>
-                <PopOver user={user}>
+                <PopOver user={user} socket={socket}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
             </div>

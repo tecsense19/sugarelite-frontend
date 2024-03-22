@@ -5,11 +5,11 @@ import message_circle from "/public/assets/message_circle.svg"
 import lock_1 from "/public/assets/lock_1.svg"
 import PopOver from '../commons/PopOver'
 import more_horizontal from "/public/assets/more_horizontal.svg"
-import { private_image_access } from '@/app/lib/actions'
 import { notification } from 'antd'
-import { client_notification, client_routes, socket_server } from '@/app/lib/helpers'
+import { client_notification, client_routes } from '@/app/lib/helpers'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/store/store'
+import { private_image_request } from '@/app/lib/actions'
 
 const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
 
@@ -19,15 +19,12 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
 
     const requestHandler = async (type) => {
         if (type === "request_view_album") {
-            const res = await private_image_access({ sender_id: currentUser?.id, receiver_id: user?.id, is_approved: 2 })
+            const res = await private_image_request({ sender_id: currentUser?.id, receiver_id: user?.id, is_approved: 0 })
             if (res.success) {
-                console.log(res)
-                dispatch({ type: "Add_User", payload: user.id })
                 socket.emit("request-album", res.data)
                 client_notification(api, "topRight", "success", res?.message, 4)
             }
         } else {
-            // dispatch({ type: "Message_To", payload: user })
             dispatch({ type: "Add_Profile", payload: { obj: { id: 1, sender_id: currentUser?.id, receiver_id: user.id, text: `You started Chat with ${user.username}`, updated_at: new Date() }, type: "normal", user: user } })
             navigate.push(client_routes.chat)
         }
@@ -65,7 +62,7 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
 
 
             <div className=' justify-center items-center hidden md:flex 2xl:hidden'>
-                <PopOver user={user}>
+                <PopOver user={user} socket={socket}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
             </div>

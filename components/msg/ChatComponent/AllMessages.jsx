@@ -6,7 +6,7 @@ import { useStore } from '@/store/store';
 import Message from './Message';
 import TypingAnimation from '../TypingAnimation/TypingAnimation';
 
-const AllMessages = ({ chats, toUser, currentUser, socket }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs }) => {
 
     const msgRef = useRef(null)
 
@@ -67,6 +67,8 @@ const AllMessages = ({ chats, toUser, currentUser, socket }) => {
 
     useEffect(() => {
         scrollToBottom()
+        const myChats = newMsgState.filter((chat) => chat.sender_id === currentUser.id)
+        setTodayMsgs((prev) => prev + (myChats.length - prev))
     }, [newMsgState])
 
     const scrollToBottom = () => {

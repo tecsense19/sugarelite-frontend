@@ -15,7 +15,7 @@ import { client_notification, client_routes, server_routes } from '@/app/lib/hel
 import { block_user_action, logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
 
-const PopOver = ({ children, user }) => {
+const PopOver = ({ children, user, socket }) => {
     const [showOptions, setShowOptions] = useState(false);
     const { state: { userState, notificationOpenState }, dispatch } = useStore()
     const path = usePathname()
@@ -31,6 +31,8 @@ const PopOver = ({ children, user }) => {
             const res = await block_user_action({ sender_id: userState?.id, receiver_id: user.id, is_blocked: 1 })
             if (res.success) {
                 client_notification(api, 'topRight', "success", res.message, 4)
+                // navigate.push(client_routes.profile)
+                socket.emit("user-blocked", res.data)
             }
         } else {
 

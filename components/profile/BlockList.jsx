@@ -20,11 +20,9 @@ const BlockList = ({ setProfileToggle, type, allUsers, blockList }) => {
         const res = await block_user_action({ sender_id: userState?.id, receiver_id: id, is_blocked: 0 })
         if (res.success) {
             const arr = data.filter((i) => i.id !== id)
-            console.log(arr)
             setData(arr)
         }
     }
-    console.log(data)
 
     const getDateOfAccess = (id) => {
         const user = blockList.filter((i) => i.user_id === id)

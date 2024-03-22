@@ -5,12 +5,10 @@ import { useStore } from '@/store/store';
 import { ConfigProvider, Drawer, notification, } from 'antd';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { io } from "socket.io-client"
 import Cross from "/public/assets/cross_icon.svg"
 
-let socket;
 
-const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
+const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) => {
 
 	const onClose = () => {
 		setOpen(false)
@@ -71,7 +69,8 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 		}
 	}
 	useEffect(() => {
-		socket = io(socket_server)
+		if (!socket) return
+
 		socket.on("album-notification", (obj) => {
 			if (user.id === obj.receiver_id) {
 				console.log(obj)
@@ -80,9 +79,7 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 		})
 
 		return () => {
-			if (socket) {
-				socket.disconnect()
-			}
+			socket.off("album-notification")
 		}
 	}, [socket])
 
@@ -99,7 +96,6 @@ const Notification = ({ open, setOpen, notifications, user, allUsers }) => {
 				// socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
 			}
 		} else if (userState.username && type === "socket") {
-
 			const res = await private_image_access({ request_id: id, is_approved: 1 })
 			console.log(res)
 			if (res.success) {

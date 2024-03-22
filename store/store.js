@@ -1,7 +1,9 @@
 "use client"
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { parseCookies } from 'nookies';
 import CryptoJS from "crypto-js"
+import { io } from 'socket.io-client';
+import { socket_server } from '@/app/lib/helpers';
 
 const initialState = {
   isOpenMobileNavbar: false,
@@ -136,11 +138,22 @@ const newMsgReducer = (state, action) => {
   }
 }
 
-
+const blockedUsers = (state, action) => {
+  switch (action.type) {
+    case 'Add_Blocked_User':
+      if (state.some(profile => profile.id === action.payload.id)) {
+        return state;
+      } else {
+        return [...state, action.payload];
+      }
+    default:
+      return state;
+  }
+}
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, newMsgState, accessPendingState, decisionState, chatProfileState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
@@ -151,13 +164,16 @@ const rootReducer = ({ firstState, filterState, userState, toMessageState, allUs
   accessPendingState: accessPendingReducer(accessPendingState, action),
   decisionState: accessDecisionReducer(decisionState, action),
   chatProfileState: chatProfileReducer(chatProfileState, action),
-  newMsgState: newMsgReducer(newMsgState, action)
+  newMsgState: newMsgReducer(newMsgState, action),
+  blockedUsersState: blockedUsers(blockedUsersState, action)
 });
+
 
 
 export const StoreProvider = ({ children }) => {
 
   const token = parseCookies("user")?.user
+  let socket;
   let user;
 
   if (token) {
@@ -165,7 +181,26 @@ export const StoreProvider = ({ children }) => {
     user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   }
 
-  const [state, dispatch] = useReducer(rootReducer, {
+  useEffect(() => {
+    socket = io(socket_server)
+
+    const blockUserHandler = (obj) => {
+      if (obj.sender_id === user.id || obj.receiver_id === user.id) {
+        dispatch({ type: "Add_Blocked_User", payload: obj })
+      }
+    };
+
+    socket.on("blocked-status", blockUserHandler);
+
+    return () => {
+      if (socket) {
+        socket.off("blocked-status", blockUserHandler);
+        socket.disconnect()
+      }
+    };
+  }, [])
+
+  const [state, dispatch,] = useReducer(rootReducer, {
     firstState: initialState,
     filterState: {
       isFilterOpen: false,
@@ -178,7 +213,8 @@ export const StoreProvider = ({ children }) => {
     accessPendingState: [],
     decisionState: [],
     chatProfileState: [],
-    newMsgState: []
+    newMsgState: [],
+    blockedUsersState: []
   });
 
   return (

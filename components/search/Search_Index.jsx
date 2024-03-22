@@ -6,13 +6,15 @@ import chevron_down from "/public/assets/arrow_left.svg"
 import settingsIcon from "/public/assets/settings_icon.svg";
 import { useStore } from "@/store/store"
 import Mob_Filter from "@/components/search/Mob_Filter"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { client_routes } from "@/app/lib/helpers"
 
-const Search_Index = ({ allUsers }) => {
+const Search_Index = ({ allUsers, blockList }) => {
 
-    const { state: { filterState: { isFilterOpen } }, dispatch } = useStore()
+    const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
+
+    const [users, setUsers] = useState(allUsers.filter((user) => !blockList.includes(user.id)))
 
     const navigate = useRouter()
 
@@ -24,6 +26,19 @@ const Search_Index = ({ allUsers }) => {
         }
     }
 
+    useEffect(() => {
+        if (blockedUsersState) {
+            if (blockedUsersState.some(i => i.sender_id === userState.id)) {
+                const blockList = blockedUsersState.map((i) => i.receiver_id)
+                const arr = users.filter((i) => !blockList.includes(i.id))
+                setUsers(arr)
+            } else if (blockedUsersState.some(i => i.receiver_id === userState.id)) {
+                const blockList = blockedUsersState.map((i) => i.sender_id)
+                const arr = users.filter((i) => !blockList.includes(i.id))
+                setUsers(arr)
+            }
+        }
+    }, [blockedUsersState])
 
     const handleResize = () => {
         if (window.innerWidth > 768) {
@@ -54,8 +69,8 @@ const Search_Index = ({ allUsers }) => {
                         <div></div>
                     </div>
             }
-            <Filters allUsers={allUsers} />
-            {!isFilterOpen ? <Cards allUsers={allUsers} /> : <Mob_Filter allUsers={allUsers} />}
+            <Filters allUsers={users} />
+            {!isFilterOpen ? <Cards allUsers={users} /> : <Mob_Filter allUsers={users} />}
         </div>
     )
 }
