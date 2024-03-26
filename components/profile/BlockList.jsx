@@ -1,37 +1,60 @@
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import arrow_left from "/public/assets/arrow_left.svg"
 import { useStore } from '@/store/store'
 import { block_user_action } from '@/app/lib/actions'
+import { notification } from 'antd'
+import { client_notification } from '@/app/lib/helpers'
 
-const BlockList = ({ setProfileToggle, type, allUsers, blockList }) => {
+const BlockList = ({ setProfileToggle, type, allUsers, blockList, socket }) => {
 
     const [data, setData] = useState([])
-    const { state: { userState } } = useStore()
+    const { state: { userState, blockedUsersState, unBlockedUsersState } } = useStore()
+    const [api, contextHolder] = notification.useNotification()
 
     useEffect(() => {
-        const matchedProfiles = allUsers.filter(user1 => {
-            return blockList.some(user2 => user2.user_id === user1.id);
-        });
+        const matchedProfiles = allUsers.filter(user1 => blockList.some(user2 => user2.user_id === user1.id))
         setData(matchedProfiles)
-    }, [blockList])
+    }, [blockList, allUsers])
+
+    useEffect(() => {
+        if (blockedUsersState.length) {
+            setData(prevData => Array.from(new Set([...allUsers.filter(user1 => blockedUsersState.some(user2 => user2.receiver_id === user1.id)), ...prevData])))
+        }
+    }, [blockedUsersState, allUsers])
+
+    useEffect(() => {
+        if (unBlockedUsersState.length) {
+            setData(prevData => prevData.filter(user1 => !unBlockedUsersState.some(user2 => user2.receiver_id === user1.id)))
+        }
+    }, [unBlockedUsersState]);
 
     const handleSubmit = async (id) => {
         const res = await block_user_action({ sender_id: userState?.id, receiver_id: id, is_blocked: 0 })
         if (res.success) {
             const arr = data.filter((i) => i.id !== id)
             setData(arr)
+            client_notification(api, "topRight", "success", res.message, 4)
+            socket.emit("user-unblocked", res.data)
         }
     }
 
-    const getDateOfAccess = (id) => {
-        const user = blockList.filter((i) => i.user_id === id)
-        const time = new Date(user[0].time)
-        return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
-    }
+    const getDateOfAccess = useMemo(() => (id) => {
+        const user = blockList.find(i => i.user_id === id)
+        const blockedUser = blockedUsersState.find(i => i.receiver_id === id)
+
+        const dataToCheck = user ? user.time : blockedUser ? blockedUser.updated_at : null;
+        if (dataToCheck) {
+            const time = new Date(dataToCheck)
+            return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
+        }
+        return "";
+    }, [blockList, blockedUsersState]);
+
+
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]">
-
+            {contextHolder}
             <div className='w-full'>
                 <div className='w-full flex flex-col items-center'>
                     <div className='text-center text-white text-[30px] font-bold leading-[40px] relative flex items-center justify-center w-full'>

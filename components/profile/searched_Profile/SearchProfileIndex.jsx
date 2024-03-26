@@ -36,7 +36,6 @@ const SearchProfileIndex = ({ queried_user, currentUser }) => {
     const [privateAlbumState, setPrivateAlbumState] = useState(null)
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification()
-    const { dispatch } = useStore()
 
 
     useEffect(() => {
@@ -46,33 +45,13 @@ const SearchProfileIndex = ({ queried_user, currentUser }) => {
         }
     }, [accessList])
 
-    // useEffect(() => {
-    //     if (!socket) return
-
-    //     const blockUserHandler = (obj) => {
-    //         if (obj.sender_id === currentUser.id) {
-    //             dispatch({ type: "Add_Blocked_User", payload: obj })
-    //         }
-    //         else if (obj.receiver_id === currentUser.id) {
-    //             dispatch({ type: "Add_Blocked_User", payload: obj })
-    //         }
-    //     };
-
-    //     socket.on("blocked-status", blockUserHandler);
-
-    //     return () => {
-    //         socket.off("blocked-status", blockUserHandler);
-    //     };
-    // }, [socket])
-
     const blockHandler = async (type) => {
         if (type === "block") {
             const res = await block_user_action({ sender_id: currentUser.id, receiver_id: queried_user.id, is_blocked: 1 })
             if (res.success) {
                 client_notification(api, "topRight", "success", res.message, 4)
-                console.log(socket.emit)
                 socket.emit("user-blocked", res.data)
-                // navigate.push(client_routes.profile)
+                navigate.push(client_routes.profile)
             }
         }
     }

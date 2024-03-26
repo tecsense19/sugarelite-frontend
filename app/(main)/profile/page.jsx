@@ -1,7 +1,5 @@
 import { all_profiles_action, decrypt_user } from "@/app/lib/actions"
 import ProfileIndex from "@/components/profile/ProfileIndex"
-import ProfileMainContent from "@/components/profile/ProfileMainContent"
-import SideContent from "@/components/profile/SideContent"
 
 
 const Profile = async () => {

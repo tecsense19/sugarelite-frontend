@@ -94,17 +94,20 @@ const accessDecisionReducer = (state = [], action) => {
   // console.log(action.payload)
   switch (action.type) {
     case 'Add_Decision_User':
-      const existingIndex = state.findIndex(item => item.userId === action.payload.userId && item.senderId === action.payload.senderId);
+      const { data, status } = action.payload
+      console.log(data)
+      const existingIndex = state.findIndex(item => item.id)
+    // const existingIndex = state.findIndex(item => item.userId === action.payload.userId && item.senderId === action.payload.senderId);
 
-      if (existingIndex !== -1) {
-        // If the object exists, update it
-        const newState = [...state];
-        newState[existingIndex] = action.payload;
-        return newState;
-      } else {
-        // If the object doesn't exist, add it
-        return [...state, action.payload];
-      }
+    // if (existingIndex !== -1) {
+    //   // If the object exists, update it
+    //   const newState = [...state];
+    //   newState[existingIndex] = action.payload;
+    //   return newState;
+    // } else {
+    //   // If the object doesn't exist, add it
+    //   return [...state, action.payload];
+    // }
     default:
       return state;
   }
@@ -127,16 +130,57 @@ const chatProfileReducer = (state, action) => {
 const newMsgReducer = (state, action) => {
   switch (action.type) {
     case 'Add_Message':
-      const newProfile = action.payload;
-      if (state.some(profile => profile.id === newProfile.id)) {
-        return state;
+      const newMsg = action.payload;
+      const existingMsgIndex = state.findIndex(msg => msg.id === newMsg.id);
+      if (existingMsgIndex !== -1) {
+        const updatedState = [...state];
+        updatedState[existingMsgIndex] = newMsg;
+        return updatedState;
       } else {
-        return [...state, action.payload];
+        return [...state, newMsg];
       }
     default:
       return state;
   }
 }
+
+const editOrDeleteReducer = (state, action) => {
+  switch (action.type) {
+    case 'Edit_Message':
+      const editedMessage = action.payload;
+      const existingMessageIndex = state.edit.findIndex(message => message.id === editedMessage.id);
+      if (existingMessageIndex !== -1) {
+        const updatedEdit = [...state.edit];
+        updatedEdit[existingMessageIndex] = editedMessage;
+        return {
+          ...state,
+          edit: updatedEdit
+        };
+      } else {
+        return {
+          ...state,
+          edit: [...state.edit, editedMessage]
+        };
+      }
+    case "Delete_Message":
+      const deletedMsg = action.payload;
+      const deletedMessageIndex = state.deleted.findIndex(message => message.id === deletedMsg.id);
+      if (deletedMessageIndex !== -1) {
+        const updatedEdit = [...state.deleted];
+        updatedEdit[deletedMessageIndex] = deletedMsg;
+        return {
+          ...state,
+          deleted: updatedEdit
+        };
+      } else {
+        return {
+          ...state, deleted: [...state.deleted, action.payload]
+        };
+      }
+    default:
+      return state;
+  }
+};
 
 const blockedUsers = (state, action) => {
   switch (action.type) {
@@ -151,9 +195,22 @@ const blockedUsers = (state, action) => {
   }
 }
 
+const unBlockedUsers = (state, action) => {
+  switch (action.type) {
+    case 'Add_UnBlocked_User':
+      if (state.some(profile => profile.id === action.payload.id)) {
+        return state;
+      } else {
+        return [...state, action.payload];
+      }
+    default:
+      return state;
+  }
+}
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, unBlockedUsersState, accessPendingState, decisionState, chatProfileState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
@@ -165,7 +222,9 @@ const rootReducer = ({ firstState, filterState, userState, toMessageState, allUs
   decisionState: accessDecisionReducer(decisionState, action),
   chatProfileState: chatProfileReducer(chatProfileState, action),
   newMsgState: newMsgReducer(newMsgState, action),
-  blockedUsersState: blockedUsers(blockedUsersState, action)
+  blockedUsersState: blockedUsers(blockedUsersState, action),
+  unBlockedUsersState: unBlockedUsers(unBlockedUsersState, action),
+  messageUpdate: editOrDeleteReducer(messageUpdate, action)
 });
 
 
@@ -190,15 +249,29 @@ export const StoreProvider = ({ children }) => {
       }
     };
 
+    const unblockUserHandler = (obj) => {
+      if (obj.sender_id === user.id || obj.receiver_id === user.id) {
+        dispatch({ type: "Add_UnBlocked_User", payload: obj })
+      }
+    };
+
+    const albumAccessHandler = (obj) => {
+      console.log(obj)
+      dispatch({ type: "Add_Decision_User", payload: obj })
+    }
+
     socket.on("blocked-status", blockUserHandler);
+    socket.on("unblocked-status", unblockUserHandler);
+    socket.on("album-notification", albumAccessHandler)
 
     return () => {
       if (socket) {
         socket.off("blocked-status", blockUserHandler);
+        socket.off("album-notification", albumAccessHandler)
         socket.disconnect()
       }
     };
-  }, [])
+  }, [user])
 
   const [state, dispatch,] = useReducer(rootReducer, {
     firstState: initialState,
@@ -214,7 +287,9 @@ export const StoreProvider = ({ children }) => {
     decisionState: [],
     chatProfileState: [],
     newMsgState: [],
-    blockedUsersState: []
+    blockedUsersState: [],
+    unBlockedUsersState: [],
+    messageUpdate: { edit: [], deleted: [] }
   });
 
   return (

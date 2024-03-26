@@ -11,7 +11,7 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
 
 
     const [data, setData] = useState([])
-    console.log(data)
+    console.log(albumAccessList)
 
     useEffect(() => {
         const matchedProfiles = allUsers.filter(user1 => {

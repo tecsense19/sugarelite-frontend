@@ -1,6 +1,5 @@
 "use client"
 import Image from 'next/image'
-import React, { use, useEffect, useState } from 'react'
 import message_circle from "/public/assets/message_circle.svg"
 import lock_1 from "/public/assets/lock_1.svg"
 import PopOver from '../commons/PopOver'
@@ -21,7 +20,7 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
         if (type === "request_view_album") {
             const res = await private_image_request({ sender_id: currentUser?.id, receiver_id: user?.id, is_approved: 0 })
             if (res.success) {
-                socket.emit("request-album", res.data)
+                socket.emit("request-album", { data: res.data, status: "pending" })
                 client_notification(api, "topRight", "success", res?.message, 4)
             }
         } else {

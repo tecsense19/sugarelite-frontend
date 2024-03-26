@@ -68,13 +68,16 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
 			return value
 		}
 	}
+
+
 	useEffect(() => {
 		if (!socket) return
 
-		socket.on("album-notification", (obj) => {
-			if (user.id === obj.receiver_id) {
-				console.log(obj)
-				setSocketNotifications((prev) => [obj, ...prev])
+		socket.on("album-notification", ({ data, status }) => {
+			console.log(data)
+			// const 
+			if (user.id === data.receiver_id) {
+				setSocketNotifications((prev) => [data, ...prev])
 			}
 		})
 

@@ -1,14 +1,17 @@
 "use client"
 import { useStore } from '@/store/store'
-import { ConfigProvider, Modal } from 'antd'
+import { ConfigProvider, Modal, notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import StripeModal from './StripeModal'
 import subscription_include from "/public/assets/subscription_include.png"
 import subscription_not_include from "/public/assets/subscription_not_include.png"
 import Image from 'next/image'
 import arrow_left from "/public/assets/arrow_left.svg";
-import { client_routes } from '@/app/lib/helpers'
+import { client_notification, client_routes } from '@/app/lib/helpers'
 import Link from 'next/link'
+import { cancel_subscription_action, search_profile_action, start_stop_subscription_action } from '@/app/lib/actions'
+import CryptoJS from "crypto-js"
+import { setCookie } from "nookies"
 
 const subscriptions = [
   { name: "4 Weeks", value: "4week", key: process.env.NEXT_PUBLIC_STRIPE_4_WEEKS, amount: 116 },
@@ -19,9 +22,13 @@ const subscriptions = [
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentObj, setSelectedPaymentObj] = useState("")
-  const { state: { userState } } = useStore()
+  const { state: { userState }, dispatch } = useStore()
   console.log(userState);
   const [isPremium, setIsPremium] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isCancelLoading, setIsCancelLoading] = useState(false)
+  const [isStartStopLoading, setIsStartStopLoading] = useState(false)
+  const [api, contextHolder] = notification.useNotification();
 
   const details = [
     { including: true, desc: "Read and write messages without any restrictions" },
@@ -37,7 +44,7 @@ const Index = () => {
     if (userState) {
       setIsPremium(userState?.is_subscribe ? true : false)
     }
-  }, [])
+  }, [userState])
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -59,22 +66,76 @@ const Index = () => {
     return `${newDate[1]} ${newDate[2]}, ${newDate[3]}`
   }
 
+  const handleCancelPlan = async () => {
+    setIsLoading(true)
+    setIsCancelLoading(true)
+    console.log("Cancel plan");
+    let obj = {
+      "user_id": userState?.id,
+      "at_cancel": "yes"
+    }
+    const res = await cancel_subscription_action(obj);
+    console.log("res ::", res);
+    if (res.success) {
+      const userRes = await search_profile_action(userState.id)
+      const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
+      setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+      client_notification(api, "topRight", "success", res.message, 2)
+      dispatch({ type: "Current_User", payload: userRes.data[0] })
+    }
+    setIsLoading(false)
+    setIsCancelLoading(false)
+  }
+
+  const handleStartStopPlan = async () => {
+    console.log("Stop plan");
+    setIsLoading(true)
+    setIsStartStopLoading(true)
+    let obj = {
+      "user_id": userState?.id,
+      "start_stop": userState?.is_subscription_stop ? "start" : "stop"
+    }
+    const res = await start_stop_subscription_action(obj);
+    console.log("res ::", res);
+    if (res.success) {
+      const userRes = await search_profile_action(userState.id)
+      const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
+      setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+      client_notification(api, "topRight", "success", res.message, 2)
+      dispatch({ type: "Current_User", payload: userRes.data[0] })
+    }
+    setIsLoading(false)
+    setIsStartStopLoading(false)
+  }
+
+  const getSubscriptionPlan = (name) => {
+    let tempObj = subscriptions.filter(item => item.value === name)
+    if (tempObj.length) {
+      return tempObj[0].name
+    } else {
+      return ""
+    }
+  }
+
   return (
     <div className='md:pt-[66px] text-white p-5'>
+      {contextHolder}
       <div className='md:mt-10 flex flex-col w-full items-center relative'>
         <Link href={client_routes.profile} prefetch={true} className='absolute left-0 top-1 flex md:hidden'>
           <Image src={arrow_left} alt='' height={30} width={30} className='pointer-events-none' />
         </Link>
-        <div className='xl:text-[30px] lg:text-[25px] text-[18px] font-bold leading-[40px] text-center'>
+        <div className='xl:text-[30px] lg:text-[25px] text-[18px] font-bold leading-[40px] text-center px-6 sm:px-0'>
           {isPremium
             ? "Your Subscription"
-            : "Upgrade Your Dating Journey. Get Premium Access Now."
+            : <span className='inline'>Upgrade Your Dating Journey. <span className='hidden sm:inline'>Get Premium Access Now.</span></span>
           }
         </div>
         <div className='mt-[14px] text-[18px] text-center font-light leading-[20px]'>
           {isPremium
             ? "Manage your current plan"
-            : "Discover Your Perfect Match with Our Premium Features. Find Your Love Faster with Exclusive Benefits. Upgrade Your Dating Experience Today"
+            : <span className='inline'>
+              Discover Your Perfect Match with Our Premium Features. <span className='hidden sm:inline'>Find Your Love Faster with Exclusive Benefits. Upgrade Your Dating Experience Today</span>
+            </span>
           }
         </div>
       </div>
@@ -84,10 +145,13 @@ const Index = () => {
             <div className='bg-black p-5 sm:p-8 2xl:px-[70px] xl:px-[60px] flex justify-between items-center'>
               <div className='flex flex-col items-start'>
                 <div className='text-[15px] sm:text-[16px] font-semibold leading-[normal]'>Current Plan</div>
-                <div className='mt-[10px] text-[24px] sm:text-[30px] font-semibold leading-[24px] sm:leading-[30px]'>4 Weeks</div>
+                <div className='mt-[10px] text-[24px] sm:text-[30px] font-semibold leading-[24px] sm:leading-[30px]'>
+                  {getSubscriptionPlan(userState.user_subscriptions.subscription_plan)}
+                  {/* {/ 4 Weeks /} */}
+                </div>
               </div>
               <div className='text-[30px] sm:text-[40px] font-semibold leading-[normal]'>
-                $69
+                ${userState.user_subscriptions.subscription_amount}
               </div>
             </div>
             <div className="bg-primary-dark-6 p-6 sm:p-10">
@@ -97,14 +161,49 @@ const Index = () => {
                   <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">Subscription Date</div>
                 </div>
                 <div className="flex flex-col items-start">
-                  <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">{getDate(userState.next_subscription_date)}</div>
-                  <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">Renewal Date</div>
+                  <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">
+                    {userState.is_subscription_cancel
+                      ? getDate(userState.subscription_cancel_date)
+                      : <>
+                        {userState.is_subscription_stop
+                          ? <>{getDate(userState.subscription_stop_date)}</>
+                          : <>{getDate(userState.next_subscription_date)}</>
+                        }
+                      </>
+                    }
+                  </div>
+                  <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">
+                    {userState.is_subscription_cancel
+                      ? "Cancel Date"
+                      : <>
+                        {userState.is_subscription_stop
+                          ? "Pause Date"
+                          : "Renewal Date"
+                        }
+                      </>
+                    }
+                  </div>
                 </div>
               </div>
-              <div className='flex flex-col sm:flex-row justify-center mt-7 sm:mt-10 gap-3 sm:gap-5'>
-                <button className='w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-primary-dark-4'>CANCEL PLAN</button>
-                <button className='w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-danger'>UPDATE PLAN</button>
-              </div>
+              {!userState.is_subscription_cancel
+                ? <div className='flex flex-col sm:flex-row justify-center mt-7 sm:mt-10 gap-3 sm:gap-5'>
+                  <button className={`w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-primary-dark-4 uppercase ${isLoading ? "pointer-events-none" : ""}`} onClick={handleCancelPlan}>
+                    {isCancelLoading
+                      ? <div className="loader"></div>
+                      : "CANCEL PLAN"
+                    }
+                  </button>
+                  <button className={`w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-danger uppercase ${isLoading ? "pointer-events-none" : ""}`} onClick={handleStartStopPlan}>
+                    {isStartStopLoading
+                      ? <div className="loader"></div>
+                      : <>
+                        {userState.is_subscription_stop ? "RESUME PLAN" : "STOP PLAN"}
+                      </>
+                    }
+                  </button>
+                </div>
+                : <></>
+              }
             </div>
           </div>
         </div>
@@ -127,7 +226,7 @@ const Index = () => {
                   ))
                   }
                 </div>
-                {/* {/ <div className='text-[20px]'>{item.name}</div> /} */}
+
                 <div className='w-full flex items-center justify-center mt-[45px] mb-10'>
                   <button className='bg-tinder rounded-[5px] py-[11px] w-[230px] sm:w-[241px] flex justify-center items-center text-[16px] font-medium leading-[normal]' onClick={() => handleSubmit(item)}>
                     GET STARTED

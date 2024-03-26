@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import smileIcon from "/public/assets/smile_icon.svg";
 import attachmentIcon from "/public/assets/attachment_icon.svg";
+import closeIcon from "/public/assets/close.svg";
 import sendIcon from "/public/assets/send_icon.svg";
 import Image from 'next/image';
 import { send_message_action } from '@/app/lib/actions';
@@ -11,22 +12,37 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import Link from 'next/link';
 
-const MessageInput = ({ socket, toUser, currentUser, isAllowed }) => {
+const MessageInput = ({ socket, toUser, currentUser, isAllowed, editingMsg, setEditingMsg }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
     const { register, handleSubmit, reset, watch, setValue } = useForm()
     const [api, contextHolder] = notification.useNotification()
     const [isEmoji, setIsEmoji] = useState(false)
+    const [isdisabled, setIsDisabled] = useState(false)
 
     const sendMessageHandler = async ({ message }) => {
         setIsEmoji(false)
-        if (message.length && currentUser && toUser) {
+        message = message.trim(' ')
+        reset()
+        if (message.length && currentUser && toUser && !editingMsg) {
+            setIsDisabled(true)
             let obj = { sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "regular" }
             const res = await send_message_action(obj)
             if (res.success) {
-                reset()
+                setIsDisabled(false)
                 socket.emit("typing", { id: toUser.id, decision: false })
+                socket.emit("send-message", { msg: res.message, user: currentUser })
+            } else {
+                client_notification(api, "topRight", "error", res?.message, 5)
+            }
+        }
+        if (message.length && currentUser && toUser && editingMsg) {
+            let obj = { sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id }
+            const res = await send_message_action(obj)
+            if (res.success) {
+                setIsDisabled(false)
+                setEditingMsg(null)
                 socket.emit("send-message", { msg: res.message, user: currentUser })
             } else {
                 client_notification(api, "topRight", "error", res?.message, 5)
@@ -35,10 +51,12 @@ const MessageInput = ({ socket, toUser, currentUser, isAllowed }) => {
     }
 
     useEffect(() => {
-        if (watch('message')?.length >= 1) {
-            socket.emit("typing", { receiver: toUser.id, sender: currentUser.id, decision: true })
-        } else {
-            socket.emit("typing", { receiver: toUser.id, sender: currentUser.id, decision: false })
+        if (!editingMsg) {
+            if (watch('message')?.length >= 1) {
+                socket.emit("typing", { receiver: toUser.id, sender: currentUser.id, decision: true })
+            } else {
+                socket.emit("typing", { receiver: toUser.id, sender: currentUser.id, decision: false })
+            }
         }
     }, [watch("message")])
 
@@ -46,6 +64,11 @@ const MessageInput = ({ socket, toUser, currentUser, isAllowed }) => {
         setValue('message', watch("message") + emoji.native);
     }
 
+    useEffect(() => {
+        if (editingMsg) {
+            setValue('message', editingMsg.message)
+        }
+    }, [editingMsg])
 
     useEffect(() => {
         const emojiCloserHandler = (event) => {
@@ -79,11 +102,18 @@ const MessageInput = ({ socket, toUser, currentUser, isAllowed }) => {
                         </button>
                         <form className=' w-full flex items-center' onSubmit={handleSubmit(sendMessageHandler)}>
                             <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px]" autoComplete="off" />
-                            <div className='cursor-pointer'>
-                                <Image src={attachmentIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />
-                                <Image src={attachmentIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
-                            </div>
-                            <button type="submit" className="h-[30px] w-[30px] md:h-[35px] md:w-[35px] bg-secondary flex justify-center items-center ms-3 md:ms-[30px] rounded-full" >
+                            {
+                                !editingMsg ? <div className='cursor-pointer'>
+                                    <Image src={attachmentIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />
+                                    <Image src={attachmentIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
+                                </div> : <>
+                                    <div className='cursor-pointer' onClick={() => { setEditingMsg(null); reset() }}>
+                                        <Image src={closeIcon} priority alt="closeIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
+                                        <Image src={closeIcon} priority alt="closeIcon" height={20} width={20} className="md:hidden pointer-events-none" />
+                                    </div>
+                                </>
+                            }
+                            <button type="submit" disabled={isdisabled} className="h-[30px] w-[30px] md:h-[35px] md:w-[35px] bg-secondary flex justify-center items-center ms-3 md:ms-[30px] rounded-full" >
                                 <Image src={sendIcon} priority alt="" height={18} width={18} className="hidden md:block pointer-events-none" />
                                 <Image src={sendIcon} priority alt="" height={15.5} width={15.5} className="md:hidden pointer-events-none" />
                             </button>

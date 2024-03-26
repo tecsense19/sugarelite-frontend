@@ -224,3 +224,27 @@ export const stripe_action = async (form) => {
     const data = await res.json()
     return data
 }
+
+export const start_stop_subscription_action = async (form) => {
+    const res = await fetch(server_routes.start_stop_subscription, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}
+
+export const cancel_subscription_action = async (form) => {
+    const res = await fetch(server_routes.cancel_subscription, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+    })
+    const data = await res.json()
+    return data
+}

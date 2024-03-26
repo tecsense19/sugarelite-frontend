@@ -1,12 +1,13 @@
 "use client"
 
-import { socket_server } from "@/app/lib/helpers";
+import { client_routes, socket_server } from "@/app/lib/helpers";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import ProfileList from "./ProfileList/ProfileList";
 import ChatComponent from "./ChatComponent/ChatComponent";
 import { useStore } from "@/store/store";
 import NoChatFound from "./NoChatFound";
+import { useRouter } from "next/navigation";
 
 const useSocket = () => {
     const [socket, setSocket] = useState(null);
@@ -30,11 +31,15 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
     const [toUser, setToUser] = useState("")
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const [currentUser, setCurrentUser] = useState(decryptedUser)
+    const navigate = useRouter()
 
     const { state: { userState } } = useStore()
 
     useEffect(() => {
         setCurrentUser(userState)
+        if (!userState?.id) {
+            navigate.push(client_routes.home)
+        }
     }, [userState])
 
     useEffect(() => {

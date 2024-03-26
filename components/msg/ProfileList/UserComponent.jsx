@@ -27,8 +27,6 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
         }
     };
 
-
-
     return (
         <div className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer" onClick={() => { setToUser(user); }}>
             <div className="flex gap-4 items-center">
@@ -42,7 +40,7 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{user.username}</p>
-                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px]">{message?.text || ''}</p>
+                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px]">{message.type === "deleted" ? "message deleted" : message?.text || ''}</p>
                 </div>
             </div>
             <div className="flex flex-col items-end">

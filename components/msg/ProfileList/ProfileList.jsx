@@ -59,28 +59,45 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
         if (!socket) return;
 
         const receiveMessageHandler = (obj) => {
-            if (obj.msg.receiver_id === currentUser.id) {
-                dispatch({ type: "Add_Profile", payload: { obj: obj.msg, type: "socket", user: obj.user } });
-                dispatch({ type: "Add_Message", payload: obj.msg })
-                if (toUser?.id !== obj.msg.sender_id) {
-                    setUnReadCount((prev) => prev + 1);
-                    setUnreadUsers(prev => {
-                        if (prev.indexOf(obj.msg.sender_id) === -1) {
-                            return [...prev, obj.msg.sender_id];
-                        }
-                        return prev;
-                    })
+            const { msg, user } = obj
+            if (msg.receiver_id === currentUser.id) {
+                if (msg.type === "regular") {
+                    dispatch({ type: "Add_Profile", payload: { obj: msg, type: "socket", user: user } });
+                    dispatch({ type: "Add_Message", payload: msg })
+                    if (toUser?.id !== msg.sender_id) {
+                        setUnReadCount((prev) => prev + 1);
+                        setUnreadUsers(prev => {
+                            if (prev.indexOf(msg.sender_id) === -1) {
+                                return [...prev, msg.sender_id];
+                            }
+                            return prev;
+                        })
+                    }
+                } else if (msg.type === "edited") {
+                    dispatch({ type: "Edit_Message", payload: msg })
                 }
-            } else if (obj.msg.sender_id === currentUser.id) {
-                dispatch({ type: "Add_Profile", payload: { obj: obj.msg, type: "socket", user: obj.user } });
-                dispatch({ type: "Add_Message", payload: obj.msg })
+            } else if (msg.sender_id === currentUser.id) {
+                if (msg.type === "regular") {
+                    dispatch({ type: "Add_Profile", payload: { obj: msg, type: "socket", user: user } });
+                    dispatch({ type: "Add_Message", payload: msg })
+                } else if (msg.type === "edited") {
+                    dispatch({ type: "Edit_Message", payload: msg })
+                }
             }
         };
 
+        const deleteMsgHandler = (obj) => {
+            if (obj.receiver_id === currentUser.id || obj.sender_id === currentUser.id) {
+                dispatch({ type: "Delete_Message", payload: obj })
+            }
+        }
+
         socket.on("receive-message", receiveMessageHandler);
+        socket.on("message-deleted", deleteMsgHandler)
 
         return () => {
             socket.off("receive-message", receiveMessageHandler);
+            socket.off("message-deleted", deleteMsgHandler)
         };
     }, [socket, setUnReadCount, toUser]);
 

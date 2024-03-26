@@ -6,13 +6,14 @@ import { useStore } from '@/store/store';
 import Message from './Message';
 import TypingAnimation from '../TypingAnimation/TypingAnimation';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs, setEditingMsg }) => {
 
     const msgRef = useRef(null)
 
     const [isTyping, setIsTyping] = useState(false)
     const [isScroller, setIsScroller] = useState(false)
     const { state: { newMsgState } } = useStore()
+
 
     let currentDate = null
     const getChatDate = (stamp) => {
@@ -65,10 +66,11 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs }) => {
         }
     }
 
+
     useEffect(() => {
         scrollToBottom()
-        const myChats = newMsgState.filter((chat) => chat.sender_id === currentUser.id)
-        setTodayMsgs((prev) => prev + (myChats.length - prev))
+        // const myChats = newMsgState.filter((chat) => chat.sender_id === currentUser.id)
+        // setTodayMsgs((prev) => prev + (myChats.length - prev))
     }, [newMsgState])
 
     const scrollToBottom = () => {
@@ -105,6 +107,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs }) => {
     }, [socket, toUser, currentUser.id]);
 
 
+
     return (
         <div className="h-[calc(100%-122px)] md:h-[calc(100%-211px)] flex flex-col justify-end ">
             <div className="h-full w-full  p-4 md:py-5 md:px-10 overflow-hidden">
@@ -116,12 +119,12 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs }) => {
                                     <div key={idx}>
                                         {
                                             <div className={`py-[30px] md:py-10 relative flex justify-center w-full ${getChatDate(item.milisecondtime) ? "block" : "hidden"} `}>
-                                                <p className="absolute top-1/2 -translate-y-1/2 bg-white/30 h-[1px] w-full"></p>
-                                                <p className="text-center font-medium bg-primary z-10 px-2 text-[14px] md:text-[18px] leading-[20px] text-white/50">{currentDate}</p>
+                                                <p className="absolute top-1/2 z-[0] -translate-y-1/2 bg-white/30 h-[1px] w-full"></p>
+                                                <p className="text-center font-medium bg-primary z-[1] px-2 text-[14px] md:text-[18px] leading-[20px] text-white/50">{currentDate}</p>
                                             </div>
                                         }
                                         <div className={`flex my-[2px] ${currentUser.id === item.sender_id ? "justify-end" : "justify-start"}`}>
-                                            <Message user={currentUser} containerElement={msgRef} item={item} messages={chats} idx={idx} toUser={toUser} />
+                                            <Message user={currentUser} containerElement={msgRef} item={item} messages={chats} idx={idx} toUser={toUser} setEditingMsg={setEditingMsg} socket={socket} />
                                         </div>
                                     </div>
                                 )
@@ -138,7 +141,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setTodayMsgs }) => {
                                                     </div>
                                                 }
                                                 <div className={`flex my-[2px] ${currentUser.id === item.sender_id ? "justify-end" : "justify-start"}`}>
-                                                    <Message user={currentUser} containerElement={msgRef} item={item} messages={[chats[chats.length - 1], ...newMsgState]} idx={idx + 1} toUser={toUser} />
+                                                    <Message user={currentUser} containerElement={msgRef} item={item} messages={[chats[chats.length - 1], ...newMsgState]} idx={idx + 1} toUser={toUser} setEditingMsg={setEditingMsg} socket={socket} />
                                                 </div>
                                             </div>
                                         )

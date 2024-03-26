@@ -37,6 +37,8 @@ export const server_routes = {
   private_image_request: base_path + "/privateimages/access",
   private_image_access: base_path + "/privateimages/access/decline",
   stripe_subscription: base_path + "/create/subscription",
+  cancel_subscription: base_path + "/cancel/subscription",
+  start_stop_subscription: base_path + "/start/stop/subscription",
   block_user: base_path + "/block/user",
   report_user: base_path + "/report/user"
 }

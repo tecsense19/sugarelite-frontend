@@ -5,14 +5,68 @@ import MessageInput from './MessageInput'
 import { useEffect, useState } from 'react'
 import SideProfile from '../SideProfile'
 import { ConfigProvider, Drawer } from 'antd'
+import { useStore } from '@/store/store'
 
 const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats, currentUser, socket, }) => {
 
     const [showMobileProfile, setShowMobileProfile] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [isAllowed, setIsAllowed] = useState(false)
+    const [editingMsg, setEditingMsg] = useState(null)
+    const [chats, setChats] = useState(userChats)
     const [todayMsgs, setTodayMsgs] = useState(0)
 
+    const { state: { messageUpdate: { edit, deleted }, newMsgState }, dispatch } = useStore()
+
+    useEffect(() => {
+        const editedFromNewMsgState = newMsgState.filter(newMsg => edit.some(oldMsg => oldMsg.id === newMsg.id));
+        if (editedFromNewMsgState.length) {
+            editedFromNewMsgState.forEach(i => {
+                const msg = edit.find((y) => y.id === i.id)
+                if (!i?.isDispatched) {
+                    dispatch({ type: "Add_Message", payload: { ...msg, isDispatched: true } });
+                }
+            });
+        }
+    }, [edit, newMsgState])
+
+    useEffect(() => {
+        if (edit.length) {
+            const updatedChats = chats.map(i => {
+                const edited = edit.find(msg => msg.id === i.id);
+                if (edited) {
+                    return { ...i, text: edited.text, type: edited.type };
+                }
+                return i;
+            });
+            setChats(updatedChats);
+        }
+    }, [edit])
+
+    useEffect(() => {
+        const deletedFromNewMsgState = newMsgState.filter(newMsg => deleted.some(oldMsg => oldMsg.id === newMsg.id));
+
+        if (deletedFromNewMsgState.length) {
+            deletedFromNewMsgState.forEach(i => {
+                if (!i?.isDispatched) {
+                    dispatch({ type: "Add_Message", payload: { ...i, isDispatched: true, type: "deleted" } });
+                }
+            });
+        }
+    }, [deleted, newMsgState])
+
+    useEffect(() => {
+        if (deleted.length) {
+            const updatedChats = chats.map(i => {
+                const edited = deleted.find(msg => msg.id === i.id);
+                if (edited) {
+                    return { ...i, text: edited.text, type: edited.type };
+                }
+                return i;
+            });
+            setChats(updatedChats);
+        }
+    }, [deleted])
 
     const onDrawerClose = () => {
         setDrawerOpen(false)
@@ -31,7 +85,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
             setTodayMsgs(todayChats.length)
             if (currentUser.is_subscribe) {
                 setIsAllowed(true);
-            } else if (todayChats.length <= 3) {
+            } else if (todayChats.length < 3) {
                 setIsAllowed(true);
             } else {
                 setIsAllowed(false);
@@ -41,15 +95,11 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
     }, [toUser, userChats, currentUser.is_subscribe])
 
     useEffect(() => {
-        if (currentUser.is_subscribe) {
-            setIsAllowed(true);
-        } else if (todayMsgs < 3) {
-            setIsAllowed(true)
-        } else {
-            setIsAllowed(false);
-        }
-    }, [todayMsgs])
-
+        setTodayMsgs(prevTodayMsgs => {
+            const myChats = newMsgState.filter(chat => chat.sender_id === currentUser.id);
+            return prevTodayMsgs + myChats.length;
+        });
+    }, [newMsgState, currentUser.id]);
 
     return (
         <div className="flex w-full md:w-[calc(100%-350px)] lg:w-[calc(100%-400px)] h-full flex-col">
@@ -57,12 +107,12 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
                 <div className='w-full h-full flex'>
                     <div className='w-full  2xl:w-[calc(100%-400px)]'>
                         <ChatHeader toUser={toUser} setShowMobileChatContent={setShowMobileChatContent} setToUser={setToUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} />
-                        <AllMessages chats={userChats.filter(
+                        <AllMessages chats={chats.filter(
                             message =>
                                 (message.sender_id === currentUser.id && message.receiver_id === toUser.id) ||
                                 (message.sender_id === toUser.id && message.receiver_id === currentUser.id)
-                        )} toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} />
-                        <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} isAllowed={isAllowed} />
+                        )} toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} />
+                        <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} isAllowed={isAllowed} editingMsg={editingMsg} setEditingMsg={setEditingMsg} />
                     </div>
                     <div className="hidden 2xl:block w-[400px]" data-aos='fade-left'>
                         <SideProfile selectedObj={toUser} />

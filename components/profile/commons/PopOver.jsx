@@ -31,7 +31,7 @@ const PopOver = ({ children, user, socket }) => {
             const res = await block_user_action({ sender_id: userState?.id, receiver_id: user.id, is_blocked: 1 })
             if (res.success) {
                 client_notification(api, 'topRight', "success", res.message, 4)
-                // navigate.push(client_routes.profile)
+                navigate.push(client_routes.profile)
                 socket.emit("user-blocked", res.data)
             }
         } else {
