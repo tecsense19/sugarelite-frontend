@@ -2,14 +2,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import ButtonProfile from './Buttons_Profile'
 import arrow_left from "../../../public/assets/arrow_left.svg"
 import more_horizontal from "../../../public/assets/more_horizontal.svg"
-import profile_img_5 from "../../../public/assets/profile_img_5.png"
 import premium from "../../../public/assets/premium.svg"
 import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
-import Buttons_Profile from './Buttons'
 import Buttons from './Buttons'
 
 const Side = ({ user, currentUser, privateAlbumState, socket }) => {

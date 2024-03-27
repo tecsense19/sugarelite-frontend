@@ -97,7 +97,7 @@
 
 // export default ProfileId
 
-import { decrypt_user, search_profile_action } from "@/app/lib/actions"
+import { decrypt_user, private_album_notification, search_profile_action } from "@/app/lib/actions"
 import { client_routes } from "@/app/lib/helpers"
 import SearchProfileIndex from "@/components/profile/searched_Profile/SearchProfileIndex"
 import Link from "next/link"
@@ -120,8 +120,10 @@ const ProfileId = async ({ params }) => {
   }
 
   const queriedUser = await search_profile_action(params.id);
-  if (queriedUser.success) {
-    return <SearchProfileIndex currentUser={currentUser} queried_user={queriedUser.data[0]} />;
+  const notifications = await private_album_notification({ user_id: params.id })
+
+  if (queriedUser.success && notifications.success) {
+    return <SearchProfileIndex currentUser={currentUser} queried_user={queriedUser.data[0]} pendingList={notifications.data} />;
   }
 
   return (

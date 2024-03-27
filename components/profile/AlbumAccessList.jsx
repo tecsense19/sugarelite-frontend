@@ -4,14 +4,14 @@ import arrow_left from "/public/assets/arrow_left.svg"
 import { notification } from 'antd'
 import { private_image_access } from '@/app/lib/actions'
 import { client_notification } from '@/app/lib/helpers'
+import { useStore } from '@/store/store'
 
 const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUsers, socket }) => {
 
     const [api, contextHolder] = notification.useNotification()
-
+    const { state: { decisionState } } = useStore()
 
     const [data, setData] = useState([])
-    console.log(albumAccessList)
 
     useEffect(() => {
         const matchedProfiles = allUsers.filter(user1 => {
@@ -20,19 +20,43 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
         setData(matchedProfiles)
     }, [albumAccessList])
 
+    useEffect(() => {
+        if (decisionState.length) {
+            const matchedProfiles = allUsers.filter(user1 => {
+                return decisionState.some(user2 => (user2.data.sender_id === user1.id && user2.status === "accept"));
+            });
+            setData((prev) => Array.from(new Set([...matchedProfiles, ...prev])))
+        }
+    }, [decisionState])
+
     const getDateOfAccess = (id) => {
         const user = albumAccessList.filter((i) => i.user_id === id)
-        const time = new Date(user[0].time)
-        return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
+        if (user.length) {
+            const time = new Date(user[0].time)
+            return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
+        } else {
+            const time = new Date()
+            return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
+        }
     }
 
     const handleSubmit = async (id) => {
-        const res = await private_image_access({ sender_id: user.id, receiver_id: id, is_approved: 0 })
-        if (res.success && socket) {
-            // const arr = myNotifications.filter((i) => i.sender_id !== id)
-            // client_notification(api, "topRight", "success", res?.message, 3)
-            // setMyNotifications(arr)
-            socket.emit("album-access", { userId: id, sender_id: user.id, type: "decline" })
+        const element = albumAccessList.find((i) => i.user_id === id)
+        if (element) {
+            const res = await private_image_access({ request_id: element.request_id, is_approved: '2' })
+            if (res.success && socket) {
+                setData(data.filter((i) => i.id !== element.user_id))
+                client_notification(api, "topRight", "success", res?.message, 3)
+                socket.emit("request-album", { data: { id: element.request_id, sender_id: element.user_id, receiver_id: user.id }, status: "decline" })
+            }
+        } else {
+            const ele = decisionState.find((i) => i.data.sender_id === id)
+            const res = await private_image_access({ request_id: `${ele.data.id}`, is_approved: '2' })
+            if (res.success && socket) {
+                socket.emit("request-album", { data: ele.data, status: "decline" })
+                client_notification(api, "topRight", "success", res?.message, 3)
+                setData(data.filter((i) => i.id !== ele.data.sender_id))
+            }
         }
     }
 
@@ -75,7 +99,6 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
                                 </tr>
                             </thead>
                             <tbody className='w-full'>
-                                {/* <div className='max-h-[300px] overflow-y-auto w-full'> */}
                                 {data && data.length
                                     ? <>
                                         {data.map((item, inx) => (
@@ -98,10 +121,7 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
                                                 <td className='text-center px-2 h-full text-[20px] font-normal leading-[20px] '>{getDateOfAccess(item.id)}</td>
                                                 <td className='text-center px-2 h-full '>
                                                     <button className='bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px]' onClick={() => handleSubmit(item.id)}>
-                                                        {type === "photo"
-                                                            ? "Decline"
-                                                            : "Unblock"
-                                                        }
+                                                        Decline
                                                     </button>
                                                 </td>
                                             </tr>
@@ -111,7 +131,6 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
                                         <td colSpan={4} className='text-center'>No data found !</td>
                                     </tr>
                                 }
-                                {/* </div> */}
                             </tbody>
                         </table>
                     </div>

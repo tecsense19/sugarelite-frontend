@@ -55,7 +55,7 @@ const Main = ({ user, currentUser, privateAlbumState, socket }) => {
             <Profile_Photos title={"Public Photos"} list={images_filter("public")} />
             <Divider />
             {
-                privateAlbumState === "access" &&
+                privateAlbumState === "accept" &&
                 <>
                     <Profile_Photos title={"Private Photos"} list={images_filter("private")} />
                     <Divider />

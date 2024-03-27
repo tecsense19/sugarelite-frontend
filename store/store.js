@@ -90,24 +90,18 @@ const accessPendingReducer = (state, action) => {
   }
 }
 
-const accessDecisionReducer = (state = [], action) => {
-  // console.log(action.payload)
+const accessDecisionReducer = (state, action) => {
   switch (action.type) {
     case 'Add_Decision_User':
-      const { data, status } = action.payload
-      console.log(data)
-      const existingIndex = state.findIndex(item => item.id)
-    // const existingIndex = state.findIndex(item => item.userId === action.payload.userId && item.senderId === action.payload.senderId);
-
-    // if (existingIndex !== -1) {
-    //   // If the object exists, update it
-    //   const newState = [...state];
-    //   newState[existingIndex] = action.payload;
-    //   return newState;
-    // } else {
-    //   // If the object doesn't exist, add it
-    //   return [...state, action.payload];
-    // }
+      const { data } = action.payload;
+      const index = state.findIndex(profile => profile.data.id === data.id);
+      if (index !== -1) {
+        const newState = [...state];
+        newState[index] = action.payload;
+        return newState;
+      } else {
+        return [...state, action.payload];
+      }
     default:
       return state;
   }

@@ -74,9 +74,7 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
 		if (!socket) return
 
 		socket.on("album-notification", ({ data, status }) => {
-			console.log(data)
-			// const 
-			if (user.id === data.receiver_id) {
+			if (user.id === data.receiver_id && status === "pending") {
 				setSocketNotifications((prev) => [data, ...prev])
 			}
 		})
@@ -87,45 +85,42 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
 	}, [socket])
 
 
-	const acceptHandler = async (id, type) => {
+	const acceptHandler = async (id, type, i) => {
 		if (userState.username && type !== "socket") {
-			const res = await private_image_access({ request_id: id, is_approved: 1 })
-			console.log(id)
-			console.log(res)
+			const res = await private_image_access({ request_id: id, is_approved: "1" })
 			if (res.success) {
 				const arr = myNotifications.filter((i) => i.id !== id)
 				setMyNotifications(arr)
 				client_notification(api, "topRight", "success", res?.message, 3)
-				// socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
+				socket.emit("request-album", { data: i, status: "accept" })
 			}
 		} else if (userState.username && type === "socket") {
-			const res = await private_image_access({ request_id: id, is_approved: 1 })
-			console.log(res)
+			const res = await private_image_access({ request_id: id, is_approved: "1" })
 			if (res.success) {
 				const arr = socketNotifications.filter((i) => i.id !== id)
 				setSocketNotifications(arr)
 				client_notification(api, "topRight", "success", res?.message, 3)
-				// socket.emit("album-access", { userId: id, sender_id: userState.id, type: "accept" })
+				socket.emit("request-album", { data: i, status: "accept" })
 			}
 		}
 	}
 
-	const declineHandler = async (id, type) => {
+	const declineHandler = async (id, type, data) => {
 		if (type === "normal") {
-			const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 0 })
+			const res = await private_image_access({ request_id: id, is_approved: '2' })
 			if (res.success) {
-				const arr = myNotifications.filter((i) => i.sender_id !== id)
-				client_notification(api, "topRight", "success", res?.message, 3)
+				const arr = myNotifications.filter((i) => i.id !== id)
 				setMyNotifications(arr)
-				socket.emit("album-access", { userId: id, sender_id: userState.id, type: "decline" })
+				client_notification(api, "topRight", "success", res?.message, 3)
+				socket.emit("request-album", { data: data, status: "decline" })
 			}
 		} else {
-			const res = await private_image_access({ sender_id: userState.id, receiver_id: id, is_approved: 0 })
+			const res = await private_image_access({ request_id: id, is_approved: '2' })
 			if (res.success) {
-				const arr = socketNotifications.filter((i) => i !== id)
+				const arr = socketNotifications.filter((i) => i.id !== id)
 				client_notification(api, "topRight", "success", res?.message, 3)
 				setSocketNotifications(arr)
-				socket.emit("album-access", { userId: id, sender_id: userState.id, type: "decline" })
+				socket.emit("request-album", { data: data, status: "decline" })
 			}
 		}
 	}
@@ -168,8 +163,8 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
 														<p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i, "username")}</p>
 														<p className='text-[16px] font-light leading-[20px]  mt-[6px]'>{getUserData(i, "username")} has requested permission to view your profile photo.</p>
 														<div className='mt-[14px] flex gap-[10px]'>
-															<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px] transition-all duration-150 ease-linear hover:scale-105' onClick={() => acceptHandler(i.id, "socket")}>Accept</button>
-															<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.id, "socket")}>Decline</button>
+															<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px] transition-all duration-150 ease-linear hover:scale-105' onClick={() => acceptHandler(i.id, "socket", i)}>Accept</button>
+															<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.id, "socket", i)}>Decline</button>
 														</div>
 													</div>
 												</div>
@@ -197,8 +192,8 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
 																<p className='text-[20px] font-semibold leading-[20px]'>{getUserData(i, "username")}</p>
 																<p className='text-[16px] font-light leading-[20px]  mt-[6px]'>{getUserData(i, "username")} has requested permission to view your profile photo.</p>
 																<div className='mt-[14px] flex gap-[10px]'>
-																	<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium transition-all duration-150 ease-linear hover:scale-105 leading-[20px]' onClick={() => acceptHandler(i.id, "normal")}>Accept</button>
-																	<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.id, "normal")}>Decline</button>
+																	<button className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium transition-all duration-150 ease-linear hover:scale-105 leading-[20px]' onClick={() => acceptHandler(i.id, "normal", i)}>Accept</button>
+																	<button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105' onClick={() => declineHandler(i.id, "normal", i)}>Decline</button>
 																</div>
 															</div>
 														</div>

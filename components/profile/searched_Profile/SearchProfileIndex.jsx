@@ -8,10 +8,10 @@ import Side from "./side"
 import Main from "./Main"
 import { io } from "socket.io-client"
 import { client_notification, client_routes, socket_server } from "@/app/lib/helpers"
-import { useStore } from "@/store/store"
 import { block_user_action } from "@/app/lib/actions"
 import { useRouter } from "next/navigation"
 import { notification } from "antd"
+import { useStore } from "@/store/store"
 
 const useSocket = () => {
     const [socket, setSocket] = useState(null);
@@ -29,7 +29,7 @@ const useSocket = () => {
 };
 
 
-const SearchProfileIndex = ({ queried_user, currentUser }) => {
+const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
 
     const socket = useSocket()
     const accessList = queried_user.allow_privateImage_access_users
@@ -37,13 +37,37 @@ const SearchProfileIndex = ({ queried_user, currentUser }) => {
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification()
 
+    const { state: { decisionState } } = useStore()
+
 
     useEffect(() => {
         const isAccessed = accessList.some((i) => i.user_id === currentUser.id)
+        const isPending = pendingList.some((i) => i.sender_id === currentUser.id)
         if (isAccessed) {
-            setPrivateAlbumState("access")
+            setPrivateAlbumState("accept")
         }
-    }, [accessList])
+        if (isPending) {
+            setPrivateAlbumState("pending")
+        }
+    }, [accessList, pendingList])
+
+    useEffect(() => {
+        if (decisionState.length) {
+            decisionState.forEach((i) => {
+                const { data, status } = i
+                if (data.sender_id === currentUser.id && data.receiver_id === queried_user.id) {
+                    if (status === "pending") {
+                        setPrivateAlbumState("pending")
+                    }
+                    else if (status === "accept") {
+                        setPrivateAlbumState("accept")
+                    } else {
+                        setPrivateAlbumState(null)
+                    }
+                }
+            })
+        }
+    }, [decisionState])
 
     const blockHandler = async (type) => {
         if (type === "block") {

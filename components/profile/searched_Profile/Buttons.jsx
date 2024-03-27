@@ -51,7 +51,7 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
                 </div>
             }
             {
-                privateAlbumState === "access" &&
+                privateAlbumState === "accept" &&
                 <div className='bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
                     {/* <Image src={lock_1} width={22} height={22} alt='message' /> */}
                     <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>you got access</span>
