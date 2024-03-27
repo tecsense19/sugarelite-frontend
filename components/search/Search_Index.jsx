@@ -12,7 +12,7 @@ import { client_routes } from "@/app/lib/helpers"
 
 const Search_Index = ({ allUsers, blockList }) => {
 
-    const { state: { filterState: { isFilterOpen }, blockedUsersState, unBlockedUsersState, userState }, dispatch } = useStore()
+    const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
 
     const [users, setUsers] = useState(allUsers.filter((user) => !blockList.includes(user.id)))
 
@@ -26,31 +26,21 @@ const Search_Index = ({ allUsers, blockList }) => {
         }
     }
 
-    useEffect(() => {
-        if (unBlockedUsersState.length) {
-            if (unBlockedUsersState.some(i => i.sender_id === userState.id)) {
-                const filtered = allUsers.filter((user) => unBlockedUsersState.some((i) => i.receiver_id === user.id))
-                const arr = [...filtered, ...users].sort((a, b) => a.id - b.id)
-                setUsers(arr)
-            } else if (unBlockedUsersState.some(i => i.receiver_id === userState.id)) {
-                const filtered = allUsers.filter((user) => unBlockedUsersState.some((i) => i.sender_id === user.id))
-                const arr = [...filtered, ...users].sort((a, b) => a.id - b.id)
-                setUsers(arr)
-            }
-        }
-    }, [unBlockedUsersState])
 
     useEffect(() => {
+        const blocked = allUsers.filter((user) => !blockList.includes(user.id))
         if (blockedUsersState.length) {
             if (blockedUsersState.some(i => i.sender_id === userState.id)) {
                 const blockList = blockedUsersState.map((i) => i.receiver_id)
-                const arr = users.filter((i) => !blockList.includes(i.id))
+                const arr = blocked.filter((i) => !blockList.includes(i.id))
                 setUsers(arr)
             } else if (blockedUsersState.some(i => i.receiver_id === userState.id)) {
                 const blockList = blockedUsersState.map((i) => i.sender_id)
-                const arr = users.filter((i) => !blockList.includes(i.id))
+                const arr = blocked.filter((i) => !blockList.includes(i.id))
                 setUsers(arr)
             }
+        } else {
+            setUsers(allUsers.filter((user) => !blockList.includes(user.id)))
         }
     }, [blockedUsersState])
 

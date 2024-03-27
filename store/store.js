@@ -190,6 +190,8 @@ const blockedUsers = (state, action) => {
       } else {
         return [...state, action.payload];
       }
+    case 'Remove_Blocked_User':
+      return state.filter(profile => profile.id !== action.payload.id);
     default:
       return state;
   }
@@ -232,46 +234,12 @@ const rootReducer = ({ firstState, filterState, userState, toMessageState, allUs
 export const StoreProvider = ({ children }) => {
 
   const token = parseCookies("user")?.user
-  let socket;
   let user;
 
   if (token) {
     const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
     user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   }
-
-  useEffect(() => {
-    socket = io(socket_server)
-
-    const blockUserHandler = (obj) => {
-      if (obj.sender_id === user.id || obj.receiver_id === user.id) {
-        dispatch({ type: "Add_Blocked_User", payload: obj })
-      }
-    };
-
-    const unblockUserHandler = (obj) => {
-      if (obj.sender_id === user.id || obj.receiver_id === user.id) {
-        dispatch({ type: "Add_UnBlocked_User", payload: obj })
-      }
-    };
-
-    const albumAccessHandler = (obj) => {
-      console.log(obj)
-      dispatch({ type: "Add_Decision_User", payload: obj })
-    }
-
-    socket.on("blocked-status", blockUserHandler);
-    socket.on("unblocked-status", unblockUserHandler);
-    socket.on("album-notification", albumAccessHandler)
-
-    return () => {
-      if (socket) {
-        socket.off("blocked-status", blockUserHandler);
-        socket.off("album-notification", albumAccessHandler)
-        socket.disconnect()
-      }
-    };
-  }, [user])
 
   const [state, dispatch,] = useReducer(rootReducer, {
     firstState: initialState,

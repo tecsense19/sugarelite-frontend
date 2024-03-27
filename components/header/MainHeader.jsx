@@ -46,6 +46,40 @@ const MainHeader = ({ decryptedUser, notifications, allUsers }) => {
     setUser(userState ? userState : decryptedUser)
   }, [userState])
 
+
+  useEffect(() => {
+    if (!socket) return
+
+    const blockUserHandler = (obj) => {
+      if (obj.sender_id === user.id || obj.receiver_id === user.id) {
+        dispatch({ type: "Add_Blocked_User", payload: obj })
+      }
+    };
+
+    const unblockUserHandler = (obj) => {
+      if (obj.sender_id === user.id || obj.receiver_id === user.id) {
+        dispatch({ type: "Remove_Blocked_User", payload: obj })
+      }
+    };
+
+    const albumAccessHandler = (obj) => {
+      dispatch({ type: "Add_Decision_User", payload: obj })
+    }
+
+    socket.on("blocked-status", blockUserHandler);
+    socket.on("unblocked-status", unblockUserHandler);
+    socket.on("album-notification", albumAccessHandler)
+
+    return () => {
+      if (socket) {
+        socket.off("blocked-status", blockUserHandler);
+        socket.off("album-notification", albumAccessHandler)
+        socket.disconnect()
+      }
+    };
+  }, [user, socket])
+
+
   const handleLogout = () => {
     logout_user()
     router.push(client_routes.home)
