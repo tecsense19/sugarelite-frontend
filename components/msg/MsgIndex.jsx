@@ -30,13 +30,13 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
 
     const [toUser, setToUser] = useState("")
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
-    const [currentUser, setCurrentUser] = useState(decryptedUser)
     const navigate = useRouter()
-
     const { state: { userState } } = useStore()
 
+    const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
+
     useEffect(() => {
-        setCurrentUser(userState)
+        setCurrentUser(userState ? userState : decryptedUser)
         if (!userState?.id) {
             navigate.push(client_routes.home)
         }
@@ -47,8 +47,6 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
             setShowMobileChatContent(true)
         }
     }, [toUser])
-
-
 
     if (profilesList.length) {
         return (

@@ -41,6 +41,7 @@ const Login = ({ setIsForgotOpen }) => {
     }
 
     const loginHandler = async (data) => {
+        setIsLoading(true)
         const res = await login_action(data)
         if (!res.success) {
             setIsLoading(false)
@@ -55,13 +56,11 @@ const Login = ({ setIsForgotOpen }) => {
         navigate.push(client_routes.profile)
     }
 
-    const loadingHandler = () => {
-        if (isValid) {
-            setIsLoading(true)
-        }
-    }
-
-
+    // const loadingHandler = () => {
+    //     if (isValid) {
+    //         setIsLoading(true)
+    //     }
+    // }
 
     return (
         <main className="flex h-dvh">
@@ -112,7 +111,7 @@ const Login = ({ setIsForgotOpen }) => {
                                 </div>
                                 <span className="underline pb-1 cursor-pointer select-none font-normal transition-all duration-150 hover:text-white/80" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
                             </div>
-                            <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center text-primary-dark-5 ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit" onClick={loadingHandler}>
+                            <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center text-primary-dark-5 ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit">
                                 {!isLoading ? "Log in" :
                                     <div className="loader after:border-t-black after:border-b-black"></div>
                                 }
@@ -124,7 +123,7 @@ const Login = ({ setIsForgotOpen }) => {
                         </div>
                     </div>
                 </div>
-                {/* {/ <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" /> /} */}
+                {/* <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" /> */}
                 <Image src={bgDesktopImg} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
             </div>
         </main>

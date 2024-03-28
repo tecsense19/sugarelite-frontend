@@ -55,6 +55,7 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
 
     }, [chatProfileState])
 
+
     useEffect(() => {
         if (!socket) return;
 

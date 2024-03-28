@@ -12,7 +12,7 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import Link from 'next/link';
 
-const MessageInput = ({ socket, toUser, currentUser, isAllowed, editingMsg, setEditingMsg }) => {
+const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setEditingMsg }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
@@ -94,7 +94,7 @@ const MessageInput = ({ socket, toUser, currentUser, isAllowed, editingMsg, setE
         <div className="w-full flex px-4 pb-[18px] md:px-10 md:pb-10 relative ">
             {contextHolder}
             {
-                isAllowed ?
+                (currentUser.is_subscribe || todayMsgs < 3) ?
                     <div className="w-full h-12 md:h-[70px] rounded-[5px] bg-black flex items-center ps-3 md:ps-[30px] relative">
                         <button ref={buttonRef} onClick={() => setIsEmoji((prev) => !prev)}>
                             <Image src={smileIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />

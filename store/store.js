@@ -111,8 +111,11 @@ const chatProfileReducer = (state, action) => {
   switch (action.type) {
     case 'Add_Profile':
       const newProfile = action.payload.obj;
-      if (state.some(profile => profile.obj.id === newProfile.id)) {
-        return state;
+      const existingProfileIndex = state.findIndex(profile => profile.obj.id === newProfile.id);
+      if (existingProfileIndex !== -1) {
+        const newState = [...state];
+        newState[existingProfileIndex] = action.payload;
+        return newState;
       } else {
         return [...state, action.payload];
       }
@@ -191,9 +194,9 @@ const blockedUsers = (state, action) => {
   }
 }
 
-const unBlockedUsers = (state, action) => {
+const existedBlockers = (state, action) => {
   switch (action.type) {
-    case 'Add_UnBlocked_User':
+    case 'Remove_Existed_Blocked_User':
       if (state.some(profile => profile.id === action.payload.id)) {
         return state;
       } else {
@@ -204,9 +207,10 @@ const unBlockedUsers = (state, action) => {
   }
 }
 
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, unBlockedUsersState, accessPendingState, decisionState, chatProfileState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, existedUnblockState, accessPendingState, decisionState, chatProfileState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
@@ -219,7 +223,7 @@ const rootReducer = ({ firstState, filterState, userState, toMessageState, allUs
   chatProfileState: chatProfileReducer(chatProfileState, action),
   newMsgState: newMsgReducer(newMsgState, action),
   blockedUsersState: blockedUsers(blockedUsersState, action),
-  unBlockedUsersState: unBlockedUsers(unBlockedUsersState, action),
+  existedUnblockState: existedBlockers(existedUnblockState, action),
   messageUpdate: editOrDeleteReducer(messageUpdate, action)
 });
 
@@ -250,7 +254,7 @@ export const StoreProvider = ({ children }) => {
     chatProfileState: [],
     newMsgState: [],
     blockedUsersState: [],
-    unBlockedUsersState: [],
+    existedUnblockState: [],
     messageUpdate: { edit: [], deleted: [] }
   });
 

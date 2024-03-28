@@ -43,7 +43,7 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
                     <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px]">{message.type === "deleted" ? "message deleted" : message?.text || ''}</p>
                 </div>
             </div>
-            <div className="flex flex-col items-end">
+            <div className="flex flex-col items-end min-w-fit">
                 <p className="italic text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mb-[8px]">{message && getTime(message.updated_at)}</p>
                 {
                     unReadCount && unReadUsers.includes(user.id) ? (
