@@ -94,7 +94,7 @@ const Index = ({ decryptedUser }) => {
                 const token = CryptoJS.AES.encrypt(JSON.stringify(data.user), "SecretKey").toString()
                 setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
                 setIsLoading(false)
-                navigate.replace(client_routes.profile)
+                navigate.push(client_routes.profile)
             }
         } catch (error) {
             console.log(error)

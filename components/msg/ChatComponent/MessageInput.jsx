@@ -67,6 +67,8 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     useEffect(() => {
         if (editingMsg) {
             setValue('message', editingMsg.message)
+        } else {
+            reset()
         }
     }, [editingMsg])
 
@@ -89,6 +91,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
             window.removeEventListener("click", emojiCloserHandler)
         }
     }, [])
+
 
     return (
         <div className="w-full flex px-4 pb-[18px] md:px-10 md:pb-10 relative ">

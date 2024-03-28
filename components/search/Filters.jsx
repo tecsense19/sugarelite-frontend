@@ -170,6 +170,7 @@ const Filters = ({ allUsers }) => {
 
   const handleReset = () => {
     reset()
+    submitHandler()
     // dispatch({ type: "all_users_data", payload: allUsers })
     // setDummyUsers(allUsers)
   }

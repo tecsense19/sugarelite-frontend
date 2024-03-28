@@ -32,7 +32,7 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
             <div className="flex gap-4 items-center">
                 <div className="relative">
                     {user.avatar_url ? (
-                        <Image src={user.avatar_url} height={40} width={40} alt="avatar" className="h-[40px] min-w-[40px] md:h-[50px] md:min-w-[50px] rounded-full" />
+                        <Image src={user.avatar_url} height={40} width={40} alt="avatar" className="h-[40px]  object-cover min-w-[40px] md:h-[50px] md:min-w-[50px] rounded-full" />
                     ) : (
                         <p className="uppercase flex justify-center items-center h-[40px] w-[40px] md:h-[50px] md:min-w-[50px] rounded-full bg-primary-dark text-[20px]">{user.username.charAt(0)}</p>
                     )}

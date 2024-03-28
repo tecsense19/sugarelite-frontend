@@ -4,6 +4,7 @@ import Image from "next/image"
 import ReportIcon from "/public/assets/chat_report_icon.svg"
 import BlockIcon from "/public/assets/chat_block_icon.svg"
 import { useEffect, useState } from "react"
+import 'aos/dist/aos.css';
 import Side from "./side"
 import Main from "./Main"
 import { io } from "socket.io-client"
@@ -12,6 +13,7 @@ import { block_user_action } from "@/app/lib/actions"
 import { useRouter } from "next/navigation"
 import { notification } from "antd"
 import { useStore } from "@/store/store"
+import Aos from "aos"
 
 const useSocket = () => {
     const [socket, setSocket] = useState(null);
@@ -79,6 +81,11 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
             }
         }
     }
+
+    useEffect(() => {
+        Aos.init()
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }, [])
 
     return (
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full relative">

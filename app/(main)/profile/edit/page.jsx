@@ -5,9 +5,11 @@ const EditProfile = () => {
   const user = decrypt_user();
   return (
     <>
-      <main className="lg:pt-[66px] bg-primary w-full">
-        <Index decryptedUser={user} />
-      </main>
+      <Suspense fallback={<Loader />}>
+        <main className="lg:pt-[66px] bg-primary w-full">
+          <Index decryptedUser={user} />
+        </main>
+      </Suspense>
     </>
   )
 }

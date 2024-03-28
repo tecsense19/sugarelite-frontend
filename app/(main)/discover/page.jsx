@@ -1,6 +1,8 @@
 import { all_profiles_action, decrypt_user } from "@/app/lib/actions"
+import Loader from "@/components/common/Loader"
 import SwipeFilter from "@/components/discover/SwipeFilter"
 import SwipePage from "@/components/discover/SwipePage"
+import { Suspense } from "react"
 
 const Discover = async () => {
 
@@ -10,10 +12,12 @@ const Discover = async () => {
 
   if (all_users.success) {
     return (
-      <div className="font-bold h-dvh pt-0 md:pt-[66px] flex">
-        <SwipeFilter />
-        <SwipePage allUsers={users} currentUser={current_user} />
-      </div>
+      <Suspense fallback={<Loader />}>
+        <div className="font-bold h-dvh pt-0 md:pt-[66px] flex">
+          <SwipeFilter />
+          <SwipePage allUsers={users} currentUser={current_user} />
+        </div>
+      </Suspense>
     )
   }
 

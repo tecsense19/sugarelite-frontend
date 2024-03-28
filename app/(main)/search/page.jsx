@@ -1,5 +1,7 @@
 import { all_profiles_action, decrypt_user } from "@/app/lib/actions"
+import Loader from "@/components/common/Loader"
 import Search_Index from "@/components/search/Search_Index"
+import { Suspense } from "react"
 
 const Search = async () => {
 
@@ -14,14 +16,15 @@ const Search = async () => {
       return user.is_blocked_users.some(blockedUser => blockedUser.user_id === current_user.id);
     }
   }).map((i) => i?.id);
-
-  if (all_users.success) {
-    return (
-      <Search_Index allUsers={users} blockList={[...myBlockList, ...filteredUsers]} />
-    )
-  }
-
-  return <div>No data found</div>
+  return (
+    <Suspense fallback={<Loader />}>
+      {
+        (all_users.success)
+          ? <Search_Index allUsers={users} blockList={[...myBlockList, ...filteredUsers]} />
+          : <div>No data found</div>
+      }
+    </Suspense>
+  )
 }
 
 export default Search

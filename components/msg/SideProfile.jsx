@@ -50,12 +50,12 @@ const SideProfile = ({ selectedObj, setShowMobileProfile }) => {
                 <div className="flex justify-center items-center relative">
                     {
                         selectedObj.avatar_url ?
-                            <Image src={selectedObj?.avatar_url} width={180} height={180} alt="person" className={`hidden md:block rounded-full h-[180px] min-h-[180px] select-none pointer-events-none`} priority />
+                            <Image src={selectedObj?.avatar_url} width={180} height={180} alt="person" className={`hidden md:block rounded-full h-[180px] min-h-[180px] select-none pointer-events-none object-cover`} priority />
                             : <p className="h-[180px] w-[180px] hidden uppercase md:flex items-center justify-center bg-primary-dark rounded-full text-[84px] ">{selectedObj.username.charAt(0)}</p>
                     }
                     {
                         selectedObj.avatar_url ?
-                            <Image src={selectedObj?.avatar_url} width={140} height={140} alt="person" className={`md:hidden min-h-[140px] h-[140px] rounded-full select-none pointer-events-none`} priority />
+                            <Image src={selectedObj?.avatar_url} width={140} height={140} alt="person" className={`md:hidden min-h-[140px] h-[140px] rounded-full select-none pointer-events-none object-cover`} priority />
                             : <p className="h-[140px] w-[140px]  md:hidden uppercase flex items-center justify-center bg-primary-dark rounded-full text-[64px] ">{selectedObj.username.charAt(0)}</p>
                     }
                     {/* <Image src={Img1} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority /> */}

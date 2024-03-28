@@ -58,6 +58,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
   }
 
   const msgDeleteHandler = async () => {
+    setEditingMsg(null)
     let obj = { sender_id: item.sender_id, receiver_id: item.receiver_id, type: "deleted", id: item.id }
     const res = await send_message_action(obj)
     if (res.success) {
@@ -80,7 +81,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   && <>
                     {
                       user.avatar_url ? <>
-                        <Image src={user.avatar_url} alt="avatar" height={40} width={40} priority className="lg:hidden h-[40px] w-10 pointer-events-none rounded-full mb-[10px]" />
+                        <Image src={user.avatar_url} alt="avatar" height={40} width={40} priority className="lg:hidden object-cover h-[40px] w-10 pointer-events-none rounded-full mb-[10px]" />
                       </> : <>
                         <p className='h-10 uppercase w-10 bg-primary-dark flex justify-center items-center lg:hidden pointer-events-none rounded-full mb-[10px]'>{user.username.charAt(0)}</p>
                       </>
@@ -90,7 +91,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               </> : <>
                 {
                   user.avatar_url ? <>
-                    <Image src={user.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none w-10 h-10 rounded-full mb-[10px]" />
+                    <Image src={user.avatar_url} alt="" height={40} width={40} priority className="lg:hidden pointer-events-none  object-cover  w-10 h-10 rounded-full mb-[10px]" />
                   </> : <>
                     <p className='h-10 w-10 uppercase bg-primary-dark flex justify-center items-center lg:hidden pointer-events-none rounded-full mb-[10px]'>{user.username.charAt(0)}</p>
                   </>
@@ -103,26 +104,27 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {user.username} </div>
                   <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
                 </div>
-                <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
-                  <Popover placement="leftBottom" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
-                    <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
-                      <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
-                        <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                        <div className="text-[14px] font-medium leading-[20px]">Delete</div>
-                      </button>
-                      <button className="bg-primary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
-                        <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
-                        <div className="text-[14px] font-medium leading-[20px]">Edit</div>
-                      </button>
-                    </div>
-                  )}>
-                    {item.type === "deleted" ? <div className="h-[20px] w-[20px] flex justify-center items-center ms-6 lg:-translate-y-1 pointer-events-none"></div> :
+                {item.type === "deleted" ? <div className="h-[20px] w-[20px] flex justify-center items-center ms-6 lg:-translate-y-1 pointer-events-none"></div> :
+                  <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
+                    <Popover placement="leftBottom" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
+                      <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
+                        <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
+                          <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                          <div className="text-[14px] font-medium leading-[20px]">Delete</div>
+                        </button>
+                        <button className="bg-primary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
+                          <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
+                          <div className="text-[14px] font-medium leading-[20px]">Edit</div>
+                        </button>
+                      </div>
+                    )}>
+
                       <button className="h-[20px] w-[20px] flex justify-center items-center ms-6 lg:-translate-y-1">
                         <Image src={optionsIcon} alt="" height={20} width={20} priority className="pointer-events-none" />
                       </button>
-                    }
-                  </Popover>
-                </ConfigProvider>
+                    </Popover>
+                  </ConfigProvider>
+                }
               </div>
               <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
                 {item.type === "deleted" ? <span className='pe-2'>You deleted this message.</span> : item?.text}
@@ -140,7 +142,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   <>
                     {
                       user.avatar_url ? <>
-                        <Image src={user.avatar_url} alt="" height={50} width={50} priority className="hidden lg:block h-[50px] w-[50px] pointer-events-none rounded-full ms-5" />
+                        <Image src={user.avatar_url} alt="" height={50} width={50} priority className="hidden lg:block  object-cover  h-[50px] w-[50px] pointer-events-none rounded-full ms-5" />
                       </> : <>
                         <p className='h-[50px] uppercase w-[50px] bg-primary-dark text-[24px] justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
                       </>
@@ -152,7 +154,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               : <>
                 {
                   user.avatar_url ? <>
-                    <Image src={user.avatar_url} alt="" height={50} width={50} priority className="hidden h-[50px] w-[50px] lg:block pointer-events-none rounded-full ms-5" />
+                    <Image src={user.avatar_url} alt="" height={50} width={50} priority className="hidden h-[50px] w-[50px] object-cover lg:block pointer-events-none rounded-full ms-5" />
                   </> : <>
                     <p className='h-[50px] w-[50px] bg-primary-dark text-[24px] uppercase justify-center items-center hidden lg:flex pointer-events-none rounded-full ms-5'>{user.username.charAt(0)}</p>
                   </>
@@ -169,7 +171,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   <>
                     {
                       toUser.avatar_url ? <>
-                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] pointer-events-none rounded-full mb-[10px]" />
+                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] object-cover  pointer-events-none rounded-full mb-[10px]" />
                       </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center uppercase items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
                     }
                   </>
@@ -178,7 +180,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               : <>
                 {
                   toUser.avatar_url ? <>
-                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] pointer-events-none rounded-full mb-[10px]" />
+                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden object-cover h-[40px] pointer-events-none rounded-full mb-[10px]" />
                   </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] uppercase flex justify-center items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
                 }
               </>
@@ -190,7 +192,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   ? <>
                     {
                       toUser.avatar_url ? <>
-                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden h-[40px] lg:block pointer-events-none rounded-full me-5" />
+                        <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden h-[40px] object-cover lg:block pointer-events-none rounded-full me-5" />
                       </> : <p className="hidden lg:flex pointer-events-none rounded-full me-5 uppercase justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
                     }
                   </>
@@ -200,7 +202,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               : <>
                 {
                   toUser.avatar_url ? <>
-                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block h-10 pointer-events-none rounded-full me-5" />
+                    <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block object-cover  h-10 pointer-events-none rounded-full me-5" />
                   </> : <p className="hidden lg:flex pointer-events-none rounded-full uppercase me-5 justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
                 }
               </>

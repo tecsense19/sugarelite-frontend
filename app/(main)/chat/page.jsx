@@ -1,5 +1,7 @@
 import { all_profiles_action, chat_list_action, decrypt_user } from "@/app/lib/actions";
+import Loader from "@/components/common/Loader";
 import MsgIndex from "@/components/msg/MsgIndex";
+import { Suspense } from "react";
 
 const Chat = async () => {
     const currentUser = decrypt_user();
@@ -24,7 +26,10 @@ const Chat = async () => {
         return { user, latestMsg };
     }).sort((a, b) => b.latestMsg.id - a.latestMsg.id);
 
-    return <MsgIndex decryptedUser={currentUser} profilesList={tempList} userChats={user_chats} />;
+    return <Suspense fallback={<Loader />}>
+        <MsgIndex decryptedUser={currentUser} profilesList={tempList} userChats={user_chats} />
+
+    </Suspense>
 };
 
 export default Chat;

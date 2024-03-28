@@ -59,7 +59,7 @@ const TopNav = ({ profileList, setToUser }) => {
     return (
         <>
             <div className="md:hidden relative flex justify-between px-4 items-center">
-                <button className="flex justify-center items-center " onClick={() => { navigate.replace(client_routes.profile); }}>
+                <button className="flex justify-center items-center " onClick={() => { navigate.push(client_routes.profile); }}>
                     <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
                 </button>
                 <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>

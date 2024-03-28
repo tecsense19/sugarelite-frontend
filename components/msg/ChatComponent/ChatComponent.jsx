@@ -11,7 +11,6 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
 
     const [showMobileProfile, setShowMobileProfile] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const [isAllowed, setIsAllowed] = useState(false)
     const [editingMsg, setEditingMsg] = useState(null)
     const [chats, setChats] = useState(userChats)
     const [todayMsgs, setTodayMsgs] = useState(0)

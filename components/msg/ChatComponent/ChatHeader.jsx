@@ -22,7 +22,7 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
             setDrawerOpen(true)
             setShowMobileProfile(true)
         } else {
-            navigate.replace(`${client_routes.profile}/${toUser.id}`)
+            navigate.push(`${client_routes.profile}/${toUser.id}`)
         }
     }
 
@@ -36,13 +36,13 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
                     <button className="flex items-center" onClick={onProfileClick}>
                         {
                             toUser.avatar_url ?
-                                <Image src={toUser.avatar_url} alt="" height={60} width={60} priority className="hidden min-h-[60px] h-[60px] min-w-[60px] md:flex pointer-events-none rounded-full" />
+                                <Image src={toUser.avatar_url} alt="" height={60} width={60} priority className="hidden min-h-[60px] h-[60px] min-w-[60px] md:flex pointer-events-none rounded-full object-cover" />
                                 : <p className="h-[60px] uppercase w-[60px] hidden md:flex items-center justify-center bg-primary-dark rounded-full text-[24px] ">{toUser.username.charAt(0)}</p>
                         }
 
                         {
                             toUser.avatar_url ?
-                                <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="md:hidden min-h-[40px] h-[40px] pointer-events-none rounded-full" />
+                                <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="md:hidden object-cover min-h-[40px] h-[40px] pointer-events-none rounded-full" />
                                 : <p className="h-10 uppercase w-10 md:hidden flex items-center justify-center bg-primary-dark rounded-full text-[22px] ">{toUser.username.charAt(0)}</p>
                         }
 

@@ -26,9 +26,9 @@ const Side = ({ user, currentUser, privateAlbumState, socket }) => {
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
                     {
                         user?.avatar_url && (user?.avatar_url).includes("https://admin-sugarelite.tec-sense.co.in") ?
-                            <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority quality={100} />
+                            <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full object-cover object-center rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority quality={100} />
                             :
-                            <p className='bg-primary-dark-4 md:bg-primary h-full w-full  rounded-full lg:rounded-[10px] select-none flex justify-center items-center capitalize text-[650%] md:text-[8rem]'>
+                            <p className='bg-primary-dark-4 lg:bg-primary h-full w-full  rounded-full lg:rounded-[10px] select-none flex justify-center items-center capitalize text-[650%] md:text-[8rem]'>
                                 {user?.username?.charAt(0)}
                             </p>
                     }
@@ -38,7 +38,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket }) => {
                     }
                 </div>
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
-                    <div className="flex flex-col text-center lg:text-left" data-aos='zoom-in'>
+                    <div className="flex flex-col text-center lg:text-left ">
                         <div className={`flex items-center ${!user?.premium ? "justify-center lg:justify-start" : "justify-start"} gap-2 `}>
                             <div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative">{user?.username},{user?.age}
                                 {

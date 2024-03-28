@@ -37,8 +37,8 @@ const AuthHeader = () => {
                   </button>
                 </div>
                 <div className="flex items-center gap-x-[8.6px]">
-                  <Link href={client_routes.register} className="w-[78.5px] h-[31px] flex justify-center items-center bg-secondary text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Register</Link>
-                  <Link href={client_routes.login} className="w-[57px] h-[31px] flex justify-center items-center bg-neutral border border-white/30 text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Login</Link>
+                  <Link prefetch={true} href={client_routes.register} className="w-[78.5px] h-[31px] flex justify-center items-center bg-secondary text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Register</Link>
+                  <Link prefetch={true} href={client_routes.login} className="w-[57px] h-[31px] flex justify-center items-center bg-neutral border border-white/30 text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Login</Link>
                   {/* <button className="outline-none relative w-6 h-6 flex justify-center items-center" onClick={handleOpenChange}>
                     <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-100" : "scale-y-0"}`} src={close} alt="" priority />
                     <Image height={24} width={24} className={`pointer-events-none select-none absolute transition-transform duration-150 ease-linear ${open ? "scale-y-0" : "scale-y-100"}`} src={align_right} alt="" priority />
@@ -66,10 +66,10 @@ const AuthHeader = () => {
             </button>
           </div>
           <div className="flex items-center">
-            <Link href={client_routes.register} className="px-[35px] h-[42px] text-center bg-secondary rounded-[5px] text-[18px] font-[450] tracking-[-0.18] me-4 transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center">
+            <Link prefetch={true} href={client_routes.register} className="px-[35px] h-[42px] text-center bg-secondary rounded-[5px] text-[18px] font-[450] tracking-[-0.18] me-4 transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center">
               Register Now
             </Link>
-            <Link href={client_routes.login} className="px-[35px] h-[42px] text-center bg-neutral border border-white/30 rounded-[5px] text-[18px] font-[450] tracking-[-0.18] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center">
+            <Link prefetch={true} href={client_routes.login} className="px-[35px] h-[42px] text-center bg-neutral border border-white/30 rounded-[5px] text-[18px] font-[450] tracking-[-0.18] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center">
               Login
             </Link>
           </div>

@@ -1,10 +1,13 @@
 "use client"
-import React from "react";
+import React, { Suspense } from "react";
 import Index from "@/components/subscribe/Index";
+import Loader from "@/components/common/Loader";
 
 const Page = () => {
     return (
-        <Index />
+        <Suspense fallback={<Loader />}>
+            <Index />
+        </Suspense>
     );
 }
 

@@ -8,6 +8,7 @@ import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
 import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
 import { useStore } from "@/store/store";
+import Link from "next/link";
 
 const Cards = ({ allUsers }) => {
 
@@ -36,7 +37,7 @@ const Cards = ({ allUsers }) => {
               allUsersState?.map((item, idx) => {
 
                 return (
-                  <div key={idx} onClick={() => navigate.push(`${client_routes.profile}/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem] xs:h-auto  w-full flex justify-center items-center">
+                  <Link key={idx} href={`${client_routes.profile}/${item.id}`} prefetch={true} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem] xs:h-auto  w-full flex justify-center items-center">
                     {item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in")
                       ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                       : <div className="w-full h-full flex items-center justify-center">
@@ -63,7 +64,7 @@ const Cards = ({ allUsers }) => {
                         <div className="mt-1 md:mt-[2px] text-[clamp(12px,1.5vw,16px)]  lg:text-[clamp(14px,1.5vw,16px)] leading-[14px] font-semibold text-white/50">{item?.region}</div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 )
               })
             }
@@ -72,7 +73,7 @@ const Cards = ({ allUsers }) => {
               {allUsers &&
                 allUsers?.map((item, idx) => {
                   return (
-                    <div key={idx} onClick={() => navigate.push(`${client_routes.profile}/${item.id}`)} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem]   xs:h-auto  w-full flex justify-center items-center">
+                    <Link key={idx} href={`${client_routes.profile}/${item.id}`} prefetch={true} className="relative rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem]   xs:h-auto  w-full flex justify-center items-center">
                       {item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in")
                         ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                         : <div className="w-full h-full flex items-center justify-center">
@@ -98,7 +99,7 @@ const Cards = ({ allUsers }) => {
                           <div className="mt-1 md:mt-[2px] text-[clamp(12px,1.5vw,16px)]  lg:text-[clamp(14px,1.5vw,16px)] leading-[14px] font-semibold text-white/50">{item?.region}</div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   )
                 })}
             </>

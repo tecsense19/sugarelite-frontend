@@ -139,44 +139,44 @@ const Index = () => {
           }
         </div>
       </div>
-      {isPremium &&
-        <div className='flex w-full justify-center mt-7 sm:my-10'>
+      {isPremium
+        ? <div className='flex w-full justify-center mt-7 sm:my-10'>
           <div className="2xl:w-9/12 xl:w-10/12 w-full flex flex-col rounded-xl overflow-hidden">
             <div className='bg-black p-5 sm:p-8 2xl:px-[70px] xl:px-[60px] flex justify-between items-center'>
               <div className='flex flex-col items-start'>
                 <div className='text-[15px] sm:text-[16px] font-semibold leading-[normal]'>Current Plan</div>
                 <div className='mt-[10px] text-[24px] sm:text-[30px] font-semibold leading-[24px] sm:leading-[30px]'>
-                  {getSubscriptionPlan(userState.user_subscriptions.subscription_plan)}
-                  {/* {/ 4 Weeks /} */}
+                  {getSubscriptionPlan(userState?.user_subscriptions?.subscription_plan)}
+                  {/* 4 Weeks  */}
                 </div>
               </div>
               <div className='text-[30px] sm:text-[40px] font-semibold leading-[normal]'>
-                ${userState.user_subscriptions.subscription_amount}
+                ${userState?.user_subscriptions?.subscription_amount}
               </div>
             </div>
             <div className="bg-primary-dark-6 p-6 sm:p-10">
               <div className='flex justify-between sm:px-0 md:px-[20px] xl:px-[60px] 2xl:px-[80px]'>
                 <div className="flex flex-col items-start">
-                  <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">{getDate(userState.subscription_start_date)}</div>
+                  <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">{getDate(userState?.subscription_start_date)}</div>
                   <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">Subscription Date</div>
                 </div>
                 <div className="flex flex-col items-start">
                   <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">
-                    {userState.is_subscription_cancel
-                      ? getDate(userState.subscription_cancel_date)
+                    {userState?.is_subscription_cancel
+                      ? getDate(userState?.subscription_cancel_date)
                       : <>
-                        {userState.is_subscription_stop
-                          ? <>{getDate(userState.subscription_stop_date)}</>
-                          : <>{getDate(userState.next_subscription_date)}</>
+                        {userState?.is_subscription_stop
+                          ? <>{getDate(userState?.subscription_stop_date)}</>
+                          : <>{getDate(userState?.next_subscription_date)}</>
                         }
                       </>
                     }
                   </div>
                   <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">
-                    {userState.is_subscription_cancel
+                    {userState?.is_subscription_cancel
                       ? "Cancel Date"
                       : <>
-                        {userState.is_subscription_stop
+                        {userState?.is_subscription_stop
                           ? "Pause Date"
                           : "Renewal Date"
                         }
@@ -185,7 +185,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-              {!userState.is_subscription_cancel
+              {!userState?.is_subscription_cancel
                 ? <div className='flex flex-col sm:flex-row justify-center mt-7 sm:mt-10 gap-3 sm:gap-5'>
                   <button className={`w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-primary-dark-4 uppercase ${isLoading ? "pointer-events-none" : ""}`} onClick={handleCancelPlan}>
                     {isCancelLoading
@@ -197,7 +197,7 @@ const Index = () => {
                     {isStartStopLoading
                       ? <div className="loader"></div>
                       : <>
-                        {userState.is_subscription_stop ? "RESUME PLAN" : "STOP PLAN"}
+                        {userState?.is_subscription_stop ? "RESUME PLAN" : "STOP PLAN"}
                       </>
                     }
                   </button>
@@ -207,6 +207,7 @@ const Index = () => {
             </div>
           </div>
         </div>
+        : <></>
       }
       <div className='flex w-full justify-center'>
         <div className='2xl:w-9/12 xl:w-10/12 w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-[37px] mt-10'>

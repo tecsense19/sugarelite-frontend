@@ -9,13 +9,14 @@ import { client_notification, client_routes } from '@/app/lib/helpers'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/store/store'
 import { private_image_request } from '@/app/lib/actions'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
 
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification();
     const { dispatch } = useStore()
+    const [isRequesting, setIsRequesting] = useState(false)
 
     const requestHandler = async (type) => {
         if (type === "request_view_album") {
@@ -31,6 +32,10 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
         }
     }
 
+    useEffect(() => {
+        setIsRequesting(false)
+    }, [privateAlbumState])
+
     return (
         <>
             {contextHolder}
@@ -39,14 +44,19 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
                 <span className='xl:text-[20px] font-[600] leading-[normal]'>SEND MESSAGE</span>
             </button>
             {
-                !privateAlbumState &&
-                <button onClick={() => requestHandler("request_view_album")} className='bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
-                    <Image src={lock_1} width={22} height={22} alt='message' />
-                    <span className='xl:text-[20px] font-[600] leading-[normal]'>REQUEST VIEW ALBUM</span>
-                </button>
+                !privateAlbumState && (
+                    !isRequesting ?
+                        <button onClick={() => { requestHandler("request_view_album"); setIsRequesting(true) }} className={`bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]`} data-aos='fade-left'>
+                            <Image src={lock_1} width={22} height={22} alt='message' />
+                            <span className='xl:text-[20px] font-[600] leading-[normal]'>REQUEST VIEW ALBUM</span>
+                        </button> :
+                        <div className='bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]'>
+                            <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>REQUESTING...!</span>
+                        </div>
+                )
             }
             {
-                privateAlbumState === "pending" &&
+                (privateAlbumState === "pending") &&
                 <div className='bg-primary-dark-3 w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
                     <Image src={lock_1} width={22} height={22} alt='message' />
                     <span className='xl:text-[20px] font-[600] leading-[normal]'>REQUEST PENDING</span>

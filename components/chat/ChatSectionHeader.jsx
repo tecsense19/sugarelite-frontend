@@ -22,7 +22,7 @@ const ChatSectionHeader = ({ setDrawerOpen, selectedObj, setShowMobileChatConten
       setDrawerOpen(true)
       setShowMobileProfile(true)
     } else {
-      navigate.replace(`${client_routes.profile}/${selectedObj.id}`)
+      navigate.push(`${client_routes.profile}/${selectedObj.id}`)
     }
   }
 

@@ -68,7 +68,7 @@ const ChatList = ({ setSelectedObj, showMobileChatContent, setShowMobileChatCont
         {chatList && chatList.length
           ? <>
             <div className="md:hidden relative flex justify-between px-4 items-center">
-              <button className="flex justify-center items-center " onClick={() => { navigate.replace(client_routes.profile); setSelectedObj("") }}>
+              <button className="flex justify-center items-center " onClick={() => { navigate.push(client_routes.profile); setSelectedObj("") }}>
                 <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
               </button>
               <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>

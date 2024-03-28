@@ -1,5 +1,7 @@
 import { all_profiles_action, decrypt_user } from "@/app/lib/actions"
+import Loader from "@/components/common/Loader"
 import ProfileIndex from "@/components/profile/ProfileIndex"
+import { Suspense } from "react"
 
 
 const Profile = async () => {
@@ -11,7 +13,9 @@ const Profile = async () => {
     const accessList = allUsers.data.filter((i) => i.id === user?.id)
     return (
       <>
-        <ProfileIndex decryptedUser={user} allUsers={allUsers.data} accessList={accessList[0]} />
+        <Suspense fallback={<Loader />}>
+          <ProfileIndex decryptedUser={user} allUsers={allUsers.data} accessList={accessList[0]} />
+        </Suspense>
       </>
     )
   }

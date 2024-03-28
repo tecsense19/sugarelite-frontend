@@ -2,7 +2,7 @@
 
 import { ConfigProvider, Select, Slider } from "antd"
 import { useEffect, useState } from "react"
-import { Controller, useForm } from "react-hook-form"
+// import { Controller, useForm } from "react-hook-form"
 import chevron_down from "/public/assets/chevron-down.svg"
 import Image from "next/image"
 import Mob_Checkbox from "./Mob_Checkbox"
@@ -10,15 +10,13 @@ import { useStore } from "@/store/store"
 
 const { Option } = Select;
 
-const Mob_Filter = ({ allUsers }) => {
+const Mob_Filter = ({ allUsers, register, handleSubmit, control, watch, setValue, Controller, dummyUsers, setDummyUsers }) => {
 
-    const { register, handleSubmit, control, watch, reset, setValue } = useForm()
-    const [dummyUsers, setDummyUsers] = useState(allUsers);
+    // const [dummyUsers, setDummyUsers] = useState(allUsers);
 
     const { dispatch } = useStore()
 
     const sugarType = watch("sugar_type")
-
 
     const [age, setAge] = useState({
         age_from: 18,
@@ -40,7 +38,7 @@ const Mob_Filter = ({ allUsers }) => {
         { img: "https://upload.wikimedia.org/wikipedia/en/4/4c/Flag_of_Sweden.svg", name: "Sweden", value: "Sweden" }
     ]
 
-    const submitHandler = (data) => {
+    const submitHandler = () => {
         // console.log("Submit ::", watch())
         const selectedMenu = watch();
         let dummyData = allUsers;
@@ -182,10 +180,23 @@ const Mob_Filter = ({ allUsers }) => {
         setAge({ age_to: watch("age_to") })
     }, [watch("age_to")])
 
+    const handleReset = () => {
+        setValue("name", "")
+        setValue("country", "")
+        setValue("region", "")
+        setValue("sugar_type", "")
+        setValue("is_verified", false)
+        setValue("has_public_photos", false)
+        setValue("has_profile_picture", false)
+        setValue("age_from", 1)
+        setValue("age_to", 99)
+        setValue("has_profile_picture", false)
+        submitHandler();
+    }
 
     return (
         <div className='text-white px-4 bg-primary md:hidden slide-in-bottom pb-4'>
-            <button className="bg-black w-full flex items-center justify-center h-[42px] text-white text-[16px] font-medium rounded-[5px] mt-3" style={{ lineHeight: "normal" }} onClick={() => reset()}>
+            <button className="bg-black w-full flex items-center justify-center h-[42px] text-white text-[16px] font-medium rounded-[5px] mt-3" style={{ lineHeight: "normal" }} onClick={handleReset}>
                 RESET SEARCH
             </button>
             <form onSubmit={handleSubmit(submitHandler)} className="w-full">

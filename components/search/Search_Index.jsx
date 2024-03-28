@@ -9,12 +9,14 @@ import Mob_Filter from "@/components/search/Mob_Filter"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { client_routes } from "@/app/lib/helpers"
+import { Controller, useForm } from "react-hook-form"
 
 const Search_Index = ({ allUsers, blockList }) => {
 
     const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
-
     const [users, setUsers] = useState(allUsers.filter((user) => !blockList.includes(user.id)))
+    const { register, handleSubmit, control, watch, setValue } = useForm()
+    const [dummyUsers, setDummyUsers] = useState();
 
     const navigate = useRouter()
 
@@ -51,6 +53,7 @@ const Search_Index = ({ allUsers, blockList }) => {
     }
 
     useEffect(() => {
+        setDummyUsers(users);
         handleResize()
         window.addEventListener('resize', handleResize);
 
@@ -74,7 +77,7 @@ const Search_Index = ({ allUsers, blockList }) => {
                     </div>
             }
             <Filters allUsers={users} />
-            {!isFilterOpen ? <Cards allUsers={users} /> : <Mob_Filter allUsers={users} />}
+            {!isFilterOpen ? <Cards allUsers={users} /> : <Mob_Filter allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} />}
         </div>
     )
 }
