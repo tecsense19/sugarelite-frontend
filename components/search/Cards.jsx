@@ -57,7 +57,7 @@ const Cards = ({ allUsers }) => {
                       <div className="">
                         <div className="flex items-center">
                           <div className="text-[clamp(16px,2vw,22px)] lg:text-[clamp(19px,2vw,22px)] leading-[normal] lg:leading-[30px] font-bold">
-                            <span className="hidden sm:inline">{item.username}</span><span className="sm:hidden inline">{item.username.split(' ')[0]}</span>,{calculateAge(item.age)}
+                            <span className="hidden sm:inline">{item.username}</span><span className="sm:hidden inline">{item.username.split(' ')[0]}</span>,{item.age}
                           </div>
                           {item.is_subscribe === 1 && <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none" />}
                         </div>
@@ -92,7 +92,7 @@ const Cards = ({ allUsers }) => {
                         <div className="">
                           <div className="flex items-center">
                             <div className="text-[clamp(16px,2vw,22px)] lg:text-[clamp(19px,2vw,22px)] leading-[normal] lg:leading-[30px] font-bold">
-                              <span className="hidden sm:inline">{item.username}</span><span className="sm:hidden inline">{item.username.split(' ')[0]}</span>,{calculateAge(item.age)}
+                              <span className="hidden sm:inline">{item.username}</span><span className="sm:hidden inline">{item.username.split(' ')[0]}</span>,{(item.age)}
                             </div>
                             {item.is_subscribe === 1 && <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none" />}
                           </div>
