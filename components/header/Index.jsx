@@ -46,7 +46,7 @@ const Header = ({ decryptedUser, notifications, allUsers }) => {
       {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname.includes("/loader") || pathname === client_routes.discover || pathname === client_routes.chat || pathname === client_routes.msg || pathname === client_routes.subscription)
         ? <MainHeader decryptedUser={user} notifications={notifications} allUsers={allUsers} socket={socket} />
         : <>
-          {user || userState
+          {user
             ? <MainHeader decryptedUser={user} notifications={notifications} allUsers={allUsers} socket={socket} />
             : <AuthHeader />
           }
