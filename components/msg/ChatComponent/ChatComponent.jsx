@@ -15,24 +15,28 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
     const [chats, setChats] = useState(userChats)
     const [todayMsgs, setTodayMsgs] = useState(0)
 
-    const { state: { messageUpdate: { edit, deleted }, newMsgState }, dispatch } = useStore()
+    const { state: { messageUpdate, newMsgState }, dispatch } = useStore()
 
     useEffect(() => {
-        const editedFromNewMsgState = newMsgState.filter(newMsg => edit.some(oldMsg => oldMsg.id === newMsg.id));
+        const editedFromNewMsgState = newMsgState.filter(newMsg => messageUpdate.some(oldMsg => oldMsg.id === newMsg.id));
+
         if (editedFromNewMsgState.length) {
             editedFromNewMsgState.forEach(i => {
-                const msg = edit.find((y) => y.id === i.id)
-                if (!i?.isDispatched) {
-                    dispatch({ type: "Add_Message", payload: { ...msg, isDispatched: true } });
+                const msg = messageUpdate.find((y) => y.id === i.id)
+                if (msg.type !== "deleted") {
+                    dispatch({ type: "Add_Message", payload: { ...msg, type: msg.type, isEditDispatched: true } });
+                } if (msg.type !== "edited") {
+                    dispatch({ type: "Add_Message", payload: { ...i, type: msg.type, isDeleteDispatched: true } });
                 }
             });
         }
-    }, [edit, newMsgState])
+    }, [messageUpdate])
 
     useEffect(() => {
-        if (edit.length) {
+        if (messageUpdate.length) {
+
             const updatedChats = chats.map(i => {
-                const edited = edit.find(msg => msg.id === i.id);
+                const edited = messageUpdate.find(msg => msg.id === i.id);
                 if (edited) {
                     return { ...i, text: edited.text, type: edited.type };
                 }
@@ -40,32 +44,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
             });
             setChats(updatedChats);
         }
-    }, [edit])
-
-    useEffect(() => {
-        const deletedFromNewMsgState = newMsgState.filter(newMsg => deleted.some(oldMsg => oldMsg.id === newMsg.id));
-
-        if (deletedFromNewMsgState.length) {
-            deletedFromNewMsgState.forEach(i => {
-                if (!i?.isDispatched) {
-                    dispatch({ type: "Add_Message", payload: { ...i, isDispatched: true, type: "deleted" } });
-                }
-            });
-        }
-    }, [deleted, newMsgState])
-
-    useEffect(() => {
-        if (deleted.length) {
-            const updatedChats = chats.map(i => {
-                const edited = deleted.find(msg => msg.id === i.id);
-                if (edited) {
-                    return { ...i, text: edited.text, type: edited.type };
-                }
-                return i;
-            });
-            setChats(updatedChats);
-        }
-    }, [deleted])
+    }, [messageUpdate])
 
     const onDrawerClose = () => {
         setDrawerOpen(false)
@@ -92,7 +71,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
                             message =>
                                 (message.sender_id === currentUser.id && message.receiver_id === toUser.id) ||
                                 (message.sender_id === toUser.id && message.receiver_id === currentUser.id)
-                        )} toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} />
+                        )} toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} />
                         <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} todayMsgs={todayMsgs} editingMsg={editingMsg} setEditingMsg={setEditingMsg} />
                     </div>
                     <div className="hidden 2xl:block w-[400px]" data-aos='fade-left'>

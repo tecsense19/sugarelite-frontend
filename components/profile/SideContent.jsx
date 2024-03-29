@@ -75,14 +75,14 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                     {!profilPic
                         ? <>
                             {user?.avatar_url
-                                ? <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
+                                ? <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-center lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
                                 : <div className={`bg-primary-dark-2 lg:bg-primary h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none flex justify-center items-center text-[50px] ${path === client_routes.edit_profile && "opacity-50"}`}>
                                     {user?.username.charAt(0)}
                                 </div>
                             }
                         </>
                         : <>
-                            <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-top lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
+                            <Image src={profilPic} width={1000} height={1000} alt="person" className={`h-full w-full rounded-full object-cover object-center lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority />
                         </>
                     }
                     {

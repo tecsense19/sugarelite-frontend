@@ -89,7 +89,8 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
 
         const deleteMsgHandler = (obj) => {
             if (obj.receiver_id === currentUser.id || obj.sender_id === currentUser.id) {
-                dispatch({ type: "Delete_Message", payload: obj })
+                // dispatch({ type: "Delete_Message", payload: obj })
+                dispatch({ type: "Edit_Message", payload: obj })
             }
         }
 

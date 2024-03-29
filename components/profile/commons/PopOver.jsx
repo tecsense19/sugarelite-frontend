@@ -21,6 +21,7 @@ const PopOver = ({ children, user, socket }) => {
     const path = usePathname()
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification()
+    const [isLoading, setisLoading] = useState({ report: false, block: false })
 
     const handleShowOptionsChange = (val) => {
         setShowOptions(val)
@@ -31,9 +32,10 @@ const PopOver = ({ children, user, socket }) => {
             const res = await block_user_action({ sender_id: userState?.id, receiver_id: user.id, is_blocked: 1 })
             if (res.success) {
                 client_notification(api, 'topRight', "success", res.message, 4)
-                navigate.push(client_routes.profile)
+                navigate.push(client_routes.search)
                 socket.emit("user-blocked", res.data)
             }
+            setisLoading(prevState => ({ ...prevState, block: false }))
         } else {
 
         }
@@ -114,10 +116,16 @@ const PopOver = ({ children, user, socket }) => {
                                     <Image src={ReportIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
                                     <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
                                 </button>
-                                <button className="bg-[#EF4444]  w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={() => blockHandler("block")}>
-                                    <Image src={BlockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                    <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
-                                </button>
+                                {!isLoading.block ?
+                                    <button className="bg-[#EF4444]  w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm"
+                                        onClick={() => { blockHandler("block"); setisLoading(prevState => ({ ...prevState, block: true })) }}>
+                                        <Image src={BlockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                                        <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                                    </button> :
+                                    <div className="bg-[#EF4444]  w-[125px] h-[32px] flex justify-center items-center gap-x-[10px] rounded-sm">
+                                        <span className='loader after:border-[12px] '></span>
+                                    </div>
+                                }
                             </div>
                         )}>
                             {children}

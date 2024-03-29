@@ -6,14 +6,20 @@ import deleteIcon from "/public/assets/delete.svg";
 import editIcon from "/public/assets/edit.svg";
 import penIcon from "/public/assets/pen.svg";
 import { send_message_action } from '@/app/lib/actions';
+import { useRouter } from 'next/navigation';
+import { client_routes } from '@/app/lib/helpers';
+import Link from 'next/link';
 
-const Message = ({ user, item, messages, idx, containerElement, toUser, setEditingMsg, socket }) => {
+const Message = ({ user, item, messages, idx, containerElement, toUser, setEditingMsg, socket, setShowMobileProfile, setDrawerOpen }) => {
 
   const [showOptions, setShowOptions] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
   }
+
+  const navigate = useRouter()
 
 
   useEffect(() => {
@@ -58,16 +64,29 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
   }
 
   const msgDeleteHandler = async () => {
+    setIsLoading(true)
     setEditingMsg(null)
     let obj = { sender_id: item.sender_id, receiver_id: item.receiver_id, type: "deleted", id: item.id }
     const res = await send_message_action(obj)
     if (res.success) {
       socket.emit("delete-message", obj)
     }
+    setShowOptions(false)
+    setIsLoading(false)
   }
 
   const msgEditHandler = () => {
+    setShowOptions(false)
     setEditingMsg({ message: item.text, id: item.id })
+  }
+
+  const onProfileClick = () => {
+    if (window.innerWidth < 1537) {
+      setDrawerOpen(true)
+      setShowMobileProfile(true)
+    } else {
+      navigate.push(`${client_routes.profile}/${toUser.id}`)
+    }
   }
 
   return (
@@ -98,7 +117,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                 }
               </>
             }
-            <div className="ps-5 pe-[5px] lg:pe-[6px] py-[10px] rounded-[15px] max-w-full lg:max-w-[calc(100%-60px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start relative">
+            <div className="ps-5 pe-[5px] lg:pe-[6px] py-[10px] rounded-[15px] max-w-full lg:max-w-[calc(100%-70px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start relative">
               <div className="flex justify-between items-center">
                 <div className='flex justify-start items-end'>
                   <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {user.username} </div>
@@ -108,11 +127,15 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
                     <Popover placement="leftBottom" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
                       <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
-                        <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
-                          <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                          <div className="text-[14px] font-medium leading-[20px]">Delete</div>
-                        </button>
-                        <button className="bg-primary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
+                        {!isLoading ?
+                          <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
+                            <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                            <div className="text-[14px] font-medium leading-[20px]">Delete</div>
+                          </button> : <div className="bg-secondary  border-[1px] border-white/30 w-[125px] h-[32px] flex justify-center items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
+                            <span className='loader after:border-[10px] '></span>
+                          </div>
+                        }
+                        <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
                           <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
                           <div className="text-[14px] font-medium leading-[20px]">Edit</div>
                         </button>
@@ -168,44 +191,44 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               ? <>
                 {item.sender_id !== messages[idx - 1].sender_id
                   &&
-                  <>
+                  <div className='cursor-pointer' onClick={onProfileClick}>
                     {
                       toUser.avatar_url ? <>
                         <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] object-cover  pointer-events-none rounded-full mb-[10px]" />
                       </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center uppercase items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
                     }
-                  </>
+                  </div>
                 }
               </>
-              : <>
+              : <div className='cursor-pointer' onClick={onProfileClick}>
                 {
                   toUser.avatar_url ? <>
                     <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden object-cover h-[40px] pointer-events-none rounded-full mb-[10px]" />
                   </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] uppercase flex justify-center items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
                 }
-              </>
+              </div>
             }
 
             {messages[idx + 1]
               ? <>
                 {item.sender_id !== messages[idx + 1].sender_id
-                  ? <>
+                  ? <div className='cursor-pointer' onClick={onProfileClick}>
                     {
                       toUser.avatar_url ? <>
                         <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden h-[40px] object-cover lg:block pointer-events-none rounded-full me-5" />
                       </> : <p className="hidden lg:flex pointer-events-none rounded-full me-5 uppercase justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
                     }
-                  </>
+                  </div>
                   : <div className="hidden lg:block w-[60px]"></div>
                 }
               </>
-              : <>
+              : <div className='cursor-pointer' onClick={onProfileClick}>
                 {
                   toUser.avatar_url ? <>
                     <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block object-cover  h-10 pointer-events-none rounded-full me-5" />
                   </> : <p className="hidden lg:flex pointer-events-none rounded-full uppercase me-5 justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
                 }
-              </>
+              </div>
             }
 
             <div className="ps-3 pe-5 md:px-5 py-[10px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[15px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-primary-dark-3 relative">

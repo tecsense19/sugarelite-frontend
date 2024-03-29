@@ -22,8 +22,9 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
         } else if (time.toDateString() === new Date(today.setDate(today.getDate() - 1)).toDateString()) {
             return "Yesterday";
         } else {
-            const diffDays = Math.floor((today - time) / (1000 * 60 * 60 * 24));
-            return `${diffDays} days`;
+            const timeString = time.toDateString().split(' ')
+            const month = time.getMonth() + 1
+            return `${timeString[2]}-${month}-${timeString[3].slice(2, 4)}`
         }
     };
 
@@ -40,7 +41,7 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{user.username}</p>
-                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px]">{message.type === "deleted" ? "message deleted" : message?.text || ''}</p>
+                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">{message.type === "deleted" ? "message deleted" : message?.text || ''}</p>
                 </div>
             </div>
             <div className="flex flex-col items-end min-w-fit">

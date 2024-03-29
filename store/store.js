@@ -141,43 +141,60 @@ const newMsgReducer = (state, action) => {
   }
 }
 
+// const editOrDeleteReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'Edit_Message':
+//       const editedMessage = action.payload;
+//       const existingMessageIndex = state.edit.findIndex(message => message.id === editedMessage.id);
+//       if (existingMessageIndex !== -1) {
+//         const updatedEdit = [...state.edit];
+//         updatedEdit[existingMessageIndex] = editedMessage;
+//         return {
+//           ...state,
+//           edit: updatedEdit
+//         };
+//       } else {
+//         return {
+//           ...state,
+//           edit: [...state.edit, editedMessage]
+//         };
+//       }
+//     case "Delete_Message":
+//       const deletedMsg = action.payload;
+//       const deletedMessageIndex = state.deleted.findIndex(message => message.id === deletedMsg.id);
+//       if (deletedMessageIndex !== -1) {
+//         const updatedEdit = [...state.deleted];
+//         updatedEdit[deletedMessageIndex] = deletedMsg;
+//         return {
+//           ...state,
+//           deleted: updatedEdit
+//         };
+//       } else {
+//         return {
+//           ...state, deleted: [...state.deleted, action.payload]
+//         };
+//       }
+//     default:
+//       return state;
+//   }
+// };
+
 const editOrDeleteReducer = (state, action) => {
   switch (action.type) {
     case 'Edit_Message':
-      const editedMessage = action.payload;
-      const existingMessageIndex = state.edit.findIndex(message => message.id === editedMessage.id);
-      if (existingMessageIndex !== -1) {
-        const updatedEdit = [...state.edit];
-        updatedEdit[existingMessageIndex] = editedMessage;
-        return {
-          ...state,
-          edit: updatedEdit
-        };
+      const newMsg = action.payload;
+      const existingMsgIndex = state.findIndex(msg => msg.id === newMsg.id);
+      if (existingMsgIndex !== -1) {
+        const updatedState = [...state];
+        updatedState[existingMsgIndex] = newMsg;
+        return updatedState;
       } else {
-        return {
-          ...state,
-          edit: [...state.edit, editedMessage]
-        };
-      }
-    case "Delete_Message":
-      const deletedMsg = action.payload;
-      const deletedMessageIndex = state.deleted.findIndex(message => message.id === deletedMsg.id);
-      if (deletedMessageIndex !== -1) {
-        const updatedEdit = [...state.deleted];
-        updatedEdit[deletedMessageIndex] = deletedMsg;
-        return {
-          ...state,
-          deleted: updatedEdit
-        };
-      } else {
-        return {
-          ...state, deleted: [...state.deleted, action.payload]
-        };
+        return [...state, action.payload];
       }
     default:
       return state;
   }
-};
+}
 
 const blockedUsers = (state, action) => {
   switch (action.type) {
@@ -255,7 +272,7 @@ export const StoreProvider = ({ children }) => {
     newMsgState: [],
     blockedUsersState: [],
     existedUnblockState: [],
-    messageUpdate: { edit: [], deleted: [] }
+    messageUpdate: []
   });
 
   return (

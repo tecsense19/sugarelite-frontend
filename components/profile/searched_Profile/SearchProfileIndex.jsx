@@ -38,6 +38,7 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
     const [privateAlbumState, setPrivateAlbumState] = useState(null)
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification()
+    const [isLoading, setisLoading] = useState({ report: false, block: false })
 
     const { state: { decisionState } } = useStore()
 
@@ -76,9 +77,10 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
             const res = await block_user_action({ sender_id: currentUser.id, receiver_id: queried_user.id, is_blocked: 1 })
             if (res.success) {
                 client_notification(api, "topRight", "success", res.message, 4)
+                navigate.push(client_routes.search)
                 socket.emit("user-blocked", res.data)
-                navigate.push(client_routes.profile)
             }
+            setisLoading(prevState => ({ ...prevState, block: false }))
         }
     }
 
@@ -101,10 +103,16 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
                     <Image src={ReportIcon} alt="report" width={18} height={18} />
                     <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">RAPPORTER</span>
                 </button>
-                <button className="w-full h-[38px] 2xl:h-[42px] bg-danger rounded-[5px] flex justify-start items-center px-[19px]" onClick={() => blockHandler("block")}>
-                    <Image src={BlockIcon} alt="block" width={18} height={18} />
-                    <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">BLOCKER</span>
-                </button>
+                {
+                    !isLoading.block ? <button className="w-full h-[38px] 2xl:h-[42px] bg-danger rounded-[5px] flex justify-start items-center px-[19px]"
+                        onClick={() => { blockHandler("block"); setisLoading(prevState => ({ ...prevState, block: true })) }}>
+                        <Image src={BlockIcon} alt="block" width={18} height={18} />
+                        <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">BLOCKER</span>
+                    </button>
+                        : <div className="w-full h-[38px] 2xl:h-[42px] bg-danger rounded-[5px] flex justify-center items-center px-[19px]">
+                            <span className='loader after:border-[14px] '></span>
+                        </div>
+                }
             </div>
 
         </main>

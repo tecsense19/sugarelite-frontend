@@ -7,6 +7,8 @@ import blockIcon from "/public/assets/chat_block_icon.svg";
 import optionsIcon from "/public/assets/chat_options_icon.svg";
 import arrowLeft from "/public/assets/arrow_left.svg";
 import { ConfigProvider, Popover } from 'antd';
+import Link from 'next/link';
+import { client_routes } from '@/app/lib/helpers';
 
 const SideProfile = ({ selectedObj, setShowMobileProfile }) => {
     const [showOptions, setShowOptions] = useState(false);
@@ -47,7 +49,7 @@ const SideProfile = ({ selectedObj, setShowMobileProfile }) => {
             </div>
 
             <div className="w-full flex justify-start items-center flex-col h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
-                <div className="flex justify-center items-center relative">
+                <Link prefetch={true} href={client_routes.profile + "/" + selectedObj.id} className="flex justify-center items-center relative !text-white">
                     {
                         selectedObj.avatar_url ?
                             <Image src={selectedObj?.avatar_url} width={180} height={180} alt="person" className={`hidden md:block rounded-full h-[180px] min-h-[180px] select-none pointer-events-none object-cover`} priority />
@@ -60,11 +62,11 @@ const SideProfile = ({ selectedObj, setShowMobileProfile }) => {
                     }
                     {/* <Image src={Img1} width={180} height={180} alt="person" className={`hidden md:block rounded-full select-none pointer-events-none`} priority /> */}
 
-                </div>
+                </Link>
                 <div data-aos='zoom-in'>
                     <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${selectedObj.is_subscribe === 1 ? "md:items-start" : "md:items-center"}`}>
                         <div className='flex items-center'>
-                            <span className="text-[24px] md:text-[26px] font-bold leading-[30px]">{selectedObj.username}, {selectedObj.age}</span>
+                            <Link prefetch={true} href={client_routes.profile + "/" + selectedObj.id} className="text-[24px] md:text-[26px] font-bold leading-[30px] flex !text-white capitalize">{selectedObj.username}, {selectedObj.age}</Link>
                             {selectedObj.is_subscribe === 1 && <>
                                 <Image src={premium} alt='premium' width={30} height={30} priority className='pointer-events-none ms-3 md:ms-4' />
                                 <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>Premium</span>
