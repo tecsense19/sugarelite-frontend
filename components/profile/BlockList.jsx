@@ -13,6 +13,8 @@ const BlockList = ({ setProfileToggle, type, allUsers, blockList, socket }) => {
 	const [api, contextHolder] = notification.useNotification()
 	const [isLoading, setIsLoading] = useState([])
 
+	console.log("blockedUsersState  ::", blockedUsersState)
+
 	useEffect(() => {
 		const matchedProfiles = allUsers.filter(user1 => blockList.some(user2 => user2.user_id === user1.id))
 		const arr = matchedProfiles.filter((i) => !existedUnblockState.some((j) => i.id === j.receiver_id))
