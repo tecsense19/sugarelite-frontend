@@ -13,17 +13,11 @@ import { cancel_subscription_action, search_profile_action, start_stop_subscript
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 
-const subscriptions = [
-  { name: "4 Weeks", value: "4week", key: process.env.NEXT_PUBLIC_STRIPE_4_WEEKS, amount: 116 },
-  { name: "6 Weeks", value: "6week", key: process.env.NEXT_PUBLIC_STRIPE_6_WEEKS, amount: 156 },
-  { name: "12 Weeks", value: "12week", key: process.env.NEXT_PUBLIC_STRIPE_12_WEEKS, amount: 228 },
-]
 
-const Index = () => {
+const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentObj, setSelectedPaymentObj] = useState("")
   const { state: { userState }, dispatch } = useStore()
-  console.log(userState);
   const [isPremium, setIsPremium] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isCancelLoading, setIsCancelLoading] = useState(false)
@@ -116,6 +110,8 @@ const Index = () => {
       return ""
     }
   }
+
+  // console.log(subscriptions)
 
   return (
     <div className='md:pt-[66px] text-white p-5'>
@@ -245,7 +241,7 @@ const Index = () => {
         }
       }}>
         <Modal title="Enter card details" centered footer={false} open={isModalOpen} onCancel={handleCancel}>
-          <StripeModal selectedPaymentObj={selectedPaymentObj} setIsModalOpen={setIsModalOpen} />
+          <StripeModal selectedPaymentObj={selectedPaymentObj} setIsModalOpen={setIsModalOpen} STRIPE_TEST_KEY={STRIPE_TEST_KEY} />
         </Modal>
       </ConfigProvider>
     </div>

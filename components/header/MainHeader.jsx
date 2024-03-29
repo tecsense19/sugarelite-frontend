@@ -30,11 +30,10 @@ const useSocket = () => {
 
 
 
-const MainHeader = ({ decryptedUser, notifications, allUsers }) => {
+const MainHeader = ({ decryptedUser, notifications, allUsers, socket }) => {
 
   const pathname = usePathname()
   const router = useRouter()
-  const socket = useSocket()
 
   const { state: { userState, notificationOpenState }, dispatch } = useStore()
 

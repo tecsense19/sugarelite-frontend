@@ -1,5 +1,7 @@
 import { decrypt_user } from "@/app/lib/actions"
+import Loader from "@/components/common/Loader";
 import Index from "@/components/profile/EditProfile/Index"
+import { Suspense } from "react";
 
 const EditProfile = () => {
   const user = decrypt_user();

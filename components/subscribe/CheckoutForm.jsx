@@ -26,7 +26,7 @@ const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen }) => {
             const { token, error } = await stripe.createToken(cardElement, { address_city: "Kakinada", name: "Tester" },)
             setIsLoading(true)
             if (token) {
-                // const res = await stripe_action({ user_id: userState.id, stripe_token: token.id, price_id: process.env.NEXT_PUBLIC_STRIPE_12_WEEKS })
+                // const res = await stripe_action({ user_id: userState.id, stripe_token: token.id, price_id: process.env.STRIPE_12_WEEKS })
                 // console.log(token)
                 let obj = {
                     "user_id": userState.id,
