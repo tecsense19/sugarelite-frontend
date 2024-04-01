@@ -12,7 +12,6 @@ import { private_image_request } from '@/app/lib/actions'
 import { useEffect, useState } from 'react'
 
 const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
-
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification();
     const { dispatch } = useStore()
@@ -24,7 +23,6 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
             if (res.success) {
                 socket.emit("request-album", { data: res.data, status: "pending" })
                 client_notification(api, "topRight", "success", res?.message, 4)
-
             }
         } else {
             dispatch({ type: "Add_Profile", payload: { obj: { id: 1, sender_id: currentUser?.id, receiver_id: user.id, text: `You started Chat with ${user.username}`, updated_at: new Date() }, type: "normal", user: user } })

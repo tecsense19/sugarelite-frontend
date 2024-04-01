@@ -18,9 +18,12 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
   const [api, contextHolder] = notification.useNotification();
   const [loadingArr, setLoadingArr] = useState([])
 
-  const [myNotifications, setMyNotifications] = useState(notifications.length ? notifications.filter((i) => i.receiver_id === user.id) : [])
+  const [myNotifications, setMyNotifications] = useState([])
   const [socketNotifications, setSocketNotifications] = useState([])
 
+  useEffect(() => {
+    setMyNotifications(notifications.filter(i => i.receiver_id === user.id))
+  }, [notifications])
 
   const getTime = (id) => {
     const time = new Date(id)
@@ -73,6 +76,7 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
     if (!socket) return
 
     socket.on("album-notification", ({ data, status }) => {
+      data = { ...data, id: parseInt(data.id), receiver_id: parseInt(data.receiver_id), sender_id: parseInt(data.sender_id) }
       if (user.id === data.receiver_id && status === "pending") {
         setSocketNotifications((prev) => [data, ...prev])
       }
@@ -128,7 +132,6 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
       setLoadingArr((prev) => prev.filter(ele => ele.id !== id))
     }
   }
-
 
   return (
     <div className={`fixed md:top-[66px] bottom-0 right-0 w-full z-[10] h-full md:h-[calc(100%-66px)] transition-transform duration-300 ease-out origin-right ${open ? "scale-x-1" : "scale-x-0"}`}>

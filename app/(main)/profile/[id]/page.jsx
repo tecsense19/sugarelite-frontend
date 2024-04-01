@@ -9,6 +9,7 @@ import { redirect } from "next/navigation"
 const ProfileId = async ({ params }) => {
 
   const currentUser = decrypt_user();
+  if (!currentUser) redirect(client_routes.profile);
   const myAccount = await search_profile_action(currentUser.id);
 
   if (!myAccount.success) {

@@ -31,7 +31,7 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
     const [toUser, setToUser] = useState("")
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const navigate = useRouter()
-    const { state: { userState } } = useStore()
+    const { state: { userState, chatProfileState } } = useStore()
 
     const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
 
@@ -47,8 +47,9 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
             setShowMobileChatContent(true)
         }
     }, [toUser])
+    console.log(socket)
 
-    if (profilesList.length) {
+    if (profilesList.length || chatProfileState.length) {
         return (
             <>
                 <div className="font-bold hidden h-dvh pt-0 md:pt-[66px] text-white md:flex">

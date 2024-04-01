@@ -9,7 +9,7 @@ import EditIcon from "../../../public/assets/edit.svg"
 import searchIcon from "/public/assets/search.svg"
 import NotificationIcon from "../../../public/assets/Mask group (1).svg"
 import React, { useEffect, useState } from 'react'
-import "../../chat/ChatContent.css"
+// import "../../chat/ChatContent.css"
 import { usePathname, useRouter } from 'next/navigation'
 import { client_notification, client_routes, server_routes } from '@/app/lib/helpers'
 import { block_user_action, logout_user } from '@/app/lib/actions'

@@ -7,7 +7,7 @@ import notification from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { useStore } from "@/store/store"
-import { logout_user } from "@/app/lib/actions"
+import { logout_user, private_album_notification } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
 import { useEffect, useState } from "react"
@@ -30,20 +30,36 @@ const useSocket = () => {
 
 
 
-const MainHeader = ({ decryptedUser, notifications, allUsers, socket }) => {
+const MainHeader = ({ decryptedUser, allUsers }) => {
 
   const pathname = usePathname()
   const router = useRouter()
+  const socket = useSocket()
 
   const { state: { userState, notificationOpenState }, dispatch } = useStore()
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
+  const [notifications, setNotifications] = useState([])
 
   useEffect(() => {
     setUser(userState ? userState : decryptedUser)
   }, [userState])
+
+
+  async function fetchNotifications() {
+    const tempNotifications = await private_album_notification({ user_id: userState?.id })
+    if (tempNotifications.success) {
+      setNotifications(tempNotifications.data)
+    }
+  }
+
+  useEffect(() => {
+    if (userState) {
+      fetchNotifications()
+    }
+  }, [])
 
 
   useEffect(() => {
@@ -77,7 +93,6 @@ const MainHeader = ({ decryptedUser, notifications, allUsers, socket }) => {
       }
     };
   }, [user, socket])
-
 
   const handleLogout = () => {
     logout_user()

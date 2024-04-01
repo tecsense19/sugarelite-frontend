@@ -57,7 +57,8 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
     useEffect(() => {
         if (decisionState.length) {
             decisionState.forEach((i) => {
-                const { data, status } = i
+                let { data, status } = i
+                data = { ...data, sender_id: parseInt(data.sender_id), receiver_id: parseInt(data.receiver_id) }
                 if (data.sender_id === currentUser.id && data.receiver_id === queried_user.id) {
                     if (status === "pending") {
                         setPrivateAlbumState("pending")
