@@ -15,7 +15,7 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
     useEffect(() => {
         const item = chatProfileState[chatProfileState.length - 1];
         if (item && item.type === "socket") {
-            const existingUserIndex = profiles.findIndex(i => i.user.id === item.obj.receiver_id);
+            const existingUserIndex = profiles.findIndex(i => i.user.id === item.obj.receiver_id)
             if (existingUserIndex !== -1) {
                 const newList = [...profiles];
                 newList[existingUserIndex].latestMsg = item.obj;
@@ -76,6 +76,7 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
                     }
                 } else if (msg.type === "edited") {
                     dispatch({ type: "Edit_Message", payload: msg })
+                    dispatch({ type: "Add_Profile", payload: { obj: msg, type: "socket", user: user } });
                 }
             } else if (msg.sender_id === currentUser.id) {
                 if (msg.type === "regular") {
@@ -83,6 +84,7 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
                     dispatch({ type: "Add_Message", payload: msg })
                 } else if (msg.type === "edited") {
                     dispatch({ type: "Edit_Message", payload: msg })
+                    dispatch({ type: "Add_Profile", payload: { obj: msg, type: "socket", user: user } });
                 }
             }
         };

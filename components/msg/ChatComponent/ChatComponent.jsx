@@ -15,7 +15,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
     const [chats, setChats] = useState(userChats)
     const [todayMsgs, setTodayMsgs] = useState(0)
 
-    const { state: { messageUpdate, newMsgState }, dispatch } = useStore()
+    const { state: { messageUpdate, newMsgState, chatProfileState }, dispatch } = useStore()
 
     useEffect(() => {
         const editedFromNewMsgState = newMsgState.filter(newMsg => messageUpdate.some(oldMsg => oldMsg.id === newMsg.id));
@@ -27,6 +27,12 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
                     dispatch({ type: "Add_Message", payload: { ...msg, type: msg.type, isEditDispatched: true } });
                 } if (msg.type !== "edited") {
                     dispatch({ type: "Add_Message", payload: { ...i, type: msg.type, isDeleteDispatched: true } });
+                    if (i.sender_id === currentUser.id) {
+                        dispatch({ type: "Add_Profile", payload: { obj: { ...i, type: msg.type }, type: "socket", user: toUser } });
+                    } else {
+                        const foundUser = chatProfileState.find((ele) => ele.user.id === i.sender_id)?.user
+                        dispatch({ type: "Add_Profile", payload: { obj: { ...i, type: msg.type }, type: "socket", user: foundUser } });
+                    }
                 }
             });
         }

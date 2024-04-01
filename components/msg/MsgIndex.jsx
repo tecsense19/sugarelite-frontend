@@ -47,7 +47,6 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
             setShowMobileChatContent(true)
         }
     }, [toUser])
-    console.log(socket)
 
     if (profilesList.length || chatProfileState.length) {
         return (

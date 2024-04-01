@@ -3,6 +3,7 @@ import React from 'react'
 
 const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) => {
 
+
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
         const today = new Date();
