@@ -11,7 +11,7 @@ import { useStore } from '@/store/store'
 import { private_image_request } from '@/app/lib/actions'
 import { useEffect, useState } from 'react'
 
-const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
+const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIsModalOpen }) => {
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification();
     const { dispatch } = useStore()
@@ -71,7 +71,7 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket }) => {
 
 
             <div className=' justify-center items-center hidden md:flex 2xl:hidden'>
-                <PopOver user={user} socket={socket}>
+                <PopOver user={user} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
             </div>

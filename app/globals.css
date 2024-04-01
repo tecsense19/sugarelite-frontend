@@ -193,6 +193,10 @@ button:disabled {
   @apply w-[180px] sm:w-auto !important
 }
 
+.report-container .ant-modal-content {
+  @apply !p-3 !px-0 !pt-0 !rounded-md
+}
+
 
 /* / Notification CSS / */
 .ant-notification-notice-message {

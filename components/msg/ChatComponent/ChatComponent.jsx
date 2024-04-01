@@ -14,6 +14,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
     const [editingMsg, setEditingMsg] = useState(null)
     const [chats, setChats] = useState(userChats)
     const [todayMsgs, setTodayMsgs] = useState(0)
+    const [sendingImages, setSendingImages] = useState([])
 
     const { state: { messageUpdate, newMsgState, chatProfileState }, dispatch } = useStore()
 
@@ -72,13 +73,13 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, setToUser, userChats,
             {toUser ? (
                 <div className='w-full h-full flex'>
                     <div className='w-full  2xl:w-[calc(100%-400px)]'>
-                        <ChatHeader toUser={toUser} setShowMobileChatContent={setShowMobileChatContent} setToUser={setToUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} />
+                        <ChatHeader toUser={toUser} currentUser={currentUser} setShowMobileChatContent={setShowMobileChatContent} setToUser={setToUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} />
                         <AllMessages chats={chats.filter(
                             message =>
                                 (message.sender_id === currentUser.id && message.receiver_id === toUser.id) ||
                                 (message.sender_id === toUser.id && message.receiver_id === currentUser.id)
-                        )} toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} />
-                        <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} todayMsgs={todayMsgs} editingMsg={editingMsg} setEditingMsg={setEditingMsg} />
+                        )} toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} sendingImages={sendingImages} />
+                        <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} todayMsgs={todayMsgs} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} />
                     </div>
                     <div className="hidden 2xl:block w-[400px]" data-aos='fade-left'>
                         <SideProfile selectedObj={toUser} />

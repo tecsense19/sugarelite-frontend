@@ -9,7 +9,7 @@ import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import Buttons from './Buttons'
 
-const Side = ({ user, currentUser, privateAlbumState, socket }) => {
+const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, isModalOpen }) => {
 
     const path = usePathname()
 
@@ -18,7 +18,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket }) => {
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
                 <Link href={path === client_routes.edit_profile ? client_routes.profile : client_routes.search}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
                 <p className="text-[24px] font-semibold select-none">Profile</p>
-                <PopOver user={user} socket={socket}>
+                <PopOver user={user} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
             </div>
@@ -63,7 +63,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket }) => {
                 <div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center items-center md:flex-row flex-col gap-3'>
                     {/* <ButtonProfile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} /> */}
                     {
-                        <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} />
+                        <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                     }
                 </div>
                 <div className="w-full bg-primary-dark-4 mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>

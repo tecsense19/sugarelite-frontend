@@ -7,10 +7,12 @@ import optionsIcon from "/public/assets/chat_options_icon.svg";
 import arrowLeft from "/public/assets/arrow_left.svg";
 import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
+import ReportModal from "@/components/profile/searched_Profile/ReportModal";
 
-const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMobileProfile, setToUser }) => {
+const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMobileProfile, setToUser, currentUser }) => {
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useRouter()
+    const [modalOpen, setModalOpen] = useState(false)
 
     const handleShowOptionsChange = (val) => {
         setShowOptions(val)
@@ -66,8 +68,8 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
                                 <Image src={starIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
                                 <div className="text-[14px] font-medium leading-[20px]">Favorites</div>
                             </button> */}
-                            <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                                <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                            <button onClick={() => setModalOpen(true)} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
+                                <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 " />
                                 <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
                             </button>
                             <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
@@ -81,6 +83,7 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
                         </button>
                     </Popover>
                 </ConfigProvider>
+                <ReportModal isModalOpen={modalOpen} setIsModalOpen={setModalOpen} toUser={toUser} currentUser={currentUser} />
             </div>
         </>
     )

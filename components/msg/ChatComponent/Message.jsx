@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import optionsIcon from "/public/assets/chat_options_icon.svg";
 import { ConfigProvider, Popover } from 'antd';
 import deleteIcon from "/public/assets/delete.svg";
@@ -20,7 +20,6 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
   }
 
   const navigate = useRouter()
-
 
   useEffect(() => {
     const closeOptions = () => {
@@ -89,6 +88,34 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
     }
   }
 
+  const Msg = ({ msg }) => {
+    if (msg.get_all_chat_with_image?.length) {
+      return (
+        <div className=' flex flex-col gap-2 w-full'>
+          {/* <p className=''>{msg.text}</p> */}
+          <div className={`overflow-hidden w-[12rem] h-[12rem] relative flex gap-1 flex-wrap ${msg.get_all_chat_with_image.length === 2 ? "flex-col" : ""}`}>
+            {
+              msg.get_all_chat_with_image.map((i, inx) => {
+                return (
+                  <React.Fragment key={inx}>
+                    <Image
+                      width={1000} height={1000} src={i.chat_images} alt="phot"
+                      className={` rounded-md bg-primary-dark-4 object-cover ${msg.get_all_chat_with_image.length === 1 ? "h-full w-full" : "h-[calc(50%-2px)] w-[calc(6rem-2px)]"} `} />
+                    {inx > 3 &&
+                      <p className='absolute bottom-0 h-[calc(50%-2px)] text-white flex justify-center items-center w-[calc(50%-2px)] right-0 bg-primary-dark/40 rounded-md'>+ {msg.get_all_chat_with_image.length - 4}</p>
+                    }
+                  </React.Fragment>
+                )
+              })
+            }
+          </div>
+        </div>
+      )
+    } else {
+      return <p className='px-2 pb-1'>{msg?.text}</p>
+    }
+  }
+
   return (
     <>
       {
@@ -117,11 +144,11 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                 }
               </>
             }
-            <div className="ps-5 pe-[5px] lg:pe-[6px] py-[10px] rounded-[15px] max-w-full lg:max-w-[calc(100%-70px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start relative">
+            <div className="ps-[5px] pe-[5px] lg:pe-[5px] pb-[5px] pt-[10px] rounded-[12px] max-w-full lg:max-w-[calc(100%-70px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start relative">
               <div className="flex justify-between items-center">
                 <div className='flex justify-start items-end'>
-                  <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {user.username} </div>
-                  <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
+                  <div className="text-[16px] font-medium leading-[20px] ps-2"> {user.username} </div>
+                  <div className="ms-5 text-[14px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
                 </div>
                 {item.type === "deleted" ? <div className="h-[20px] w-[20px] flex justify-center items-center ms-6 lg:-translate-y-1 pointer-events-none"></div> :
                   <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
@@ -150,7 +177,9 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                 }
               </div>
               <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
-                {item.type === "deleted" ? <span className='pe-2'>You deleted this message.</span> : item?.text}
+                {
+                  item.type === "deleted" ? <span className='px-2 mb-3'>You deleted this message.</span> : <Msg msg={item} />
+                }
               </div>
               {
                 item.type === "edited" && <div className='absolute -left-[35px] top-2'>
@@ -231,17 +260,17 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               </div>
             }
 
-            <div className="ps-3 pe-5 md:px-5 py-[10px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[15px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-primary-dark-3 relative">
-              <div className="flex justify-start items-end">
-                <div className="text-[18px] md:text-[20px] font-medium leading-[20px]"> {toUser.username} </div>
-                <div className="ms-5 text-[16px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
+            <div className="px-[7px] pt-2 pb-[7px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[12px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-primary-dark-3 relative">
+              <div className="flex px-2 justify-between items-center ">
+                <div className="text-[16px] font-medium leading-[20px] capitalize"> {toUser.username} </div>
+                <div className="ms-5 text-[14px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
               </div>
               {item.type === "deleted" ?
-                <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
+                <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80 px-2 p-1">
                   This message was deleted.
                 </div> :
                 <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
-                  {item?.text}
+                  <Msg msg={item} />
                 </div>
               }
               {

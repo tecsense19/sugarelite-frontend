@@ -8,7 +8,7 @@ import Aos from 'aos';
 import Buttons from './Buttons';
 
 
-const Main = ({ user, currentUser, privateAlbumState, socket }) => {
+const Main = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIsModalOpen }) => {
 
     const profile = {
         appearance: [
@@ -49,7 +49,7 @@ const Main = ({ user, currentUser, privateAlbumState, socket }) => {
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
             <div className='hidden lg:flex items-center mt-[16px] mb-[40px] gap-[20px]'>
                 {
-                    <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} />
+                    <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                 }
             </div>
             <Profile_Photos title={"Public Photos"} list={images_filter("public")} />

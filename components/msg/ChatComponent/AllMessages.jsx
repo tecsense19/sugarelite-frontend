@@ -6,7 +6,7 @@ import { useStore } from '@/store/store';
 import Message from './Message';
 import TypingAnimation from '../TypingAnimation/TypingAnimation';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages }) => {
 
 	const msgRef = useRef(null)
 
@@ -105,9 +105,8 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 	}, [socket, toUser, currentUser.id]);
 
 
-
 	return (
-		<div className="h-[calc(100%-122px)] md:h-[calc(100%-211px)] flex flex-col justify-end ">
+		<div className={`h-[calc(100%-122px)]  ${sendingImages.length ? "md:h-[calc(100%-311px)]" : "md:h-[calc(100%-211px)]"} flex flex-col justify-end`}>
 			<div className="h-full w-full  p-4 md:py-5 md:px-10 overflow-hidden">
 				<div className="relative w-full  h-full flex flex-col justify-end">
 					<div ref={msgRef} className="flex flex-col-reverse overflow-y-auto scroll-smooth" onScroll={scrollerHandler} style={{ scrollbarWidth: "none" }}>
@@ -162,7 +161,6 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 
 				</div>
 			</div>
-
 		</div>
 	)
 }
