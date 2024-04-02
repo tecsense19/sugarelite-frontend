@@ -165,5 +165,6 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 }
 
 
+AllMessages.displayName = "AllMessages"
 
 export default React.memo(AllMessages)

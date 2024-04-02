@@ -216,4 +216,6 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     )
 }
 
+MessageInput.displayName = 'MessageInput';
+
 export default React.memo(MessageInput)
