@@ -99,4 +99,6 @@ const ImagesModal = ({ setSelctedImages, list }) => {
     )
 }
 
+ImagesModal.displayName = "ImagesModal"
+
 export default React.memo(ImagesModal)
