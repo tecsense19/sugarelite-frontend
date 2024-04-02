@@ -32,6 +32,7 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const navigate = useRouter()
     const { state: { userState, chatProfileState } } = useStore()
+    const [sendingImages, setSendingImages] = useState([])
 
     const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
 
@@ -53,14 +54,14 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
             <>
                 <div className="font-bold hidden h-dvh pt-0 md:pt-[66px] text-white md:flex">
                     <ProfileList profileList={profilesList} setToUser={setToUser} socket={socket} currentUser={currentUser} toUser={toUser} />
-                    <ChatComponent setToUser={setToUser} toUser={toUser} userChats={userChats} currentUser={currentUser} socket={socket} />
+                    <ChatComponent setToUser={setToUser} toUser={toUser} userChats={userChats} currentUser={currentUser} socket={socket} sendingImages={sendingImages} setSendingImages={setSendingImages} />
                 </div>
                 <div className="font-bold md:hidden h-dvh pt-0 md:pt-[66px] text-white flex">
                     {
                         !showMobileChatContent ?
                             <ProfileList profileList={profilesList} setToUser={setToUser} socket={socket} currentUser={currentUser} toUser={toUser} />
                             :
-                            <ChatComponent setToUser={setToUser} toUser={toUser} userChats={userChats} currentUser={currentUser} setShowMobileChatContent={setShowMobileChatContent} socket={socket} />
+                            <ChatComponent setToUser={setToUser} toUser={toUser} userChats={userChats} currentUser={currentUser} setShowMobileChatContent={setShowMobileChatContent} socket={socket} sendingImages={sendingImages} setSendingImages={setSendingImages} />
                     }
                 </div>
             </>

@@ -6,8 +6,7 @@ import { useStore } from "@/store/store"
 
 const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) => {
 
-    const [unReadCount, setUnReadCount] = useState(0)
-    const [unReadUsers, setUnreadUsers] = useState([])
+    const [unReadCount, setUnReadCount] = useState([])
     const [profiles, setProfiles] = useState(profileList)
 
     const { state: { chatProfileState }, dispatch } = useStore()
@@ -66,13 +65,18 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
                     dispatch({ type: "Add_Profile", payload: { obj: msg, type: "socket", user: user } });
                     dispatch({ type: "Add_Message", payload: msg })
                     if (toUser?.id !== msg.sender_id) {
-                        setUnReadCount((prev) => prev + 1);
-                        setUnreadUsers(prev => {
-                            if (prev.indexOf(msg.sender_id) === -1) {
-                                return [...prev, msg.sender_id];
+                        setUnReadCount(prevUnreadMsgs => {
+                            const updatedUnreadMsgs = [...prevUnreadMsgs];
+                            const existingIndex = updatedUnreadMsgs.findIndex(item => item.id === msg.sender_id);
+
+                            if (existingIndex !== -1) {
+                                updatedUnreadMsgs[existingIndex].count += 1;
+                            } else {
+                                updatedUnreadMsgs.push({ id: msg.sender_id, count: 1 });
                             }
-                            return prev;
-                        })
+
+                            return updatedUnreadMsgs;
+                        });
                     }
                 } else if (msg.type === "edited") {
                     dispatch({ type: "Edit_Message", payload: msg })
@@ -106,16 +110,18 @@ const ProfileList = ({ profileList, setToUser, socket, currentUser, toUser }) =>
     }, [socket, setUnReadCount, toUser]);
 
     useEffect(() => {
-        const arr = unReadUsers.filter((i) => i !== toUser.id)
-        setUnreadUsers(arr)
-        setUnReadCount(0)
+        setUnReadCount((prev) => {
+            const updatedUnreadMsgs = [...prev];
+            const existingIndex = updatedUnreadMsgs.filter(item => item.id !== toUser.id);
+            return existingIndex
+        })
     }, [toUser])
 
 
     return (
         <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[14px] md:py-[30px]'>
             <TopNav profileList={profiles} setToUser={setToUser} />
-            <Profiles profileList={profiles} setToUser={setToUser} unReadCount={unReadCount} unReadUsers={unReadUsers} />
+            <Profiles profileList={profiles} setToUser={setToUser} unReadCount={unReadCount} />
         </div>
     )
 }

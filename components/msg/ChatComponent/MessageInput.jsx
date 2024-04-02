@@ -11,6 +11,7 @@ import { notification } from 'antd';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import Link from 'next/link';
+import cross from "/public/assets/cross.svg"
 
 const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages }) => {
 
@@ -21,14 +22,31 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     const [isEmoji, setIsEmoji] = useState(false)
     const [isdisabled, setIsDisabled] = useState(false)
 
+    const getFormData = ({ sender_id, receiver_id, message, type, id }) => {
+        let formdata = new FormData
+        formdata.append("sender_id", sender_id)
+        formdata.append("receiver_id", receiver_id)
+        formdata.append("message", message)
+        formdata.append("id", id)
+        formdata.append("type", type)
+        sendingImages.forEach((image, index) => {
+            formdata.append(`chat_images[]`, image.file);
+        });
+        if (editingMsg) {
+            const data = editingMsg?.images.filter(i => !sendingImages.some(j => i.id === j.id)).map(z => z.id).toString()
+            formdata.append("remove_chatimages", data)
+        }
+        return formdata
+    }
+
 
     const sendMessageHandler = async ({ message, photo }) => {
         setIsEmoji(false)
-        message = message.trim(' ')
-        if (message.length && currentUser && toUser && !editingMsg) {
+        message = message?.trim(' ')
+        if ((message?.length || sendingImages.length) && currentUser && toUser && !editingMsg) {
             reset()
             setIsDisabled(true)
-            let obj = { sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "regular" }
+            let obj = getFormData({ sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "regular" })
             const res = await send_message_action(obj)
             if (res.success) {
                 setIsDisabled(false)
@@ -37,10 +55,11 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
             } else {
                 client_notification(api, "topRight", "error", res?.message, 5)
             }
+            setSendingImages([])
         }
-        if (message.length && currentUser && toUser && editingMsg) {
+        if ((message?.length || sendingImages.length) && currentUser && toUser && editingMsg) {
             reset()
-            let obj = { sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id }
+            let obj = getFormData({ sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id })
             const res = await send_message_action(obj)
             if (res.success) {
                 setIsDisabled(false)
@@ -49,6 +68,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
             } else {
                 client_notification(api, "topRight", "error", res?.message, 5)
             }
+            setSendingImages([])
         }
 
     }
@@ -70,6 +90,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     useEffect(() => {
         if (editingMsg) {
             setValue('message', editingMsg.message)
+            setSendingImages(editingMsg.images)
         } else {
             reset()
         }
@@ -96,7 +117,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     }, [])
 
 
-    const Attachment = () => {
+    const Attachment = React.memo(() => {
 
         const getBase64 = (file) =>
             new Promise((resolve, reject) => {
@@ -138,24 +159,26 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
                 </label>
             </>
         )
-    }
+    })
 
     return (
         <>
 
             <div className="w-full flex flex-col px-4 pb-[18px] md:px-10 md:pb-10 relative ">
                 {contextHolder}
-                {sendingImages.length ?
-                    <div className='h-[100px] rounded-t-[5px] bg-black w-full flex items-center px-2 gap-2'>
-                        {
-                            sendingImages.map((i, inx) => {
-                                return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] '>
-                                    <Image src={i.photo_url} alt='photo' width={1000} height={1000} className='object-contain h-20 w-20' />
+                <div className={`h-[100px] rounded-t-[5px] bg-black w-full flex items-center px-2 gap-2 ${sendingImages.length ? "flex" : "hidden"}`}>
+                    {
+                        sendingImages.map((i, inx) => {
+                            return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] relative'>
+                                <Image src={i?.photo_url ? i?.photo_url : i.chat_images} alt='photo' width={1000} height={1000} className='object-contain h-20 w-20 min-w-20 min-h-20' />
+                                <div className='absolute bg-secondary h-[14px] w-[14px] flex justify-center -top-[6px] -right-2 rounded-full cursor-pointer'
+                                    onClick={() => setSendingImages(prev => prev.filter(j => (j.name !== i.name || j.id !== i.id)))}>
+                                    <Image src={cross} alt='photo' width={7} height={7} className='' />
                                 </div>
-                            })
-                        }
-                    </div> : <></>
-                }
+                            </div>
+                        })
+                    }
+                </div>
                 {
                     (currentUser.is_subscribe || todayMsgs < 3) ?
                         <div className={`w-full h-12 md:h-[70px] bg-black flex items-center ps-3 md:ps-[30px] relative ${sendingImages.length ? "border-t border-primary rounded-b-[5px]" : " rounded-[5px]"}`}>
@@ -193,4 +216,4 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     )
 }
 
-export default MessageInput
+export default React.memo(MessageInput)

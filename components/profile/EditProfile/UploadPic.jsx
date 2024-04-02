@@ -3,7 +3,7 @@ import { Button, ConfigProvider, Popconfirm } from 'antd'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
-import cross from "../../../public/assets/cross.svg"
+import cross from "/public/assets/cross.svg"
 
 const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalArray, progress }) => {
 

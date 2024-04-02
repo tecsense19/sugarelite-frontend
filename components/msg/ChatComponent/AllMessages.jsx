@@ -6,7 +6,7 @@ import { useStore } from '@/store/store';
 import Message from './Message';
 import TypingAnimation from '../TypingAnimation/TypingAnimation';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages }) => {
 
 	const msgRef = useRef(null)
 
@@ -104,9 +104,8 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 		};
 	}, [socket, toUser, currentUser.id]);
 
-
 	return (
-		<div className={`h-[calc(100%-122px)]  ${sendingImages.length ? "md:h-[calc(100%-311px)]" : "md:h-[calc(100%-211px)]"} flex flex-col justify-end`}>
+		<div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-311px)]" : "md:h-[calc(100%-211px)] h-[calc(100%-122px)]"} flex flex-col justify-end`}>
 			<div className="h-full w-full  p-4 md:py-5 md:px-10 overflow-hidden">
 				<div className="relative w-full  h-full flex flex-col justify-end">
 					<div ref={msgRef} className="flex flex-col-reverse overflow-y-auto scroll-smooth" onScroll={scrollerHandler} style={{ scrollbarWidth: "none" }}>
@@ -121,7 +120,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 											</div>
 										}
 										<div className={`flex my-[2px] ${currentUser.id === item.sender_id ? "justify-end" : "justify-start"}`}>
-											<Message user={currentUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} containerElement={msgRef} item={item} messages={chats} idx={idx} toUser={toUser} setEditingMsg={setEditingMsg} socket={socket} />
+											<Message user={currentUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} containerElement={msgRef} item={item} messages={chats} idx={idx} toUser={toUser} setEditingMsg={setEditingMsg} socket={socket} setSelectedImages={setSelectedImages} />
 										</div>
 									</div>
 								)
@@ -138,7 +137,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 													</div>
 												}
 												<div className={`flex my-[2px] ${currentUser.id === item.sender_id ? "justify-end" : "justify-start"}`}>
-													<Message user={currentUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} containerElement={msgRef} item={item} messages={[chats[chats.length - 1], ...newMsgState]} idx={idx + 1} toUser={toUser} setEditingMsg={setEditingMsg} socket={socket} />
+													<Message user={currentUser} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} containerElement={msgRef} item={item} messages={[chats[chats.length - 1], ...newMsgState]} idx={idx + 1} toUser={toUser} setEditingMsg={setEditingMsg} socket={socket} setSelectedImages={setSelectedImages} />
 												</div>
 											</div>
 										)
@@ -165,4 +164,4 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 	)
 }
 
-export default AllMessages
+export default React.memo(AllMessages)

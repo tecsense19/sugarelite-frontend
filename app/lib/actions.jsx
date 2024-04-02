@@ -126,12 +126,16 @@ export const chat_list_action = async () => {
 }
 
 export const send_message_action = async (form) => {
+    // const res = await fetch(server_routes.sendMessage, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(form)
+    // })
     const res = await fetch(server_routes.sendMessage, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form)
+        body: form
     })
     const data = await res.json()
     return data

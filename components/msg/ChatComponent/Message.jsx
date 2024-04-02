@@ -8,9 +8,44 @@ import penIcon from "/public/assets/pen.svg";
 import { send_message_action } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
 import { client_routes } from '@/app/lib/helpers';
-import Link from 'next/link';
+import NO_Pitcure from "/public/assets/no_image.svg"
 
-const Message = ({ user, item, messages, idx, containerElement, toUser, setEditingMsg, socket, setShowMobileProfile, setDrawerOpen }) => {
+
+const Msg = React.memo(({ msg, setSelectedImages }) => {
+  if (msg.get_all_chat_with_image?.length) {
+    return (
+      <div className=' flex flex-col gap-2 w-full'>
+        {/* <p className=''>{msg.text}</p> */}
+        <div className={`overflow-hidden relative flex gap-1 flex-wrap cursor-pointer ${msg.get_all_chat_with_image.length === 2 ? "h-[6rem] w-[12rem]" : "w-[12rem] h-[12rem]"}`} onClick={() => setSelectedImages(msg.get_all_chat_with_image)}>
+          {
+            msg.get_all_chat_with_image.map((i, inx) => {
+              return (
+                <React.Fragment key={inx} >
+                  <Image
+                    width={1000} height={1000} src={i.chat_images} alt="phot"
+                    className={` rounded-md bg-primary-dark-4 object-cover ${msg.get_all_chat_with_image.length === 1 ? "h-full w-full" : msg.get_all_chat_with_image.length === 2 ? "h-full w-[calc(6rem-2px)]" : "h-[calc(50%-2px)] w-[calc(6rem-2px)]"} `} />
+                  {inx > 3 &&
+                    <p className='absolute bottom-0 h-[calc(50%-2px)] text-white flex justify-center items-center w-[calc(50%-2px)] right-0 bg-primary-dark/40 rounded-md'>+ {msg.get_all_chat_with_image.length - 4}</p>
+                  }
+                  {
+                    msg.get_all_chat_with_image.length === 3 &&
+                    <div className='absolute bottom-0 h-[calc(50%-2px)] text-white text-sm font-light flex justify-center items-center w-[calc(50%-2px)] right-0  rounded-md'>
+                      <Image src={NO_Pitcure} width={1000} height={1000} alt='no image' className='w-full h-full' />
+                    </div>
+                  }
+                </React.Fragment>
+              )
+            })
+          }
+        </div>
+      </div>
+    )
+  } else {
+    return <p className='px-2 pb-1'>{msg?.text}</p>
+  }
+})
+
+const Message = ({ user, item, messages, idx, containerElement, toUser, setEditingMsg, socket, setShowMobileProfile, setDrawerOpen, setSelectedImages }) => {
 
   const [showOptions, setShowOptions] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -62,13 +97,22 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
     return formattedTime;
   }
 
+  const getFormData = ({ sender_id, receiver_id, type, id }) => {
+    let formdata = new FormData
+    formdata.append("sender_id", sender_id)
+    formdata.append("receiver_id", receiver_id)
+    formdata.append("id", id)
+    formdata.append("type", type)
+    return formdata
+  }
+
   const msgDeleteHandler = async () => {
     setIsLoading(true)
     setEditingMsg(null)
-    let obj = { sender_id: item.sender_id, receiver_id: item.receiver_id, type: "deleted", id: item.id }
+    let obj = getFormData({ sender_id: item.sender_id, receiver_id: item.receiver_id, type: "deleted", id: item.id })
     const res = await send_message_action(obj)
     if (res.success) {
-      socket.emit("delete-message", obj)
+      socket.emit("delete-message", { sender_id: item.sender_id, receiver_id: item.receiver_id, type: "deleted", id: item.id })
     }
     setShowOptions(false)
     setIsLoading(false)
@@ -76,7 +120,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
 
   const msgEditHandler = () => {
     setShowOptions(false)
-    setEditingMsg({ message: item.text, id: item.id })
+    setEditingMsg({ message: item.text, id: item.id, images: item.get_all_chat_with_image })
   }
 
   const onProfileClick = () => {
@@ -87,35 +131,6 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
       navigate.push(`${client_routes.profile}/${toUser.id}`)
     }
   }
-
-  const Msg = ({ msg }) => {
-    if (msg.get_all_chat_with_image?.length) {
-      return (
-        <div className=' flex flex-col gap-2 w-full'>
-          {/* <p className=''>{msg.text}</p> */}
-          <div className={`overflow-hidden relative flex gap-1 flex-wrap ${msg.get_all_chat_with_image.length === 2 ? "h-[6rem] w-[12rem]" : "w-[12rem] h-[12rem]"}`}>
-            {
-              msg.get_all_chat_with_image.map((i, inx) => {
-                return (
-                  <React.Fragment key={inx}>
-                    <Image
-                      width={1000} height={1000} src={i.chat_images} alt="phot"
-                      className={` rounded-md bg-primary-dark-4 object-cover ${msg.get_all_chat_with_image.length === 1 ? "h-full w-full" : msg.get_all_chat_with_image.length === 2 ? "h-full w-[calc(6rem-2px)]" : "h-[calc(50%-2px)] w-[calc(6rem-2px)]"} `} />
-                    {inx > 3 &&
-                      <p className='absolute bottom-0 h-[calc(50%-2px)] text-white flex justify-center items-center w-[calc(50%-2px)] right-0 bg-primary-dark/40 rounded-md'>+ {msg.get_all_chat_with_image.length - 4}</p>
-                    }
-                  </React.Fragment>
-                )
-              })
-            }
-          </div>
-        </div>
-      )
-    } else {
-      return <p className='px-2 pb-1'>{msg?.text}</p>
-    }
-  }
-
   return (
     <>
       {
@@ -178,7 +193,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
               </div>
               <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
                 {
-                  item.type === "deleted" ? <span className='px-2 mb-3'>You deleted this message.</span> : <Msg msg={item} />
+                  item.type === "deleted" ? <p className='px-2 pb-1'>You deleted this message.</p> : <Msg msg={item} setSelectedImages={setSelectedImages} />
                 }
               </div>
               {
@@ -270,7 +285,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
                   This message was deleted.
                 </div> :
                 <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
-                  <Msg msg={item} />
+                  <Msg msg={item} setSelectedImages={setSelectedImages} />
                 </div>
               }
               {
@@ -285,4 +300,4 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
   )
 }
 
-export default Message
+export default React.memo(Message)

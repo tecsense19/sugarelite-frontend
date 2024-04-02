@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react'
 
-const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) => {
+const UserComponent = ({ user, setToUser, message, unReadCount }) => {
 
 
     const getTime = (timeStamp) => {
@@ -42,14 +42,14 @@ const UserComponent = ({ user, setToUser, message, unReadCount, unReadUsers }) =
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{user.username}</p>
-                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">{message.type === "deleted" ? "message deleted" : message?.text || ''}</p>
+                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">{message.type === "deleted" ? "message deleted" : message?.text || `${message.get_all_chat_with_image.length} Images ${message.sender_id !== user.id ? "sended" : "received"}`}</p>
                 </div>
             </div>
             <div className="flex flex-col items-end min-w-fit">
                 <p className="italic text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mb-[8px]">{message && getTime(message.updated_at)}</p>
                 {
-                    unReadCount && unReadUsers.includes(user.id) ? (
-                        <p className="h-[20px] w-[20px] bg-green-active text-white text-[14px] font-medium leading-[20px] rounded-full flex justify-center items-center">{unReadCount}</p>
+                    unReadCount.find((ele) => ele.id === user.id) ? (
+                        <p className="h-[20px] w-[20px] bg-green-active text-white text-[14px] font-medium leading-[20px] rounded-full flex justify-center items-center">{unReadCount.find((ele) => ele.id === user.id).count}</p>
                     ) : <></>
                 }
             </div>
