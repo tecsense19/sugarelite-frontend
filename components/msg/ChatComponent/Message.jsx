@@ -93,14 +93,14 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
       return (
         <div className=' flex flex-col gap-2 w-full'>
           {/* <p className=''>{msg.text}</p> */}
-          <div className={`overflow-hidden w-[12rem] h-[12rem] relative flex gap-1 flex-wrap ${msg.get_all_chat_with_image.length === 2 ? "flex-col" : ""}`}>
+          <div className={`overflow-hidden relative flex gap-1 flex-wrap ${msg.get_all_chat_with_image.length === 2 ? "h-[6rem] w-[12rem]" : "w-[12rem] h-[12rem]"}`}>
             {
               msg.get_all_chat_with_image.map((i, inx) => {
                 return (
                   <React.Fragment key={inx}>
                     <Image
                       width={1000} height={1000} src={i.chat_images} alt="phot"
-                      className={` rounded-md bg-primary-dark-4 object-cover ${msg.get_all_chat_with_image.length === 1 ? "h-full w-full" : "h-[calc(50%-2px)] w-[calc(6rem-2px)]"} `} />
+                      className={` rounded-md bg-primary-dark-4 object-cover ${msg.get_all_chat_with_image.length === 1 ? "h-full w-full" : msg.get_all_chat_with_image.length === 2 ? "h-full w-[calc(6rem-2px)]" : "h-[calc(50%-2px)] w-[calc(6rem-2px)]"} `} />
                     {inx > 3 &&
                       <p className='absolute bottom-0 h-[calc(50%-2px)] text-white flex justify-center items-center w-[calc(50%-2px)] right-0 bg-primary-dark/40 rounded-md'>+ {msg.get_all_chat_with_image.length - 4}</p>
                     }
