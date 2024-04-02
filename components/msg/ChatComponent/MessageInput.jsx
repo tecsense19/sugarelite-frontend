@@ -117,7 +117,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     }, [])
 
 
-    const Attachment = React.memo(() => {
+    const Attachment = (() => {
 
         const getBase64 = (file) =>
             new Promise((resolve, reject) => {
