@@ -12,7 +12,7 @@ import { client_routes } from '@/app/lib/helpers';
 import NO_Pitcure from "/public/assets/no_image.svg"
 
 
-const Msg = React.memo(function Msg({ msg, setSelectedImages }) {
+const Msg = ({ msg, setSelectedImages }) => {
   if (msg.get_all_chat_with_image?.length) {
     return (
       <div className=' flex flex-col gap-2 w-full'>
@@ -45,9 +45,9 @@ const Msg = React.memo(function Msg({ msg, setSelectedImages }) {
   } else {
     return <p className='px-2 pb-1'>{msg?.text}</p>
   }
-})
+}
 
-Msg.displayName = 'Msg';
+
 
 const Message = ({ user, item, messages, idx, containerElement, toUser, setEditingMsg, socket, setShowMobileProfile, setDrawerOpen, setSelectedImages }) => {
 
