@@ -42,7 +42,7 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{user.username}</p>
-                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">{message.type === "deleted" ? "message deleted" : message?.text || `${message.get_all_chat_with_image.length} Images ${message.sender_id !== user.id ? "sended" : "received"}`}</p>
+                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">{message.type === "deleted" ? "message deleted" : message?.text || `${message?.get_all_chat_with_image?.length} Images ${message.sender_id !== user.id ? "sended" : "received"}`}</p>
                 </div>
             </div>
             <div className="flex flex-col items-end min-w-fit">

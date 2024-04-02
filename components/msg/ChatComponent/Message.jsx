@@ -1,3 +1,4 @@
+"use client"
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import optionsIcon from "/public/assets/chat_options_icon.svg";
@@ -299,5 +300,7 @@ const Message = ({ user, item, messages, idx, containerElement, toUser, setEditi
     </>
   )
 }
+
+Message.displayName = 'Message';
 
 export default React.memo(Message)
