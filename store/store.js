@@ -128,13 +128,22 @@ const newMsgReducer = (state, action) => {
   switch (action.type) {
     case 'Add_Message':
       const newMsg = action.payload;
-      const existingMsgIndex = state.findIndex(msg => msg.id === newMsg.id);
-      if (existingMsgIndex !== -1) {
-        const updatedState = [...state];
-        updatedState[existingMsgIndex] = newMsg;
-        return updatedState;
+      if (newMsg.id) {
+        const existingMsgIndex = state.findIndex(msg => msg.id === newMsg.id);
+        if (existingMsgIndex !== -1) {
+          const updatedState = state.filter((_, index) => index !== existingMsgIndex);
+          return [...updatedState, newMsg];
+        } else {
+          return [...state, newMsg];
+        }
       } else {
-        return [...state, newMsg];
+        const existingMsgIndex = state.findIndex(msg => msg.receiver_id === newMsg.receiver_id);
+        if (existingMsgIndex !== -1) {
+          const updatedState = state.filter((_, index) => index !== existingMsgIndex);
+          return [...updatedState, newMsg];
+        } else {
+          return [...state, newMsg];
+        }
       }
     default:
       return state;
@@ -199,26 +208,26 @@ const editOrDeleteReducer = (state, action) => {
 const blockedUsers = (state, action) => {
   switch (action.type) {
     case 'Add_Blocked_User':
-      if (state.some(profile => profile.id === action.payload.id)) {
-        return state;
+      const newUser = action.payload;
+      const existingMsgIndex = state.findIndex(msg => msg.receiver_id === newUser.receiver_id);
+      if (existingMsgIndex !== -1) {
+        const updatedState = [...state];
+        updatedState[existingMsgIndex] = newUser;
+        return updatedState;
       } else {
         return [...state, action.payload];
       }
-    case 'Remove_Blocked_User':
-      return state.filter(profile => profile.id !== action.payload.id);
     default:
       return state;
   }
 }
 
-const existedBlockers = (state, action) => {
+const notifyReducer = (state, action) => {
   switch (action.type) {
-    case 'Remove_Existed_Blocked_User':
-      if (state.some(profile => profile.id === action.payload.id)) {
-        return state;
-      } else {
-        return [...state, action.payload];
-      }
+    case "Add_Msg_Badge":
+      return { ...state, msg: action.payload }
+    case "Add_Notification_Badge":
+      return { ...state, notify: action.payload }
     default:
       return state;
   }
@@ -227,7 +236,7 @@ const existedBlockers = (state, action) => {
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, existedUnblockState, accessPendingState, decisionState, chatProfileState }, action) => ({
+const rootReducer = ({ firstState, filterState, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState }, action) => ({
   firstState: reducer(firstState, action),
   filterState: filterReducer(filterState, action),
   userState: currentUserReducer(userState, action),
@@ -240,8 +249,8 @@ const rootReducer = ({ firstState, filterState, userState, toMessageState, allUs
   chatProfileState: chatProfileReducer(chatProfileState, action),
   newMsgState: newMsgReducer(newMsgState, action),
   blockedUsersState: blockedUsers(blockedUsersState, action),
-  existedUnblockState: existedBlockers(existedUnblockState, action),
-  messageUpdate: editOrDeleteReducer(messageUpdate, action)
+  messageUpdate: editOrDeleteReducer(messageUpdate, action),
+  notifyBadgeState: notifyReducer(notifyBadgeState, action)
 });
 
 
@@ -271,8 +280,8 @@ export const StoreProvider = ({ children }) => {
     chatProfileState: [],
     newMsgState: [],
     blockedUsersState: [],
-    existedUnblockState: [],
-    messageUpdate: []
+    messageUpdate: [],
+    notifyBadgeState: { msg: false, notify: false }
   });
 
   return (

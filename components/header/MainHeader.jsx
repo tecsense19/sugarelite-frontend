@@ -7,7 +7,7 @@ import notification from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { useStore } from "@/store/store"
-import { logout_user, private_album_notification } from "@/app/lib/actions"
+import { logout_user, private_album_notification, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
 import { useEffect, useState } from "react"
@@ -36,12 +36,13 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
   const router = useRouter()
   const socket = useSocket()
 
-  const { state: { userState, notificationOpenState }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState, blockedUsersState, notifyBadgeState }, dispatch } = useStore()
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
   const [notifications, setNotifications] = useState([])
+  const [isNotify, setIsnotify] = useState(true)
 
   useEffect(() => {
     setUser(userState ? userState : decryptedUser)
@@ -61,6 +62,17 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (decryptedUser) {
+      const blockList = allUsers.find(i => i.id === decryptedUser.id)?.is_blocked_users
+      if (blockList?.length) {
+        blockList.forEach(i => {
+          i = { ...i, is_blocked: 1 }
+          dispatch({ type: "Add_Blocked_User", payload: i })
+        })
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (!socket) return
@@ -73,22 +85,33 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
 
     const unblockUserHandler = (obj) => {
       if (obj.sender_id === user.id || obj.receiver_id === user.id) {
-        dispatch({ type: "Remove_Blocked_User", payload: obj })
+        dispatch({ type: "Add_Blocked_User", payload: obj })
       }
     };
 
     const albumAccessHandler = (obj) => {
       dispatch({ type: "Add_Decision_User", payload: obj })
+      if (obj.data.receiver_id === decryptedUser.id) {
+        console.log(isNotify)
+      }
+    }
+
+    const receiveMessageHandler = (obj) => {
+      if (obj.receiver_id === user.id && pathname !== client_routes.chat) {
+        dispatch({ type: "Add_Msg_Badge", payload: true })
+      }
     }
 
     socket.on("blocked-status", blockUserHandler);
     socket.on("unblocked-status", unblockUserHandler);
+    socket.on("receive-message", receiveMessageHandler);
     socket.on("album-notification", albumAccessHandler)
 
     return () => {
       if (socket) {
         socket.off("blocked-status", blockUserHandler);
         socket.off("album-notification", albumAccessHandler)
+        socket.off("receive-message", receiveMessageHandler);
         socket.disconnect()
       }
     };
@@ -123,11 +146,17 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
           </div>
           <div className="flex items-center me-[72px]">
             <div className="flex flex-row gap-x-[30px] me-[35px]">
-              <button className="transition-all duration-150 hover:scale-110" onClick={() => setIsDrawerOpen(isDrawerOpen ? false : true)}>
+              <button className="transition-all duration-150 hover:scale-110 relative" onClick={() => setIsDrawerOpen(isDrawerOpen ? false : true)}>
                 <Image height={20} width={20} src={notification} alt="" />
+                {notifyBadgeState.notify &&
+                  <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute top-0 right-0 "></p>
+                }
               </button>
-              <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110">
+              <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110 relative">
                 <Image height={20} width={20} src={messages} alt="" className="" />
+                {notifyBadgeState.msg &&
+                  <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute top-0 -right-1"></p>
+                }
               </Link>
               <Link href={client_routes.search} className="py-[7px] rounded-[5px] h-[32px] flex items-center transition-all duration-150 hover:scale-110">
                 <Image height={18} width={18} src={search} className="" alt="" priority />
@@ -148,7 +177,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
         </div>
       </header>
       {
-        user && <Notification open={isDrawerOpen || notificationOpenState} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
+        user && <Notification open={isDrawerOpen || notificationOpenState} setIsnotify={setIsnotify} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
       }
     </>
   )

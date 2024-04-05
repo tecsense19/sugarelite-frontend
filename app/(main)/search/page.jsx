@@ -9,18 +9,12 @@ const Search = async () => {
   const current_user = decrypt_user()
 
   const users = all_users.data.filter((i) => i.id !== current_user?.id)
-  const myBlockList = all_users.data.filter((i) => i.id === current_user?.id)[0].is_blocked_users.map((i) => i?.user_id)
 
-  const filteredUsers = users.filter(user => {
-    if (user.id && Array.isArray(user.is_blocked_users)) {
-      return user.is_blocked_users.some(blockedUser => blockedUser.user_id === current_user.id);
-    }
-  }).map((i) => i?.id);
   return (
     <Suspense fallback={<Loader />}>
       {
         (all_users.success)
-          ? <Search_Index allUsers={users} blockList={[...myBlockList, ...filteredUsers]} />
+          ? <Search_Index allUsers={users} />
           : <div>No data found</div>
       }
     </Suspense>

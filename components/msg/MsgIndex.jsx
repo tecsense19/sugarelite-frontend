@@ -24,7 +24,7 @@ const useSocket = () => {
     return socket;
 };
 
-const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
+const MsgIndex = ({ profilesList, decryptedUser, userChats, allUsers }) => {
 
     const socket = useSocket()
 
@@ -48,6 +48,10 @@ const MsgIndex = ({ profilesList, decryptedUser, userChats }) => {
             setShowMobileChatContent(true)
         }
     }, [toUser])
+
+    useEffect(() => {
+        console.log(allUsers)
+    }, [allUsers])
 
     if (profilesList.length || chatProfileState.length) {
         return (

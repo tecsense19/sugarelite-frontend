@@ -9,6 +9,7 @@ export const client_routes = {
   profile_id: "profile/:id",
   discover: "/discover",
   chat: "/chat",
+  message: "/message",
   disclaimer: "/disclaimer",
   privacyPolicy: "/privacy-policy",
   termsOfUse: "/terms-of-use",

@@ -11,10 +11,10 @@ import { useRouter } from "next/navigation"
 import { client_routes } from "@/app/lib/helpers"
 import { Controller, useForm } from "react-hook-form"
 
-const Search_Index = ({ allUsers, blockList }) => {
+const Search_Index = ({ allUsers }) => {
 
     const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
-    const [users, setUsers] = useState(allUsers.filter((user) => !blockList.includes(user.id)))
+    const [users, setUsers] = useState([])
     const { register, handleSubmit, control, watch, setValue } = useForm()
     const [dummyUsers, setDummyUsers] = useState();
 
@@ -28,22 +28,21 @@ const Search_Index = ({ allUsers, blockList }) => {
         }
     }
 
-
     useEffect(() => {
-        const blocked = allUsers.filter((user) => !blockList.includes(user.id))
-        if (blockedUsersState.length) {
-            if (blockedUsersState.some(i => i.sender_id === userState.id)) {
-                const blockList = blockedUsersState.map((i) => i.receiver_id)
-                const arr = blocked.filter((i) => !blockList.includes(i.id))
-                setUsers(arr)
-            } else if (blockedUsersState.some(i => i.receiver_id === userState.id)) {
-                const blockList = blockedUsersState.map((i) => i.sender_id)
-                const arr = blocked.filter((i) => !blockList.includes(i.id))
-                setUsers(arr)
+        const blockList = blockedUsersState.filter((i) => i.is_blocked === 1)
+        const otherIDsSet = new Set();
+
+        blockList.forEach(message => {
+            if (message.sender_id !== userState.id) {
+                otherIDsSet.add(message.sender_id);
             }
-        } else {
-            setUsers(allUsers.filter((user) => !blockList.includes(user.id)))
-        }
+            if (message.receiver_id !== userState.id) {
+                otherIDsSet.add(message.receiver_id);
+            }
+        });
+
+        const otherIDs = Array.from(otherIDsSet);
+        setUsers(allUsers.filter((i) => !otherIDs.some(j => j == i.id)))
     }, [blockedUsersState])
 
     const handleResize = () => {

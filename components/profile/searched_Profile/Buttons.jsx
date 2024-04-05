@@ -25,7 +25,8 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, se
                 client_notification(api, "topRight", "success", res?.message, 4)
             }
         } else {
-            dispatch({ type: "Add_Profile", payload: { obj: { id: 1, sender_id: currentUser?.id, receiver_id: user.id, text: `You started Chat with ${user.username}`, updated_at: new Date() }, type: "normal", user: user } })
+            // dispatch({ type: "Add_Profile", payload: { obj: { id: 1, sender_id: currentUser?.id, receiver_id: user.id, text: `You started Chat with ${user.username}`, updated_at: new Date() }, type: "normal", user: user } })
+            dispatch({ type: "Add_Message", payload: { sender_id: currentUser?.id, receiver_id: user.id, updated_at: new Date(), milisecondtime: new Date().getTime(), user: user } })
             navigate.push(client_routes.chat)
         }
     }

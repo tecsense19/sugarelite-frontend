@@ -1,7 +1,5 @@
 import { all_profiles_action, chat_list_action, decrypt_user } from "@/app/lib/actions";
-import Loader from "@/components/common/Loader";
-import MsgIndex from "@/components/msg/MsgIndex";
-import { Suspense } from "react";
+import Index from "@/components/NewMessage/Index";
 
 const Chat = async () => {
     const currentUser = decrypt_user();
@@ -15,21 +13,25 @@ const Chat = async () => {
     const users = allUsers.data.filter(user => parseInt(user.id) !== currentUser?.id);
     const user_chats = chatList.data.filter(chat => chat.sender_id === currentUser?.id || chat.receiver_id === currentUser?.id);
 
-    const allUserIds = Array.from(new Set([
-        ...user_chats.map(chat => chat.sender_id !== currentUser?.id ? chat.sender_id : chat.receiver_id)
-    ]));
+    const myChattedProfiles = Array.from(new Set(user_chats.map(chat => chat.sender_id !== currentUser.id ? chat.sender_id : chat.receiver_id)));
 
-    const tempList = allUserIds.map(id => {
-        const userChats = user_chats.filter(chat => chat.sender_id === id || chat.receiver_id === id);
-        const latestMsg = userChats.reduce((latest, current) => latest.id > current.id ? latest : current, {});
-        const user = users.find(u => u.id === id);
-        return { user, latestMsg };
-    }).sort((a, b) => b.latestMsg.id - a.latestMsg.id);
+    const myChatsWithProfiles = myChattedProfiles.map(profileID => {
+        const profile = users.find(user => user.id === profileID);
+        const conversation = user_chats.filter(chat => chat.sender_id === profileID || chat.receiver_id === profileID);
+        conversation.sort((a, b) => a.id - b.id);
+        return {
+            profile,
+            messages: conversation
+        };
+    });
 
-    return <Suspense fallback={<Loader />}>
-        <MsgIndex decryptedUser={currentUser} profilesList={tempList} userChats={user_chats} />
+    myChatsWithProfiles.sort((a, b) => {
+        const latestMessageIDA = a.messages.length > 0 ? a.messages[a.messages.length - 1].id : 0;
+        const latestMessageIDB = b.messages.length > 0 ? b.messages[b.messages.length - 1].id : 0;
+        return latestMessageIDB - latestMessageIDA;
+    });
 
-    </Suspense>
+    return <Index decryptedUser={currentUser} profilesList={myChatsWithProfiles} allUsers={users} myChats={user_chats} />
 };
 
 export default Chat;

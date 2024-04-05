@@ -6,52 +6,37 @@ import { block_user_action } from '@/app/lib/actions'
 import { notification } from 'antd'
 import { client_notification } from '@/app/lib/helpers'
 
-const BlockList = ({ setProfileToggle, type, allUsers, blockList, socket }) => {
+const BlockList = ({ setProfileToggle, type, allUsers, socket }) => {
 
 	const [data, setData] = useState([])
-	const { state: { userState, blockedUsersState, existedUnblockState }, dispatch } = useStore()
+	const { state: { userState, blockedUsersState, }, dispatch } = useStore()
 	const [api, contextHolder] = notification.useNotification()
 	const [isLoading, setIsLoading] = useState([])
 
-	console.log("blockedUsersState  ::", blockedUsersState)
-
 	useEffect(() => {
-		const matchedProfiles = allUsers.filter(user1 => blockList.some(user2 => user2.user_id === user1.id))
-		const arr = matchedProfiles.filter((i) => !existedUnblockState.some((j) => i.id === j.receiver_id))
+		const arr = allUsers.filter((i) => blockedUsersState.some(j => (j.receiver_id === i.id && j.sender_id === userState.id && j.is_blocked === 1)))
 		setData(arr)
-	}, [blockList, allUsers, existedUnblockState])
-
-
-	useEffect(() => {
-		if (blockedUsersState.length) {
-			setData(prevData => Array.from(new Set([...allUsers.filter(user1 => blockedUsersState.some(user2 => user2.receiver_id === user1.id)), ...prevData])))
-		}
-	}, [blockedUsersState, allUsers])
-
+	}, [blockedUsersState])
 
 	const handleSubmit = async (id) => {
 		const res = await block_user_action({ sender_id: userState?.id, receiver_id: id, is_blocked: 0 })
 		if (res.success) {
-			const arr = data.filter((i) => i.id !== id)
-			setData(arr)
 			client_notification(api, "topRight", "success", res.message, 4)
 			socket.emit("user-unblocked", res.data)
-			dispatch({ type: "Remove_Existed_Blocked_User", payload: res.data })
 		}
 		setIsLoading(isLoading.filter(ele => ele !== id))
 	}
 
 	const getDateOfAccess = useMemo(() => (id) => {
-		const user = blockList.find(i => i.user_id === id)
 		const blockedUser = blockedUsersState.find(i => i.receiver_id === id)
 
-		const dataToCheck = user ? user.time : blockedUser ? blockedUser.updated_at : null;
+		const dataToCheck = blockedUser.time || blockedUser.updated_at
 		if (dataToCheck) {
 			const time = new Date(dataToCheck)
 			return `${time.getDate()}-${time.getMonth() + 1}-${time.getFullYear()}`
 		}
 		return "";
-	}, [blockList, blockedUsersState]);
+	}, [blockedUsersState]);
 
 
 	return (

@@ -41,7 +41,7 @@ const ProfileIndex = ({ decryptedUser, allUsers, accessList }) => {
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full">
             <SideContent decryptedUser={user} setProfileToggle={setProfileToggle} />
             {
-                !profileToggle ? <ProfileMainContent decryptedUser={user} /> : profileToggle === "photo" ? <AlbumAccessList albumAccessList={accessList.allow_privateImage_access_users} user={user} type={profileToggle} allUsers={allUsers} setProfileToggle={setProfileToggle} socket={socket} /> : <BlockList type={profileToggle} setProfileToggle={setProfileToggle} user={user} blockList={accessList.is_blocked_users} allUsers={allUsers} socket={socket} />
+                !profileToggle ? <ProfileMainContent decryptedUser={user} /> : profileToggle === "photo" ? <AlbumAccessList albumAccessList={accessList.allow_privateImage_access_users} user={user} type={profileToggle} allUsers={allUsers} setProfileToggle={setProfileToggle} socket={socket} /> : <BlockList type={profileToggle} setProfileToggle={setProfileToggle} user={user} allUsers={allUsers} socket={socket} />
             }
         </main>
     )
