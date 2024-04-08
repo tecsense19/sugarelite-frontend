@@ -1,18 +1,22 @@
-import { ConfigProvider, Popover } from "antd";
-import { useState } from "react";
+import { ConfigProvider, Popover, notification } from "antd";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import reportIcon from "/public/assets/chat_report_icon.svg";
 import blockIcon from "/public/assets/chat_block_icon.svg";
 import optionsIcon from "/public/assets/chat_options_icon.svg";
 import arrowLeft from "/public/assets/arrow_left.svg";
 import { useRouter } from "next/navigation";
-import { client_routes } from "@/app/lib/helpers";
+import { client_notification, client_routes } from "@/app/lib/helpers";
 import ReportModal from "@/components/profile/searched_Profile/ReportModal";
+import { useStore } from "@/store/store";
+import { block_user_action } from "@/app/lib/actions";
 
-const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMobileProfile, setToUser, currentUser }) => {
+const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMobileProfile, currentUser, socket }) => {
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useRouter()
     const [modalOpen, setModalOpen] = useState(false)
+    const { dispatch, } = useStore()
+    const [api, contextHolder] = notification.useNotification()
 
     const handleShowOptionsChange = (val) => {
         setShowOptions(val)
@@ -27,10 +31,21 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
         }
     }
 
+    const blockHandler = async () => {
+        const res = await block_user_action({ sender_id: currentUser?.id, receiver_id: toUser.id, is_blocked: 1 })
+        if (res.success) {
+            client_notification(api, 'topRight', "success", res.message, 4)
+            socket.emit("user-blocked", res.data)
+        }
+    }
+
+
+
     return (
         <>
+            {contextHolder}
             <div className="w-full  md:border-b-[1px] border-white/30 px-4 md:px-10 pt-4 pb-1 md:py-5 flex justify-between items-center">
-                <button className="flex md:hidden items-center justify-center" onClick={() => { setShowMobileChatContent(false); setToUser('') }}>
+                <button className="flex md:hidden items-center justify-center" onClick={() => { setShowMobileChatContent(false); dispatch({ type: "Message_To", payload: null }) }}>
                     <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
                 </button>
                 <div className="flex items-center">
@@ -72,7 +87,7 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
                                 <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 " />
                                 <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
                             </button>
-                            <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
+                            <button onClick={blockHandler} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" >
                                 <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
                                 <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
                             </button>

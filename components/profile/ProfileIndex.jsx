@@ -7,27 +7,28 @@ import AlbumAccessList from './AlbumAccessList'
 import BlockList from './BlockList'
 import { socket_server } from '@/app/lib/helpers'
 import { io } from 'socket.io-client'
+import { getSocket } from '@/app/lib/socket'
 
-const useSocket = () => {
-    const [socket, setSocket] = useState(null);
+// const useSocket = () => {
+//     const [socket, setSocket] = useState(null);
 
-    useEffect(() => {
-        const newSocket = io(socket_server);
-        setSocket(newSocket);
+//     useEffect(() => {
+//         const newSocket = io(socket_server);
+//         setSocket(newSocket);
 
-        return () => {
-            newSocket.disconnect();
-        };
-    }, []);
+//         return () => {
+//             newSocket.disconnect();
+//         };
+//     }, []);
 
-    return socket;
-};
+//     return socket;
+// };
 
 const ProfileIndex = ({ decryptedUser, allUsers, accessList }) => {
 
-    const socket = useSocket();
+    const { state: { userState, mySocket } } = useStore()
+    const socket = getSocket()
 
-    const { state: { userState } } = useStore()
 
     const [user, setUser] = useState(userState ? userState : decryptedUser)
 

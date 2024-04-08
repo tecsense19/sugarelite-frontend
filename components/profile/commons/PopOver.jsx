@@ -14,6 +14,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { client_notification, client_routes, server_routes } from '@/app/lib/helpers'
 import { block_user_action, logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
+import { disconnectSocket } from '@/app/lib/socket'
 
 const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
 	const [showOptions, setShowOptions] = useState(false);
@@ -77,6 +78,7 @@ const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
 		return window.removeEventListener("resize", (() => setShowOptions(false)))
 	}, [])
 
+
 	const navigateHandler = (nav) => {
 		if (nav.path) {
 			navigate.push(nav.path)
@@ -84,7 +86,8 @@ const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
 			if (nav.name === "Logout") {
 				logout_user()
 				navigate.push(client_routes.home)
-				dispatch({ type: "Current_User", payload: "" })
+				dispatch({ type: "Logout" })
+				disconnectSocket()
 				fetch(server_routes.logout, {
 					method: "POST",
 					headers: {

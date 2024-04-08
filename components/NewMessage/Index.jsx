@@ -8,35 +8,36 @@ import { useStore } from "@/store/store";
 import NoChatFound from "./NoChatFound";
 import { useRouter } from "next/navigation";
 import ProfileList from "./Profiles/ProfileList";
+import { getSocket } from "@/app/lib/socket";
 
-const useSocket = () => {
-    const [socket, setSocket] = useState(null);
+// const useSocket = () => {
+//     const [socket, setSocket] = useState(null);
 
-    useEffect(() => {
-        const newSocket = io(socket_server);
-        setSocket(newSocket);
+//     useEffect(() => {
+//         const newSocket = io(socket_server);
+//         setSocket(newSocket);
 
-        return () => {
-            newSocket.disconnect();
-        };
-    }, []);
+//         return () => {
+//             newSocket.disconnect();
+//         };
+//     }, []);
 
-    return socket;
-};
+//     return socket;
+// };
 
 
 const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
 
-    const socket = useSocket()
+    const { state: { userState, newMsgState, mySocket, toMessageState, chatProfileState }, dispatch } = useStore()
+    const socket = getSocket()
+    const toUser = toMessageState
+
     const [profiles, setProfiles] = useState(profilesList)
-    const [toUser, setToUser] = useState("")
+    const [chats, setMyChats] = useState(myChats)
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const navigate = useRouter()
-    const { state: { userState, newMsgState }, dispatch } = useStore()
     const [unReadCount, setUnReadCount] = useState([])
     const [sendingImages, setSendingImages] = useState([])
-    const [isFirstMount, setIsFirstMount] = useState(true);
-
 
     const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
 
@@ -58,8 +59,12 @@ const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
     }, [toUser])
 
     useEffect(() => {
-        if (!socket) return;
+        // console.log(currentUser)
+    }, [])
 
+
+    useEffect(() => {
+        if (!socket) return;
         const receiveMessageHandler = (obj) => {
             if (obj.receiver_id === currentUser.id) {
                 dispatch({ type: "Add_Message", payload: obj })
@@ -88,94 +93,26 @@ const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
         };
     }, [socket, toUser, unReadCount]);
 
+
     useEffect(() => {
-        if (isFirstMount) {
-            if (newMsgState.length) {
-                newMsgState.forEach((message) => {
-                    const profileIndex = profiles.findIndex(
-                        i => i.profile.id === message.receiver_id || i.profile.id === message.sender_id
-                    );
-                    if (profileIndex !== -1 && message.id) {
-                        const profile = profiles[profileIndex];
-                        const msgIndex = profile.messages.findIndex(msg => msg.id === message.id);
-                        if (msgIndex !== -1) {
-                            profile.messages[msgIndex] = message;
-                        } else {
-                            profile.messages.push(message);
-                        }
-                        const updatedProfiles = [...profiles];
-                        updatedProfiles[profileIndex] = profile;
-                        updatedProfiles.sort((a, b) => {
-                            const latestMessageIDA = a.messages.length > 0 ? parseInt(a.messages[a.messages.length - 1].milisecondtime) : 0;
-                            const latestMessageIDB = b.messages.length > 0 ? parseInt(b.messages[b.messages.length - 1].milisecondtime) : 0;
-                            return latestMessageIDB - latestMessageIDA;
-                        });
-                        setProfiles(updatedProfiles);
-                    } else if (profileIndex !== -1 && !message.id) {
-                        setToUser(message.user);
-                    } else if (profileIndex === -1 && message.id) {
-                        const receiverProfile = allUsers.find(i => (i.id === message.receiver_id));
-                        const senderProfile = allUsers.find(i => (i.id === message.sender_id));
-                        if (receiverProfile) {
-                            const msgs = newMsgState.filter((i) => (i.receiver_id === receiverProfile.id))
-                            const obj = { profile: receiverProfile, messages: msgs };
-                            setProfiles(prev => [obj, ...prev]);
-                        } else if (senderProfile) {
-                            const msgs = newMsgState.filter((i) => (i.sender_id === senderProfile.id))
-                            const obj = { profile: senderProfile, messages: msgs };
-                            setProfiles(prev => [obj, ...prev]);
-                        }
-                    } else {
-                        const obj = { profile: message.user, messages: [{ updated_at: message.updated_at, milisecondtime: message.milisecondtime }] };
-                        setProfiles(prev => [obj, ...prev]);
-                        setToUser(message.user);
-                    }
-                })
+        const mergedChats = myChats.map(i => {
+            const newMsgIndex = newMsgState.findIndex(msg => msg.id === i.id);
+            if (newMsgIndex !== -1) {
+                return newMsgState[newMsgIndex];
             }
-            setIsFirstMount(false);
-        } else {
-            if (newMsgState.length > 0) {
-                const message = newMsgState[newMsgState.length - 1];
-                const profileIndex = profiles.findIndex(
-                    i => i.profile.id === message.receiver_id || i.profile.id === message.sender_id
-                );
-                if (profileIndex !== -1 && message.id) {
-                    const profile = profiles[profileIndex];
-                    const msgIndex = profile.messages.findIndex(msg => msg.id === message.id);
-                    if (msgIndex !== -1) {
-                        profile.messages[msgIndex] = message;
-                    } else {
-                        profile.messages.push(message);
-                    }
-                    const updatedProfiles = [...profiles];
-                    updatedProfiles[profileIndex] = profile;
-                    updatedProfiles.sort((a, b) => {
-                        const latestMessageIDA = a.messages.length > 0 ? parseInt(a.messages[a.messages.length - 1].milisecondtime) : 0;
-                        const latestMessageIDB = b.messages.length > 0 ? parseInt(b.messages[b.messages.length - 1].milisecondtime) : 0;
-                        return latestMessageIDB - latestMessageIDA;
-                    });
-                    setProfiles(updatedProfiles);
-                } else if (profileIndex !== -1 && !message.id) {
-                    setToUser(message.user);
-                } else if (profileIndex === -1 && message.id) {
-                    const profile = allUsers.find(i => i.id === message.sender_id);
-                    if (profile) {
-                        const obj = { profile: profile, messages: [message] };
-                        setProfiles(prev => [obj, ...prev]);
-                    }
-                } else {
-                    const obj = { profile: message.user, messages: [{ updated_at: message.updated_at, milisecondtime: message.milisecondtime }] };
-                    setProfiles(prev => [obj, ...prev]);
-                    setToUser(message.user);
-                }
+            return i;
+        });
+
+        const updatedChats = [...mergedChats];
+
+        newMsgState.forEach(newMsg => {
+            const chatExists = myChats.some(i => i.id === newMsg.id);
+            if (!chatExists) {
+                updatedChats.push(newMsg);
             }
-        }
+        });
+        setMyChats(updatedChats)
     }, [newMsgState]);
-
-    useEffect(() => {
-        // console.log(newMsgState)
-    }, [newMsgState])
-
 
     useEffect(() => {
         setUnReadCount((prev) => {
@@ -186,27 +123,19 @@ const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
     }, [toUser])
 
 
-    if (profiles.length || newMsgState.length) {
+    if (chatProfileState.length || newMsgState.length) {
         return (
             <>
                 <div className="font-bold hidden h-dvh pt-0 md:pt-[66px] text-white md:flex">
-                    <ProfileList currentUser={currentUser} profiles={profiles.filter((obj, index, self) =>
-                        index === self.findIndex((t) => (
-                            t.profile.id === obj.profile.id
-                        ))
-                    )} setToUser={setToUser} toUser={toUser} unReadCount={unReadCount} />
-                    <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={myChats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} setToUser={setToUser} socket={socket} toUser={toUser} userChats={toUser ? profiles.find(i => i.profile.id === toUser.id).messages : []} />
+                    <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} />
+                    <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} />
                 </div>
                 <div className="font-bold md:hidden h-dvh pt-0 md:pt-[66px] text-white flex">
                     {
                         !showMobileChatContent ?
-                            <ProfileList currentUser={currentUser} profiles={profiles.filter((obj, index, self) =>
-                                index === self.findIndex((t) => (
-                                    t.profile.id === obj.profile?.id
-                                ))
-                            )} setToUser={setToUser} toUser={toUser} unReadCount={unReadCount} />
+                            <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} />
                             :
-                            <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={myChats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} setToUser={setToUser} socket={socket} toUser={toUser} userChats={toUser ? profiles.find(i => i.profile.id === toUser.id).messages : []} />
+                            <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} />
                     }
                 </div>
             </>

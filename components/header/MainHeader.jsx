@@ -10,34 +10,33 @@ import { useStore } from "@/store/store"
 import { logout_user, private_album_notification, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
+import { io } from 'socket.io-client';
 import { useEffect, useState } from "react"
-import { io } from "socket.io-client"
+import { disconnectSocket, getSocket } from "@/app/lib/socket"
+import SideDrawer from "../common/SideDrawer"
 
-const useSocket = () => {
-  const [socket, setSocket] = useState(null);
+// const useSocket = () => {
+//   const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
-    const newSocket = io(socket_server);
-    setSocket(newSocket);
+//   useEffect(() => {
+//     const newSocket = io(socket_server);
+//     setSocket(newSocket);
 
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
+//     return () => {
+//       newSocket.disconnect();
+//     };
+//   }, []);
 
-  return socket;
-};
-
+//   return socket;
+// };
 
 
 const MainHeader = ({ decryptedUser, allUsers }) => {
 
+  const { state: { userState, notificationOpenState, blockedUsersState, notifyBadgeState, showMenu }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
-  const socket = useSocket()
-
-  const { state: { userState, notificationOpenState, blockedUsersState, notifyBadgeState }, dispatch } = useStore()
-
+  const socket = getSocket()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
@@ -47,7 +46,6 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
   useEffect(() => {
     setUser(userState ? userState : decryptedUser)
   }, [userState])
-
 
   async function fetchNotifications() {
     const tempNotifications = await private_album_notification({ user_id: userState?.id })
@@ -74,6 +72,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
     }
   }, [])
 
+
   useEffect(() => {
     if (!socket) return
 
@@ -97,7 +96,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
     }
 
     const receiveMessageHandler = (obj) => {
-      if (obj.receiver_id === user.id && pathname !== client_routes.chat) {
+      if (obj.receiver_id === user.id && (pathname !== client_routes.chat)) {
         dispatch({ type: "Add_Msg_Badge", payload: true })
       }
     }
@@ -112,7 +111,6 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
         socket.off("blocked-status", blockUserHandler);
         socket.off("album-notification", albumAccessHandler)
         socket.off("receive-message", receiveMessageHandler);
-        socket.disconnect()
       }
     };
   }, [user, socket])
@@ -120,7 +118,9 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
   const handleLogout = () => {
     logout_user()
     router.push(client_routes.home)
-    dispatch({ type: "Current_User", payload: "" })
+    dispatch({ type: "Logout" })
+
+    disconnectSocket()
     fetch(server_routes.logout, {
       method: "POST",
       headers: {
@@ -132,9 +132,19 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
   return (
     <>
       {/* {/ Mobile View /} */}
-      {/* <header className="sm:hidden flex">
-        Main Mobile Navbar
-      </header> */}
+      {pathname === client_routes.home &&
+        <header className="sm:hidden flex items-center justify-between fixed top-0 left-0 right-0 bg-black h-[66px] z-[2] px-4">
+          <button onClick={() => router.push(client_routes.profile)}>
+            <Image height={22} width={102} src={logo} alt="" className="pointer-events-none h-[30px] w-[150px]" priority />
+          </button>
+          <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
+            {user?.avatar_url
+              ? <Image height={34} width={34} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full aspect-square" priority onClick={() => router.push(client_routes.profile)} />
+              : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{user?.username.charAt(0)}</div>
+            }
+          </Link>
+        </header>
+      }
 
       {/* {/ Web View /} */}
       <header className="hidden md:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
@@ -178,6 +188,10 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
       </header>
       {
         user && <Notification open={isDrawerOpen || notificationOpenState} setIsnotify={setIsnotify} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
+      }
+      {
+
+        <SideDrawer />
       }
     </>
   )

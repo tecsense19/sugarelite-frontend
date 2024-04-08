@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIsModalOpen }) => {
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification();
-    const { dispatch } = useStore()
+    const { dispatch, state: { chatProfileState } } = useStore()
     const [isRequesting, setIsRequesting] = useState(false)
 
     const requestHandler = async (type) => {
@@ -26,8 +26,16 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, se
             }
         } else {
             // dispatch({ type: "Add_Profile", payload: { obj: { id: 1, sender_id: currentUser?.id, receiver_id: user.id, text: `You started Chat with ${user.username}`, updated_at: new Date() }, type: "normal", user: user } })
-            dispatch({ type: "Add_Message", payload: { sender_id: currentUser?.id, receiver_id: user.id, updated_at: new Date(), milisecondtime: new Date().getTime(), user: user } })
-            navigate.push(client_routes.chat)
+            // dispatch({ type: "Add_Message", payload: { sender_id: currentUser?.id, receiver_id: user.id, updated_at: new Date(), milisecondtime: new Date().getTime(), user: user } })
+            const isThere = chatProfileState.some(i => i.id === user.id)
+            if (!isThere) {
+                dispatch({ type: "Add_Profile", payload: { id: user.id, milisecondtime: new Date().getTime() } })
+                dispatch({ type: "Message_To", payload: user })
+                navigate.push(client_routes.chat)
+            } else {
+                dispatch({ type: "Message_To", payload: user })
+                navigate.push(client_routes.chat)
+            }
         }
     }
 

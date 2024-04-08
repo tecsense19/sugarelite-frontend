@@ -64,11 +64,10 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
             reset()
             let obj = getFormData({ sender_id: currentUser.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id })
             const res = await send_message_action(obj)
-            console.log(res.message)
             if (res.success) {
                 setIsDisabled(false)
                 setEditingMsg(null)
-                socket.emit("send-message", { ...res.message, get_all_chat_with_image: res.message.get_all_chatimg })
+                socket.emit("send-message", res.message)
             } else {
                 client_notification(api, "topRight", "error", res?.message, 5)
             }

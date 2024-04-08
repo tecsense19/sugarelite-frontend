@@ -4,6 +4,7 @@ import { parseCookies } from 'nookies';
 import CryptoJS from "crypto-js"
 import { io } from 'socket.io-client';
 import { socket_server } from '@/app/lib/helpers';
+import { connectSocket } from '@/app/lib/socket';
 
 const initialState = {
   isOpenMobileNavbar: false,
@@ -40,10 +41,10 @@ const currentUserReducer = (state, action) => {
   }
 }
 
-const messageToReducer = (state = [], action) => {
+const messageToReducer = (state, action) => {
   switch (action.type) {
     case 'Message_To':
-      return [...state, action.payload]
+      return action.payload
     default:
       return state;
   }
@@ -107,17 +108,32 @@ const accessDecisionReducer = (state, action) => {
   }
 }
 
+// const chatProfileReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'Add_Profile':
+//       const newProfile = action.payload.obj;
+//       const existingProfileIndex = state.findIndex(profile => profile.obj.id === newProfile.id);
+//       if (existingProfileIndex !== -1) {
+//         const newState = [...state];
+//         newState[existingProfileIndex] = action.payload;
+//         return newState;
+//       } else {
+//         return [...state, action.payload];
+//       }
+//     default:
+//       return state;
+//   }
+// }
+
 const chatProfileReducer = (state, action) => {
   switch (action.type) {
     case 'Add_Profile':
-      const newProfile = action.payload.obj;
-      const existingProfileIndex = state.findIndex(profile => profile.obj.id === newProfile.id);
+      const newProfile = action.payload.id;
+      const existingProfileIndex = state.findIndex(profile => profile.id === newProfile);
       if (existingProfileIndex !== -1) {
-        const newState = [...state];
-        newState[existingProfileIndex] = action.payload;
-        return newState;
+        return state;
       } else {
-        return [...state, action.payload];
+        return [action.payload, ...state];
       }
     default:
       return state;
@@ -150,43 +166,6 @@ const newMsgReducer = (state, action) => {
   }
 }
 
-// const editOrDeleteReducer = (state, action) => {
-//   switch (action.type) {
-//     case 'Edit_Message':
-//       const editedMessage = action.payload;
-//       const existingMessageIndex = state.edit.findIndex(message => message.id === editedMessage.id);
-//       if (existingMessageIndex !== -1) {
-//         const updatedEdit = [...state.edit];
-//         updatedEdit[existingMessageIndex] = editedMessage;
-//         return {
-//           ...state,
-//           edit: updatedEdit
-//         };
-//       } else {
-//         return {
-//           ...state,
-//           edit: [...state.edit, editedMessage]
-//         };
-//       }
-//     case "Delete_Message":
-//       const deletedMsg = action.payload;
-//       const deletedMessageIndex = state.deleted.findIndex(message => message.id === deletedMsg.id);
-//       if (deletedMessageIndex !== -1) {
-//         const updatedEdit = [...state.deleted];
-//         updatedEdit[deletedMessageIndex] = deletedMsg;
-//         return {
-//           ...state,
-//           deleted: updatedEdit
-//         };
-//       } else {
-//         return {
-//           ...state, deleted: [...state.deleted, action.payload]
-//         };
-//       }
-//     default:
-//       return state;
-//   }
-// };
 
 const editOrDeleteReducer = (state, action) => {
   switch (action.type) {
@@ -233,25 +212,62 @@ const notifyReducer = (state, action) => {
   }
 }
 
+const sideDarwerReducer = (state, action) => {
+  switch (action.type) {
+    case 'Show_Menu':
+      return true
+    case 'Close_Menu':
+      return false
+    default:
+      return state;
+  }
+}
+
+
+
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState }, action) => ({
-  firstState: reducer(firstState, action),
-  filterState: filterReducer(filterState, action),
-  userState: currentUserReducer(userState, action),
-  toMessageState: messageToReducer(toMessageState, action),
-  allUsersState: allUsersDataReducer(allUsersState, action),
-  chatsState: chatReducer(chatsState, action),
-  notificationOpenState: notificationReducer(notificationOpenState, action),
-  accessPendingState: accessPendingReducer(accessPendingState, action),
-  decisionState: accessDecisionReducer(decisionState, action),
-  chatProfileState: chatProfileReducer(chatProfileState, action),
-  newMsgState: newMsgReducer(newMsgState, action),
-  blockedUsersState: blockedUsers(blockedUsersState, action),
-  messageUpdate: editOrDeleteReducer(messageUpdate, action),
-  notifyBadgeState: notifyReducer(notifyBadgeState, action)
-});
+const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
+  switch (action.type) {
+    case 'Logout':
+      return {
+        firstState: initialState,
+        filterState: { isFilterOpen: false },
+        userState: null,
+        toMessageState: null,
+        allUsersState: null,
+        chatsState: [],
+        notificationOpenState: false,
+        accessPendingState: [],
+        decisionState: [],
+        chatProfileState: [],
+        newMsgState: [],
+        blockedUsersState: [],
+        messageUpdate: [],
+        notifyBadgeState: { msg: false, notify: false },
+        sideMenu: false
+      };
+    default:
+      return {
+        firstState: reducer(firstState, action),
+        filterState: filterReducer(filterState, action),
+        userState: currentUserReducer(userState, action),
+        toMessageState: messageToReducer(toMessageState, action),
+        allUsersState: allUsersDataReducer(allUsersState, action),
+        chatsState: chatReducer(chatsState, action),
+        notificationOpenState: notificationReducer(notificationOpenState, action),
+        accessPendingState: accessPendingReducer(accessPendingState, action),
+        decisionState: accessDecisionReducer(decisionState, action),
+        chatProfileState: chatProfileReducer(chatProfileState, action),
+        newMsgState: newMsgReducer(newMsgState, action),
+        blockedUsersState: blockedUsers(blockedUsersState, action),
+        messageUpdate: editOrDeleteReducer(messageUpdate, action),
+        notifyBadgeState: notifyReducer(notifyBadgeState, action),
+        sideMenu: sideDarwerReducer(sideMenu, action)
+      };
+  }
+};
 
 
 
@@ -271,7 +287,7 @@ export const StoreProvider = ({ children }) => {
       isFilterOpen: false,
     },
     userState: user ? user : null,
-    toMessageState: [],
+    toMessageState: null,
     allUsersState: null,
     chatsState: [],
     notificationOpenState: false,
@@ -281,8 +297,15 @@ export const StoreProvider = ({ children }) => {
     newMsgState: [],
     blockedUsersState: [],
     messageUpdate: [],
-    notifyBadgeState: { msg: false, notify: false }
+    notifyBadgeState: { msg: false, notify: false },
+    sideMenu: false
   });
+
+  useEffect(() => {
+    if (state.userState) {
+      connectSocket(state.userState.id)
+    }
+  }, [])
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

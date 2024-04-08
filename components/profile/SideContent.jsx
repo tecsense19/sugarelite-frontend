@@ -12,12 +12,13 @@ import PopOver from './commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import { useStore } from '@/store/store'
 import lock_1 from "/public/assets/lock_1.svg"
-import subscription_logo from "/public/assets/subscription_logo.png"
+import subscription_logo from "/public/assets/subscription_logo.svg"
 import prohibition from "/public/assets/prohibition.svg"
+import SideDrawer from '../common/SideDrawer'
 
 const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileToggle }) => {
 
-    const { state: { userState } } = useStore()
+    const { state: { userState }, dispatch } = useStore()
 
     const [user, setUser] = useState(userState ? userState : decryptedUser)
 
@@ -69,6 +70,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                 <PopOver>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
+                {/* <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} /> */}
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
@@ -173,9 +175,9 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                             <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>block list</span>
                         </button>
-                        <Link href={client_routes.subscription} prefetch={true} className='flex justify-center items-center gap-[10.25px] rounded-[5px] bg-subscription w-full h-[42px] lg:h-[56px]'>
+                        <Link href={client_routes.subscription} prefetch={true} className='flex justify-center items-center gap-[10.25px] rounded-[5px] bg-[#F4498F] w-full h-[42px] lg:h-[56px]'>
                             <Image src={subscription_logo} width={22.75} height={26} alt='message' className='inline-block mb-[6px]' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center text-primary-dark-3'>Subscription</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center text-white'>Subscription</span>
                         </Link>
                     </div>
                 }

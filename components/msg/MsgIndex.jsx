@@ -8,30 +8,31 @@ import ChatComponent from "./ChatComponent/ChatComponent";
 import { useStore } from "@/store/store";
 import NoChatFound from "./NoChatFound";
 import { useRouter } from "next/navigation";
+import { getSocket } from "@/app/lib/socket";
 
-const useSocket = () => {
-    const [socket, setSocket] = useState(null);
+// const useSocket = () => {
+//     const [socket, setSocket] = useState(null);
 
-    useEffect(() => {
-        const newSocket = io(socket_server);
-        setSocket(newSocket);
+//     useEffect(() => {
+//         const newSocket = io(socket_server);
+//         setSocket(newSocket);
 
-        return () => {
-            newSocket.disconnect();
-        };
-    }, []);
+//         return () => {
+//             newSocket.disconnect();
+//         };
+//     }, []);
 
-    return socket;
-};
+//     return socket;
+// };
 
 const MsgIndex = ({ profilesList, decryptedUser, userChats, allUsers }) => {
 
-    const socket = useSocket()
+    const { state: { userState, chatProfileState, mySocket } } = useStore()
+    const socket = getSocket()
 
     const [toUser, setToUser] = useState("")
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const navigate = useRouter()
-    const { state: { userState, chatProfileState } } = useStore()
     const [sendingImages, setSendingImages] = useState([])
 
     const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)

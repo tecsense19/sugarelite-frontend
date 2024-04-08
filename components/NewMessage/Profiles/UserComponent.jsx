@@ -1,8 +1,10 @@
+import { useStore } from '@/store/store';
 import Image from 'next/image';
 import React from 'react'
 
 const UserComponent = ({ user, setToUser, message, unReadCount }) => {
 
+    const { dispatch } = useStore()
 
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
@@ -31,7 +33,7 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
 
     // console.log(message)
     return (
-        <div className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer" onClick={() => { setToUser(user); }}>
+        <div className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer" onClick={() => { dispatch({ type: "Message_To", payload: user }) }}>
             <div className="flex gap-4 items-center">
                 <div className="relative">
                     {user.avatar_url ? (

@@ -6,13 +6,14 @@ import AuthHeader from "./AuthHeader"
 import MainHeader from "./MainHeader"
 import { useEffect, useState } from "react"
 import { useStore } from "@/store/store"
+import { io } from "socket.io-client"
 
+let socket;
 
-
-const Header = ({ decryptedUser, allUsers }) => {
+const Header = ({ decryptedUser, allUsers, chatId }) => {
   const pathname = usePathname()
 
-  const { state: { userState } } = useStore()
+  const { state: { userState }, dispatch } = useStore()
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
 
@@ -30,6 +31,14 @@ const Header = ({ decryptedUser, allUsers }) => {
   useEffect(() => {
     const AOS = require("aos");
     AOS.init();
+  }, [])
+
+  useEffect(() => {
+    if (chatId.length) {
+      chatId.forEach(i => {
+        dispatch({ type: "Add_Profile", payload: { id: i, milisecondtime: '' } })
+      })
+    }
   }, [])
 
   return (

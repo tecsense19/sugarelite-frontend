@@ -15,26 +15,28 @@ import { notification } from "antd"
 import { useStore } from "@/store/store"
 import Aos from "aos"
 import ReportModal from "./ReportModal"
+import { getSocket } from "@/app/lib/socket"
 
-const useSocket = () => {
-    const [socket, setSocket] = useState(null);
+// const useSocket = () => {
+//     const [socket, setSocket] = useState(null);
 
-    useEffect(() => {
-        const newSocket = io(socket_server);
-        setSocket(newSocket);
+//     useEffect(() => {
+//         const newSocket = io(socket_server);
+//         setSocket(newSocket);
 
-        return () => {
-            newSocket.disconnect();
-        };
-    }, []);
+//         return () => {
+//             newSocket.disconnect();
+//         };
+//     }, []);
 
-    return socket;
-};
+//     return socket;
+// };
 
 
 const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
 
-    const socket = useSocket()
+    const { state: { decisionState } } = useStore()
+    const socket = getSocket()
     const accessList = queried_user.allow_privateImage_access_users
     const [privateAlbumState, setPrivateAlbumState] = useState(null)
     const navigate = useRouter()
@@ -42,7 +44,6 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
     const [isLoading, setisLoading] = useState({ report: false, block: false })
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const { state: { decisionState } } = useStore()
 
 
     useEffect(() => {
