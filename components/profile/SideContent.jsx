@@ -71,9 +71,9 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                 {/* <PopOver>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver> */}
-                <div className='flex gap-x-4'>
+                <div className='flex gap-x-4 items-center'>
                     <div className='relative'>
-                        <Image src={NotificationIcon} alt="bell icon" width={21} height={21} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
+                        <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
                         {notifyBadgeState.notify &&
                             <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute -top-1 -right-1 "></p>
                         }

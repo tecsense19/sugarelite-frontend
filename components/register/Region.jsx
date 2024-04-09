@@ -10,20 +10,12 @@ import country from "/public/assets/country.svg"
 import region from "/public/assets/region.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
 import sugar_region from "/public/assets/sugar_region.svg"
+import { Countries } from "@/app/lib/constants"
 
-const people = [
-    { value: 'Wade Cooper' },
-    { value: 'Arlene Mccoy' },
-    { value: 'Devon Webb' },
-    { value: 'Tom Cook' },
-    { value: 'Tanya Fox' },
-    { value: 'Hellen Schmidt' },
-]
+
 const { Option } = Select;
 
 const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) => {
-
-    const [countries, setCountires] = useState([])
     const [states, setStates] = useState([])
 
     const customStyles = {
@@ -58,21 +50,11 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
     }
 
     useEffect(() => {
-        async function getData() {
-            const data = await getCountries()
-            setCountires(data.data)
+        if (watch("country")) {
+            const filteredArray = Countries.find((country) => country.name.toLowerCase() === watch("country").toLowerCase()).cities
+            setStates(filteredArray)
         }
-        getData()
-    }, [])
-
-    useEffect(() => {
-        const filteredArray = countries.filter((country) => country.name === watch("country"))
-        if (filteredArray[0]?.name && !filteredArray[0]?.states.length) {
-            setValue("region", "No region")
-        }
-        setStates(filteredArray[0]?.states)
     }, [watch("country")])
-
 
     const isValid = {
         country: watch("country"),
@@ -109,7 +91,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                     className="w-full "
                                 >
                                     {
-                                        countries.map((country, inx) => {
+                                        Countries.map((country, inx) => {
                                             return <Option key={inx} value={country.name} >
                                                 {country.name}
                                             </Option>
@@ -142,9 +124,9 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                     }
                                     className="w-full text-opacity-[70%] pt-4"
                                 >
-                                    {states && states.map((state) => (
-                                        <Option key={state.name} value={state.name} >
-                                            {state.name}
+                                    {states && states.map((state, inx) => (
+                                        <Option key={inx} value={state} >
+                                            {state}
                                         </Option>
                                     ))}
                                 </Select>

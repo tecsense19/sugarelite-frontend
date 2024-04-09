@@ -119,7 +119,6 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
         }
     }, [])
 
-
     const Attachment = (() => {
 
         const getBase64 = (file) =>

@@ -1,10 +1,10 @@
 import { useStore } from '@/store/store';
 import Image from 'next/image';
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const UserComponent = ({ user, setToUser, message, unReadCount }) => {
 
-    const { dispatch } = useStore()
+    const { dispatch, state } = useStore()
 
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
@@ -29,7 +29,9 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
             const month = time.getMonth() + 1
             return `${timeString[2]}-${month}-${timeString[3].slice(2, 4)}`
         }
+        // console.log(message)
     };
+
 
     // console.log(message)
     return (

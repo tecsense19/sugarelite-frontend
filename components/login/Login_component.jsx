@@ -51,11 +51,11 @@ const Login = ({ setIsForgotOpen }) => {
             client_notification(api, "topRight", "error", res.message, 2)
             return;
         }
+        dispatch({ type: "Current_User", payload: res.data })
         const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
         setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
         setIsLoading(false)
         connectSocket()
-        dispatch({ type: "Current_User", payload: res.data })
         client_notification(api, "topRight", "success", res.message, 2)
         navigate.push(client_routes.profile)
     }

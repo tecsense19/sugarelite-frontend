@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import chevron_down from "../../public/assets/chevron-down.svg"
 import { useStore } from '@/store/store';
+import { Countries } from '@/app/lib/constants';
 
 const { Option } = Select;
 
@@ -52,6 +53,7 @@ const countries = [
 const Filters = ({ allUsers }) => {
   const { register, handleSubmit, control, watch, reset, setValue } = useForm()
   const [dummyUsers, setDummyUsers] = useState(allUsers);
+  const [cities, setCities] = useState([])
 
   const { dispatch } = useStore()
 
@@ -175,6 +177,13 @@ const Filters = ({ allUsers }) => {
     // setDummyUsers(allUsers)
   }
 
+  useEffect(() => {
+    if (watch("country")) {
+      const city = Countries.find(i => i.name.toLowerCase() === watch("country")?.toLowerCase())?.cities
+      setCities(city)
+    }
+  }, [watch("country")])
+
   return (
     // Filter Section
     <div className="bg-primary-dark-3 h-full max-h-full overflow-y-auto min-w-[350px] xl:min-w-[380px] p-[30px] text-white filter-container hidden md:block" style={{ scrollbarWidth: "none" }} data-aos="fade-right" data-aos-duration="800">
@@ -233,10 +242,10 @@ const Filters = ({ allUsers }) => {
                 filterOption={(input, option) => {
                   return option.children.props.children[1].toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }}>
-                {countries.map((ctry) => (
-                  <Option className="!flex !items-center !justify-center" key={ctry.value} value={ctry.value}>
+                {Countries.map((ctry) => (
+                  <Option className="!flex !items-center !justify-center" key={ctry.name} value={ctry.name}>
                     <div className='flex justify-start items-center text-[16px] font-[500]'>
-                      <Image src={ctry.img} alt='' height={20} width={20} className='aspect-square me-3' />
+                      <Image src={ctry.flag} alt='' height={20} width={20} className='aspect-square me-3' />
                       {ctry.name}
                     </div>
                   </Option>
@@ -251,14 +260,14 @@ const Filters = ({ allUsers }) => {
         <div className='mt-[30px] flex justify-center items-center relative'>
           <Controller name="region" control={control} render={({ field }) => (
             <ConfigProvider theme={{ ...customDropdownTheme, components: { Select: { ...customDropdownTheme.components.Select, selectorBg: "#6C6C6C" } } }}>
-              <Select {...field} placeholder="Select Region" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
+              <Select {...field} placeholder="Select City" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                 className="w-full text-[16px] font-[400] text-white/80"
                 filterOption={(input, option) => {
                   return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }}>
-                {countries.map((ctry) => (
-                  <Option className="text-[16px] font-[500]" key={ctry.value} value={ctry.value}>
-                    {ctry.name}
+                {cities.map((ctry, inx) => (
+                  <Option className="text-[16px] font-[500]" key={inx} value={ctry}>
+                    {ctry}
                   </Option>
                 ))}
               </Select>

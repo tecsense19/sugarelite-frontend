@@ -1,7 +1,7 @@
 "use client"
 
 import { client_routes, socket_server } from "@/app/lib/helpers";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import ChatComponent from "./ChatComponent/ChatComponent";
 import { useStore } from "@/store/store";
@@ -26,13 +26,13 @@ import { getSocket } from "@/app/lib/socket";
 // };
 
 
-const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
+const Index = ({ decryptedUser, allUsers, myChats }) => {
 
-    const { state: { userState, newMsgState, mySocket, toMessageState, chatProfileState }, dispatch } = useStore()
+    const { state: { userState, newMsgState, toMessageState, chatProfileState }, dispatch } = useStore()
     const socket = getSocket()
     const toUser = toMessageState
 
-    const [profiles, setProfiles] = useState(profilesList)
+    const [profiles, setProfiles] = useState([])
     const [chats, setMyChats] = useState(myChats)
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const navigate = useRouter()
@@ -57,11 +57,6 @@ const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
             setShowMobileChatContent(true)
         }
     }, [toUser])
-
-    useEffect(() => {
-        // console.log(currentUser)
-    }, [])
-
 
     useEffect(() => {
         if (!socket) return;
@@ -93,7 +88,6 @@ const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
         };
     }, [socket, toUser, unReadCount]);
 
-
     useEffect(() => {
         const mergedChats = myChats.map(i => {
             const newMsgIndex = newMsgState.findIndex(msg => msg.id === i.id);
@@ -115,25 +109,75 @@ const Index = ({ decryptedUser, profilesList, allUsers, myChats }) => {
     }, [newMsgState]);
 
     useEffect(() => {
-        setUnReadCount((prev) => {
-            const updatedUnreadMsgs = [...prev];
-            const existingIndex = updatedUnreadMsgs.filter(item => item.id !== toUser.id);
-            return existingIndex
-        })
+        if (toUser) {
+            setUnReadCount((prev) => {
+                const updatedUnreadMsgs = [...prev];
+                const existingIndex = updatedUnreadMsgs.filter(item => item.id !== toUser.id);
+                return existingIndex
+            })
+        }
     }, [toUser])
 
+    useEffect(() => {
+        const myChatsWithProfiles = chatProfileState.map(profileID => {
+            const profile = allUsers.find(user => user.id === profileID.id);
+            const conversation = myChats.filter(chat => chat.sender_id === profileID.id || chat.receiver_id === profileID.id);
+            conversation.sort((a, b) => a.id - b.id);
+            let messages;
+            if (conversation.length > 0) {
+                messages = conversation[conversation.length - 1];
+            } else {
+                messages = { milisecondtime: profileID.milisecondtime };
+            }
+
+            return {
+                profile,
+                messages: { ...messages, milisecondtime: parseInt(messages.milisecondtime) }
+            };
+        });
+        setProfiles(myChatsWithProfiles);
+    }, [chatProfileState, myChats, allUsers]);
+
+    const addNewMessageToConversation = useCallback((message, profile) => {
+        if (message) {
+            setProfiles(prevProfiles => {
+                return prevProfiles.map(p => (p.profile.id === profile.profile.id ? { ...p, messages: message } : p));
+            });
+        } else {
+            setProfiles((prev) => [profile, ...prev])
+        }
+    }, []);
+
+    useEffect(() => {
+        if (newMsgState.length) {
+            const latestMsg = newMsgState[newMsgState.length - 1];
+            const profile = profiles.find(i => i.profile.id === latestMsg.receiver_id);
+            if (!profile) {
+                const findProfile = allUsers.find(i => i.id === latestMsg.sender_id)
+                if (findProfile) {
+                    dispatch({ type: "Add_Profile", payload: { id: findProfile.id, milisecondtime: latestMsg.milisecondtime } })
+                }
+            } else {
+                if (!profile.messages || latestMsg.id >= profile.messages.id) {
+                    addNewMessageToConversation(latestMsg, profile);
+                } else if (!profile.messages.id) {
+                    addNewMessageToConversation(latestMsg, profile);
+                }
+            }
+        }
+    }, [newMsgState]);
 
     if (chatProfileState.length || newMsgState.length) {
         return (
             <>
                 <div className="font-bold hidden h-dvh pt-0 md:pt-[66px] text-white md:flex">
-                    <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} />
+                    <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} />
                     <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} />
                 </div>
                 <div className="font-bold md:hidden h-dvh pt-0 md:pt-[66px] text-white flex">
                     {
                         !showMobileChatContent ?
-                            <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} />
+                            <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} />
                             :
                             <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} />
                     }

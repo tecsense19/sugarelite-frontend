@@ -59,8 +59,8 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
   }, [])
 
   useEffect(() => {
-    if (decryptedUser) {
-      const blockList = allUsers.find(i => i.id === decryptedUser.id)?.is_blocked_users
+    if (userState) {
+      const blockList = allUsers.find(i => i.id === userState.id)?.is_blocked_users
       if (blockList?.length) {
         blockList.forEach(i => {
           i = { ...i, is_blocked: 1 }
@@ -68,8 +68,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
         })
       }
     }
-  }, [])
-
+  }, [userState])
 
   useEffect(() => {
     if (!socket) return

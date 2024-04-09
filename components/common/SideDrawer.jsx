@@ -49,8 +49,8 @@ const SideDrawer = () => {
     const logoutHandler = () => {
         logout_user()
         dispatch({ type: "Logout" })
-        disconnectSocket()
         router.push(client_routes.home)
+        disconnectSocket()
         fetch(server_routes.logout, {
             method: "POST",
             headers: {
@@ -77,14 +77,14 @@ const SideDrawer = () => {
                     <div className='flex justify-between flex-col h-full w-full'>
                         <div>
                             <div className='w-full h-[66px] bg-black px-4 flex items-center justify-between'>
-                                <button onClick={() => router.push(client_routes.profile)}>
+                                <button onClick={() => router.push(client_routes.home)}>
                                     <Image height={22} width={102} src={logo} alt="" className="pointer-events-none h-[30px] w-[150px]" priority />
                                 </button>
                                 <button onClick={() => dispatch({ type: "Close_Menu" })}>
                                     <Image height={30} width={30} src={Close} alt="" className="pointer-events-none" priority />
                                 </button>
                             </div>
-                            <div className='text-[18px] pt-4 w-full  font-medium'>
+                            <div className='text-[16px] pt-4 w-full  font-medium'>
                                 {
                                     navs.map((i, inx) => {
                                         return <div className='px-4  w-full' key={inx}>
@@ -92,22 +92,9 @@ const SideDrawer = () => {
                                         </div>
                                     })
                                 }
-                                {/* <div className='px-4  w-full'>
-                                    <button className=' py-3  px-2 bg-secondary border-primary-dark-4 tracking-normal w-full text-left h-full capitalize'>Profile</button>
-                                </div>
-                                <div className='px-4 w-full'>
-                                    <button className=' py-3  px-2 border-b border-primary-dark-4 tracking-normal w-full text-left h-full capitalize'>Edit Profile</button>
-                                </div>
-                                <div className='px-4 w-full'>
-                                    <button className=' py-3 px-2 border-b border-primary-dark-4 tracking-normal w-full text-left h-full capitalize'>Chat</button>
-                                </div>
-                                <div className='px-4 w-full'>
-                                    <button className=' py-3 px-2 border-b border-primary-dark-4 tracking-normal w-full text-left h-full capitalize'>Search</button>
-                                </div> */}
-
                             </div>
                         </div>
-                        <div className='w-full p-4 text-[18px] font-medium'>
+                        <div className='w-full p-4 text-[16px] font-medium'>
                             <button className='bg-primary-dark-5 p-2 rounded-[5px] tracking-[0.075em] w-full h-full uppercase' onClick={logoutHandler}>Logout</button>
                         </div>
                     </div>

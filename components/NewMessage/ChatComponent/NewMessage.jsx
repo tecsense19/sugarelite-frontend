@@ -110,7 +110,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
                         }
                     </div>
                 }
-                <div className=" px-[5px] pb-[5px] pt-[10px] rounded-[12px] max-w-full lg:max-w-[calc(100%-70px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-secondary flex flex-col items-start relative">
+                <div className=" px-[5px] pb-[5px] pt-[10px] rounded-[12px] max-w-full lg:max-w-[calc(100%-70px)] rounded-tr-[0px] lg:rounded-tr-[15px] lg:rounded-br-[0px] bg-primary-dark-3  flex flex-col items-start relative">
                     <div className="flex justify-between gap-4 items-center w-full">
                         <div className="text-[16px] font-medium leading-[20px] ps-2"> {user.username} </div>
                         <div className=" text-[14px] italic font-normal leading-[20px] me-3 text-white/70"> {getChatTime(item.milisecondtime)} </div>
@@ -190,7 +190,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
                         }
                     </div> : <div className='h-10 w-10 hidden lg:flex'></div>
                 }
-                <div className="px-[7px] pt-2 pb-[7px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[12px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-primary-dark-3 relative">
+                <div className="px-[7px] pt-2 pb-[7px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[12px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-[#626262] relative">
                     <div className="flex px-2 justify-between items-center ">
                         <div className="text-[16px] font-medium leading-[20px] capitalize"> {toUser.username} </div>
                         <div className="ms-5 text-[14px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
