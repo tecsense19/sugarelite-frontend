@@ -8,11 +8,13 @@ import { useRouter } from 'next/navigation';
 import { client_routes } from '@/app/lib/helpers';
 import chatArrowRight from "/public/assets/chat_arrow_right.png";
 import { useStore } from '@/store/store';
+import NotificationIcon from "/public/assets/bell_icon.svg"
+import Bars_Icon from "/public/assets/bars.svg"
 
 const TopNav = ({ profileList }) => {
 
     const navigate = useRouter()
-    const { dispatch } = useStore()
+    const { dispatch, state: { notifyBadgeState } } = useStore()
 
     const horizontalProfilesRef = useRef(null);
     const [showProfileScrollLeftBtn, setShowProfileScrollLeftBtn] = useState(false)
@@ -65,9 +67,18 @@ const TopNav = ({ profileList }) => {
                     <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
                 </button>
                 <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>
-                <PopOver>
+                {/* <PopOver>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
-                </PopOver>
+                </PopOver> */}
+                <div className='flex gap-x-4'>
+                    <div className='relative'>
+                        <Image src={NotificationIcon} alt="bell icon" width={21} height={21} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
+                        {notifyBadgeState.notify &&
+                            <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute -top-1 -right-1 "></p>
+                        }
+                    </div>
+                    <Image src={Bars_Icon} alt="more" width={24} height={24} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} />
+                </div>
             </div>
             <div className="text-[20px] md:text-[26px] font-semibold md:font-bold leading-[30px] px-4 md:px-[30px] mt-5 md:mt-0">
                 Favorites

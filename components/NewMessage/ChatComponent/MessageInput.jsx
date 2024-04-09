@@ -193,7 +193,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
                                 <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px]" autoComplete="off" />
                                 {
                                     !editingMsg ? <Attachment /> : <>
-                                        <div className='cursor-pointer' onClick={() => { setEditingMsg(null); reset() }}>
+                                        <div className='cursor-pointer' onClick={() => { setEditingMsg(null); setSendingImages([]); reset() }}>
                                             <Image src={closeIcon} priority alt="closeIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
                                             <Image src={closeIcon} priority alt="closeIcon" height={20} width={20} className="md:hidden pointer-events-none" />
                                         </div>

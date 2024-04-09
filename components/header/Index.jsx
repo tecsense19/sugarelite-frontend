@@ -10,10 +10,10 @@ import { io } from "socket.io-client"
 
 let socket;
 
-const Header = ({ decryptedUser, allUsers, chatId }) => {
+const Header = ({ decryptedUser, allUsers, chatList }) => {
   const pathname = usePathname()
 
-  const { state: { userState }, dispatch } = useStore()
+  const { state: { userState, chatProfileState }, dispatch } = useStore()
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
 
@@ -34,12 +34,16 @@ const Header = ({ decryptedUser, allUsers, chatId }) => {
   }, [])
 
   useEffect(() => {
-    if (chatId.length) {
-      chatId.forEach(i => {
-        dispatch({ type: "Add_Profile", payload: { id: i, milisecondtime: '' } })
-      })
+    if (user) {
+      const user_chats = chatList.data.filter(chat => chat.sender_id === user?.id || chat.receiver_id === user?.id);
+      const chatId = Array.from(new Set(user_chats.map(chat => chat.sender_id !== user.id ? chat.sender_id : chat.receiver_id)));
+      if (chatId.length) {
+        chatId.forEach(i => {
+          dispatch({ type: "Add_Profile", payload: { id: i, milisecondtime: '' } })
+        })
+      }
     }
-  }, [])
+  }, [user])
 
   return (
     <>

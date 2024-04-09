@@ -21,15 +21,14 @@ export default async function RootLayout({ children }) {
   const allUsers = await all_profiles_action()
   const chatList = await chat_list_action();
 
-  const user_chats = chatList.data.filter(chat => chat.sender_id === user?.id || chat.receiver_id === user?.id);
-  const chatId = Array.from(new Set(user_chats.map(chat => chat.sender_id !== user.id ? chat.sender_id : chat.receiver_id)));
+
 
   return (
     <html className="overflow-x-hidden" lang="en">
       <AntdRegistry>
         <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
           <StoreProvider>
-            <Header decryptedUser={user} allUsers={allUsers.success && allUsers.data} chatId={chatId} />
+            <Header decryptedUser={user} allUsers={allUsers.success && allUsers.data} chatList={chatList} />
             {children}
           </StoreProvider>
         </body>

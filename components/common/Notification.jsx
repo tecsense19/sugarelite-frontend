@@ -8,13 +8,13 @@ import { useEffect, useState } from 'react';
 import Cross from "/public/assets/cross_icon.svg"
 
 
-const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) => {
+const Notification = ({ open, notifications, user, allUsers, socket }) => {
+  const { state: { userState, notificationOpenState }, dispatch } = useStore()
 
   const onClose = () => {
-    setOpen(false)
+    dispatch({ type: "Close_Notification", payload: false })
   }
 
-  const { state: { userState }, dispatch } = useStore()
   const [api, contextHolder] = notification.useNotification();
   const [loadingArr, setLoadingArr] = useState([])
 
@@ -132,6 +132,10 @@ const Notification = ({ open, setOpen, notifications, user, allUsers, socket }) 
       setLoadingArr((prev) => prev.filter(ele => ele.id !== id))
     }
   }
+
+  useEffect(() => {
+    dispatch({ type: "Add_Notification_Badge", payload: false })
+  }, [notificationOpenState])
 
   return (
     <div className={`fixed md:top-[66px] bottom-0 right-0 w-full z-[10] h-full md:h-[calc(100%-66px)] transition-transform duration-300 ease-out origin-right ${open ? "scale-x-1" : "scale-x-0"}`}>

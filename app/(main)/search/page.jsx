@@ -11,13 +11,13 @@ const Search = async () => {
   const users = all_users.data.filter((i) => i.id !== current_user?.id)
 
   return (
-    <Suspense fallback={<Loader />}>
+    <>
       {
-        (all_users.success)
+        all_users.success
           ? <Search_Index allUsers={users} />
           : <div>No data found</div>
       }
-    </Suspense>
+    </>
   )
 }
 

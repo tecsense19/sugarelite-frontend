@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import arrow_left from "../../public/assets/arrow_left.svg"
 import more_horizontal from "../../public/assets/more_horizontal.svg"
+import Bars_Icon from "/public/assets/bars.svg"
 import edit from "../../public/assets/edit.svg"
 import premium from "../../public/assets/premium.svg"
 import PopOver from './commons/PopOver'
@@ -14,11 +15,11 @@ import { useStore } from '@/store/store'
 import lock_1 from "/public/assets/lock_1.svg"
 import subscription_logo from "/public/assets/subscription_logo.svg"
 import prohibition from "/public/assets/prohibition.svg"
-import SideDrawer from '../common/SideDrawer'
+import NotificationIcon from "/public/assets/bell_icon.svg"
 
 const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileToggle }) => {
 
-    const { state: { userState }, dispatch } = useStore()
+    const { state: { userState, notifyBadgeState }, dispatch } = useStore()
 
     const [user, setUser] = useState(userState ? userState : decryptedUser)
 
@@ -64,13 +65,21 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
 
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
-            <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
+            <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex  justify-between items-center">
                 <Link href={path === "/profile/edit" ? "/profile" : "/search"}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
                 <p className="text-[24px] font-semibold select-none">Profile</p>
-                <PopOver>
+                {/* <PopOver>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
-                </PopOver>
-                {/* <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} /> */}
+                </PopOver> */}
+                <div className='flex gap-x-4'>
+                    <div className='relative'>
+                        <Image src={NotificationIcon} alt="bell icon" width={21} height={21} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
+                        {notifyBadgeState.notify &&
+                            <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute -top-1 -right-1 "></p>
+                        }
+                    </div>
+                    <Image src={Bars_Icon} alt="more" width={24} height={24} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} />
+                </div>
             </div>
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">

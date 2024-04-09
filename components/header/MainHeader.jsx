@@ -33,15 +33,13 @@ import SideDrawer from "../common/SideDrawer"
 
 const MainHeader = ({ decryptedUser, allUsers }) => {
 
-  const { state: { userState, notificationOpenState, blockedUsersState, notifyBadgeState, showMenu }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState, notifyBadgeState }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
   const socket = getSocket()
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
   const [notifications, setNotifications] = useState([])
-  const [isNotify, setIsnotify] = useState(true)
 
   useEffect(() => {
     setUser(userState ? userState : decryptedUser)
@@ -90,9 +88,11 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
 
     const albumAccessHandler = (obj) => {
       dispatch({ type: "Add_Decision_User", payload: obj })
-      if (obj.data.receiver_id === decryptedUser.id) {
-        console.log(isNotify)
+      const { data, status } = obj
+      if (!notificationOpenState && status === "pending" && data.receiver_id === decryptedUser.id) {
+        dispatch({ type: "Add_Notification_Badge", payload: true })
       }
+
     }
 
     const receiveMessageHandler = (obj) => {
@@ -113,7 +113,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
         socket.off("receive-message", receiveMessageHandler);
       }
     };
-  }, [user, socket])
+  }, [user, socket, notificationOpenState])
 
   const handleLogout = () => {
     logout_user()
@@ -156,7 +156,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
           </div>
           <div className="flex items-center me-[72px]">
             <div className="flex flex-row gap-x-[30px] me-[35px]">
-              <button className="transition-all duration-150 hover:scale-110 relative" onClick={() => setIsDrawerOpen(isDrawerOpen ? false : true)}>
+              <button className="transition-all duration-150 hover:scale-110 relative" onClick={() => notificationOpenState ? dispatch({ type: "Close_Notification", payload: false }) : dispatch({ type: "Open_Notification", payload: true })}>
                 <Image height={20} width={20} src={notification} alt="" />
                 {notifyBadgeState.notify &&
                   <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute top-0 right-0 "></p>
@@ -187,7 +187,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
         </div>
       </header>
       {
-        user && <Notification open={isDrawerOpen || notificationOpenState} setIsnotify={setIsnotify} setOpen={setIsDrawerOpen} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
+        user && <Notification open={notificationOpenState} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
       }
       {
 

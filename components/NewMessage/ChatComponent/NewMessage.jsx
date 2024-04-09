@@ -99,7 +99,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
 
     if (item.sender_id === user.id) {
         return (
-            <div className='flex flex-col lg:flex-row items-end gap-x-5'>
+            <div className='flex flex-col lg:flex-row items-end gap-x-5 max-w-[85%]'>
                 {
                     isFirstMessage &&
                     <div className='cursor-pointer lg:hidden' onClick={onProfileClick}>

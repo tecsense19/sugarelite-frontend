@@ -108,22 +108,6 @@ const accessDecisionReducer = (state, action) => {
   }
 }
 
-// const chatProfileReducer = (state, action) => {
-//   switch (action.type) {
-//     case 'Add_Profile':
-//       const newProfile = action.payload.obj;
-//       const existingProfileIndex = state.findIndex(profile => profile.obj.id === newProfile.id);
-//       if (existingProfileIndex !== -1) {
-//         const newState = [...state];
-//         newState[existingProfileIndex] = action.payload;
-//         return newState;
-//       } else {
-//         return [...state, action.payload];
-//       }
-//     default:
-//       return state;
-//   }
-// }
 
 const chatProfileReducer = (state, action) => {
   switch (action.type) {
@@ -144,22 +128,12 @@ const newMsgReducer = (state, action) => {
   switch (action.type) {
     case 'Add_Message':
       const newMsg = action.payload;
-      if (newMsg.id) {
-        const existingMsgIndex = state.findIndex(msg => msg.id === newMsg.id);
-        if (existingMsgIndex !== -1) {
-          const updatedState = state.filter((_, index) => index !== existingMsgIndex);
-          return [...updatedState, newMsg];
-        } else {
-          return [...state, newMsg];
-        }
+      const existingMsgIndex = state.findIndex(msg => msg.id === newMsg.id);
+      if (existingMsgIndex !== -1) {
+        const updatedState = state.filter((_, index) => index !== existingMsgIndex);
+        return [...updatedState, newMsg];
       } else {
-        const existingMsgIndex = state.findIndex(msg => msg.receiver_id === newMsg.receiver_id);
-        if (existingMsgIndex !== -1) {
-          const updatedState = state.filter((_, index) => index !== existingMsgIndex);
-          return [...updatedState, newMsg];
-        } else {
-          return [...state, newMsg];
-        }
+        return [...state, newMsg];
       }
     default:
       return state;
@@ -225,7 +199,6 @@ const sideDarwerReducer = (state, action) => {
 
 
 
-
 const StoreContext = createContext();
 
 const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
@@ -246,7 +219,7 @@ const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageSt
         blockedUsersState: [],
         messageUpdate: [],
         notifyBadgeState: { msg: false, notify: false },
-        sideMenu: false
+        sideMenu: false,
       };
     default:
       return {
@@ -264,7 +237,7 @@ const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageSt
         blockedUsersState: blockedUsers(blockedUsersState, action),
         messageUpdate: editOrDeleteReducer(messageUpdate, action),
         notifyBadgeState: notifyReducer(notifyBadgeState, action),
-        sideMenu: sideDarwerReducer(sideMenu, action)
+        sideMenu: sideDarwerReducer(sideMenu, action),
       };
   }
 };
@@ -298,7 +271,7 @@ export const StoreProvider = ({ children }) => {
     blockedUsersState: [],
     messageUpdate: [],
     notifyBadgeState: { msg: false, notify: false },
-    sideMenu: false
+    sideMenu: false,
   });
 
   useEffect(() => {
