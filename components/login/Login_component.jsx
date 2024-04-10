@@ -55,7 +55,7 @@ const Login = ({ setIsForgotOpen }) => {
         const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
         setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
         setIsLoading(false)
-        connectSocket()
+        connectSocket(res.data.id)
         client_notification(api, "topRight", "success", res.message, 2)
         navigate.push(client_routes.profile)
     }

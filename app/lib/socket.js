@@ -4,9 +4,9 @@ import { socket_server } from './helpers';
 
 let socket;
 
-export const connectSocket = () => {
+export const connectSocket = (id) => {
     socket = io(socket_server);
-
+    socket.emit("join", id)
 };
 
 export const disconnectSocket = () => {

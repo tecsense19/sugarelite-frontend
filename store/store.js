@@ -197,11 +197,18 @@ const sideDarwerReducer = (state, action) => {
   }
 }
 
-
+const onlineUsersReducer = (state, action) => {
+  switch (action.type) {
+    case "Update_Online_Users":
+      return action.payload
+    default:
+      return state;
+  }
+}
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
+const rootReducer = ({ firstState, filterState, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -220,6 +227,7 @@ const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageSt
         messageUpdate: [],
         notifyBadgeState: { msg: false, notify: false },
         sideMenu: false,
+        onlineUsers: []
       };
     default:
       return {
@@ -238,6 +246,7 @@ const rootReducer = ({ firstState, filterState, sideMenu, userState, toMessageSt
         messageUpdate: editOrDeleteReducer(messageUpdate, action),
         notifyBadgeState: notifyReducer(notifyBadgeState, action),
         sideMenu: sideDarwerReducer(sideMenu, action),
+        onlineUsers: onlineUsersReducer(onlineUsers, action)
       };
   }
 };
@@ -272,6 +281,7 @@ export const StoreProvider = ({ children }) => {
     messageUpdate: [],
     notifyBadgeState: { msg: false, notify: false },
     sideMenu: false,
+    onlineUsers: []
   });
 
   useEffect(() => {

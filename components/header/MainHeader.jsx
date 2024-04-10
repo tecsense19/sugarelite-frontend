@@ -100,18 +100,26 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
       }
     }
 
+    const onlineUserHandler = (arr) => {
+      dispatch({ type: "Update_Online_Users", payload: arr })
+    }
+
     socket.on("blocked-status", blockUserHandler);
     socket.on("unblocked-status", unblockUserHandler);
     socket.on("receive-message", receiveMessageHandler);
-    socket.on("album-notification", albumAccessHandler)
+    socket.on("album-notification", albumAccessHandler);
+    socket.on("onlineUsers", onlineUserHandler)
 
     return () => {
       if (socket) {
         socket.off("blocked-status", blockUserHandler);
+        socket.off("unblocked-status", unblockUserHandler);
         socket.off("album-notification", albumAccessHandler)
         socket.off("receive-message", receiveMessageHandler);
+        socket.off("onlineUsers", onlineUserHandler)
       }
     };
+
   }, [user, socket, notificationOpenState])
 
   const handleLogout = () => {
@@ -189,7 +197,6 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
         user && <Notification open={notificationOpenState} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
       }
       {
-
         <SideDrawer />
       }
     </>

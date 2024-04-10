@@ -7,7 +7,6 @@ const Msg = ({ msg, setSelectedImages }) => {
         return (
             <div className={`${msg.get_all_chat_with_image?.length === 1 ? "max-w-[17rem] " : 'max-w-[14rem]'} flex flex-col gap-2  w-full`}>
 
-                {/* <p className=''>{msg.text}</p> */}
                 <div className={`overflow-hidden relative flex gap-1 justify-between flex-wrap cursor-pointer ${msg.get_all_chat_with_image.length === 2 ? "h-[6rem] w-full min-w-[14rem]" : "w-full min-w-[14rem] h-[14rem]"}`} onClick={() => setSelectedImages(msg.get_all_chat_with_image)}>
                     {
                         msg.get_all_chat_with_image.map((i, inx) => {
@@ -30,10 +29,11 @@ const Msg = ({ msg, setSelectedImages }) => {
                         })
                     }
                 </div>
+                {/* <p className=''>{msg.text}</p> */}
             </div>
         )
     } else {
-        return <p className='px-2 pb-1'>{msg?.text}</p>
+        return <p className='py-1 px-1'>{msg?.text}</p>
     }
 }
 

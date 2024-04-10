@@ -11,7 +11,7 @@ import { client_routes } from "./lib/helpers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Sugar Elite",
+  title: "Elite Sugar",
   description: "A dating app.",
 };
 

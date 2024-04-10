@@ -1,7 +1,7 @@
 import 'aos/dist/aos.css';
 
 export const metadata = {
-  title: "Sugar Elite - Profile",
+  title: "Elite Sugar - Profile",
   description: "Profile",
 };
 

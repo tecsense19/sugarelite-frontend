@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 
 const UserComponent = ({ user, setToUser, message, unReadCount }) => {
 
-    const { dispatch, state } = useStore()
+    const { dispatch, state: { onlineUsers } } = useStore()
 
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
@@ -43,16 +43,21 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
                     ) : (
                         <p className="uppercase flex justify-center items-center h-[40px] w-[40px] md:h-[50px] md:min-w-[50px] rounded-full bg-primary-dark text-[20px]">{user.username.charAt(0)}</p>
                     )}
-                    {user.online === 1 && <p className="absolute h-[9px] w-[9px] bg-green-active top-1 rounded-full right-1 "></p>}
+                    {onlineUsers.some(i => i === user.id) && <p className="absolute h-[9px] w-[9px] bg-green-active top-1 rounded-full right-1 "></p>}
                 </div>
                 <div>
-                    <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{user.username}</p>
+                    <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">
+
+                        {user.username}
+                    </p>
                     {
-                        message?.id ? <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">
-                            {
-                                message.type === "deleted" ? "Message deleted" : message?.text || `${message?.get_all_chat_with_image?.length} Images ${message.sender_id !== user.id ? "sended" : "received"}`
-                            }
-                        </p> :
+                        message?.id ?
+                            <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">
+
+                                {
+                                    message.type === "deleted" ? "Message deleted" : message?.text || `${message?.get_all_chat_with_image?.length} Images ${message.sender_id !== user.id ? "sended" : "received"}`
+                                }
+                            </p> :
                             <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">
                                 You started chat with {user.username}
                             </p>

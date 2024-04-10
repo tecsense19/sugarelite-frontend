@@ -15,7 +15,7 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useRouter()
     const [modalOpen, setModalOpen] = useState(false)
-    const { dispatch, } = useStore()
+    const { dispatch, state: { onlineUsers } } = useStore()
     const [api, contextHolder] = notification.useNotification()
 
     const handleShowOptionsChange = (val) => {
@@ -67,7 +67,7 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
                             <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">{toUser.username}</div>
                             <div className="">
                                 {
-                                    toUser.online === 1 && <div className="ms-[10px] flex items-center mt-2 md:mt-0">
+                                    onlineUsers.some(i => i === toUser.id) && <div className="ms-[10px] flex items-center mt-2 md:mt-0">
                                         <div className="h-[6px] w-[6px] md:h-[9px] md:w-[9px] bg-[#3DC73A] rounded-full" />
                                         <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">Active</div>
                                     </div>
