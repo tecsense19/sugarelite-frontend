@@ -207,7 +207,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
         )
     } else {
         return (
-            <div className='flex flex-col lg:flex-row lg:items-end gap-x-5 '>
+            <div className='flex flex-col lg:flex-row lg:items-end gap-x-5 max-w-[88%]'>
                 {
                     isFirstMessage &&
                     <div className='cursor-pointer lg:hidden' onClick={onProfileClick}>
@@ -227,32 +227,24 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
                         }
                     </div> : <div className='h-10 w-10 hidden lg:flex'></div>
                 }
-                {/* <div className="px-[7px] pt-2 pb-[7px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[12px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-[#626262] relative">
-                    <div className="flex px-2 justify-between items-center ">
-                        <div className="text-[16px] font-medium leading-[20px] capitalize"> {toUser.username} </div>
-                        <div className="ms-5 text-[14px] italic font-normal leading-[20px] text-white/70"> {getChatTime(item.milisecondtime)} </div>
-                    </div>
-                    {item.type === "deleted" ?
-                        <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80 px-2 p-1">
-                            This message was deleted.
-                        </div> :
-                        <div className="mt-[10px] break-words max-w-full text-[16px] font-normal leading-[20px] text-white/80">
-                            <Msg msg={item} setSelectedImages={setSelectedImages} />
-                        </div>
-                    }
-                    {
-                        item.type === "edited" && <div className='absolute -right-[33px] top-2'>
-                            <Image src={penIcon} alt="" height={18} width={18} priority className="opacity-50 pointer-events-none" />
-                        </div>
-                    }
-                </div> */}
+
                 <div className="px-[7px] pt-2 pb-[7px] max-w-full lg:max-w-[calc(100%-60px)] rounded-[12px] rounded-tl-[0px] lg:rounded-tl-[15px] lg:rounded-bl-[0px] break-words bg-[#626262] relative min-w-[5rem] flex items-end">
                     <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
                         {
                             item.type === "deleted" ? <p className='p-2'> Message deleted</p> : <Msg msg={item} setSelectedImages={setSelectedImages} />
                         }
                     </div>
-                    <span className='text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem]'>{getChatTime(item.milisecondtime)}</span>
+                    {
+                        item?.get_all_chat_with_image?.length ?
+                            <div className='absolute text-white w-[94%]  font-normal text-end text-[12px] mt-1 min-w-[4rem] gap-x-1 justify-end flex'>
+                                <div className='absolute w-[225px]  -right-1 bottom-0 z-10'>
+                                    <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
+                                </div>
+                                <span className='z-20 me-1'>{getChatTime(item.milisecondtime)}</span>
+                            </div>
+                            : <span className='text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem]'>{getChatTime(item.milisecondtime)}</span>
+                    }
+
                 </div>
             </div>
         )
