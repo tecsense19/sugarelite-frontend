@@ -1,11 +1,12 @@
+import { getSocket } from '@/app/lib/socket';
 import { useStore } from '@/store/store';
 import Image from 'next/image';
 import React, { useEffect } from 'react'
 
 const UserComponent = ({ user, setToUser, message, unReadCount }) => {
 
-    const { dispatch, state: { onlineUsers } } = useStore()
-
+    const { dispatch, state: { onlineUsers, toMessageState, userState } } = useStore()
+    const socket = getSocket()
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
         const today = new Date();
@@ -32,10 +33,26 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
         // console.log(message)
     };
 
+    const toUserState = () => {
+        if (toMessageState && toMessageState.id !== user.id) {
+            console.log(message)
+            socket.emit("open-chat", { sender_id: userState.id, receiver_id: toMessageState.id, type: "closed", lastMsgId: message.id });
+        }
+        dispatch({ type: "Message_To", payload: user });
+        socket.emit("open-chat", { sender_id: userState.id, receiver_id: user.id, type: "opened", lastMsgId: message.id });
+        console.log(message)
+    }
 
-    // console.log(message)
     return (
-        <div className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer" onClick={() => { dispatch({ type: "Message_To", payload: user }) }}>
+        <div
+            className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer"
+            onClick={() => {
+                if (toMessageState && toMessageState.id !== user.id) {
+                    socket.emit("open-chat", { sender_id: userState.id, receiver_id: toMessageState.id, type: "closed" });
+                }
+                dispatch({ type: "Message_To", payload: user });
+            }}
+        >
             <div className="flex gap-4 items-center">
                 <div className="relative">
                     {user.avatar_url ? (

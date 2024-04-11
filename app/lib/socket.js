@@ -5,6 +5,7 @@ import { socket_server } from './helpers';
 let socket;
 
 export const connectSocket = (id) => {
+    // fetch("/api/socket");
     socket = io(socket_server);
     socket.emit("join", id)
 };

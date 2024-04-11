@@ -7,7 +7,7 @@ import notification from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { useStore } from "@/store/store"
-import { logout_user, private_album_notification, search_profile_action } from "@/app/lib/actions"
+import { logout_user, private_album_notification, read_message_action, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
 import { io } from 'socket.io-client';
@@ -31,9 +31,9 @@ import SideDrawer from "../common/SideDrawer"
 // };
 
 
-const MainHeader = ({ decryptedUser, allUsers }) => {
+const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
 
-  const { state: { userState, notificationOpenState, notifyBadgeState }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState, notifyBadgeState, onlineUsers }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
   const socket = getSocket()
@@ -71,6 +71,28 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
   }, [userState])
 
   useEffect(() => {
+    if (onlineUsers.length) {
+      const onlineUser = onlineUsers[onlineUsers.length - 1]
+      console.log(onlineUser)
+    }
+  }, [onlineUsers])
+
+  useEffect(() => {
+    if (chatList?.length) {
+      const myReceivedMsgs = chatList.filter(msg => msg.receiver_id === decryptedUser.id)
+      if (myReceivedMsgs.length) {
+        const senderId = Array.from(new Set(myReceivedMsgs.filter(msg => msg.status === "sent")?.map(i => i.sender_id)))
+        if (senderId.length) {
+          senderId.forEach(id => {
+            const msgs = myReceivedMsgs.filter((i) => i.sender_id === id)?.map(j => j.id).toString()
+            read_message_action({ sender_id: id, receiver_id: decryptedUser.id, status: "delivered", messageId: msgs })
+          })
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (!socket) return
 
     const blockUserHandler = (obj) => {
@@ -101,7 +123,12 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
     }
 
     const onlineUserHandler = (arr) => {
-      dispatch({ type: "Update_Online_Users", payload: arr })
+      const filtered = arr.filter(i => i !== userState.id)
+      dispatch({ type: "Update_Online_Users", payload: filtered })
+    }
+
+    const myChattingPartner = (obj) => {
+      dispatch({ type: "Add_Partner", payload: obj })
     }
 
     socket.on("blocked-status", blockUserHandler);
@@ -109,6 +136,7 @@ const MainHeader = ({ decryptedUser, allUsers }) => {
     socket.on("receive-message", receiveMessageHandler);
     socket.on("album-notification", albumAccessHandler);
     socket.on("onlineUsers", onlineUserHandler)
+    socket.on("opened-chat-user", myChattingPartner)
 
     return () => {
       if (socket) {

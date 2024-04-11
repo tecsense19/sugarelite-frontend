@@ -157,6 +157,22 @@ export const send_message_action = async (form) => {
     }
 }
 
+export const read_message_action = async (form) => {
+    try {
+        const res = await fetch(server_routes.readMessage, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const private_image_request = async (form) => {
     try {
         const formData = new FormData()

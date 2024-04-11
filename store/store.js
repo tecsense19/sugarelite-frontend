@@ -206,9 +206,30 @@ const onlineUsersReducer = (state, action) => {
   }
 }
 
+const chatPartnerListReducer = (state, action) => {
+  switch (action.type) {
+    case "Add_Partner":
+      const id = action.payload.sender_id
+      const findIdIndex = state.findIndex(i => i.sender_id === id);
+      if (findIdIndex !== -1) {
+        const newState = [...state];
+        if (action.payload.type === "closed") {
+          newState[findIdIndex] = { ...state[findIdIndex], type: "closed" }
+          return newState;
+        }
+        newState[findIdIndex] = action.payload
+        return newState;
+      } else {
+        return [...state, action.payload];
+      }
+    default:
+      return state;
+  }
+}
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
+const rootReducer = ({ firstState, filterState, chatPartnerList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -227,7 +248,8 @@ const rootReducer = ({ firstState, filterState, onlineUsers, sideMenu, userState
         messageUpdate: [],
         notifyBadgeState: { msg: false, notify: false },
         sideMenu: false,
-        onlineUsers: []
+        onlineUsers: [],
+        chatPartnerList: []
       };
     default:
       return {
@@ -246,7 +268,8 @@ const rootReducer = ({ firstState, filterState, onlineUsers, sideMenu, userState
         messageUpdate: editOrDeleteReducer(messageUpdate, action),
         notifyBadgeState: notifyReducer(notifyBadgeState, action),
         sideMenu: sideDarwerReducer(sideMenu, action),
-        onlineUsers: onlineUsersReducer(onlineUsers, action)
+        onlineUsers: onlineUsersReducer(onlineUsers, action),
+        chatPartnerList: chatPartnerListReducer(chatPartnerList, action)
       };
   }
 };
@@ -281,7 +304,8 @@ export const StoreProvider = ({ children }) => {
     messageUpdate: [],
     notifyBadgeState: { msg: false, notify: false },
     sideMenu: false,
-    onlineUsers: []
+    onlineUsers: [],
+    chatPartnerList: []
   });
 
   useEffect(() => {

@@ -39,13 +39,15 @@ const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMo
         }
     }
 
-
-
     return (
         <>
             {contextHolder}
             <div className="w-full  md:border-b-[1px] border-white/30 px-4 md:px-10 pt-4 pb-1 md:py-5 flex justify-between items-center">
-                <button className="flex md:hidden items-center justify-center" onClick={() => { setShowMobileChatContent(false); dispatch({ type: "Message_To", payload: null }) }}>
+                <button className="flex md:hidden items-center justify-center" onClick={() => {
+                    setShowMobileChatContent(false);
+                    dispatch({ type: "Message_To", payload: null });
+                    socket.emit("open-chat", { sender_id: currentUser.id, receiver_id: toUser.id, type: "closed" });
+                }}>
                     <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
                 </button>
                 <div className="flex items-center">

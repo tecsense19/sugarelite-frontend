@@ -12,6 +12,7 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import Link from 'next/link';
 import cross from "/public/assets/cross.svg"
+import { useStore } from '@/store/store';
 
 const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages }) => {
 
@@ -21,6 +22,19 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     const [api, contextHolder] = notification.useNotification()
     const [isEmoji, setIsEmoji] = useState(false)
     const [isdisabled, setIsDisabled] = useState(false)
+    const { state: { onlineUsers, chatPartnerList } } = useStore()
+
+    const isUserOnline = (id) => {
+        const isOnline = onlineUsers.some(i => i === id)
+        if (!isOnline) {
+            return "sent"
+        } else if (chatPartnerList.some(i => i.sender_id === id && i.type === "opened")) {
+            return "read"
+        }
+        else {
+            return "delivered"
+        }
+    }
 
     const getFormData = ({ sender_id, receiver_id, message, type, id }) => {
         let formdata = new FormData
@@ -29,6 +43,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
         formdata.append("message", message)
         formdata.append("id", id)
         formdata.append("type", type)
+        formdata.append("status", isUserOnline(receiver_id))
         sendingImages.forEach((image, index) => {
             if (image.file) {
                 formdata.append(`chat_images[]`, image.file);

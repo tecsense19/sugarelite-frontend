@@ -7,14 +7,15 @@ import TypingAnimation from '../TypingAnimation/TypingAnimation';
 import Message from './Message';
 import double_tick from "/public/assets/double_tick.svg";
 import NewMessage from './NewMessage';
+import { read_message_action } from '@/app/lib/actions';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg }) => {
 
   const msgRef = useRef(null)
 
   const [isTyping, setIsTyping] = useState(false)
   const [isScroller, setIsScroller] = useState(false)
-  const { state: { newMsgState } } = useStore()
+  const { state: { newMsgState, onlineUsers, chatPartnerList, toMessageState } } = useStore()
 
 
   let currentDate = null
@@ -105,13 +106,35 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
     };
   }, [socket, toUser, currentUser.id]);
 
+  useEffect(() => {
+    const msgs = chats.filter(msg => msg.receiver_id === currentUser.id && msg.status !== "read")?.map(i => i.id)
+
+    if (msgs.length && msgs[msgs.length - 1] !== lastUpdatedMsg) {
+      read_message_action({ sender_id: toUser.id, receiver_id: currentUser.id, status: "read", messageId: msgs.toString() })
+      setLastUpdatedMsg(msgs[msgs.length - 1])
+    }
+  }, [])
+
+  useEffect(() => {
+    socket.emit("open-chat", { sender_id: currentUser.id, receiver_id: toUser.id, type: "opened", lastMsgId: chats[chats.length - 1].id });
+  }, [toUser])
+
   return (
     <div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-311px)]" : "md:h-[calc(100%-211px)] h-[calc(100%-122px)]"} flex flex-col justify-end`}>
       <div className="h-full w-full  p-4 md:py-5 md:px-10 overflow-hidden">
         <div className="relative w-full  h-full flex flex-col justify-end">
           <div ref={msgRef} className="flex flex-col-reverse overflow-y-auto scroll-smooth" onScroll={scrollerHandler} style={{ scrollbarWidth: "none" }}>
             <div>
-              {chats && chats.map((item, idx) => {
+              {chats && chats.map(i => {
+                if (chatPartnerList.some(user => user.sender_id === toUser.id && i.id <= user.lastMsgId)) {
+                  return { ...i, status: "read" }
+                }
+                else if (onlineUsers.some(id => id === toUser.id) && i.status === "sent") {
+                  return { ...i, status: "delivered" }
+                } else {
+                  return i
+                }
+              }).map((item, idx) => {
                 const isLastMessage = idx === chats.length - 1 || chats[idx + 1]?.sender_id !== item.sender_id;
                 const isFirstMessage = idx === 0 || chats[idx - 1]?.sender_id !== item.sender_id;
                 // console.log(item)
