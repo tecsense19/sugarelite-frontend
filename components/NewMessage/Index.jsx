@@ -69,7 +69,7 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
                         const existingIndex = updatedUnreadMsgs.findIndex(item => item.id === obj.sender_id);
 
                         if (existingIndex !== -1) {
-                            updatedUnreadMsgs[existingIndex].count += 1 / 2;
+                            updatedUnreadMsgs[existingIndex].count += 1;
                         } else {
                             updatedUnreadMsgs.push({ id: obj.sender_id, count: 1 });
                         }
