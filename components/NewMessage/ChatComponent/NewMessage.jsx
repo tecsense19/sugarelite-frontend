@@ -116,18 +116,8 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
   if (item.sender_id === user.id) {
     return (
       <div className='flex flex-col lg:flex-row  max-w-[85%]'>
-        {/* {
-                    isFirstMessage &&
-                    <div className='cursor-pointer lg:hidden' onClick={onProfileClick}>
-                        {
-                            user.avatar_url ? <>
-                                <Image src={user.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] object-cover  pointer-events-none rounded-full mb-[10px]" />
-                            </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center uppercase items-center bg-primary-dark-3 h-10 w-10">{user.username.charAt(0)}</p>
-                        }
-                    </div>
-                } */}
         <div
-          className={`p-2  max-w-full bg-primary-dark-3 items-end flex justify-end relative min-w-[5rem] ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}
+          className={`p-2  max-w-full bg-primary-dark-3 relative min-w-[5rem] ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}
           onMouseEnter={popupHandler}
           onMouseLeave={popupRemoveHandler}
         >
@@ -159,7 +149,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
           }
           <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
             {
-              item.type === "deleted" ? <p className='p-2 text-[15px]'> You deleted this message</p> : <Msg msg={item} setSelectedImages={setSelectedImages} />
+              item.type === "deleted" ? <p className='p-2 text-[15px]'> You deleted this message <span className={`h-[10px] w-[80px] ${item.type === "deleted" ? "hidden" : "inline-block"} `}></span></p> : <Msg msg={item} setSelectedImages={setSelectedImages} />
             }
           </div>
           {
@@ -170,7 +160,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
           {
 
             !item?.get_all_chat_with_image?.length ?
-              <span className='text-white/50 font-normal text-end text-[12px] mt-1 min-w-[5rem] gap-x-1 justify-end flex'>
+              <span className={`text-white/50 font-normal text-end text-[12px] mt-1 min-w-[5rem] gap-x-1 justify-end ${item.type === "deleted" ? "hidden" : "flex"}  absolute bottom-[7px] right-[9px]`}>
                 {getChatTime(item.milisecondtime)}
                 {
                   item?.status === "read" ?
@@ -180,76 +170,47 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
                       <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
                 }
               </span>
-              : <div className='absolute text-white font-normal text-end text-[12px] mt-1 min-w-[4rem] me-1 gap-x-1 justify-end flex'>
-                <div className='absolute w-[225px]  -right-1 bottom-0 z-10'>
+              :
+              <div className={`absolute bottom-[10px] right-[6px] text-white font-normal text-end text-[12px] mt-1 min-w-[6rem] me-1 gap-x-1 justify-end ${item.type === "deleted" ? "hidden" : "flex"} `}>
+                <div className='absolute w-[225px]  -right-0 bottom-0'>
                   <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
                 </div>
-                <span className='z-20'>{getChatTime(item.milisecondtime)}</span>
+                <span className='absolute right-[22px] -bottom-[2px]'>{getChatTime(item.milisecondtime)}</span>
 
                 {
                   item?.status === "read" ?
-                    <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none z-20`} /> :
+                    <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
                     item?.status === "delivered" ?
-                      <Image src={double_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none z-20 " /> :
-                      <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none z-20" />
+                      <Image src={double_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
+                      <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none" />
                 }
               </div>
           }
         </div>
-        {/* {
-                    isLastMessage ?
-                        <div className=' hidden lg:block '>
-                            {
-                                user.avatar_url ? <>
-                                    <Image src={user.avatar_url} alt="" height={50} width={50} priority className=" object-cover  h-[50px] w-[50px] pointer-events-none rounded-full " />
-                                </> : <>
-                                    <p className='h-[50px] uppercase w-[50px] bg-primary-dark text-[24px] justify-center items-center hidden lg:flex pointer-events-none rounded-full '>{user.username.charAt(0)}</p>
-                                </>
-                            }
-                        </div> : <div className='h-[50px] w-[50px] hidden lg:flex '></div>
-                } */}
       </div>
     )
   } else {
     return (
-      <div className='flex flex-col lg:flex-row lg:items-end max-w-[88%]'>
-        {/* {
-                    isFirstMessage &&
-                    <div className='cursor-pointer lg:hidden' onClick={onProfileClick}>
-                        {
-                            toUser.avatar_url ? <>
-                                <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="lg:hidden h-[40px] object-cover  pointer-events-none rounded-full mb-[10px]" />
-                            </> : <p className="lg:hidden pointer-events-none rounded-full mb-[10px] flex justify-center uppercase items-center bg-primary-dark-3 h-10 w-10">{toUser.username.charAt(0)}</p>
-                        }
-                    </div>
-                }
-                {isLastMessage ?
-                    <div className='cursor-pointer hidden lg:block' onClick={onProfileClick}>
-                        {
-                            toUser.avatar_url ? <>
-                                <Image src={toUser.avatar_url} alt="" height={40} width={40} priority className="hidden lg:block object-cover  h-10 pointer-events-none rounded-full " />
-                            </> : <p className="hidden lg:flex pointer-events-none rounded-full uppercase  justify-center items-center h-10 w-10 bg-primary-dark-3">{toUser.username.charAt(0)}</p>
-                        }
-                    </div> : <div className='h-10 w-10 hidden lg:flex'></div>
-                } */}
-
-        <div className={`px-[7px] pt-2 pb-[7px] max-w-full ${isFirstMessage ? "rounded-tr-[12px] rounded-br-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-bl-[12px] rounded-tr-[12px] rounded-br-[12px]" : " rounded-e-[12px]"} break-words bg-[#626262] relative min-w-[5rem] flex items-end`}>
-          <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
+      <div className='flex flex-col lg:flex-row lg:items-end max-w-[88%] '>
+        <div className={`px-[7px] pt-2 pb-[7px] ${isFirstMessage ? "rounded-tr-[12px] rounded-br-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-bl-[12px] rounded-tr-[12px] rounded-br-[12px]" : " rounded-e-[12px]"} break-words bg-[#626262] relative  flex items-end`}>
+          <div className=" break-words text-[16px] font-normal leading-[22px] text-white/80 ">
             {
               item.type === "deleted" ? <p className='p-2'> Message deleted</p> : <Msg msg={item} setSelectedImages={setSelectedImages} />
             }
           </div>
           {
             item?.get_all_chat_with_image?.length ?
-              <div className='absolute text-white w-[94%]  font-normal text-end text-[12px] mt-1 min-w-[4rem] gap-x-1 justify-end flex'>
-                <div className='absolute w-[225px]  -right-1 bottom-0 z-10'>
+              <div className={`absolute text-white w-[94%]  font-normal text-end text-[12px] mt-1 min-w-[4rem] gap-x-1 justify-end ${item.type === "deleted" ? "hidden" : "flex"}`}>
+                <div className='absolute w-[225px]  -right-1 bottom-0'>
                   <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
                 </div>
-                <span className='z-20 me-1'>{getChatTime(item.milisecondtime)}</span>
+                <span className='absolute me-1 bottom-[2px]'>{getChatTime(item.milisecondtime)}</span>
               </div>
-              : <span className='text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem]'>{getChatTime(item.milisecondtime)}</span>
+              :
+              <span className={`text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem] absolute right-[10px] bottom-[7px] ${item.type === "deleted" ? "hidden" : ""}`}>
+                {getChatTime(item.milisecondtime)}
+              </span>
           }
-
         </div>
       </div>
     )

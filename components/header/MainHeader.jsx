@@ -73,7 +73,6 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
   useEffect(() => {
     if (onlineUsers.length) {
       const onlineUser = onlineUsers[onlineUsers.length - 1]
-      console.log(onlineUser)
     }
   }, [onlineUsers])
 

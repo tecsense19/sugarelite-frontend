@@ -116,7 +116,9 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
   }, [])
 
   useEffect(() => {
-    socket.emit("open-chat", { sender_id: currentUser.id, receiver_id: toUser.id, type: "opened", lastMsgId: chats[chats.length - 1].id });
+    if (chats.length) {
+      socket.emit("open-chat", { sender_id: currentUser.id, receiver_id: toUser.id, type: "opened", lastMsgId: chats[chats.length - 1].id });
+    }
   }, [toUser])
 
   return (
