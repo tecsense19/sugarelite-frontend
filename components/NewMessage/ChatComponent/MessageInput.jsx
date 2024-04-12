@@ -36,10 +36,10 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
         }
     }
 
-    useEffect(() => {
-        console.log(onlineUsers)
-        console.log(chatPartnerList)
-    }, [onlineUsers, chatPartnerList])
+    // useEffect(() => {
+    //     console.log(onlineUsers)
+    //     console.log(chatPartnerList)
+    // }, [onlineUsers, chatPartnerList])
 
     const getFormData = ({ sender_id, receiver_id, message, type, id }) => {
         let formdata = new FormData
@@ -228,8 +228,8 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
                             </div>
                         </div>
                         :
-                        <div className="w-full h-full pb-[18px] md:pb-10 my-auto">
-                            <div className="w-full py-2 md:py-4 rounded-[5px] bg-black my-auto h-full text-center items-center px-3 md:px-[30px] text-[14px] md:text-[16px] text-white/80 justify-center">Chat limit exceeded for today! Upgrade to <Link href={client_routes.subscription} className="text-secondary inline">premium</Link> for unlimited chatting. 🚀</div>
+                        <div className="w-full h-full pb-[18px]  md:pb-10 my-auto">
+                            <div className="w-full py-2 md:py-4 rounded-[5px] bg-black my-auto h-full text-center items-center px-3 md:px-[30px] text-[12px] md:text-[16px] text-white/80 justify-center">Chat limit exceeded for today! Upgrade to <Link href={client_routes.subscription} className="text-secondary inline">premium</Link> for unlimited chatting. 🚀</div>
                         </div>
                 }
             </div>

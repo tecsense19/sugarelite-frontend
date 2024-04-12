@@ -21,7 +21,7 @@ module.exports = {
       "primary-dark-5": "#555555",
       "primary-dark-6": "#383838",
       "primary_border": "#535353",
-      "green-active": "#3DC73A",
+      "green-active": "#3Da73A",
       "tinder-1": "#FF695B",
       "tinder-2": "#FE426F",
       "neutral": "#414141"

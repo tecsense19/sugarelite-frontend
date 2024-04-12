@@ -131,7 +131,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
                 if (chatPartnerList.some(user => user.sender_id === toUser.id && i.id <= user.lastMsgId)) {
                   return { ...i, status: "read" }
                 }
-                else if (onlineUsers.some(id => id === toUser.id) && i.status === "sent") {
+                else if (onlineUsers.some(id => id === toUser.id) && i.status === "sent" && chatPartnerList.some(user => user.sender_id === toUser.id && i.id <= user.lastMsgId)) {
                   return { ...i, status: "delivered" }
                 } else {
                   return i

@@ -28,7 +28,7 @@ import { getSocket } from "@/app/lib/socket";
 
 const Index = ({ decryptedUser, allUsers, myChats }) => {
 
-    const { state: { userState, newMsgState, toMessageState, chatProfileState }, dispatch } = useStore()
+    const { state: { userState, newMsgState, toMessageState, chatProfileState, chatPartnerList }, dispatch } = useStore()
     const socket = getSocket()
     const toUser = toMessageState
 
@@ -50,6 +50,16 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
 
     useEffect(() => {
         dispatch({ type: "Add_Msg_Badge", payload: false })
+
+    }, [])
+
+    useEffect(() => {
+        return () => {
+            if (userState && toMessageState) {
+                socket.emit("open-chat", { sender_id: userState.id, receiver_id: toMessageState.id, type: "closed" });
+                dispatch({ type: "Message_To", payload: null })
+            }
+        }
     }, [])
 
     useEffect(() => {
@@ -167,6 +177,22 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
     //         }
     //     }
     // }, [newMsgState]);
+
+    useEffect(() => {
+        if (myChats.length) {
+            let tempArr = []
+            const myUnreadMsgs = myChats.filter(i => (i.receiver_id === decryptedUser.id && i.status !== "read"))
+            myUnreadMsgs.forEach((i) => {
+                const index = tempArr.findIndex(j => j.id === i.sender_id)
+                if (index !== -1) {
+                    tempArr[index].count += 1
+                } else {
+                    tempArr.push({ id: i.sender_id, count: 1 })
+                }
+            })
+            setUnReadCount(tempArr)
+        }
+    }, [myChats])
 
     if (chatProfileState.length || newMsgState.length) {
         return (

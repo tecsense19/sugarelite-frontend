@@ -2,15 +2,21 @@
 
 import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
-import Img2 from "../../public/assets/profile_img_3.png";
-import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
-import closeIcon from "../../public/assets/cross_icon.svg";
-import starIcon from "../../public/assets/star_icon.svg";
+import Img2 from "/public/assets/profile_img_3.png";
+import premiumUserIcon from "/public/assets/premium_user_icon.svg";
+import closeIcon from "/public/assets/cross_icon.svg";
+import starIcon from "/public/assets/star_icon.svg";
 import heartIcon from "/public/assets/heart_swipe_icon.svg";
+import womanPlaceolderImg from "/public/assets/woman.png";
+import manPlaceolderImg from "/public/assets/man.png";
+import placeholder from "/public/assets/place_holder.png";
+import { useStore } from '@/store/store';
 
 const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, activeIndex, currentPhotoNumber }) => {
   const cardRef = useRef(null);
   let dragCardValues = {}
+
+  const { state: { onlineUsers } } = useStore()
 
   useEffect(() => {
     if (cardRef.current) {
@@ -99,32 +105,55 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
   }
 
   const onCrossClick = () => {
-    console.log("Cross Click", i)
+    // console.log("Cross Click", i)
+    const moveOutWidth = window.innerWidth
+    cardRef.current.style.transform = `translate(-${moveOutWidth}px, -100px) rotate(-30deg)`
+    const direction = 'left';
+    setTimeout(() => {
+      onSwipe(profile, direction, i);
+    }, 100)
   }
   const onBookmarkClick = () => {
     console.log("Bookmark Click", i)
   }
   const onHeartClick = () => {
-    console.log("Heart Click", i)
+    // console.log("Heart Click", i)
+    const moveOutWidth = window.innerWidth
+    cardRef.current.style.transform = `translate(${moveOutWidth}px, -100px) rotate(-30deg)`
+    const direction = 'right';
+    setTimeout(() => {
+      onSwipe(profile, direction, i);
+    }, 100)
   }
 
   return (
     <>
-      <div ref={cardRef} id={`imageChangeCard_${i}`} className={`profile-card absolute text-white bg-primary ease-linear duration-100 transition-transform rounded-xl select-none overflow-hidden w-full h-full ${i === activeIndex ? "cursor-grab" : ""}`} onMouseDown={onCardDragStart} onMouseUp={onCardDragEnd}>
-        {/* <div className="group w-full h-full"> */}
+      <div ref={cardRef} id={`imageChangeCard_${i}`} className={`profile-card absolute text-white bg-primary ease-linear duration-100 transition-transform rounded-xl select-none overflow-hidden w-full h-full ${i === activeIndex ? "cursor-grab" : ""}`}>
+        {/* onMouseDown={onCardDragStart} onMouseUp={onCardDragEnd} */}
         <div className="relative group w-full h-full">
-          <Image src={profile.public_images ? (activeIndex === i ? profile.public_images[currentPhotoNumber] : profile.public_images[0]) : Img2} alt={profile.username} width={1000} height={1000} className='h-full w-full rounded-xl object-cover object-center pointer-events-none' priority />
+          {profile.avatar_url
+            ? <Image src={profile.avatar_url} alt={profile.username} width={1000} height={1000} className='h-full w-full rounded-xl object-cover object-center pointer-events-none' priority />
+            : <>
+              {(profile.sugar_type === "EliteDaddy" || profile.sugar_type === "EliteBoy")
+                ? <Image src={manPlaceolderImg} alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
+                : (profile.sugar_type === "EliteMama" || profile.sugar_type === "EliteBabe")
+                  ? <Image src={womanPlaceolderImg} alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
+                  : <Image src={placeholder} alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
+              }
+            </>
+          }
+          <div className='discover-card-bg h-full w-full rounded-xl absolute top-0 pointer-events-none'></div>
           <div className="absolute inset-0 w-full h-full flex flex-col justify-end items-center pt-[14px] pb-[17px] px-[17px]">
             <div className='relative h-full w-full flex flex-col justify-between'>
-              {profile.is_active && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>}
+              {(onlineUsers.some(i => i === profile.id)) && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>}
               <div className='flex w-full justify-center gap-x-[5.5px]'>
-                {
+                {/* {
                   profile?.public_images?.map((item, idx) => {
                     return (
                       <div key={idx} className={`rounded-full h-[11px] w-[11px] ${(activeIndex === i) ? (currentPhotoNumber === idx ? "bg-secondary" : "bg-white/50") : (idx === 0 ? "bg-secondary" : "bg-white/50")}`} />
                     )
                   })
-                }
+                } */}
               </div>
               <div className='flex justify-between items-end'>
                 <div className="flex flex-col items-start">
@@ -138,9 +167,9 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
                   <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onCrossClick) }}>
                     <Image src={closeIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button>
-                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onBookmarkClick) }}>
+                  {/* <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onBookmarkClick) }}>
                     <Image src={starIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
-                  </button>
+                  </button> */}
                   <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-secondary rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onHeartClick) }}>
                     <Image src={heartIcon} alt="" height={24} width={22} priority className="pointer-events-none h-[24px] w-[22px] aspect-auto" />
                   </button>

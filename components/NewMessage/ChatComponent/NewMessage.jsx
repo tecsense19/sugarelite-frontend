@@ -117,7 +117,7 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
     return (
       <div className='flex flex-col lg:flex-row  max-w-[85%]'>
         <div
-          className={`p-2  max-w-full bg-primary-dark-3 relative min-w-[5rem] ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}
+          className={`p-2  max-w-full bg-primary-dark-3 relative min-w-[5rem]  ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}
           onMouseEnter={popupHandler}
           onMouseLeave={popupRemoveHandler}
         >
@@ -176,13 +176,12 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
                   <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
                 </div>
                 <span className='absolute right-[22px] -bottom-[2px]'>{getChatTime(item.milisecondtime)}</span>
-
                 {
                   item?.status === "read" ?
-                    <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
+                    <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none absolute bottom-0`} /> :
                     item?.status === "delivered" ?
-                      <Image src={double_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
-                      <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none" />
+                      <Image src={double_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" /> :
+                      <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" />
                 }
               </div>
           }
@@ -198,6 +197,11 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
               item.type === "deleted" ? <p className='p-2'> Message deleted</p> : <Msg msg={item} setSelectedImages={setSelectedImages} />
             }
           </div>
+          {
+            item.type === "edited" && <div className='absolute -right-[25px] bottom-1'>
+              <Image src={penIcon} alt="edit-icon" height={16} width={16} priority className="opacity-50 pointer-events-none" />
+            </div>
+          }
           {
             item?.get_all_chat_with_image?.length ?
               <div className={`absolute text-white w-[94%]  font-normal text-end text-[12px] mt-1 min-w-[4rem] gap-x-1 justify-end ${item.type === "deleted" ? "hidden" : "flex"}`}>

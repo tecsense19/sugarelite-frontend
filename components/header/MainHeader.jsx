@@ -33,7 +33,7 @@ import SideDrawer from "../common/SideDrawer"
 
 const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
 
-  const { state: { userState, notificationOpenState, notifyBadgeState, onlineUsers }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
   const socket = getSocket()
@@ -69,12 +69,6 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
       }
     }
   }, [userState])
-
-  useEffect(() => {
-    if (onlineUsers.length) {
-      const onlineUser = onlineUsers[onlineUsers.length - 1]
-    }
-  }, [onlineUsers])
 
   useEffect(() => {
     if (chatList?.length) {

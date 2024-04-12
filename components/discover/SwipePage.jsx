@@ -115,7 +115,7 @@ const SwipePage = ({ allUsers, currentUser }) => {
         </div>
         <div className="flex flex-col justify-center items-center">
           <div className="text-white text-[24px] font-semibold leading-[23px]">Discover</div>
-          <div className="text-white/70 text-[14px] font-medium leading-[16px]">You looking</div>
+          <div className="text-white/70 text-[14px] font-medium leading-[16px] mt-2">You looking</div>
         </div>
         <button className="h-[42px] w-[42px] flex justify-center items-center bg-secondary rounded-[5px]">
           <Image src={settingsIcon} alt="" height={20} width={20} priority className="pointer-events-none" />
@@ -124,7 +124,7 @@ const SwipePage = ({ allUsers, currentUser }) => {
       <div className='w-full flex h-[calc(100%-88px)] md:h-[85%] items-center justify-center relative transition-opacity duration-[.1s] ease-in-out' data-aos="fade-up" data-aos-duration="800">
         <div className='relative items-center h-full w-full flex justify-center'>
           {profiles.length
-            ? <div className="relative max-w-[300px] max-h-[500px] sm:max-w-[330px] sm:max-h-[550px] h-[550px] w-[330px] flex items-start">
+            ? <div className="relative max-w-[500px] max-h-[800px] h-[calc(100vh-224px)] w-[calc(100vw-60px)] flex items-start">
               {/* {profiles?.map((profile, idx) => {
                 return (
                   <React.Fragment key={idx}>
@@ -150,7 +150,7 @@ const SwipePage = ({ allUsers, currentUser }) => {
           }
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-x-4 md:hidden">
+      <div className="grid grid-cols-2 gap-x-4 md:hidden mx-[10px]">
         <button className="h-[46px] rounded-[5px] flex justify-center items-center text-white bg-primary-dark-4 text-[18px] font-medium leading-[20px]">
           Refers
         </button>

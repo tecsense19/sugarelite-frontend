@@ -47,6 +47,9 @@ button:disabled {
   padding: 0 56px !important;
 }
 
+.discover-card-bg {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 34.64%, rgba(0, 0, 0, 0.83) 100%);
+}
 
 
 .ant-select-arrow {

@@ -1,11 +1,15 @@
 import { getSocket } from '@/app/lib/socket';
 import { useStore } from '@/store/store';
 import Image from 'next/image';
-import React, { useEffect } from 'react'
+import Stroke_Online from '/public/assets/online_stroke.svg'
+import read_tick from "/public/assets/read_tick.svg";
+import single_tick from "/public/assets/single_tick.svg";
+import double_tick from "/public/assets/double_tick.svg";
+import React from 'react'
 
-const UserComponent = ({ user, setToUser, message, unReadCount }) => {
+const UserComponent = ({ user, message, unReadCount }) => {
 
-    const { dispatch, state: { onlineUsers, toMessageState, userState } } = useStore()
+    const { dispatch, state: { onlineUsers, toMessageState, userState, chatPartnerList } } = useStore()
     const socket = getSocket()
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
@@ -33,14 +37,21 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
         // console.log(message)
     };
 
-    const toUserState = () => {
-        if (toMessageState && toMessageState.id !== user.id) {
-            console.log(message)
-            socket.emit("open-chat", { sender_id: userState.id, receiver_id: toMessageState.id, type: "closed", lastMsgId: message.id });
+    const readStatus = (msg) => {
+        if (msg.sender_id !== user.id) {
+            if ((message.status === "read") || chatPartnerList.some(i => (i.sender_id === message.receiver_id) && (message.id <= i.lastMsgId))) {
+                return <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} />
+            }
+            else if (
+                (message.status === "delivered") ||
+                onlineUsers.some(i => (i === message.receiver_id) ||
+                    chatPartnerList.some(i => (i.sender_id === message.receiver_id) && (message.id <= i.lastMsgId)))
+            ) {
+                return <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
+            } else {
+                return <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
+            }
         }
-        dispatch({ type: "Message_To", payload: user });
-        socket.emit("open-chat", { sender_id: userState.id, receiver_id: user.id, type: "opened", lastMsgId: message.id });
-        console.log(message)
     }
 
     return (
@@ -60,11 +71,11 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
                     ) : (
                         <p className="uppercase flex justify-center items-center h-[40px] w-[40px] md:h-[50px] md:min-w-[50px] rounded-full bg-primary-dark text-[20px]">{user.username.charAt(0)}</p>
                     )}
-                    {onlineUsers.some(i => i === user.id) && <p className="absolute h-[9px] w-[9px] bg-green-active top-1 rounded-full right-1 "></p>}
+                    {/* {onlineUsers.some(i => i === user.id) && <p className="absolute p-1 bg-green-active stroke-black stroke-2 top-0 rounded-full right-1 "></p>} */}
+                    {onlineUsers.some(i => i === user.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />}
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">
-
                         {user.username}
                     </p>
                     {
@@ -87,8 +98,13 @@ const UserComponent = ({ user, setToUser, message, unReadCount }) => {
                 </p>
                 {
                     unReadCount.find((ele) => ele.id === user.id) ? (
-                        <p className="h-[20px] w-[20px] bg-green-active text-white text-[14px] font-medium leading-[20px] rounded-full flex justify-center items-center">{unReadCount.find((ele) => ele.id === user.id).count}</p>
-                    ) : <></>
+                        <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">{unReadCount.find((ele) => ele.id === user.id).count}</p>
+                    ) : readStatus(message)
+                    // message.sender_id !== user.id &&
+                    // (message.status === "read" && chatPartnerList.some(i => user.sender_id === i.receiver_id && message.id <= i.lastMsgId) ? <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
+                    //     message.status === "delivered" ? <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
+                    //         <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
+                    // )
                 }
             </div>
         </div>
