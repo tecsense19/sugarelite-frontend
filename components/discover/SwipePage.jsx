@@ -3,24 +3,52 @@
 import SwipeCard from "./SwipeCard";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Img1 from "../../public/assets/profile_img_1.png";
+import Img2 from "../../public/assets/profile_img_2.png";
+import Img3 from "../../public/assets/profile_img_3.png";
+import Img4 from "../../public/assets/profile_img_4.png";
+import Img5 from "../../public/assets/profile_img_5.png";
+import Img6 from "../../public/assets/profile_img_6.png";
+import Img7 from "../../public/assets/profile_img_7.png";
+import Img8 from "../../public/assets/profile_img_8.png";
+import Img9 from "../../public/assets/profile_img_9.png";
+import Img10 from "../../public/assets/profile_img_10.png";
+import Img11 from "../../public/assets/profile_img_11.png";
+import Img12 from "../../public/assets/profile_img_12.png";
+import Img13 from "../../public/assets/swipe_img_1.png";
+import Img14 from "../../public/assets/swipe_img_2.png";
 import avtarImage from "../../public/assets/avtar_image.svg"
 import backIcon from "../../public/assets/back_discover_icon.svg";
 import nextIcon from "../../public/assets/next_discover_icon.svg";
 import favouriteIcon from "../../public/assets/favourite_discover_icon.svg";
 import settingsIcon from "../../public/assets/settings_icon.svg";
-import { useStore } from "@/store/store";
 
-const SwipePage = ({ allUsers, currentUser, filterHandler, profiles, setProfiles }) => {
+const tempProfiles = [
+  { id: 1, public_images: [Img1, Img10], is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
+  { id: 2, public_images: [Img2, Img11], is_active: false, name: "Inga Green", age: 22, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 3, public_images: [Img3, Img12], is_active: false, name: "Inga Green", age: 29, is_premium: false, desc: "Obcaecati cumque et" },
+  { id: 4, public_images: [Img4, Img13], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 5, public_images: [Img5, Img14], is_active: false, name: "Inga Green", age: 32, is_premium: false, desc: "Obcaecati cumque et" },
+  { id: 6, public_images: [Img6, Img10], is_active: false, name: "Inga Green", age: 29, is_premium: false, desc: "Obcaecati cumque et" },
+  { id: 7, public_images: [Img7, Img11], is_active: true, name: "Inga Green", age: 28, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 8, public_images: [Img8, Img12], is_active: false, name: "Inga Green", age: 30, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 9, public_images: [Img9, Img13], is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
+  { id: 10, public_images: [Img10, Img1], is_active: false, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 11, public_images: [Img11, Img2], is_active: true, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 12, public_images: [Img12, Img3], is_active: false, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 13, public_images: [Img13, Img3, Img5], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
+  { id: 14, public_images: [Img14, Img4], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
+]
+
+const SwipePage = ({ allUsers, currentUser }) => {
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  // const [profiles, setProfiles] = useState(allUsers)
+  const [profiles, setProfiles] = useState(allUsers)
   // const [profiles, setProfiles] = useState(tempProfiles)
-  const { state: { userState } } = useStore()
 
   useEffect(() => {
     setActiveIndex(profiles.length - 1)
   }, [])
-
 
   const swiped = (direction, profile) => {
     if (direction === "left") {
@@ -83,17 +111,13 @@ const SwipePage = ({ allUsers, currentUser, filterHandler, profiles, setProfiles
     <div className="max-h-full h-full w-full md:w-[calc(100%-300px)] p-5 md:p-0 lg:w-[calc(100%-400px)] overflow-y-auto flex flex-col justify-start md:justify-end" style={{ scrollbarWidth: "none" }}>
       <div className="md:hidden flex justify-between items-center" data-aos="fade-down" data-aos-duration="800">
         <div className="flex justify-center items-center">
-          {/* {
-            userState?.avatar_url ?
-              <Image src={userState.avatar_url} alt="" height={42} width={42} priority className="pointer-events-none h-[42px] w-[42px] object-cover rounded-[5px]" /> :
-            } */}
           <Image src={avtarImage} alt="" height={42} width={42} priority className="pointer-events-none" />
         </div>
         <div className="flex flex-col justify-center items-center">
           <div className="text-white text-[24px] font-semibold leading-[23px]">Discover</div>
           <div className="text-white/70 text-[14px] font-medium leading-[16px] mt-2">You looking</div>
         </div>
-        <button className="h-[42px] w-[42px] flex justify-center items-center bg-secondary rounded-[5px]" onClick={filterHandler}>
+        <button className="h-[42px] w-[42px] flex justify-center items-center bg-secondary rounded-[5px]">
           <Image src={settingsIcon} alt="" height={20} width={20} priority className="pointer-events-none" />
         </button>
       </div>
@@ -110,6 +134,7 @@ const SwipePage = ({ allUsers, currentUser, filterHandler, profiles, setProfiles
               })} */}
               {
                 profiles.map((profile, idx) => {
+                  // console.log(profile)
                   return (
                     <React.Fragment key={idx}>
                       <SwipeCard profile={profile} i={idx} onSwipe={handleSwipe} onLeftClick={onLeftClick} onRightClick={onRightClick} activeIndex={activeIndex} currentPhotoNumber={currentPhotoNumber} />

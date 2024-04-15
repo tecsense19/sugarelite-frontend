@@ -17,7 +17,6 @@ const Search_Index = ({ allUsers }) => {
     const [dummyUsers, setDummyUsers] = useState([]);
     const [cities, setCities] = useState([])
     const [isFiltered, setIsFiltered] = useState(false)
-    const [swipeProfiles, setSwipeProfiles] = useState(allUsers)
 
     const navigate = useRouter()
 
@@ -156,7 +155,7 @@ const Search_Index = ({ allUsers }) => {
             <div className="h-dvh">
                 {
                     !isFiltered ? (isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                        <SwipePage allUsers={users} currentUser={userState} filterHandler={filterHandler} profiles={swipeProfiles} setProfiles={setSwipeProfiles} />) :
+                        <SwipePage allUsers={allUsers} currentUser={userState} filterHandler={filterHandler} />) :
                         (
                             isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
                                 <Cards allUsers={dummyUsers} filterHandler={filterHandler} />
