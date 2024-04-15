@@ -22,6 +22,7 @@ import backIcon from "../../public/assets/back_discover_icon.svg";
 import nextIcon from "../../public/assets/next_discover_icon.svg";
 import favouriteIcon from "../../public/assets/favourite_discover_icon.svg";
 import settingsIcon from "../../public/assets/settings_icon.svg";
+import { useStore } from "@/store/store";
 
 const tempProfiles = [
   { id: 1, public_images: [Img1, Img10], is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
@@ -40,11 +41,13 @@ const tempProfiles = [
   { id: 14, public_images: [Img14, Img4], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
 ]
 
-const SwipePage = ({ allUsers, currentUser }) => {
+const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [profiles, setProfiles] = useState(allUsers)
   // const [profiles, setProfiles] = useState(tempProfiles)
+
+  const { state: { userState }, dispatch } = useStore()
 
   useEffect(() => {
     setActiveIndex(profiles.length - 1)
@@ -117,7 +120,7 @@ const SwipePage = ({ allUsers, currentUser }) => {
           <div className="text-white text-[24px] font-semibold leading-[23px]">Discover</div>
           <div className="text-white/70 text-[14px] font-medium leading-[16px] mt-2">You looking</div>
         </div>
-        <button className="h-[42px] w-[42px] flex justify-center items-center bg-secondary rounded-[5px]">
+        <button className="h-[42px] w-[42px] flex justify-center items-center bg-secondary rounded-[5px]" onClick={filterHandler}>
           <Image src={settingsIcon} alt="" height={20} width={20} priority className="pointer-events-none" />
         </button>
       </div>

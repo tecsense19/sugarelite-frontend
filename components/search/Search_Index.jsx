@@ -155,13 +155,14 @@ const Search_Index = ({ allUsers }) => {
             <div className="h-dvh">
                 {
                     !isFiltered ? (isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                        <SwipePage allUsers={allUsers} currentUser={userState} filterHandler={filterHandler} />) :
+                        <SwipePage allUsers={allUsers.slice(0, 10)} currentUser={userState} filterHandler={filterHandler} />) :
                         (
                             isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
                                 <Cards allUsers={dummyUsers} filterHandler={filterHandler} />
                         )
                 }
             </div>
+
         </>
     )
 }
