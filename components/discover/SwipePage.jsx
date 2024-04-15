@@ -58,6 +58,11 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
 
   const navigate = useRouter()
 
+
+  const messageHandler = () => {
+    console.log(allUsers[activeIndex])
+  }
+
   const swiped = (direction, profile) => {
     if (direction === "left") {
       // toast.warn("Swiped Left")
@@ -132,7 +137,7 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
       <div className='w-full flex h-[calc(100%-88px)] md:h-[85%] items-center justify-center relative transition-opacity duration-[.1s] ease-in-out' data-aos="fade-up" data-aos-duration="800">
         <div className='relative items-center h-full w-full flex justify-center'>
           {profiles.length
-            ? <div className="relative max-w-[500px] max-h-[800px] h-[calc(100vh-224px)] w-[calc(100vw-60px)] flex items-start">
+            ? <div className="relative max-w-[500px] max-h-[800px] h-[calc(100dvh-224px)] w-[calc(100vw-60px)] flex items-start">
               {/* {profiles?.map((profile, idx) => {
                 return (
                   <React.Fragment key={idx}>
@@ -162,7 +167,7 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
         <button className="h-[46px] rounded-[5px] flex justify-center items-center text-white bg-primary-dark-4 text-[18px] font-medium leading-[20px]">
           Refers
         </button>
-        <button className="h-[46px] rounded-[5px] flex justify-center items-center text-white bg-primary-dark-4 text-[18px] font-medium leading-[20px]">
+        <button className="h-[46px] rounded-[5px] flex justify-center items-center text-white bg-primary-dark-4 text-[18px] font-medium leading-[20px]" onClick={messageHandler}>
           Message
         </button>
       </div>
