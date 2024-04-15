@@ -12,13 +12,13 @@ import { useRouter } from "next/navigation";
 import chevron_down from "/public/assets/arrow_left.svg"
 import settingsIcon from "/public/assets/settings_icon.svg";
 
-const Cards = ({ allUsers, filterHandler }) => {
+const Cards = ({ allUsers, filterHandler, resetHandler }) => {
 
   const navigate = useRouter()
   return (
     <>
       <div className="md:hidden text-white p-4 flex justify-between items-center mb-2 ">
-        <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer ' onClick={() => navigate.push(client_routes.profile)} />
+        <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer ' onClick={resetHandler} />
         <span className="text-[24px] font-semibold leading-[22.8px]">Results</span>
         <button onClick={filterHandler}>
           <Image src={settingsIcon} alt='down_arrow' width={20} height={20} priority className='text-white ' />

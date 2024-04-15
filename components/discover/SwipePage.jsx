@@ -23,6 +23,9 @@ import nextIcon from "../../public/assets/next_discover_icon.svg";
 import favouriteIcon from "../../public/assets/favourite_discover_icon.svg";
 import settingsIcon from "../../public/assets/settings_icon.svg";
 import { useStore } from "@/store/store";
+import chevron_left from "/public/assets/arrow_left.svg"
+import { useRouter } from "next/navigation";
+import { client_routes } from "@/app/lib/helpers";
 
 const tempProfiles = [
   { id: 1, public_images: [Img1, Img10], is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
@@ -52,6 +55,8 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
   useEffect(() => {
     setActiveIndex(profiles.length - 1)
   }, [])
+
+  const navigate = useRouter()
 
   const swiped = (direction, profile) => {
     if (direction === "left") {
@@ -113,8 +118,8 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
   return (
     <div className="max-h-full h-full w-full md:w-[calc(100%-300px)] p-5 md:p-0 lg:w-[calc(100%-400px)] overflow-y-auto flex flex-col justify-start md:justify-end" style={{ scrollbarWidth: "none" }}>
       <div className="md:hidden flex justify-between items-center" data-aos="fade-down" data-aos-duration="800">
-        <div className="flex justify-center items-center">
-          <Image src={avtarImage} alt="" height={42} width={42} priority className="pointer-events-none" />
+        <div className="flex justify-center items-center" onClick={() => navigate.push(client_routes.profile)}>
+          <Image src={chevron_left} alt="" height={24} width={24} priority className="pointer-events-none" />
         </div>
         <div className="flex flex-col justify-center items-center">
           <div className="text-white text-[24px] font-semibold leading-[23px]">Discover</div>
