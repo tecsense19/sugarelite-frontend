@@ -186,7 +186,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                 <span className="text-[24px] font-semibold leading-[22.8px]">Filter & Sort</span>
                 <div></div>
             </div>
-            <div className='text-white px-4 bg-primary md:hidden slide-in-bottom pb-4'>
+            <div className='text-white px-4 bg-primary md:hidden slide-in-bottom  overflow-y-auto h-full pb-12'>
                 <button className="bg-black w-full flex items-center justify-center h-[42px] text-white text-[16px] font-medium rounded-[5px] mt-3" style={{ lineHeight: "normal" }} onClick={handleReset}>
                     RESET SEARCH
                 </button>
