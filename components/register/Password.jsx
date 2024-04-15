@@ -8,6 +8,7 @@ import lock from "/public/assets/lock.svg"
 import eye_close from "/public/assets/eye_close.svg"
 import eye_open from "/public/assets/eye_open.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
+import { Popover } from 'antd'
 
 const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue }) => {
 
@@ -34,6 +35,18 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
             }
         }
     }
+
+    const content = (
+        <div className='w-full'>
+            <p>Password must contains</p>
+            <ul className='text-xs ms-4 list-disc'>
+                <li>Minimum of 8 characters</li>
+                <li>Minimum of 8 characters</li>
+                <li>Minimum of 8 characters</li>
+            </ul>
+        </div>
+    );
+
     return (
         <>
             <div className="text-center flex flex-col items-center">
@@ -44,21 +57,24 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
-                <div className='mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                    <Image src={showPass ? password : lock} width={20} height={20} alt='password ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
-                    <input
-                        type={showPass ? "text" : "password"}
-                        {...register('password', { required: true })}
-                        onChange={(e) => setValue("password", e.target.value)}
-                        placeholder='Password'
-                        className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white outline-none '
-                        autoComplete='new-password' />
-                    {
-                        showPass ?
-                            <Image src={eye_close} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "password")} /> :
-                            <Image src={eye_open} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open", "password")} />
-                    }
-                </div>
+                <Popover placement='topLeft' >
+                    <div className='mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px] relative'>
+                        <Image src={showPass ? password : lock} width={20} height={20} alt='password ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
+                        <input
+                            type={showPass ? "text" : "password"}
+                            {...register('password', { required: true })}
+                            onChange={(e) => setValue("password", e.target.value)}
+                            placeholder='Password'
+                            className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white outline-none '
+                            autoComplete='new-password' />
+                        {
+                            showPass ?
+                                <Image src={eye_close} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "password")} /> :
+                                <Image src={eye_open} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open", "password")} />
+                        }
+
+                    </div>
+                </Popover>
                 <div className=' flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
                     <Image src={showCPass ? password : lock} width={20} height={20} alt='password ' className='sm:me-[14px] me-[10px] w-[20px] h-[20px]' />
                     <input
