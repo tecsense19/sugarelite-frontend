@@ -57,7 +57,6 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
         return () => {
             if (userState && toMessageState) {
                 socket.emit("open-chat", { sender_id: userState.id, receiver_id: toMessageState.id, type: "closed" });
-                dispatch({ type: "Message_To", payload: null })
             }
         }
     }, [])

@@ -69,9 +69,9 @@ const TopNav = ({ profileList }) => {
                 <div className="text-[24px] font-semibold leading-[22.8px]">Messages</div>
                 <div className='flex gap-x-4'>
                     <div className='relative'>
-                        <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
+                        <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer pt-[2px]" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
                         {notifyBadgeState.notify &&
-                            <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute -top-1 -right-1 "></p>
+                            <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute -top-1 -right-1"></p>
                         }
                     </div>
                     <Image src={Bars_Icon} alt="more" width={24} height={24} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} />

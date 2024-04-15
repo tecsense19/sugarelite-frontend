@@ -1,7 +1,5 @@
-import { all_profiles_action, decrypt_user, getCountries } from "@/app/lib/actions"
-import Loader from "@/components/common/Loader"
+import { all_profiles_action, decrypt_user } from "@/app/lib/actions"
 import Search_Index from "@/components/search/Search_Index"
-import { Suspense } from "react"
 
 const Search = async () => {
 
@@ -13,7 +11,7 @@ const Search = async () => {
   return (
     <>
       {
-        all_users.success
+        all_users?.success
           ? <Search_Index allUsers={users} />
           : <div>No data found</div>
       }
