@@ -168,7 +168,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
           <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
             {user?.avatar_url
               ? <Image height={34} width={34} src={user?.avatar_url} alt="profile_pic" className="cursor-pointer rounded-full aspect-square" priority onClick={() => router.push(client_routes.profile)} />
-              : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full">{user?.username.charAt(0)}</div>
+              : <div className="h-10 w-10 flex items-center justify-center text-[18px] bg-secondary rounded-full uppercase">{user?.username.charAt(0)}</div>
             }
           </Link>
         </header>
