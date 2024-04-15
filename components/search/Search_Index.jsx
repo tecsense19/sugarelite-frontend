@@ -152,7 +152,7 @@ const Search_Index = ({ allUsers }) => {
 
             {/* mobile view */}
 
-            <div className="h-dvh">
+            <div className={`${isFilterOpen ? "" : "h-dvh"}`}>
                 {
                     !isFiltered ? (isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
                         <SwipePage allUsers={allUsers.slice(0, 10)} currentUser={userState} filterHandler={filterHandler} />) :
