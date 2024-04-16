@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Proxima Nova" !important;
+}
+
 input::-ms-reveal,
 input::-ms-clear {
   display: none;

@@ -23,7 +23,7 @@ const Banner = () => {
         </div>
         <div className="w-full flex flex-col items-center mt-[30px] lg:block lg:w-6/12 lg:mt-0" data-aos="fade-right" data-aos-anchor="#example-anchor" data-aos-duration="800">
           <div className="flex items-center">
-            <span className="text-[70px] italic font-[750] lg:me-3 hidden lg:block" style={{ lineHeight: "70px" }}>ELITE </span>
+            <span className="text-[70px] italic font-[650] lg:me-3 hidden lg:block" style={{ lineHeight: "70px" }}>ELITE </span>
             <span className="text-[clamp(30px,9vw,50px)] italic font-[750] me-[10px] lg:hidden block" style={{ lineHeight: "clamp(30px,9vw,50px)" }}>ELITE</span>
 
             <span className="text-[70px] font-[350] hidden lg:block" style={{ lineHeight: "70px" }}>SUGAR </span>
