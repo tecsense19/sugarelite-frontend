@@ -134,17 +134,17 @@ const Register = () => {
 				<main className="hidden sm:flex h-screen ">
 					<div className="h-full w-full relative">
 						<div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
-							<div className="text-white h-[725px] sm:w-[90%] xl:w-[60%] my-auto py-[50px] rounded-[5px] sm:bg-primary/80 sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center flex-col ">
+							<div className="text-white h-[725px] sm:w-[90%] xl:w-[60%] my-auto py-[50px] rounded-[5px] sm:bg-gradient-to-l sm:from-tinder-1 sm:from-0% sm:to-tinder-2 sm:to-100% sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center flex-col ">
 								<h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">ELITE<span className="font-normal sm:ms-2 md:ms-3">SUGAR</span></h1>
 
 								{/* step status tarcker starts */}
 								<div className="sm:w-[82%] lg:w-[665px] mb-[50px] relative h-[40px]">
-									<div className="bg-black w-full h-1 rounded-[29px] absolute top-[50%] translate-y-[-50%]"></div>
-									<div style={{ transform: `scaleX(${(nextStep - 1) * 20}%)` }} className="bg-secondary transition-transform duration-300 ease-in-out w-full origin-left h-1 rounded-[29px] absolute top-[43.5%] translate-y-[-50%]"></div>
+									<div className="bg-primary w-full h-1 rounded-[29px] absolute top-[50%] translate-y-[-50%]"></div>
+									<div style={{ transform: `scaleX(${(nextStep - 1) * 20}%)` }} className="bg-white transition-transform duration-300 ease-in-out w-full origin-left h-1 rounded-[29px] absolute top-[calc(50%-2px)] translate-y-[-50%]"></div>
 									<div className="flex justify-between absolute w-full top-[50%] translate-y-[-50%] ">
 										{
 											stepsArr.map((step, inx) => (
-												<div className={`h-[40px] w-[40px] flex items-center justify-center rounded-full transition-all duration-500 ease-in ${nextStep >= step.val ? "bg-secondary" : "bg-black"}`} key={inx}>
+												<div className={`h-[40px] w-[40px] flex items-center justify-center rounded-full transition-all duration-500 ease-in ${nextStep >= step.val ? "bg-white" : "bg-primary"}`} key={inx}>
 													<Image src={step.img_url} alt={step.step} width={24} height={24} priority />
 												</div>
 											))

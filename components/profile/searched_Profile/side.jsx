@@ -41,7 +41,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col text-center lg:text-left ">
                         <div className={`flex items-center ${!user?.premium ? "justify-center lg:justify-start" : "justify-start"} gap-2 `}>
-                            <div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative">{user?.username},{user?.age}
+                            <div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative capitalize">{user?.username},{user?.age}
                                 {
                                     user?.online === 1 &&
                                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-success absolute top-[0px] -right-[15px] border border-white rounded-full'></div>

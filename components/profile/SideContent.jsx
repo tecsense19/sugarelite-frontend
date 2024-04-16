@@ -126,7 +126,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
                     <div className="flex flex-col items-center lg:items-start text-center lg:text-left" data-aos='zoom-in'>
                         <div className='flex items-center gap-6'>
-                            <div className="text-[30px] font-bold leading-[30px] relative">
+                            <div className="text-[30px] font-bold leading-[30px] relative capitalize">
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
                                 {
                                     user && user?.online &&
