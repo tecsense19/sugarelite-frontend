@@ -75,23 +75,23 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
             <div className='text-xs mt-[3px] me-1'>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.sixChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.sixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>Minimum of 6 characters</p>
+                    <p className={isValidPass.sixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Minimum of 6 characters'}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.mixChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.mixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>Include a mix of uppercase and lowercase letters</p>
+                    <p className={isValidPass.mixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Include a mix of uppercase and lowercase letters'}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.numChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.numChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>Include at least one number (0-9)</p>
+                    <p className={isValidPass.numChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Include at least one number (0-9)'}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.spclChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.spclChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>At least one special character (!@#$%^&*)</p>
+                    <p className={isValidPass.spclChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'At least one special character (!@#$%^&*)'}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.sqncChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.sqncChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>Avoid repeating characters (e.g., "aaa")</p>
+                    <p className={isValidPass.sqncChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Avoid repeating characters (e.g., "aaa")'}</p>
                 </div>
             </div>
         </div>
