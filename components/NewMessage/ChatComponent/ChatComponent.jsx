@@ -10,7 +10,7 @@ import ImagesModal from '../ImagesModal'
 import { block_user_action } from '@/app/lib/actions'
 import { client_notification } from '@/app/lib/helpers'
 
-const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUser, socket, sendingImages, setSendingImages, myChats, lastUpdatedMsg, setLastUpdatedMsg }) => {
+const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUser, socket, sendingImages, setSendingImages, myChats, lastUpdatedMsg, setLastUpdatedMsg, isTyping }) => {
 
     const [showMobileProfile, setShowMobileProfile] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -53,7 +53,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUse
                         {
                             !blockedUsersState.some(i => (i.sender_id === toUser.id || i.receiver_id === toUser.id) && i.is_blocked === 1) ?
                                 <>
-                                    <AllMessages toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} sendingImages={sendingImages} setSelectedImages={setSelectedImages} chats={userChats} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} />
+                                    <AllMessages toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} sendingImages={sendingImages} setSelectedImages={setSelectedImages} chats={userChats} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} />
                                     <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} todayMsgs={todayMsgs} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} />
                                 </> : <div className='h-full w-full flex justify-center items-center text-white/80 font-normal'>
                                     {

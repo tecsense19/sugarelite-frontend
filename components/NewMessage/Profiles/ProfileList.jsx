@@ -3,7 +3,7 @@ import TopNav from './TopNav'
 import Profiles from './Profiles'
 import { useStore } from '@/store/store'
 
-const ProfileList = ({ currentUser, toUser, unReadCount, allUsers, myChats, profileList, setProfiles }) => {
+const ProfileList = ({ isTyping, unReadCount, allUsers, myChats, profileList, setProfiles }) => {
     const { state: { chatProfileState, newMsgState }, dispatch } = useStore()
     // const [profiles, setProfiles] = useState([])
 
@@ -59,7 +59,7 @@ const ProfileList = ({ currentUser, toUser, unReadCount, allUsers, myChats, prof
     return (
         <div className='w-full md:w-[350px] lg:w-[400px] bg-primary-dark-3 h-full py-[14px] md:py-[30px]'>
             <TopNav profileList={profileList.sort((a, b) => b.messages.milisecondtime - a.messages.milisecondtime)} />
-            <Profiles profileList={profileList.sort((a, b) => b.messages.milisecondtime - a.messages.milisecondtime)} unReadCount={unReadCount} />
+            <Profiles profileList={profileList.sort((a, b) => b.messages.milisecondtime - a.messages.milisecondtime)} unReadCount={unReadCount} isTyping={isTyping} />
         </div>
     )
 }

@@ -5,9 +5,9 @@ import Stroke_Online from '/public/assets/online_stroke.svg'
 import read_tick from "/public/assets/read_tick.svg";
 import single_tick from "/public/assets/single_tick.svg";
 import double_tick from "/public/assets/double_tick.svg";
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const UserComponent = ({ user, message, unReadCount }) => {
+const UserComponent = ({ user, message, unReadCount, isTyping }) => {
 
     const { dispatch, state: { onlineUsers, toMessageState, userState, chatPartnerList } } = useStore()
     const socket = getSocket()
@@ -72,7 +72,7 @@ const UserComponent = ({ user, message, unReadCount }) => {
                         <p className="uppercase flex justify-center items-center h-[40px] w-[40px] md:h-[50px] md:min-w-[50px] rounded-full bg-primary-dark text-[20px]">{user.username.charAt(0)}</p>
                     )}
                     {/* {onlineUsers.some(i => i === user.id) && <p className="absolute p-1 bg-green-active stroke-black stroke-2 top-0 rounded-full right-1 "></p>} */}
-                    {onlineUsers.some(i => i === user.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />}
+                    {onlineUsers.some(i => i === user.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute top-[-1px] right-[3px] md:top-0 md:right-[5px]' />}
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">
@@ -111,4 +111,6 @@ const UserComponent = ({ user, message, unReadCount }) => {
     )
 }
 
-export default UserComponent
+UserComponent.displayName = "UserComponent"
+
+export default React.memo(UserComponent)

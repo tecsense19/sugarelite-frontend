@@ -13,10 +13,11 @@ import HomeCounter from "./HomeCounter"
 import Working from "./Working"
 import Footer from "../common/Footer"
 
-const Home = () => {
+const Home = ({ user }) => {
   const { state } = useStore();
   const { firstState: { isOpenMobileNavbar } } = state;
   const [showScrollTopBtn, setShowScrollTopBtn] = useState(false)
+
 
   useEffect(() => {
     const AOS = require("aos")
@@ -47,7 +48,7 @@ const Home = () => {
   return (
     <>
       <div className={`min-h-dvh w-full overflow-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top flex flex-col ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
-        <Banner />
+        <Banner user={user} />
         <Services />
         <UserFriendly />
         <EasySearch />

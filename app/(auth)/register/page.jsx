@@ -36,7 +36,7 @@ const Register = () => {
 	const navigate = useRouter()
 
 	const registerhandler = async (data) => {
-		data = { ...data, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
+		// data = { ...data, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
 		setIsLoading(true)
 		const res = await register_action(data)
 		if (!res.success || res.error) {

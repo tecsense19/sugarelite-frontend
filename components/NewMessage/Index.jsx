@@ -37,6 +37,7 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
     const navigate = useRouter()
     const [unReadCount, setUnReadCount] = useState([])
+    const [isTyping, setIsTyping] = useState([])
     const [sendingImages, setSendingImages] = useState([])
     const [lastUpdatedMsg, setLastUpdatedMsg] = useState(null)
     const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
@@ -52,6 +53,32 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
         dispatch({ type: "Add_Msg_Badge", payload: false })
 
     }, [])
+
+
+    useEffect(() => {
+        if (!socket) return;
+
+        const showAnimationHandler = (obj) => {
+            if (obj.receiver === currentUser.id) {
+                if (obj.decision) {
+                    const findIndex = isTyping.findIndex(i => (i.receiver === obj.receiver && i.sender === obj.sender))
+                    if (findIndex !== -1) {
+                        return
+                    } else {
+                        setIsTyping(prev => [...prev, obj])
+                    }
+                } else {
+                    setIsTyping(prev => prev.filter(i => (i.receiver !== obj.receiver && i.sender !== obj.sender)))
+                }
+            }
+        };
+
+        socket.on("show-animation", showAnimationHandler);
+
+        return () => {
+            socket.off("show-animation", showAnimationHandler);
+        };
+    }, [socket, toUser, currentUser.id, isTyping]);
 
     useEffect(() => {
         return () => {
@@ -197,15 +224,15 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
         return (
             <>
                 <div className="font-bold hidden h-dvh pt-0 md:pt-[66px] text-white md:flex">
-                    <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} setProfiles={setProfiles} />
-                    <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} />
+                    <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} setProfiles={setProfiles} isTyping={isTyping} />
+                    <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} />
                 </div>
                 <div className="font-bold md:hidden h-dvh pt-0 md:pt-[66px] text-white flex">
                     {
                         !showMobileChatContent ?
-                            <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} setProfiles={setProfiles} />
+                            <ProfileList currentUser={currentUser} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} setProfiles={setProfiles} isTyping={isTyping} />
                             :
-                            <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} />
+                            <ChatComponent currentUser={currentUser} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} />
                     }
                 </div>
             </>

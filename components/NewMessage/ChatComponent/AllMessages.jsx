@@ -4,16 +4,13 @@ import chatScrollBottom from "/public/assets/chat_scroll_bottom_icon.svg";
 import Image from 'next/image';
 import { useStore } from '@/store/store';
 import TypingAnimation from '../TypingAnimation/TypingAnimation';
-import Message from './Message';
-import double_tick from "/public/assets/double_tick.svg";
 import NewMessage from './NewMessage';
 import { read_message_action } from '@/app/lib/actions';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg, isTyping }) => {
 
   const msgRef = useRef(null)
 
-  const [isTyping, setIsTyping] = useState(false)
   const [isScroller, setIsScroller] = useState(false)
   const { state: { newMsgState, onlineUsers, chatPartnerList, toMessageState } } = useStore()
 
@@ -90,30 +87,44 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
     }
   }
 
-  useEffect(() => {
-    if (!socket || !toUser) return;
 
-    const showAnimationHandler = (obj) => {
-      if (obj.receiver === currentUser.id && obj.sender === toUser.id) {
-        setIsTyping(obj.decision)
-      }
-    };
+  // useEffect(() => {
+  //   if (!socket || !toUser) return;
 
-    socket.on("show-animation", showAnimationHandler);
+  //   const showAnimationHandler = (obj) => {
+  //     if (obj.receiver === currentUser.id && obj.sender === toUser.id) {
+  //       if (obj.decision) {
+  //         const findIndex = isTyping.findIndex(i => (i.receiver === obj.receiver || i.sender === obj.sender))
+  //         if (findIndex !== -1) {
+  //           let temp = [...isTyping]
+  //           temp[findIndex] = obj
+  //           setIsTyping(temp)
+  //         } else {
+  //           setIsTyping(prev => [...prev, obj])
+  //         }
+  //       } else {
+  //         setIsTyping(prev => prev.filter(i => (i.receiver !== obj.receiver && i.sender !== obj.sender)))
+  //       }
 
-    return () => {
-      socket.off("show-animation", showAnimationHandler);
-    };
-  }, [socket, toUser, currentUser.id]);
+  //       // setIsTyping(obj.decision)
+  //       // console.log(obj)
+  //     }
+  //   };
+
+  //   socket.on("show-animation", showAnimationHandler);
+
+  //   return () => {
+  //     socket.off("show-animation", showAnimationHandler);
+  //   };
+  // }, [socket, toUser, currentUser.id]);
 
   useEffect(() => {
     const msgs = chats.filter(msg => msg.receiver_id === currentUser.id && msg.status !== "read")?.map(i => i.id)
-
     if (msgs.length && msgs[msgs.length - 1] !== lastUpdatedMsg) {
       read_message_action({ sender_id: toUser.id, receiver_id: currentUser.id, status: "read", messageId: msgs.toString() })
       setLastUpdatedMsg(msgs[msgs.length - 1])
     }
-  }, [])
+  }, [toUser])
 
   useEffect(() => {
     if (chats.length) {
@@ -158,7 +169,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
                   </div>
                 )
               })}
-              <div className={`mt-[30px] lg:mt-5 gap-2 md:gap-4 items-center ${isTyping ? "flex" : "hidden"}`} >
+              <div className={`mt-[30px] lg:mt-5 gap-2 md:gap-4 items-center ${isTyping.some(i => i.sender === toUser.id) ? "flex" : "hidden"}`} >
                 {
                   toUser.avatar_url ? <Image src={toUser.avatar_url} height={30} width={30} alt="avatar" className="md:h-[40px] min-h-[30px] h-[30px] w-[30px] md:w-[40px] rounded-full" /> : <p className="h-[30px] w-[30px] md:h-[40px] md:w-[40px] bg-primary-dark-3 flex items-center justify-center rounded-full uppercase" data-aos='zoom-in'>{toUser.username.charAt(0)}</p>
                 }

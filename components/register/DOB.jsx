@@ -7,14 +7,25 @@ import calendar_3 from "../../public/assets/calendar_3.svg"
 import sugar_DOB from "../../public/assets/sugar_DOB.svg"
 import chevron_right from "../../public/assets/chevron_right.svg"
 import calendar from "../../public/assets/calendar.svg"
+import { useState } from "react";
+import DateModal from "./DateModal";
 
-const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) => {
+const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setValue }) => {
 
     const isValid = watch("birthdate")
     const dateFormat = 'DD/MM/YYYY';
+    const [modalOpened, setIsModalOpened] = useState(false)
+    const [day, setDay] = useState(1);
+    const [month, setMonth] = useState(1);
+    const [year, setYear] = useState(2024);
+
 
     const ageController = (current) => {
         return current && current > dayjs().subtract(1, 'year');
+    }
+
+    const openModal = () => {
+        setIsModalOpened(true)
     }
 
     return (
@@ -28,7 +39,7 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) =>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <div className="relative flex justify-end items-center">
-                    <Controller
+                    {/* <Controller
                         name="birthdate"
                         control={control}
                         render={({ field }) => (
@@ -73,8 +84,14 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control }) =>
                                 <Image src={calendar} alt="dob" width={20} height={20} className="absolute left-0 opacity-70 translate-x-4" />
                             </ConfigProvider>
                         )}
-                    />
+                    /> */}
                 </div>
+                <div className="h-[45px] flex border-white px-5 rounded-[5px] border items-center gap-x-[14px] cursor-pointer" onClick={() => setIsModalOpened(modalOpened ? !modalOpened : !modalOpened)}>
+                    <Image src={calendar} alt="dob" width={20} height={20} className="" />
+
+                    <p>{(day && month && year) ? year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day) : "YYYY-MM-DD"}</p>
+                </div>
+                <DateModal isOpen={modalOpened} setIsModalOpened={setIsModalOpened} setValue={setValue} day={day} month={month} setDay={setDay} setMonth={setMonth} setYear={setYear} year={year} />
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">

@@ -94,7 +94,7 @@ const TopNav = ({ profileList }) => {
                                             <Image src={item.profile.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
                                             : <p className="h-10 w-10 flex items-center justify-center bg-primary rounded-full text-[18px] uppercase">{item.profile.username.charAt(0)}</p>
                                     }
-                                    {onlineUsers.some(i => i === item.profile.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute z-10 -top-[3px] right-1' />}
+                                    {onlineUsers.some(i => i === item.profile.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />}
                                 </button>
                             </>
                         )

@@ -118,8 +118,8 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
       <div className='flex flex-col lg:flex-row  max-w-[85%]'>
         <div
           className={`p-2  max-w-full bg-primary-dark-3 relative min-w-[5rem]  ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}
-          onMouseEnter={popupHandler}
-          onMouseLeave={popupRemoveHandler}
+        // onMouseEnter={popupHandler}
+        // onMouseLeave={popupRemoveHandler}
         >
           {
             item.type !== "deleted" &&
@@ -142,7 +142,8 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
               )}>
 
                 <button className={`h-full w-[30px] flex justify-center items-start absolute -left-8 top-0 lg:top-1 lg:-translate-y-1   `}>
-                  <Image src={optionsIcon} alt="options" height={20} width={20} priority className={`pointer-events-none ${idx === showIcon ? "flex" : "hidden"}`} />
+                  {/* <Image src={optionsIcon} alt="options" height={20} width={20} priority className={`pointer-events-none ${idx === showIcon ? "flex" : "hidden"}`} /> */}
+                  <Image src={optionsIcon} alt="options" height={20} width={20} priority className={`pointer-events-none flex`} />
                 </button>
               </Popover>
             </ConfigProvider>

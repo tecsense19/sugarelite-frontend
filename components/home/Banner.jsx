@@ -3,8 +3,10 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import bannerImg from "../../public/assets/In love-bro 1.svg";
 import Link from "next/link";
+import { decrypt_user } from "@/app/lib/actions";
+import { useStore } from "@/store/store";
 
-const Banner = () => {
+const Banner = ({ user }) => {
   const router = useRouter();
 
   const handleReadMoreClick = () => {
@@ -45,9 +47,15 @@ const Banner = () => {
             <Link href={client_routes.register} className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-secondary me-[20px] transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }}>
               CREATE PROFILE
             </Link>
-            <button className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} onClick={handleReadMoreClick}>
-              READ MORE
-            </button>
+            {
+              user ?
+                <button className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} onClick={handleReadMoreClick}>
+                  READ MORE
+                </button> :
+                <Link href={client_routes.login} prefetch className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} >
+                  LOGIN
+                </Link>
+            }
           </div>
         </div>
       </div>
