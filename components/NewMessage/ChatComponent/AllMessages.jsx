@@ -7,13 +7,12 @@ import TypingAnimation from '../TypingAnimation/TypingAnimation';
 import NewMessage from './NewMessage';
 import { read_message_action } from '@/app/lib/actions';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg, isTyping }) => {
+const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg, isTyping, unsendedMsgs }) => {
 
   const msgRef = useRef(null)
 
   const [isScroller, setIsScroller] = useState(false)
   const { state: { newMsgState, onlineUsers, chatPartnerList, toMessageState } } = useStore()
-
 
   let currentDate = null
   const getChatDate = (stamp) => {
@@ -147,7 +146,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
                 } else {
                   return i
                 }
-              }).map((item, idx) => {
+              }).sort((a, b) => a.id - b.id).map((item, idx) => {
                 const isLastMessage = idx === chats.length - 1 || chats[idx + 1]?.sender_id !== item.sender_id;
                 const isFirstMessage = idx === 0 || chats[idx - 1]?.sender_id !== item.sender_id;
                 // console.log(item)
