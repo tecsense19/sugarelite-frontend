@@ -26,8 +26,8 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
   }
-  const navigate = useRouter()
 
+  const navigate = useRouter()
   useEffect(() => {
     const closeOptions = () => {
       handleShowOptionsChange(false)
@@ -222,4 +222,6 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
   }
 }
 
-export default NewMessage
+NewMessage.displayName = "NewMessage"
+
+export default React.memo(NewMessage)

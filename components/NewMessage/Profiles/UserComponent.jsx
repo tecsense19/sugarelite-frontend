@@ -100,11 +100,6 @@ const UserComponent = ({ user, message, unReadCount, isTyping }) => {
                     unReadCount.find((ele) => ele.id === user.id) ? (
                         <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">{unReadCount.find((ele) => ele.id === user.id).count}</p>
                     ) : readStatus(message)
-                    // message.sender_id !== user.id &&
-                    // (message.status === "read" && chatPartnerList.some(i => user.sender_id === i.receiver_id && message.id <= i.lastMsgId) ? <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
-                    //     message.status === "delivered" ? <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
-                    //         <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
-                    // )
                 }
             </div>
         </div>

@@ -2,6 +2,8 @@ import React from 'react'
 import UserComponent from './UserComponent'
 
 const Profiles = ({ profileList, unReadCount, isTyping }) => {
+
+
     return (
         <>
             <div className="mt-5 px-4 md:mt-[30px] md:px-[30px]">

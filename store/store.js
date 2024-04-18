@@ -227,9 +227,26 @@ const chatPartnerListReducer = (state, action) => {
   }
 }
 
+const readMsgsReducer = (state, action) => {
+  switch (action.type) {
+    case 'Add_Read_Message':
+      const newUser = action.payload;
+      const existingMsgIndex = state.findIndex(msg => msg === newUser);
+      if (existingMsgIndex !== -1) {
+        const updatedState = [...state];
+        updatedState[existingMsgIndex] = newUser;
+        return updatedState;
+      } else {
+        return [...state, action.payload];
+      }
+    default:
+      return state;
+  }
+}
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, chatPartnerList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
+const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -249,7 +266,8 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, onlineUsers, si
         notifyBadgeState: { msg: false, notify: false },
         sideMenu: false,
         onlineUsers: [],
-        chatPartnerList: []
+        chatPartnerList: [],
+        readMsgsState: []
       };
     default:
       return {
@@ -269,7 +287,8 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, onlineUsers, si
         notifyBadgeState: notifyReducer(notifyBadgeState, action),
         sideMenu: sideDarwerReducer(sideMenu, action),
         onlineUsers: onlineUsersReducer(onlineUsers, action),
-        chatPartnerList: chatPartnerListReducer(chatPartnerList, action)
+        chatPartnerList: chatPartnerListReducer(chatPartnerList, action),
+        readMsgsState: readMsgsReducer(readMsgsState, action)
       };
   }
 };
@@ -305,7 +324,8 @@ export const StoreProvider = ({ children }) => {
     notifyBadgeState: { msg: false, notify: false },
     sideMenu: false,
     onlineUsers: [],
-    chatPartnerList: []
+    chatPartnerList: [],
+    readMsgsState: []
   });
 
   useEffect(() => {

@@ -7,6 +7,8 @@ const ProfileList = ({ isTyping, unReadCount, allUsers, myChats, profileList, se
     const { state: { chatProfileState, newMsgState }, dispatch } = useStore()
     // const [profiles, setProfiles] = useState([])
 
+
+
     useEffect(() => {
         const myChatsWithProfiles = chatProfileState.map(profileID => {
             const profile = allUsers.find(user => user.id === profileID.id);

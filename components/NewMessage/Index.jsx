@@ -39,7 +39,7 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
     const [unReadCount, setUnReadCount] = useState([])
     const [isTyping, setIsTyping] = useState([])
     const [sendingImages, setSendingImages] = useState([])
-    const [lastUpdatedMsg, setLastUpdatedMsg] = useState(null)
+    const [lastUpdatedMsg, setLastUpdatedMsg] = useState([])
     const [unsendedMsgs, setUnsendedMsgs] = useState([])
     const [currentUser, setCurrentUser] = useState(userState ? userState : decryptedUser)
 
@@ -220,6 +220,8 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
             setUnReadCount(tempArr)
         }
     }, [myChats])
+
+
 
     if (chatProfileState.length || newMsgState.length) {
         return (

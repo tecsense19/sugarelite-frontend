@@ -12,7 +12,7 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
   const msgRef = useRef(null)
 
   const [isScroller, setIsScroller] = useState(false)
-  const { state: { newMsgState, onlineUsers, chatPartnerList, toMessageState } } = useStore()
+  const { state: { newMsgState, onlineUsers, chatPartnerList, toMessageState, readMsgsState }, dispatch } = useStore()
 
   let currentDate = null
   const getChatDate = (stamp) => {
@@ -119,9 +119,9 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
 
   useEffect(() => {
     const msgs = chats.filter(msg => msg.receiver_id === currentUser.id && msg.status !== "read")?.map(i => i.id)
-    if (msgs.length && msgs[msgs.length - 1] !== lastUpdatedMsg) {
+    if (msgs.length && !readMsgsState.some(i => i === msgs[msgs.length - 1])) {
       read_message_action({ sender_id: toUser.id, receiver_id: currentUser.id, status: "read", messageId: msgs.toString() })
-      setLastUpdatedMsg(msgs[msgs.length - 1])
+      dispatch({ type: "Add_Read_Message", payload: msgs[msgs.length - 1] })
     }
   }, [toUser])
 
@@ -189,5 +189,6 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
   )
 }
 
+AllMessages.displayName = "AllMessages"
 
-export default AllMessages
+export default React.memo(AllMessages)

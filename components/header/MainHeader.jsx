@@ -33,7 +33,7 @@ import SideDrawer from "../common/SideDrawer"
 
 const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
 
-  const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, newMessageState }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
   const socket = getSocket()
@@ -49,6 +49,13 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
     const tempNotifications = await private_album_notification({ user_id: userState?.id })
     if (tempNotifications.success) {
       setNotifications(tempNotifications.data)
+    }
+  }
+
+  const newMessageHandler = (obj) => {
+    const finduser = chatProfileState.some(i => i.id === obj.sender_id)
+    if (!finduser) {
+      dispatch({ type: "Add_Profile", payload: { id: obj.sender_id, milisecondtime: obj.milisecondtime } })
     }
   }
 
@@ -112,6 +119,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
     const receiveMessageHandler = (obj) => {
       if (obj.receiver_id === user.id && (pathname !== client_routes.chat)) {
         dispatch({ type: "Add_Msg_Badge", payload: true })
+        newMessageHandler(obj)
       }
     }
 
@@ -141,7 +149,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
       }
     };
 
-  }, [user, socket, notificationOpenState])
+  }, [user, socket, notificationOpenState, pathname])
 
   const handleLogout = () => {
     logout_user()
@@ -157,6 +165,8 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
       body: JSON.stringify({ id: user.id })
     })
   }
+
+
   return (
     <>
       {/* {/ Mobile View /} */}

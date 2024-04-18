@@ -14,7 +14,7 @@ import Link from 'next/link';
 import cross from "/public/assets/cross.svg"
 import { useStore } from '@/store/store';
 
-const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, setUnsendedMsgs = { setUnsendedMsgs } }) => {
+const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, setUnsendedMsgs }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
