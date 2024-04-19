@@ -12,6 +12,7 @@ export default function SocketHandler(req, res) {
 
     const onlineUsers = new Map()
 
+
     io.on("connection", (socket) => {
 
         // console.log("connection found")
@@ -73,8 +74,6 @@ export default function SocketHandler(req, res) {
             }
         });
     });
-
-
 
     res.end();
 }

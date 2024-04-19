@@ -119,7 +119,7 @@ const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalAr
                                 </button>
                             </Popconfirm>
                         </ConfigProvider>
-                        <Image src={photo.photo_url ? photo.photo_url : photo.public_images} width={1000} height={1000} alt="person" className="h-full w-full select-none pointer-events-none border-dashed border border-[#ffffff70] rounded-[5px] object-contain object-center overflow-hidden" />
+                        <Image src={photo.photo_url ? photo.photo_url : photo.public_images} unoptimized width={1000} height={1000} alt="person" className="h-full w-full select-none pointer-events-none border-dashed border border-[#ffffff70] rounded-[5px] object-contain object-center overflow-hidden" />
                         <progress id="progressBar" value={progress} max="100" className='absolute w-full h-2 bottom-0 rounded-[5px]'></progress>
                     </div>
                 })

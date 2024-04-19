@@ -135,10 +135,10 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
             ? <Image src={profile.avatar_url} alt={profile.username} width={1000} height={1000} className='h-full w-full rounded-xl object-cover object-center pointer-events-none' priority />
             : <>
               {(profile.sugar_type === "EliteDaddy" || profile.sugar_type === "EliteBoy")
-                ? <Image src={manPlaceolderImg} alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
+                ? <Image src={manPlaceolderImg} unoptimized alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
                 : (profile.sugar_type === "EliteMama" || profile.sugar_type === "EliteBabe")
-                  ? <Image src={womanPlaceolderImg} alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
-                  : <Image src={placeholder} alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
+                  ? <Image src={womanPlaceolderImg} unoptimized alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
+                  : <Image src={placeholder} unoptimized alt={profile.username} width={1000} height={1000} className="h-full w-full rounded-xl object-contain object-center pointer-events-none bg-primary-dark-5 py-14" priority />
               }
             </>
           }
@@ -163,7 +163,7 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
                   </div>
                   <div className="mt-[5px] text-[clamp(14px,1.5vw,15px)] leading-[14px] font-medium text-white/50">{profile.region}</div>
                 </div>
-                <div className='flex flex-col gap-y-[13.2px]'>
+                <div className='flex flex-col gap-y-[13.2px] border z-20'>
                   <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onCrossClick) }}>
                     <Image src={closeIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button>

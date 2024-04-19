@@ -36,10 +36,10 @@ const Cards = ({ allUsers, filterHandler, resetHandler }) => {
                       ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                       : <div className="w-full h-full flex items-center justify-center">
                         {(item.sugar_type === "EliteDaddy" || item.sugar_type === "EliteBoy")
-                          ? <Image src={manPlaceolderImg} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
+                          ? <Image src={manPlaceolderImg} alt="" unoptimized width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                           : (item.sugar_type === "EliteMama" || item.sugar_type === "EliteBabe")
-                            ? <Image src={womanPlaceolderImg} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
-                            : <Image src={placeholder} alt="" width={1000} height={1000} className="pointer-events-none w-14 h-14 object-cover object-center rounded-[5px]" priority />
+                            ? <Image src={womanPlaceolderImg} unoptimized alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
+                            : <Image src={placeholder} unoptimized alt="" width={1000} height={1000} className="pointer-events-none w-14 h-14 object-cover object-center rounded-[5px]" priority />
                         }
                       </div>
                     }

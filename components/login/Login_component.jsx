@@ -128,7 +128,7 @@ const Login = ({ setIsForgotOpen }) => {
                     </div>
                 </div>
                 {/* <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" /> */}
-                <Image src={bgDesktopImg} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+                <Image src={bgDesktopImg} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
             </div>
         </main>
     )

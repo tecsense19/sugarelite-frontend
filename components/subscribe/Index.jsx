@@ -217,7 +217,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
                 <div className='mt-[30px] flex flex-col gap-y-7 items-center'>
                   {details.map((item, idx) => (
                     <div key={idx} className='flex gap-x-[7px] sm:gap-x-[10px] items-start justify-start px-3 w-full sm:px-5 md:px-8 xl:px-5 2xl:px-8'>
-                      <Image src={item.including ? subscription_include : subscription_not_include} alt="" height={20} width={20} className='pointer-events-none' />
+                      <Image src={item.including ? subscription_include : subscription_not_include} unoptimized alt="" height={20} width={20} className='pointer-events-none' />
                       <div className='text-[18px] font-medium leading-[20px]'>{item.desc}</div>
                     </div>
                   ))

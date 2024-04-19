@@ -82,7 +82,7 @@ const TopNav = ({ profileList }) => {
             </div>
             <div className="relative flex items-center mt-[10px] md:mt-5 px-4 md:px-[22px] mx-1">
                 <button className={`absolute left-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollLeftBtn ? "flex" : "hidden"}`} onClick={() => handleHorizontalScrollBtn(-40)}>
-                    <Image src={chatArrowRight} alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none rotate-180" />
+                    <Image src={chatArrowRight} unoptimized alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none rotate-180" />
                 </button>
                 <div ref={horizontalProfilesRef} className={`horizontal-profiles py-1 flex gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
                     {profileList?.map((item, idx) => {
@@ -102,7 +102,7 @@ const TopNav = ({ profileList }) => {
 
                 </div>
                 <button className={`absolute right-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollRightBtn ? "flex" : "hidden"}`} onClick={() => handleHorizontalScrollBtn(40)}>
-                    <Image src={chatArrowRight} alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none" />
+                    <Image src={chatArrowRight} unoptimized alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none" />
                 </button>
             </div>
         </>

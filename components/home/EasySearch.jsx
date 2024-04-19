@@ -13,7 +13,7 @@ const EasySearch = () => {
     <div className="mt-[140px] lg:mt-[200px] 2xl:mt-[320px] px-4 lg:px-0 flex justify-center items-center lg:block">
       <div className="block lg:flex lg:flex-row-reverse justify-between items-center bg-primary-dark-2 pt-[100px] pb-[35px] px-4 lg:px-0 lg:py-[90px] rounded-[5px] lg:rounded-[0px] w-full sm:w-9/12 lg:w-full" data-aos="fade-right" data-aos-offset="100" data-aos-duration="500">
         <div className="w-full lg:w-6/12 relative h-full flex items-center justify-center lg:justify-center" data-aos="fade-left" data-aos-offset="100" data-aos-duration="500" data-aos-delay="10">
-          <Image src={easySearchDesktopImg} alt="" width={1000} height={1000} priority className="hidden lg:block absolute pointer-events-none select-none w-11/12 lg:max-w-[878px]" />
+          <Image src={easySearchDesktopImg} unoptimized alt="" width={1000} height={1000} priority className="hidden lg:block absolute pointer-events-none select-none w-11/12 lg:max-w-[878px]" />
           <Image src={easySearchMobileImg} alt="" width={1000} height={1000} priority className="block lg:hidden absolute pointer-events-none select-none w-[240px] mb-10 -translate-y-[50%]" />
         </div>
         <div className="w-full lg:w-6/12 lg:flex flex-col items-end ">

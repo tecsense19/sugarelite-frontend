@@ -176,7 +176,7 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
 
         <div className="font-semibold text-[20px] leading-[22px] flex items-center gap-x-[14px]">
           <div className="h-10 w-10 rounded-[5px] flex justify-center items-center border-[1.5px] border-white/80">
-            <Image src={backIcon} alt="" width={24} height={24} className='pointer-events-none' priority />
+            <Image src={backIcon} alt="" width={24} height={24} className='pointer-events-none' priority unoptimized />
           </div>
           <div className="text-[20px] font-semibold leading-[22px] text-white/80">Nope</div>
         </div>
