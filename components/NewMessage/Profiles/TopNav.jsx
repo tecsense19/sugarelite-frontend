@@ -87,16 +87,14 @@ const TopNav = ({ profileList }) => {
                 <div ref={horizontalProfilesRef} className={`horizontal-profiles py-1 flex gap-x-4 overflow-x-auto items-center ${showProfileScrollLeftBtn ? "ps-5" : "ps-0"} ${showProfileScrollRightBtn ? "pe-6" : "pe-0"}`} style={{ scrollbarWidth: "none" }}>
                     {profileList?.map((item, idx) => {
                         return (
-                            <>
-                                <button key={idx} className="flex items-center relative justify-center scroll-smooth" onClick={() => { dispatch({ type: "Message_To", payload: item.profile }) }}>
-                                    {
-                                        item.profile.avatar_url ?
-                                            <Image src={item.profile.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
-                                            : <p className="h-10 w-10 flex items-center justify-center bg-primary rounded-full text-[18px] uppercase">{item.profile.username.charAt(0)}</p>
-                                    }
-                                    {onlineUsers.some(i => i === item.profile.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />}
-                                </button>
-                            </>
+                            <button key={idx} className="flex items-center relative justify-center scroll-smooth" onClick={() => { dispatch({ type: "Message_To", payload: item.profile }) }}>
+                                {
+                                    item.profile.avatar_url ?
+                                        <Image src={item.profile.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
+                                        : <p className="h-10 w-10 flex items-center justify-center bg-primary rounded-full text-[18px] uppercase">{item.profile.username.charAt(0)}</p>
+                                }
+                                {onlineUsers.some(i => i === item.profile.id) && <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />}
+                            </button>
                         )
                     })}
 
