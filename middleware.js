@@ -15,7 +15,7 @@ export const middleware = (request) => {
     const url = origin === local_path ? local_path : (origin === development ? development : main)
 
     const path = request.nextUrl.pathname
-    const user = request.cookies.get("user")?.value
+    const user = request.cookies.get("id")?.value
 
 
     const public_routes = [client_routes.login, client_routes.register]

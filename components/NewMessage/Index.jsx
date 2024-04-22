@@ -35,7 +35,6 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
     const [profiles, setProfiles] = useState([])
     const [chats, setMyChats] = useState(myChats)
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
-    const navigate = useRouter()
     const [unReadCount, setUnReadCount] = useState([])
     const [isTyping, setIsTyping] = useState([])
     const [sendingImages, setSendingImages] = useState([])
@@ -45,9 +44,9 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
 
     useEffect(() => {
         setCurrentUser(userState ? userState : decryptedUser)
-        if (!userState?.id) {
-            navigate.push(client_routes.home)
-        }
+        // if (!userState?.id) {
+        //     navigate.push(client_routes.home)
+        // }
     }, [userState])
 
     useEffect(() => {

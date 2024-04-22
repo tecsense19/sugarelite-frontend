@@ -117,54 +117,38 @@ const Search_Index = ({ allUsers }) => {
         setDummyUsers(users)
     }, [users])
 
+    if (userState) {
+        return (
+            <>
 
-    return (
-        <>
-            {/* <div className="font-bold md:h-dvh pt-0 md:pt-[66px] flex flex-col md:flex-row">
-                {
-                    !isFilterOpen ? <div className="md:hidden text-white p-4 flex justify-between items-center my-2 ">
-                        <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer ' onClick={() => navigate.push(client_routes.profile)} />
-                        <span className="text-[24px] font-semibold leading-[22.8px]">Results</span>
-                        <button onClick={filterHandler}>
-                            <Image src={settingsIcon} alt='down_arrow' width={20} height={20} priority className='text-white pointer-events-none' />
-                        </button>
-                    </div> :
-                        <div className="md:hidden text-white p-4 flex justify-between items-center my-2 ">
-                            <Image src={chevron_down} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer' onClick={() => dispatch({ type: "Filter_Close" })} />
-                            <span className="text-[24px] font-semibold leading-[22.8px]">Filter & Sort</span>
-                            <div></div>
-                        </div>
-                }
-                <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} />
-                {
-                    !isFilterOpen ? getComponent()
-                        :
-                        <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} />
-                }
-            </div> */}
+                {/* web view */}
 
-            {/* web view */}
+                <div className="font-bold hidden md:flex md:h-dvh pt-0 md:pt-[66px] flex-col md:flex-row">
+                    <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} />
+                    <Cards allUsers={dummyUsers} />
+                </div>
 
-            <div className="font-bold hidden md:flex md:h-dvh pt-0 md:pt-[66px] flex-col md:flex-row">
-                <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} />
-                <Cards allUsers={dummyUsers} />
-            </div>
+                {/* mobile view */}
 
-            {/* mobile view */}
+                <div className={`${isFilterOpen ? "" : "h-dvh"} md:hidden`}>
+                    {
+                        !isFiltered ? (isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
+                            <SwipePage allUsers={allUsers} currentUser={userState} filterHandler={filterHandler} />) :
+                            (
+                                isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
+                                    <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} />
+                            )
+                    }
+                </div>
 
-            <div className={`${isFilterOpen ? "" : "h-dvh"} md:hidden`}>
-                {
-                    !isFiltered ? (isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                        <SwipePage allUsers={allUsers.slice(0, 10)} currentUser={userState} filterHandler={filterHandler} />) :
-                        (
-                            isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                                <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} />
-                        )
-                }
-            </div>
+            </>
+        )
+    } else {
+        return <div className="h-dvh flex justify-center items-center">
+            <span className="loader after:border-[30px]"></span>
+        </div>
+    }
 
-        </>
-    )
 }
 
 export default Search_Index

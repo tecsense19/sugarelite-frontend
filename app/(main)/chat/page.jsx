@@ -1,8 +1,10 @@
-import { all_profiles_action, chat_list_action, decrypt_user } from "@/app/lib/actions";
+import { all_profiles_action, chat_list_action, decrypt_user, get_user_action } from "@/app/lib/actions";
 import Index from "@/components/NewMessage/Index";
 
 const Chat = async () => {
-    const currentUser = decrypt_user();
+    const profile = await get_user_action()
+    // const currentUser = decrypt_user();
+    const currentUser = profile[0]
     const allUsers = await all_profiles_action();
     const chatList = await chat_list_action();
 

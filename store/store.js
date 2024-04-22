@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { parseCookies } from 'nookies';
 import CryptoJS from "crypto-js"
 import { io } from 'socket.io-client';
-import { socket_server } from '@/app/lib/helpers';
+import { server_routes, socket_server } from '@/app/lib/helpers';
 import { connectSocket } from '@/app/lib/socket';
 
 const initialState = {
@@ -298,19 +298,20 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
 export const StoreProvider = ({ children }) => {
 
   const token = parseCookies("user")?.user
-  let user;
+  const id = parseCookies()?.id
+  // let user;
 
-  if (token) {
-    const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
-    user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  }
+  // if (token) {
+  //   const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
+  //   user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  // }
 
   const [state, dispatch,] = useReducer(rootReducer, {
     firstState: initialState,
     filterState: {
       isFilterOpen: false,
     },
-    userState: user ? user : null,
+    userState: null,
     toMessageState: null,
     allUsersState: null,
     chatsState: [],
@@ -329,9 +330,23 @@ export const StoreProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (state.userState) {
-      connectSocket(state.userState.id)
+
+    const fetchuser = async () => {
+      try {
+        const res = await fetch(server_routes.allProfiles + `?id=${id}`)
+        const data = await res.json()
+        if (data.success) {
+          dispatch({ type: "Current_User", payload: data.data[0] })
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
+
+    if (id) {
+      connectSocket(id)
+    }
+    fetchuser()
   }, [])
 
   return (

@@ -33,7 +33,6 @@ const Header = ({ decryptedUser, allUsers, chatList }) => {
     AOS.init();
   }, [])
 
-
   useEffect(() => {
     if (userState) {
       const user_chats = chatList.data.filter(chat => chat.sender_id === userState?.id || chat.receiver_id === userState?.id);

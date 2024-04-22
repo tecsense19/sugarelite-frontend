@@ -1,4 +1,4 @@
-import { decrypt_user, private_album_notification, search_profile_action } from "@/app/lib/actions"
+import { decrypt_user, get_user_action, private_album_notification, search_profile_action } from "@/app/lib/actions"
 import { client_routes } from "@/app/lib/helpers"
 import SearchProfileIndex from "@/components/profile/searched_Profile/SearchProfileIndex"
 import Link from "next/link"
@@ -7,9 +7,10 @@ import { redirect } from "next/navigation"
 
 
 const ProfileId = async ({ params }) => {
-
-  const currentUser = decrypt_user();
-  if (!currentUser) redirect(client_routes.profile);
+  const profile = await get_user_action()
+  // const currentUser = decrypt_user();
+  if (!profile) redirect(client_routes.profile);
+  const currentUser = profile[0];
   const myAccount = await search_profile_action(currentUser.id);
 
   if (!myAccount.success) {

@@ -1,4 +1,4 @@
-import { all_profiles_action, decrypt_user } from "@/app/lib/actions"
+import { all_profiles_action, decrypt_user, get_user_action } from "@/app/lib/actions"
 import Loader from "@/components/common/Loader"
 import ProfileIndex from "@/components/profile/ProfileIndex"
 import { Suspense } from "react"
@@ -6,7 +6,8 @@ import { Suspense } from "react"
 
 const Profile = async () => {
 
-  const user = decrypt_user()
+  // const user = decrypt_user()
+  const user = await get_user_action()
   const allUsers = await all_profiles_action()
 
   if (allUsers.success) {
@@ -14,7 +15,7 @@ const Profile = async () => {
     return (
       <>
         <Suspense fallback={<Loader />}>
-          <ProfileIndex decryptedUser={user} allUsers={allUsers.data} accessList={accessList[0]} />
+          <ProfileIndex decryptedUser={user[0]} allUsers={allUsers.data} accessList={accessList[0]} />
         </Suspense>
       </>
     )

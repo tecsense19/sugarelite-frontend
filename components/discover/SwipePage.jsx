@@ -3,21 +3,6 @@
 import SwipeCard from "./SwipeCard";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Img1 from "../../public/assets/profile_img_1.png";
-import Img2 from "../../public/assets/profile_img_2.png";
-import Img3 from "../../public/assets/profile_img_3.png";
-import Img4 from "../../public/assets/profile_img_4.png";
-import Img5 from "../../public/assets/profile_img_5.png";
-import Img6 from "../../public/assets/profile_img_6.png";
-import Img7 from "../../public/assets/profile_img_7.png";
-import Img8 from "../../public/assets/profile_img_8.png";
-import Img9 from "../../public/assets/profile_img_9.png";
-import Img10 from "../../public/assets/profile_img_10.png";
-import Img11 from "../../public/assets/profile_img_11.png";
-import Img12 from "../../public/assets/profile_img_12.png";
-import Img13 from "../../public/assets/swipe_img_1.png";
-import Img14 from "../../public/assets/swipe_img_2.png";
-import avtarImage from "../../public/assets/avtar_image.svg"
 import backIcon from "../../public/assets/back_discover_icon.svg";
 import nextIcon from "../../public/assets/next_discover_icon.svg";
 import favouriteIcon from "../../public/assets/favourite_discover_icon.svg";
@@ -27,33 +12,18 @@ import chevron_left from "/public/assets/arrow_left.svg"
 import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
 
-const tempProfiles = [
-  { id: 1, public_images: [Img1, Img10], is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
-  { id: 2, public_images: [Img2, Img11], is_active: false, name: "Inga Green", age: 22, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 3, public_images: [Img3, Img12], is_active: false, name: "Inga Green", age: 29, is_premium: false, desc: "Obcaecati cumque et" },
-  { id: 4, public_images: [Img4, Img13], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 5, public_images: [Img5, Img14], is_active: false, name: "Inga Green", age: 32, is_premium: false, desc: "Obcaecati cumque et" },
-  { id: 6, public_images: [Img6, Img10], is_active: false, name: "Inga Green", age: 29, is_premium: false, desc: "Obcaecati cumque et" },
-  { id: 7, public_images: [Img7, Img11], is_active: true, name: "Inga Green", age: 28, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 8, public_images: [Img8, Img12], is_active: false, name: "Inga Green", age: 30, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 9, public_images: [Img9, Img13], is_active: true, name: "Inga Green", age: 37, is_premium: false, desc: "Obcaecati cumque et" },
-  { id: 10, public_images: [Img10, Img1], is_active: false, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 11, public_images: [Img11, Img2], is_active: true, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 12, public_images: [Img12, Img3], is_active: false, name: "Inga Green", age: 37, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 13, public_images: [Img13, Img3, Img5], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
-  { id: 14, public_images: [Img14, Img4], is_active: true, name: "Inga Green", age: 24, is_premium: true, desc: "Obcaecati cumque et" },
-]
 
 const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
   const [currentPhotoNumber, setCurrentPhotoNumber] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [profiles, setProfiles] = useState(allUsers)
+  const [profiles, setProfiles] = useState(allUsers.slice(allUsers.length - 10, allUsers.length))
   // const [profiles, setProfiles] = useState(tempProfiles)
 
   const { state: { userState }, dispatch } = useStore()
 
   useEffect(() => {
     setActiveIndex(profiles.length - 1)
+    console.log(profiles)
   }, [])
 
   const navigate = useRouter()
@@ -65,13 +35,12 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
 
   const swiped = (direction, profile) => {
     if (direction === "left") {
-      // toast.warn("Swiped Left")
       console.log("left", profile)
     } else if (direction === "right") {
-      // toast.success("Swiped Right")
       console.log("right", profile)
     }
   }
+
   const outOfFrame = (profile, index) => {
     let updatedProfiles = profiles.filter((chr) => {
       if (chr.id === profile.id) {
@@ -85,11 +54,9 @@ const SwipePage = ({ allUsers, currentUser, filterHandler }) => {
   }
   const handleSwipe = (profile, direction, index) => {
     if (direction === 'right') {
-      // Handle right swipe
       swiped(direction, profile)
       outOfFrame(profile, index)
     } else if (direction === 'left') {
-      // Handle left swipe
       swiped(direction, profile)
       outOfFrame(profile, index)
     }

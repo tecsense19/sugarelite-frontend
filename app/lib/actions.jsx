@@ -48,7 +48,6 @@ export const newsletter_action = async (email) => {
 
 export const encrypt_user = (token) => {
     if (token) {
-        console.log(token)
         cookies().set("user", token)
     }
 }
@@ -59,6 +58,17 @@ export const decrypt_user = () => {
         const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
         const user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         return user
+    }
+}
+
+export const get_user_action = async () => {
+    const id = cookies().get("id")?.value
+    const res = await fetch(server_routes.allProfiles + `?id=${id}`)
+    if (res.ok) {
+        const data = await res.json()
+        if (data.success) {
+            return data.data
+        }
     }
 }
 
@@ -110,6 +120,7 @@ export const edit_profile_action = async (form) => {
 
 export const logout_user = () => {
     cookies().delete("user")
+    cookies().delete("id")
 }
 
 export const all_profiles_action = async () => {

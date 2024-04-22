@@ -219,7 +219,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
                                     </>
                                 }
                                 <button type="submit" disabled={isdisabled} className="h-[30px] w-[30px] md:h-[35px] md:w-[35px] bg-secondary flex justify-center items-center ms-3 md:ms-[30px] rounded-full" >
-                                    <Image src={sendIcon} priority alt="sendIcon" height={18} width={18} className="hidden md:block pointer-events-none" />
+                                    <Image src={sendIcon} priority alt="sendIcon" height={16} width={16} className="hidden md:block pointer-events-none h-[16px] w-[16px] me-1 mt-[2px]" />
                                     <Image src={sendIcon} priority alt="sendIcon" height={15.5} width={15.5} className="md:hidden pointer-events-none" />
                                 </button>
                             </form>

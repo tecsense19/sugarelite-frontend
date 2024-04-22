@@ -82,6 +82,7 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
   const onCardDragStart = (e) => {
     dragCardValues = { clientX: e.clientX, clientY: e.clientY };
   }
+
   const onCardDragEnd = (e, fn) => {
     if (dragCardValues.clientX === e.clientX && dragCardValues.clientY === e.clientY) {
       let coords = { clientX: e.clientX, clientY: e.clientY };
@@ -116,8 +117,8 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
   const onBookmarkClick = () => {
     console.log("Bookmark Click", i)
   }
-  const onHeartClick = () => {
-    // console.log("Heart Click", i)
+  const onHeartClick = async () => {
+    console.log("Heart Click", i)
     const moveOutWidth = window.innerWidth
     cardRef.current.style.transform = `translate(${moveOutWidth}px, -100px) rotate(-30deg)`
     const direction = 'right';
@@ -163,14 +164,14 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
                   </div>
                   <div className="mt-[5px] text-[clamp(14px,1.5vw,15px)] leading-[14px] font-medium text-white/50">{profile.region}</div>
                 </div>
-                <div className='flex flex-col gap-y-[13.2px] border z-20'>
+                <div className='flex flex-col gap-y-[13.2px] z-20'>
                   <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onCrossClick) }}>
                     <Image src={closeIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button>
                   {/* <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-white/50 rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onBookmarkClick) }}>
                     <Image src={starIcon} alt="" height={22} width={22} priority className="pointer-events-none" />
                   </button> */}
-                  <button className='flex justify-center items-center cursor-pointer h-[52.3px] w-[52.3px] bg-secondary rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onHeartClick) }}>
+                  <button className='flex justify-center items-center z-20 cursor-pointer h-[52.3px] w-[52.3px] bg-secondary rounded-full' onMouseDown={(e) => { e.stopPropagation(); onCardDragStart(e) }} onMouseUp={(e) => { e.stopPropagation(); onCardDragEnd(e, onHeartClick) }}>
                     <Image src={heartIcon} alt="" height={24} width={22} priority className="pointer-events-none h-[24px] w-[22px] aspect-auto" />
                   </button>
                 </div>

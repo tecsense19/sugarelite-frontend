@@ -32,7 +32,6 @@ import SideDrawer from "../common/SideDrawer"
 
 
 const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
-
   const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, newMessageState }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
@@ -124,7 +123,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
     }
 
     const onlineUserHandler = (arr) => {
-      const filtered = arr.filter(i => i !== userState.id)
+      const filtered = arr.filter(i => i !== user.id)
       dispatch({ type: "Update_Online_Users", payload: filtered })
     }
 
