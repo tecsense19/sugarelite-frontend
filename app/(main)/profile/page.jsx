@@ -11,7 +11,7 @@ const Profile = async () => {
   const allUsers = await all_profiles_action()
 
   if (allUsers.success) {
-    const accessList = allUsers.data.filter((i) => i.id === user?.id)
+    const accessList = allUsers.data.filter((i) => i.id === user[0]?.id)
     return (
       <>
         <Suspense fallback={<Loader />}>

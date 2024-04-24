@@ -62,7 +62,6 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     }
 
 
-
     const sendMessageHandler = async ({ message, photo }) => {
         setIsEmoji(false)
         message = message?.trim(' ')
@@ -139,49 +138,35 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
         }
     }, [])
 
-    const Attachment = (() => {
+    const getBase64 = (file) =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    const photoHandler = async (e) => {
+        let obj = {}
+        const { files } = e.target
 
-        const getBase64 = (file) =>
-            new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = (error) => reject(error);
-            });
-
-
-        const photoHandler = async (e) => {
-            let obj = {}
-            const { files } = e.target
-
-            if (files[0]) {
-                let file = await getBase64(files[0])
-                obj.name = files[0].name
-                let alreadyUploaded = false;
-                for (let item of sendingImages) {
-                    if (item.name === obj.name) {
-                        alreadyUploaded = true;
-                        break;
-                    }
-                }
-                if (!alreadyUploaded) {
-                    obj.photo_url = file
-                    obj.file = files[0]
-                    setSendingImages((prev) => [...prev, obj])
+        if (files[0]) {
+            let file = await getBase64(files[0])
+            obj.name = files[0].name
+            let alreadyUploaded = false;
+            for (let item of sendingImages) {
+                if (item.name === obj.name) {
+                    alreadyUploaded = true;
+                    break;
                 }
             }
+            if (!alreadyUploaded) {
+                obj.photo_url = file
+                obj.file = files[0]
+                setSendingImages((prev) => [...prev, obj])
+            }
         }
+    }
 
-        return (
-            <>
-                <input type="file" {...register("photo")} id='photo' className='hidden' accept="image/x-png,image/gif,image/jpeg" onChange={photoHandler} />
-                <label className='cursor-pointer' htmlFor='photo'>
-                    <Image src={attachmentIcon} priority alt="attachmentIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
-                    <Image src={attachmentIcon} priority alt="attachmentIcon" height={20} width={20} className="md:hidden pointer-events-none" />
-                </label>
-            </>
-        )
-    })
 
     return (
         <>
@@ -204,19 +189,27 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
                 {
                     (currentUser.is_subscribe || todayMsgs < 3) ?
                         <div className={`w-full h-12 md:h-[70px] bg-black flex items-center ps-3 md:ps-[30px] relative ${sendingImages.length ? "border-t border-primary rounded-b-[5px]" : " rounded-[5px]"}`}>
-                            <button ref={buttonRef} onClick={() => setIsEmoji((prev) => !prev)}>
+                            <button ref={buttonRef} onClick={() => setIsEmoji((prev) => !prev)} className='hidden md:flex'>
                                 <Image src={smileIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />
                                 <Image src={smileIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
                             </button>
                             <form className='w-full flex items-center' onSubmit={handleSubmit(sendMessageHandler)}>
                                 <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px]" autoComplete="off" />
                                 {
-                                    !editingMsg ? <Attachment /> : <>
-                                        <div className='cursor-pointer' onClick={() => { setEditingMsg(null); setSendingImages([]); reset() }}>
-                                            <Image src={closeIcon} priority alt="closeIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
-                                            <Image src={closeIcon} priority alt="closeIcon" height={20} width={20} className="md:hidden pointer-events-none" />
-                                        </div>
-                                    </>
+                                    !editingMsg ?
+                                        <>
+                                            <input type="file" {...register("photo")} id='photo' className='hidden' accept="image/x-png,image/gif,image/jpeg" onChange={photoHandler} />
+                                            <label className='cursor-pointer' htmlFor='photo'>
+                                                <Image src={attachmentIcon} priority alt="attachmentIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
+                                                <Image src={attachmentIcon} priority alt="attachmentIcon" height={20} width={20} className="md:hidden pointer-events-none" />
+                                            </label>
+                                        </>
+                                        : <>
+                                            <div className='cursor-pointer' onClick={() => { setEditingMsg(null); setSendingImages([]); reset() }}>
+                                                <Image src={closeIcon} priority alt="closeIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
+                                                <Image src={closeIcon} priority alt="closeIcon" height={20} width={20} className="md:hidden pointer-events-none" />
+                                            </div>
+                                        </>
                                 }
                                 <button type="submit" disabled={isdisabled} className="h-[30px] w-[30px] md:h-[35px] md:w-[35px] bg-secondary flex justify-center items-center ms-3 md:ms-[30px] rounded-full" >
                                     <Image src={sendIcon} priority alt="sendIcon" height={16} width={16} className="hidden md:block pointer-events-none h-[16px] w-[16px] me-1 mt-[2px]" />
