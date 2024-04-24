@@ -52,9 +52,8 @@ const Login = ({ setIsForgotOpen }) => {
             return;
         }
         dispatch({ type: "Current_User", payload: res.data })
-        setCookie(null, "id", res.data.id, { maxAge: 36000, secure: true, path: '/' })
-        // const token = CryptoJS.AES.encrypt(JSON.stringify(res.data), "SecretKey").toString()
-        // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+        const id = CryptoJS.AES.encrypt(JSON.stringify(res.data.id), "SecretKey").toString()
+        setCookie(null, "user", id, { maxAge: 36000, secure: true, path: '/' })
         setIsLoading(false)
         connectSocket(res.data.id)
         client_notification(api, "topRight", "success", res.message, 2)

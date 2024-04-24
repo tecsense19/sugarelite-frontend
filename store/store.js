@@ -298,13 +298,12 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
 export const StoreProvider = ({ children }) => {
 
   const token = parseCookies("user")?.user
-  const id = parseCookies()?.id
-  // let user;
+  let userId;
 
-  // if (token) {
-  //   const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
-  //   user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-  // }
+  if (token) {
+    const bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
+    userId = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  }
 
   const [state, dispatch,] = useReducer(rootReducer, {
     firstState: initialState,
@@ -333,7 +332,7 @@ export const StoreProvider = ({ children }) => {
 
     const fetchuser = async () => {
       try {
-        const res = await fetch(server_routes.allProfiles + `?id=${id}`)
+        const res = await fetch(server_routes.allProfiles + `?id=${userId}`)
         const data = await res.json()
         if (data.success) {
           dispatch({ type: "Current_User", payload: data.data[0] })
@@ -343,10 +342,10 @@ export const StoreProvider = ({ children }) => {
       }
     }
 
-    if (id) {
-      connectSocket(id)
+    if (userId) {
+      connectSocket(userId)
+      fetchuser()
     }
-    fetchuser()
   }, [])
 
   return (

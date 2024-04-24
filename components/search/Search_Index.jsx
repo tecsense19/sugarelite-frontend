@@ -18,8 +18,6 @@ const Search_Index = ({ allUsers }) => {
     const [cities, setCities] = useState([])
     const [isFiltered, setIsFiltered] = useState(false)
 
-    const navigate = useRouter()
-
     const filterHandler = () => {
         if (isFilterOpen) {
             dispatch({ type: "Filter_Close" })

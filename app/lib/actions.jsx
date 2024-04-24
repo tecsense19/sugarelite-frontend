@@ -62,12 +62,16 @@ export const decrypt_user = () => {
 }
 
 export const get_user_action = async () => {
-    const id = cookies().get("id")?.value
-    const res = await fetch(server_routes.allProfiles + `?id=${id}`)
-    if (res.ok) {
-        const data = await res.json()
-        if (data.success) {
-            return data.data
+    const token = cookies().get("user")?.value
+    if (token) {
+        var bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
+        var userId = bytes.toString(CryptoJS.enc.Utf8);
+        const res = await fetch(server_routes.allProfiles + `?id=${userId}`)
+        if (res.ok) {
+            const data = await res.json()
+            if (data.success) {
+                return data.data
+            }
         }
     }
 }
