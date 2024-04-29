@@ -1,9 +1,14 @@
 import { all_profiles_action, chat_list_action, decrypt_user, get_user_action } from "@/app/lib/actions";
+import { client_routes } from "@/app/lib/helpers";
 import Index from "@/components/NewMessage/Index";
+import { redirect } from "next/navigation";
 
 const Chat = async () => {
     const profile = await get_user_action()
     // const currentUser = decrypt_user();
+    if (!profile) {
+        redirect(client_routes.home)
+    }
     const currentUser = profile[0]
     const allUsers = await all_profiles_action();
     const chatList = await chat_list_action();

@@ -107,7 +107,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
-                <Popover placement='bottomLeft' visible={showPopOver} content={content}>
+                <Popover placement='bottomLeft' open={showPopOver} content={content}>
                     <div className='mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px] relative'>
                         <Image src={showPass ? password : lock} width={20} height={20} alt='password ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                         <input

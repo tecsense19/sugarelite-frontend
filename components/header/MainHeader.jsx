@@ -1,19 +1,19 @@
 "use client"
-import { client_routes, server_routes, socket_server } from "@/app/lib/helpers"
+import { client_notification, client_routes, server_routes, socket_server } from "@/app/lib/helpers"
 import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import logo from "../../public/assets/Logo (1).svg"
-import notification from "../../public/assets/Mask group (1).svg"
+import notificationIcon from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { useStore } from "@/store/store"
 import { logout_user, private_album_notification, read_message_action, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
-import { io } from 'socket.io-client';
 import { useEffect, useState } from "react"
 import { disconnectSocket, getSocket } from "@/app/lib/socket"
 import SideDrawer from "../common/SideDrawer"
+import { notification } from "antd"
 
 // const useSocket = () => {
 //   const [socket, setSocket] = useState(null);
@@ -32,7 +32,7 @@ import SideDrawer from "../common/SideDrawer"
 
 
 const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
-  const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, newMessageState }, dispatch } = useStore()
+  const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, onlineUsers }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
   const socket = getSocket()
@@ -194,13 +194,13 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
           <div className="flex items-center me-[72px]">
             <div className="flex flex-row gap-x-[30px] me-[35px]">
               <button className="transition-all duration-150 hover:scale-110 relative" onClick={() => notificationOpenState ? dispatch({ type: "Close_Notification", payload: false }) : dispatch({ type: "Open_Notification", payload: true })}>
-                <Image height={20} width={20} src={notification} alt="" />
+                <Image height={20} width={20} src={notificationIcon} alt="" />
                 {notifyBadgeState.notify &&
                   <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute top-0 right-0 "></p>
                 }
               </button>
               <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110 relative">
-                <Image height={20} width={20} src={messages} alt="" className="" />
+                <Image height={32} width={20} src={messages} alt="" className="" />
                 {notifyBadgeState.msg &&
                   <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute top-0 -right-1"></p>
                 }

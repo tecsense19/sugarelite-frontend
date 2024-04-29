@@ -146,7 +146,9 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
           <div className='discover-card-bg h-full w-full rounded-xl absolute top-0 pointer-events-none'></div>
           <div className="absolute inset-0 w-full h-full flex flex-col justify-end items-center pt-[14px] pb-[17px] px-[17px]">
             <div className='relative h-full w-full flex flex-col justify-between'>
-              {(onlineUsers.some(i => i === profile.id)) && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>}
+              {
+                (onlineUsers.some(i => i === profile.id)) && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
+              }
               <div className='flex w-full justify-center gap-x-[5.5px]'>
                 {/* {
                   profile?.public_images?.map((item, idx) => {

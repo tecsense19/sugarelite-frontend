@@ -10,7 +10,7 @@ const Profile = async () => {
   const user = await get_user_action()
   const allUsers = await all_profiles_action()
 
-  if (allUsers.success) {
+  if (allUsers?.success && user) {
     const accessList = allUsers.data.filter((i) => i.id === user[0]?.id)
     return (
       <>

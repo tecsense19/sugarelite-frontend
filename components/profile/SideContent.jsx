@@ -51,18 +51,6 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
         setAvatar(files[0])
     }
 
-    const calculateAge = (dob) => {
-        const today = new Date();
-        const birthDate = new Date(dob);
-        let age = today.getFullYear() - birthDate.getFullYear();
-
-        if (today < new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate())) {
-            age--;
-        }
-
-        return age;
-    };
-
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex  justify-between items-center">
@@ -97,7 +85,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                         </>
                     }
                     {
-                        user && user?.online &&
+
                         <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-success absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
                     }
 
@@ -120,7 +108,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                         </div>
                     }
 
-                    {/* Edit Profile content ends */}
+                    {/* Edit Profile option ends */}
 
                 </div>
                 <div className="lg:self-start mt-[20px] lg:mt-[30px]">
@@ -128,10 +116,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                         <div className='flex items-center gap-6'>
                             <div className="text-[30px] font-bold leading-[30px] relative capitalize">
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
-                                {
-                                    user && user?.online &&
-                                    <div className='h-3 w-3 lg:hidden bg-success absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
-                                }
+                                <div className='h-3 w-3 lg:hidden bg-success absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
                             </div>
                             {
                                 user && user?.is_subscribe === 1 &&

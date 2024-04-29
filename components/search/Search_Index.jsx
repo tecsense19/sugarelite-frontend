@@ -4,10 +4,9 @@ import Filters from "@/components/search/Filters"
 import { useStore } from "@/store/store"
 import Mob_Filter from "@/components/search/Mob_Filter"
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import { Controller, useForm } from "react-hook-form"
 import { Countries } from "@/app/lib/constants"
-import SwipePage from "../discover/SwipePage"
+import TinderSwipe from "./TinderSwipe"
 
 const Search_Index = ({ allUsers }) => {
 
@@ -130,8 +129,10 @@ const Search_Index = ({ allUsers }) => {
 
                 <div className={`${isFilterOpen ? "" : "h-dvh"} md:hidden`}>
                     {
-                        !isFiltered ? (isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                            <SwipePage allUsers={allUsers} currentUser={userState} filterHandler={filterHandler} />) :
+                        !isFiltered ? (
+                            isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
+                                <TinderSwipe filterHandler={filterHandler} users={allUsers} />
+                        ) :
                             (
                                 isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
                                     <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} />

@@ -2,8 +2,7 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { parseCookies } from 'nookies';
 import CryptoJS from "crypto-js"
-import { io } from 'socket.io-client';
-import { server_routes, socket_server } from '@/app/lib/helpers';
+import { server_routes } from '@/app/lib/helpers';
 import { connectSocket } from '@/app/lib/socket';
 
 const initialState = {
@@ -50,24 +49,6 @@ const messageToReducer = (state, action) => {
   }
 }
 
-const chatReducer = (state, action) => {
-  switch (action.type) {
-    case 'Update_Chats':
-      return [...state, action.payload]
-    default:
-      return state;
-  }
-}
-
-const allUsersDataReducer = (state, action) => {
-  switch (action.type) {
-    case 'all_users_data':
-      // console.log(action.payload);
-      return action.payload;
-    default:
-      return state;
-  }
-}
 
 const notificationReducer = (state, action) => {
   switch (action.type) {
@@ -75,17 +56,6 @@ const notificationReducer = (state, action) => {
       return action.payload;
     case 'Close_Notification':
       return action.payload;
-    default:
-      return state;
-  }
-}
-
-const accessPendingReducer = (state, action) => {
-  switch (action.type) {
-    case 'Add_User':
-      return [...state, action.payload];
-    case "Remove_User":
-      return state.filter(user => user !== action.payload.id);
     default:
       return state;
   }
@@ -107,7 +77,6 @@ const accessDecisionReducer = (state, action) => {
       return state;
   }
 }
-
 
 const chatProfileReducer = (state, action) => {
   switch (action.type) {
@@ -246,7 +215,7 @@ const readMsgsReducer = (state, action) => {
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, allUsersState, chatsState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, accessPendingState, decisionState, chatProfileState, customState }, action) => {
+const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -254,10 +223,7 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         filterState: { isFilterOpen: false },
         userState: null,
         toMessageState: null,
-        allUsersState: null,
-        chatsState: [],
         notificationOpenState: false,
-        accessPendingState: [],
         decisionState: [],
         chatProfileState: [],
         newMsgState: [],
@@ -275,10 +241,7 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         filterState: filterReducer(filterState, action),
         userState: currentUserReducer(userState, action),
         toMessageState: messageToReducer(toMessageState, action),
-        allUsersState: allUsersDataReducer(allUsersState, action),
-        chatsState: chatReducer(chatsState, action),
         notificationOpenState: notificationReducer(notificationOpenState, action),
-        accessPendingState: accessPendingReducer(accessPendingState, action),
         decisionState: accessDecisionReducer(decisionState, action),
         chatProfileState: chatProfileReducer(chatProfileState, action),
         newMsgState: newMsgReducer(newMsgState, action),
@@ -312,10 +275,7 @@ export const StoreProvider = ({ children }) => {
     },
     userState: null,
     toMessageState: null,
-    allUsersState: null,
-    chatsState: [],
     notificationOpenState: false,
-    accessPendingState: [],
     decisionState: [],
     chatProfileState: [],
     newMsgState: [],

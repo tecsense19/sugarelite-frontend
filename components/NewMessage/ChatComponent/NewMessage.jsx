@@ -14,14 +14,12 @@ import single_tick_2 from "/public/assets/single_tick_2.svg";
 import shadow_bg_chat from "/public/assets/shadow_bg_chat.svg";
 import { send_message_action } from '@/app/lib/actions';
 import { useRouter } from 'next/navigation';
-import { client_routes } from '@/app/lib/helpers';
 import Msg from './Msg';
 
 
-const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, socket, setShowMobileProfile, setDrawerOpen, setSelectedImages, isLastMessage, isFirstMessage }) => {
+const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, socket, setSelectedImages, isLastMessage, isFirstMessage }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showIcon, setShowIcon] = useState("")
 
   const handleShowOptionsChange = (val) => {
     setShowOptions(val)
@@ -94,23 +92,6 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
   const msgEditHandler = () => {
     setShowOptions(false)
     setEditingMsg({ message: item.text, id: item.id, images: item.get_all_chat_with_image })
-  }
-
-  const onProfileClick = () => {
-    if (window.innerWidth < 1537) {
-      setDrawerOpen(true)
-      setShowMobileProfile(true)
-    } else {
-      navigate.push(`${client_routes.profile}/${toUser.id}`)
-    }
-  }
-
-  const popupHandler = () => {
-    setShowIcon(idx)
-  }
-  const popupRemoveHandler = () => {
-    setShowIcon('')
-    setShowOptions(false)
   }
 
   if (item.sender_id === user.id) {
@@ -206,10 +187,10 @@ const NewMessage = ({ user, item, idx, containerElement, toUser, setEditingMsg, 
           {
             item?.get_all_chat_with_image?.length ?
               <div className={`absolute text-white w-[94%]  font-normal text-end text-[12px] mt-1 min-w-[4rem] gap-x-1 justify-end ${item.type === "deleted" ? "hidden" : "flex"}`}>
-                <div className='absolute w-[225px]  -right-1 bottom-0'>
+                <div className='absolute w-[225px]  -right-1 bottom-0 pointer-events-none'>
                   <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
                 </div>
-                <span className='absolute me-1 bottom-[2px]'>{getChatTime(item.milisecondtime)}</span>
+                <span className='absolute me-1 bottom-[2px] pointer-events-none'>{getChatTime(item.milisecondtime)}</span>
               </div>
               :
               <span className={`text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem] absolute right-[10px] bottom-[7px] ${item.type === "deleted" ? "hidden" : ""}`}>
