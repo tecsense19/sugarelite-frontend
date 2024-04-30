@@ -1,9 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 
 const Buttons = ({ toggle, setToggle }) => {
-
-    const btnRef = useRef(null)
-    console.log(btnRef.current?.clientWidth);
 
     return (
         <div className='px-[30px] w-full'>
@@ -17,16 +14,6 @@ const Buttons = ({ toggle, setToggle }) => {
                 </button>
             </div>
         </div>
-        // <div className='relative w-full px-[30px] gap-x-4 mt-6 flex'>
-        //     <div className='absolute bg-secondary h-10 w-[calc(50%-38px)] rounded-[5px]'></div>
-        //     <button onClick={() => setToggle(false)} className={`h-[40px] z-10 basis-1/2 flex justify-center tracking-wide rounded-[5px] items-center text-white  text-[16px] font-semibold leading-[20px]`}>
-        //         New Souls
-        //     </button>
-        //     <button onClick={() => setToggle(true)} className={`h-[40px] z-10 basis-1/2 flex justify-center tracking-wide hover:bg-secondary rounded-[5px] items-center text-white ${toggle && "bg-secondary"} text-[16px] font-semibold leading-[20px]`} >
-        //         Requests
-        //     </button>
-
-        // </div>
     )
 }
 
