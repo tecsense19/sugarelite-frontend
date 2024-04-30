@@ -9,7 +9,7 @@ import closeIcon from "/public/assets/cross_icon.svg";
 import Image from 'next/image';
 import { useStore } from '@/store/store';
 
-const SwiperComponent = ({ users }) => {
+const SwiperComponent = ({ users, toggle }) => {
     const [user, setUsers] = useState(users)
     const { state: { onlineUsers } } = useStore()
 
@@ -68,8 +68,8 @@ const SwiperComponent = ({ users }) => {
     }
 
     return (
-        <div className='h-[calc(100%-88px)] flex justify-center items-center w-full transition-opacity duration-[.1s] ease-in-out' data-aos="fade-up" data-aos-duration="800">
-            <div className='relative max-w-[500px] max-h-[800px] h-[calc(100dvh-224px)] w-[calc(100vw-60px)] text-black'>
+        <div className={`h-[calc(100%-88px)] justify-center items-center w-full transition-opacity duration-[.1s] ease-in-out ${toggle ? "hidden" : "flex"}`}>
+            <div className='relative max-w-[500px] max-h-[800px] h-[calc(100dvh-180px)] w-[calc(100vw-60px)] text-black'>
                 {
                     user.length ?
                         user.map((profile, inx) => {

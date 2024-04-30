@@ -163,15 +163,15 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                     <div className='w-full flex flex-col gap-y-[10px] mt-[26px] lg:mt-0 sm:max-w-[75%] md:max-w-full'>
                         <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-primary-dark-4 w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("photo")}>
                             <Image src={lock_1} width={24} height={24} alt='message' className='inline-block h-[22px] lg:h-[24px]' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>photo access</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[6px] tracking-wider uppercase'>photo access</span>
                         </button>
                         <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-danger w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("block")}>
                             <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center'>block list</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>block list</span>
                         </button>
                         <Link href={client_routes.subscription} prefetch={true} className='flex justify-center items-center gap-[10.25px] rounded-[5px] bg-[#F4498F] w-full h-[42px] lg:h-[56px]'>
                             <Image src={subscription_logo} width={22.75} height={26} alt='message' className='inline-block mb-[6px]' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] uppercase  h-full flex items-center text-white'>Subscription</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>Subscription</span>
                         </Link>
                     </div>
                 }
