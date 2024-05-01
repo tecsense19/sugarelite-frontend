@@ -72,8 +72,8 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
     console.log("res ::", res);
     if (res.success) {
       const userRes = await search_profile_action(userState.id)
-      const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
-      setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+      // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
+      // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
       client_notification(api, "topRight", "success", res.message, 2)
       dispatch({ type: "Current_User", payload: userRes.data[0] })
     }
@@ -93,8 +93,8 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
     console.log("res ::", res);
     if (res.success) {
       const userRes = await search_profile_action(userState.id)
-      const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
-      setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+      // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
+      // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
       client_notification(api, "topRight", "success", res.message, 2)
       dispatch({ type: "Current_User", payload: userRes.data[0] })
     }

@@ -91,8 +91,8 @@ const Index = ({ decryptedUser }) => {
             if (data.success) {
                 dispatch({ type: "Current_User", payload: data.user })
                 client_notification(api, "topRight", 'success', data.message, 4)
-                const token = CryptoJS.AES.encrypt(JSON.stringify(data.user), "SecretKey").toString()
-                setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
+                // const token = CryptoJS.AES.encrypt(JSON.stringify(data.user), "SecretKey").toString()
+                // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
                 setIsLoading(false)
                 navigate.push(client_routes.profile)
             }

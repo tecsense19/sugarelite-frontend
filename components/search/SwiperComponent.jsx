@@ -8,14 +8,21 @@ import premiumUserIcon from "/public/assets/premium_user_icon.svg";
 import closeIcon from "/public/assets/cross_icon.svg";
 import Image from 'next/image';
 import { useStore } from '@/store/store';
+import './animations/style.css'
+import { friend_request_action } from '@/app/lib/actions';
 
-const SwiperComponent = ({ users, toggle }) => {
+const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
     const [user, setUsers] = useState(users)
-    const { state: { onlineUsers } } = useStore()
+    const { state: { onlineUsers, userState } } = useStore()
+    const [showLike, setShowLike] = useState({ id: null, d: null })
 
     const resetHandler = () => {
         setUsers(users)
+    }
 
+    const sendFriendReq = async (receiver_id) => {
+        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 0 })
+        console.log(res)
     }
 
     useEffect(() => {
@@ -42,12 +49,28 @@ const SwiperComponent = ({ users, toggle }) => {
         stack.on('throwout', (event) => {
             const id = event.target.id
             const profile = users.find(i => i.id === parseInt(id))
-            console.log(`You ${(event.throwDirection == Direction.LEFT ? 'removed' : 'liked')} ${profile.username} profile`)
+            // console.log(`You ${(event.throwDirection == Direction.LEFT ? 'removed' : 'liked')} ${profile.username} profile`)
+            if (event.throwDirection == Direction.RIGHT) {
+                sendFriendReq(profile.id)
+            }
             setUsers(prev => prev.filter(i => i.id !== parseInt(id)))
         });
 
-    }, [])
+        stack.on("dragmove", (e) => {
+            if (e.offset > 0) {
+                setOffSet("right")
+                setShowLike({ id: parseInt(e.target.id), d: "right" })
+            } else if (e.offset < 0) {
+                setOffSet("left")
+                setShowLike({ id: parseInt(e.target.id), d: "left" })
+            }
+        })
+        stack.on("dragend", (e) => {
+            setOffSet(null)
+            setShowLike({ id: null, d: null })
+        })
 
+    }, [])
 
     const handleClick = (type, id) => {
         const card = document.getElementById(id)
@@ -97,6 +120,24 @@ const SwiperComponent = ({ users, toggle }) => {
                                             <button className='bg-secondary rounded-full w-[48px] h-[48px] flex' onClick={() => handleClick('like', profile.id)}>
                                                 <Image src={heartIcon} alt="" height={24} width={22} priority className="pointer-events-none h-[24px] m-auto w-[22px] aspect-auto" />
                                             </button>
+                                        </div>
+                                        <div className={`absolute left-4 top-7 -rotate-[25deg] ${(profile.id === showLike?.id && showLike?.d === "right" ? "block" : "hidden")}`}>
+                                            <div class="bouncing-text tracking-wider">
+                                                <div class="b">L</div>
+                                                <div class="o">I</div>
+                                                <div class="u">K</div>
+                                                <div class="n">E</div>
+                                                <div class="shadow"></div>
+                                            </div>
+                                        </div>
+                                        <div className={`absolute right-3 top-7 rotate-[25deg] ${(profile.id === showLike?.id && showLike?.d === "left" ? "block" : "hidden")}`}>
+                                            <div class="bouncing-text tracking-wider">
+                                                <div class="b N">N</div>
+                                                <div class="o O">O</div>
+                                                <div class="u P">P</div>
+                                                <div class="n E">E</div>
+                                                <div class="shadow"></div>
+                                            </div>
                                         </div>
                                         {
                                             (onlineUsers.some(i => i === profile.id)) && <div className='absolute right-3 top-3 h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>

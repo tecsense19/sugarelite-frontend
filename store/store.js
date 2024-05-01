@@ -213,9 +213,18 @@ const readMsgsReducer = (state, action) => {
   }
 }
 
+const friendsListReducer = (state, action) => {
+  switch (action.type) {
+    case "Add_Friend":
+      return [...state, action.payload]
+    default:
+      return state;
+  }
+}
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState }, action) => {
+const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, friendsList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -233,7 +242,8 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         sideMenu: false,
         onlineUsers: [],
         chatPartnerList: [],
-        readMsgsState: []
+        readMsgsState: [],
+        friendsList: []
       };
     default:
       return {
@@ -251,7 +261,8 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         sideMenu: sideDarwerReducer(sideMenu, action),
         onlineUsers: onlineUsersReducer(onlineUsers, action),
         chatPartnerList: chatPartnerListReducer(chatPartnerList, action),
-        readMsgsState: readMsgsReducer(readMsgsState, action)
+        readMsgsState: readMsgsReducer(readMsgsState, action),
+        friendsList: friendsListReducer(friendsList, action)
       };
   }
 };
@@ -285,7 +296,8 @@ export const StoreProvider = ({ children }) => {
     sideMenu: false,
     onlineUsers: [],
     chatPartnerList: [],
-    readMsgsState: []
+    readMsgsState: [],
+    friendsList: []
   });
 
   useEffect(() => {

@@ -8,9 +8,10 @@ import { Controller, useForm } from "react-hook-form"
 import { Countries } from "@/app/lib/constants"
 import TinderSwipe from "./TinderSwipe"
 
-const Search_Index = ({ allUsers }) => {
+const Search_Index = ({ allUsers, pendingList, decryptedUser }) => {
 
     const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
+    const [currentUser, setCurrentUser] = useState(decryptedUser)
     const [users, setUsers] = useState([])
     const { register, handleSubmit, control, watch, setValue, reset } = useForm()
     const [dummyUsers, setDummyUsers] = useState([]);
@@ -24,6 +25,10 @@ const Search_Index = ({ allUsers }) => {
             dispatch({ type: "Filter_Open" })
         }
     }
+
+    useEffect(() => {
+        setCurrentUser(userState)
+    }, [userState])
 
     useEffect(() => {
         const blockList = blockedUsersState.filter((i) => i.is_blocked === 1)
@@ -131,7 +136,7 @@ const Search_Index = ({ allUsers }) => {
                     {
                         !isFiltered ? (
                             isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                                <TinderSwipe filterHandler={filterHandler} users={allUsers} />
+                                <TinderSwipe filterHandler={filterHandler} users={allUsers} pendingList={pendingList} currentUser={currentUser} />
                         ) :
                             (
                                 isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :

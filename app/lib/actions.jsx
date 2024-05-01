@@ -238,14 +238,26 @@ export const private_image_access = async (form) => {
     }
 }
 
-export const friends_list_action = async (id) => {
+export const friend_request_action = async (form) => {
     try {
-        const res = await fetch(server_routes.friends_list, {
+        const res = await fetch(server_routes.friends, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(id)
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const friend_request_notifications = async (id) => {
+    try {
+        const res = await fetch(server_routes.friends_request_notification + '?user_id=' + id, {
+            cache: "no-cache"
         })
         const data = await res.json()
         return data

@@ -73,6 +73,13 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
           dispatch({ type: "Add_Blocked_User", payload: i })
         })
       }
+      const friendsList = allUsers.find(i => i.id === userState.id)?.is_friends
+      if (friendsList.length) {
+        friendsList.forEach(i => {
+          const payload = i.user_id
+          dispatch({ type: "Add_Friend", payload: payload })
+        })
+      }
     }
   }, [userState])
 

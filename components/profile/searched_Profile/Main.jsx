@@ -69,7 +69,7 @@ const Main = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIs
                         profile.appearance.map((style, inx) => {
                             return <div key={inx} className=' min-w-[150px] ' data-aos='zoom-in' data-aos-anchor-placement="bottom" >
                                 <p className='font-medium  text-[13px] md:text-[16px] text-white text-opacity-50 uppercase mb-[7px]'>{style.type}</p>
-                                <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value}</p>
+                                <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value ? (style.value === "ask me" ? "NA" : style.value) : "NA"}</p>
                             </div>
                         })
                     }
@@ -84,7 +84,7 @@ const Main = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIs
                         profile.lifestyle.map((style, inx) => {
                             return <div key={inx} className=' min-w-[150px] ' data-aos='zoom-in' data-aos-anchor-placement="bottom" >
                                 <p className='font-medium  text-[13px] md:text-[16px] text-white text-opacity-50 uppercase mb-[7px]'>{style.type}</p>
-                                <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value}</p>
+                                <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value ? (style.value === "ask me" ? "NA" : style.value) : "NA"}</p>
                             </div>
                         })
                     }
