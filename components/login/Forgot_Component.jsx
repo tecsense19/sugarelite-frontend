@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import loginLogoImg from "/public/assets/login_logo.svg";
 import eliteLogoImg from "/public/assets/elite_logo.svg";
-import bgMobileImg from "/public/assets/Group 427318831.png";
+// import bgMobileImg from "/public/assets/Group 427318831.png";
 import bgDesktopImg from "/public/assets/large_image.png";
 import emailImg from "/public/assets/email.svg";
 import { useForm } from 'react-hook-form';

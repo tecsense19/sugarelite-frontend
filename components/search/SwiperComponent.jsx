@@ -6,6 +6,7 @@ import placeholder from "/public/assets/place_holder.png";
 import heartIcon from "/public/assets/heart_swipe_icon.svg";
 import premiumUserIcon from "/public/assets/premium_user_icon.svg";
 import closeIcon from "/public/assets/cross_icon.svg";
+import closeSecondaryIcon from "/public/assets/cross_secondary.svg";
 import Image from 'next/image';
 import { useStore } from '@/store/store';
 import './animations/style.css'
@@ -21,8 +22,8 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
     }
 
     const sendFriendReq = async (receiver_id) => {
-        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 0 })
-        console.log(res)
+        // const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 0 })
+        // console.log(res)
     }
 
     useEffect(() => {
@@ -77,17 +78,21 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
         const profile = users.find(i => i.id === parseInt(id))
 
         if (type === "like") {
-            card.style.transition = "transform .6s ease-out";
+            setShowLike({ id: parseInt(id), d: "right" })
+            card.style.transition = "transform 1s ease-out";
             card.style.transform = "translateX(1000px) translateY(100px) rotate(70deg)";
             console.log(`You liked ${profile.username} profile`)
         } else {
-            card.style.transition = "transform .6s ease-out";
+            setShowLike({ id: parseInt(id), d: "left" })
+            card.style.transition = "transform 1s ease-out";
             card.style.transform = "translateX(-1000px) translateY(100px) rotate(-70deg)";
             console.log(`You removed ${profile.username} profile`)
         }
         setTimeout(() => {
+            setOffSet(null)
             setUsers(prev => prev.filter(i => i.id !== parseInt(id)))
-        }, 100)
+            setShowLike({ id: null, d: null })
+        }, 500)
     }
 
     return (
@@ -103,7 +108,7 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
                                             {profile.avatar_url ? (
                                                 <Image src={profile.avatar_url} alt={profile.username} width={1000} height={1000} className='h-full select-none touch-none w-full object-cover rounded-xl pointer-events-none' />
                                             ) : (
-                                                <Image src={getPlaceholder(profile.sugar_type)} alt={profile.username} width={1000} height={1000} className='pointer-events-none ' />
+                                                <Image src={getPlaceholder(profile.sugar_type)} unoptimized alt={profile.username} width={1000} height={1000} className='pointer-events-none ' />
                                             )}
                                         </div>
                                         <div className='discover-card-bg h-full w-full absolute flex flex-col text-white p-4 justify-end'>
@@ -121,23 +126,25 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
                                                 <Image src={heartIcon} alt="" height={24} width={22} priority className="pointer-events-none h-[24px] m-auto w-[22px] aspect-auto" />
                                             </button>
                                         </div>
-                                        <div className={`absolute left-4 top-7 -rotate-[25deg] ${(profile.id === showLike?.id && showLike?.d === "right" ? "block" : "hidden")}`}>
-                                            <div class="bouncing-text tracking-wider">
+                                        <div className={`absolute left-3 top-3 -rotate-[25deg] pointer-events-none p-4 rounded-full aspect-square flex justify-center items-end transition-all duration-300 ${(profile.id === showLike?.id && showLike?.d === "right" ? "bg-secondary/80" : "bg-none")}`}>
+                                            <Image src={heartIcon} alt='' height={50} width={50} className={`pointer-events-none transition-all duration-300 ${(profile.id === showLike?.id && showLike?.d === "right" ? "scale-100" : "scale-0")}`} />
+                                            {/* <div class="bouncing-text tracking-wider">
                                                 <div class="b">L</div>
                                                 <div class="o">I</div>
                                                 <div class="u">K</div>
                                                 <div class="n">E</div>
                                                 <div class="shadow"></div>
-                                            </div>
+                                            </div> */}
                                         </div>
-                                        <div className={`absolute right-3 top-7 rotate-[25deg] ${(profile.id === showLike?.id && showLike?.d === "left" ? "block" : "hidden")}`}>
-                                            <div class="bouncing-text tracking-wider">
+                                        <div className={`absolute right-3 top-3 rotate-[25deg] pointer-events-none p-4 rounded-full transition-all duration-300 ${(profile.id === showLike?.id && showLike?.d === "left" ? "bg-gray-500/50" : "bg-none")}`}>
+                                            <Image src={closeSecondaryIcon} alt='' height={50} width={50} className={`pointer-events-none transition-all duration-300 ${(profile.id === showLike?.id && showLike?.d === "left" ? "scale-100" : "scale-0")}`} />
+                                            {/* <div class="bouncing-text tracking-wider">
                                                 <div class="b N">N</div>
                                                 <div class="o O">O</div>
                                                 <div class="u P">P</div>
                                                 <div class="n E">E</div>
                                                 <div class="shadow"></div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         {
                                             (onlineUsers.some(i => i === profile.id)) && <div className='absolute right-3 top-3 h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
@@ -145,7 +152,7 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
                                     </div>
                                 </div>
                             )
-                        }) : <div className='text-white flex items-center justify-center h-full w-full '>
+                        }) : <div className='text-white flex items-center justify-center h-full w-full'>
                             <p className='py-1 px-6 bg-secondary rounded-[10px] ' onClick={resetHandler}>Reset</p>
                         </div>
                 }

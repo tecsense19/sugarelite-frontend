@@ -41,9 +41,9 @@ const TinderSwipe = ({ users, filterHandler, pendingList, currentUser }) => {
 
     return (
         <div className="h-full flex flex-col text-white items-center overflow-hidden">
-            <div className={`h-full w-full absolute pointer-events-none ${offSet === "right" ? "block" : "hidden"}`}>
+            {/* <div className={`h-full w-full absolute pointer-events-none ${offSet === "right" ? "block" : "hidden"}`}>
                 <Image className='h-full w-full object-cover pointer-events-none' src={Butterflies} width={1000} height={1000} alt='gif' />
-            </div>
+            </div> */}
             <div className="md:hidden flex justify-between items-center w-full px-4 pt-3" data-aos="fade-down" data-aos-duration="800" data-aos-anchor="#example-anchor">
                 <div className="flex justify-center items-center " onClick={() => navigate.push(client_routes.profile)}>
                     <Image src={chevron_left} alt="" height={24} width={24} priority className="pointer-events-none" />

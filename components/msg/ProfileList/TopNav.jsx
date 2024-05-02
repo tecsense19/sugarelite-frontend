@@ -93,7 +93,7 @@ const TopNav = ({ profileList, setToUser }) => {
                     })}
                 </div>
                 <button className={`absolute right-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollRightBtn ? "flex" : "hidden"}`} onClick={() => handleHorizontalScrollBtn(40)}>
-                    <Image src={chatArrowRight} alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none" />
+                    <Image src={chatArrowRight} unoptimized alt="" height={1000} width={1000} priority className="h-full w-full pointer-events-none" />
                 </button>
             </div>
         </>

@@ -10,7 +10,7 @@ import { Suspense, useEffect, useState } from "react"
 import dayjs from 'dayjs';
 import { useForm } from "react-hook-form"
 import chevronLeft from "/public/assets/chevron_left.svg"
-import bgMobileImg from "/public/assets/Group 427318831.png"
+// import bgMobileImg from "/public/assets/Group 427318831.png"
 import large_image from "/public/assets/large_image.png"
 import boy_small from "/public/assets/boy_small.svg"
 import pad_lock from "/public/assets/pad_lock.svg"
@@ -175,7 +175,7 @@ const Register = () => {
 								</form>
 							</div>
 						</div>
-						<Image src={large_image} width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+						<Image src={large_image} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
 					</div>
 				</main>
 			</Suspense>

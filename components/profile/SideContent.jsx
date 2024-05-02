@@ -51,15 +51,34 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
         setAvatar(files[0])
     }
 
+    const handleProfileTogglBtn = (name) => {
+        setProfileToggle(name);
+        setTimeout(() => {
+            if (name === "photo") {
+                let ele = document.getElementById("photoAccess");
+                if (ele) {
+                    ele.scrollIntoView({ behavior: "smooth", block: 'center' })
+                }
+            } else {
+                let ele = document.getElementById("blockList");
+                if (ele) {
+                    ele.scrollIntoView({ behavior: "smooth", block: 'center' })
+                }
+            }
+        }, 100)
+    }
+
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
-            <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex  justify-between items-center">
-                <Link href={path === "/profile/edit" ? "/profile" : "/search"}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
+            <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-center items-center relative">
+                <Link href={path === "/profile/edit" ? "/profile" : "/search"} className='absolute left-[15px]'>
+                    <Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" />
+                </Link>
                 <p className="text-[24px] font-semibold select-none">Profile</p>
                 {/* <PopOver>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver> */}
-                <div className='flex gap-x-4 items-center'>
+                <div className='flex gap-x-4 items-center absolute right-[15px]'>
                     <div className='relative'>
                         <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
                         {notifyBadgeState.notify &&
@@ -161,11 +180,11 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                 {
                     path === client_routes.profile &&
                     <div className='w-full flex flex-col gap-y-[10px] mt-[26px] lg:mt-0 sm:max-w-[75%] md:max-w-full'>
-                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-primary-dark-4 w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("photo")}>
+                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-primary-dark-4 w-full h-[42px] lg:h-[56px]' onClick={() => handleProfileTogglBtn("photo")}>
                             <Image src={lock_1} width={24} height={24} alt='message' className='inline-block h-[22px] lg:h-[24px]' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[6px] tracking-wider uppercase'>photo access</span>
                         </button>
-                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-danger w-full h-[42px] lg:h-[56px]' onClick={() => setProfileToggle("block")}>
+                        <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-danger w-full h-[42px] lg:h-[56px]' onClick={() => handleProfileTogglBtn("block")}>
                             <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>block list</span>
                         </button>
