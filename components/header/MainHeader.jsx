@@ -62,7 +62,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
     if (userState) {
       fetchNotifications()
     }
-  }, [])
+  }, [userState])
 
   useEffect(() => {
     if (userState) {

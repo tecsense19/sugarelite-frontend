@@ -12,6 +12,10 @@ export const middleware = (request) => {
 
     const origin = request.nextUrl.origin
 
+    if (origin === "http://sugarelite.website4you.co.in") {
+        return NextResponse.redirect(main)
+    }
+
     const url = origin === local_path ? local_path : (origin === development ? development : main)
 
     const path = request.nextUrl.pathname
