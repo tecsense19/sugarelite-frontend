@@ -24,7 +24,7 @@ const months = [
 const AlbumNotification = ({ notification, allUsers, socket }) => {
     const i = notification
     const [loadingArr, setLoadingArr] = useState([])
-    const { state: { userState, onlineUsers }, dispatch } = useStore()
+    const { dispatch } = useStore()
     const [api, contextHolder] = customNotification.useNotification();
 
     const getUserData = (id, type) => {

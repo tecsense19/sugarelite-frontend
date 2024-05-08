@@ -10,13 +10,14 @@ import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
-import { disconnectSocket } from '@/app/lib/socket'
+import { disconnectSocket, getSocket } from '@/app/lib/socket'
 import NotificationComaponent from '../common/Notifications/NotificationComaponent'
 import SideDrawer from '../common/SideDrawer'
 
-const RootHeader = ({ user, allUsers, matchNotifications }) => {
+const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) => {
+    const socket = getSocket()
 
-    const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, onlineUsers }, dispatch } = useStore()
+    const { state: { notificationOpenState, notifyBadgeState }, dispatch } = useStore()
 
     const router = useRouter()
 
@@ -35,7 +36,22 @@ const RootHeader = ({ user, allUsers, matchNotifications }) => {
     }
 
     useEffect(() => {
-        console.log(matchNotifications)
+        if (albumNotifications.length) {
+            albumNotifications.forEach(i => {
+                dispatch({ type: "Add_Album_Notification", payload: i })
+            })
+        }
+        if (matchNotifications.length) {
+            matchNotifications.forEach(i => {
+                dispatch({ type: "Add_Friend_Request", payload: i })
+            })
+        }
+        if (user.is_blocked_users.length) {
+            user.is_blocked_users.forEach(i => {
+                i = { ...i, is_blocked: 1 }
+                dispatch({ type: "Add_Blocked_User", payload: i })
+            })
+        }
     }, [])
 
     return (
@@ -79,7 +95,7 @@ const RootHeader = ({ user, allUsers, matchNotifications }) => {
                     </div>
                 </div>
             </header>
-            <NotificationComaponent open={notificationOpenState} />
+            <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} />
             <SideDrawer />
         </>
     )

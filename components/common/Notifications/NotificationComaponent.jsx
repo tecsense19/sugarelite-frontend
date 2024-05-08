@@ -1,4 +1,4 @@
-import { ConfigProvider, Drawer, notification } from 'antd';
+import { ConfigProvider, Drawer } from 'antd';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import Cross from "/public/assets/cross_icon.svg";
@@ -8,8 +8,7 @@ import AlbumNotification from './AlbumNotification';
 import FriendNotification from './FriendNotification';
 
 const NotificationComaponent = ({ open, allUsers, socket }) => {
-    const { state: { userState, notificationOpenState, notificationState }, dispatch } = useStore()
-    const [api, contextHolder] = notification.useNotification();
+    const { state: { notificationState }, dispatch } = useStore()
     const [allNotifications, setAllNotifications] = useState([])
 
     const onClose = () => {
@@ -24,13 +23,11 @@ const NotificationComaponent = ({ open, allUsers, socket }) => {
             const dateB = new Date(b.updated_at);
             return dateB - dateA;
         });
-        console.log(friendRequests)
         setAllNotifications(mergedNotifications)
     }, [notificationState])
 
     return (
         <div className={`fixed md:top-[66px] bottom-0 right-0 w-full z-[10] h-full md:h-[calc(100%-66px)] transition-transform duration-300 ease-out origin-right ${open ? "scale-x-1" : "scale-x-0"}`}>
-            {contextHolder}
             <ConfigProvider
                 theme={{
                     components: {
