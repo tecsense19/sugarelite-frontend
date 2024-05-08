@@ -95,6 +95,7 @@ const Index = ({ decryptedUser }) => {
                 // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
                 setIsLoading(false)
                 navigate.push(client_routes.profile)
+                navigate.refresh()
             }
         } catch (error) {
             console.log(error)

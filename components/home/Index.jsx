@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Banner from "./Banner"
 import Services from "./Services"
-import { useStore } from "@/store/store"
 import UserFriendly from "./UserFriendly"
 import EasySearch from "./EasySearch"
 import Image from "next/image"
@@ -14,10 +13,7 @@ import Working from "./Working"
 import Footer from "../common/Footer"
 
 const Home = ({ user }) => {
-  const { state } = useStore();
-  const { firstState: { isOpenMobileNavbar } } = state;
   const [showScrollTopBtn, setShowScrollTopBtn] = useState(false)
-
 
   useEffect(() => {
     const AOS = require("aos")
@@ -47,7 +43,7 @@ const Home = ({ user }) => {
 
   return (
     <>
-      <div className={`min-h-dvh w-full overflow-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top flex flex-col ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
+      <div className={`min-h-dvh w-full overflow-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top flex flex-col pt-[65px]`}>
         <Banner user={user} />
         <Services />
         <UserFriendly />
