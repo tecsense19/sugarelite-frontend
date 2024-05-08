@@ -6,7 +6,7 @@ import gmail from "/public/assets/gmail.svg"
 import sugar_email from "/public/assets/sugar_email.svg"
 import email from "/public/assets/email.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
-import { checkuser_action, send_otp_action } from '@/app/lib/actions'
+import { checkuser_action, send_otp_action, verify_otp_action } from '@/app/lib/actions'
 import { Alert } from 'antd'
 import username_email_white from "/public/assets/username_email_white.svg"
 import username_email_black from "/public/assets/username_email_black.svg"
@@ -27,6 +27,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
     const [countries, setCountries] = useState(specificCountries);
     const [selectedCountry, setSelectedCountry] = useState(specificCountries[0]);
     const [showCountryCode, setShowCountryCode] = useState(false);
+    const [otpId, setOtpId] = useState("")
 
     let handleSubmitCalls = true
 
@@ -44,13 +45,20 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 email: watch("email")
             }
         } else {
+            let countryCode = selectedCountry.code.split("+")[1]
             obj = {
-                mobile_no: selectedCountry.code + watch("phone")
+                mobile_no: countryCode + watch("phone")
             }
         }
-        console.log(obj);
-        // let res = await send_otp_action();
-        // setShowOTP(true);
+        let res = await send_otp_action(obj);
+        if (res.success) {
+            setOtpId(res.data.id);
+            setValue("user_id", res.data.id)
+            setShowOTP(true);
+        } else {
+            setAlertMessage(res.message);
+            setShowUserAlreadyExistAlert(true);
+        }
         // if (handleSubmitCalls) {
         //     handleSubmitCalls = false
         //     setShowUserAlreadyExistAlert(false)
@@ -98,12 +106,67 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
         }
     }
 
-    const handleVerifyOTP = () => {
-
+    const getNextBtnClasses = () => {
+        let classes = ""
+        if (isLoading) {
+            classes = ""
+        } else {
+            classes = isEmail
+                ? ((!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))
+                    ? ""
+                    : "transition-all duration-150 hover:scale-[1.02]")
+                : ((isValid.phone?.length < 8 || isValid.username.length < 3)
+                    ? ""
+                    : "transition-all duration-150 hover:scale-[1.02]")
+        }
+        return classes;
     }
 
-    const handleResetOTP = () => {
+    const getNextBtnDisablity = () => {
+        let flag = isEmail
+            ? (!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))
+            : (isValid.phone?.length < 8 || isValid.username.length < 3)
+        return flag;
+    }
 
+    const handleVerifyOTP = async () => {
+        let tempOtp = otpArr.join("")
+        if (tempOtp.length === 6) {
+            setIsLoading(true);
+            let obj = {
+                id: otpId,
+                otp: tempOtp
+            }
+            let res = await verify_otp_action(obj);
+            if (res.success) {
+                setNextStep(3)
+            }
+            setIsLoading(false);
+        }
+    }
+
+    const handleResetOTP = async () => {
+        setIsLoading(true);
+        let obj = {};
+        if (isEmail) {
+            obj = {
+                email: watch("email")
+            }
+        } else {
+            obj = {
+                mobile_no: selectedCountry.code + watch("phone")
+            }
+        }
+        let res = await send_otp_action(obj);
+        if (res.success) {
+            setOtpId(res.data.id);
+            setValue("user_id", res.data.id)
+            setShowOTP(true);
+        } else {
+            setAlertMessage(res.message);
+            setShowUserAlreadyExistAlert(true);
+        }
+        setIsLoading(false);
     }
 
     return (
@@ -133,21 +196,26 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                             <input key={index} id={`otpInput${index}`} className={`border-0 p-2 text-center ${(index === 0) ? "me-1" : ((index === otpArr.length - 1) ? "ms-1" : "mx-1")}`} type="tel" maxLength="1" value={digit} onChange={(e) => handleOtpChange(index, e)} onKeyDown={(e) => handleOtpKeyDown(index, e)} placeholder='X' />
                         ))}
                     </div>
-                    <p className="text-2xl sm:text-[20px] text-white font-medium max-w-[15rem] mb-8 sm:max-w-full border-b-[2px] leading-[normal] cursor-pointer" onClick={handleResetOTP}>
+                    <p className={`text-2xl sm:text-[20px] text-white font-medium max-w-[15rem] mb-8 sm:max-w-full border-b-[2px] leading-[normal] cursor-pointer ${isLoading ? "pointer-events-none" : ""}`} onClick={handleResetOTP}>
                         Resend OTP
                     </p>
                     <div className={`mt-[30px] w-full sm:grid grid-cols-2 gap-x-[37px]`}>
-                        <button className="sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" type="button" onClick={() => setShowOTP(false)}>
+                        <button className={`sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02] ${isLoading ? "pointer-events-none" : ""}`} type="button" onClick={() => setShowOTP(false)}>
                             <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />
                                 BACK
                             </div>
                         </button>
-                        <button className={`w-full h-[42px] bg-white rounded relative text-[#263238]`} type="button" onClick={handleVerifyOTP}>
-                            <div className="flex justify-center gap-[5px] font-bold sm:ms-4 text-[16px] leading-[normal]">
-                                VERIFY OTP
+                        {isLoading
+                            ? <div className={`w-full h-[42px] bg-white rounded relative text-[#263238] flex items-center justify-center ${isLoading ? "pointer-events-none" : ""}`}>
+                                <span className='loader after:border-t-[#263238] after:border-b-[#263238]'></span>
                             </div>
-                        </button>
+                            : <button className={`w-full h-[42px] bg-white rounded relative text-[#263238] ${isLoading ? "pointer-events-none" : ""}`} type="button" onClick={handleVerifyOTP}>
+                                <div className="flex justify-center gap-[5px] font-bold sm:ms-4 text-[16px] leading-[normal]">
+                                    VERIFY OTP
+                                </div>
+                            </button>
+                        }
                     </div>
                 </>
                 : <>
@@ -238,16 +306,16 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                         }
                     </div>
                     <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
-                        <button className="sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button">
+                        <button className="sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button" disabled={isLoading ? isLoading : false}>
                             <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                                 BACK
                             </div>
                         </button>
-                        <button className={`w-full h-[42px] bg-white rounded relative text-primary-dark-5 ${isEmail ? ((!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) ? "" : "transition-all duration-150 hover:scale-[1.02]") : ((isValid.phone?.length < 8 || isValid.username.length < 3) ? "" : "transition-all duration-150 hover:scale-[1.02]")}`}
+                        <button className={`w-full h-[42px] bg-white rounded relative text-[#263238] ${getNextBtnClasses()}`}
                             onClick={() => { handleUsernameSubmit() }}
                             type="button"
-                            disabled={isEmail ? (!isValid.email || isValid.username.length < 3 || !isValid.email.toLowerCase().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) : (isValid.phone?.length < 8 || isValid.username.length < 3)}>
+                            disabled={isLoading ? isLoading : getNextBtnDisablity()}>
                             <div className="flex justify-center gap-[5px] font-medium sm:ms-4 text-[16px] leading-[normal] text-[#263238]">
                                 NEXT
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
