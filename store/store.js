@@ -222,9 +222,79 @@ const friendsListReducer = (state, action) => {
   }
 }
 
+// const notificationsReducer = (state = { albumNotifications: [], friendRequests: [] }, action) => {
+//   switch (action.type) {
+//     case "Add_Album_Notification":
+//       return { ...state, albumNotifications: [...state.albumNotifications, action.payload] };
+//     case "Remove_Album_Notification":
+//       return { ...state, albumNotifications: state.albumNotifications.filter(notification => notification.id !== action.payload.id) };
+//     case "Add_Friend_Request":
+//       return { ...state, friendRequests: [...state.friendRequests, action.payload] };
+//     case "Remove_Friend_Request":
+//       return { ...state, friendRequests: state.friendRequests.filter(request => request.id !== action.payload.id) };
+//     default:
+//       return state;
+//   }
+// }
+const notificationsReducer = (state = { albumNotifications: [], friendRequests: [] }, action) => {
+  switch (action.type) {
+    case "Add_Album_Notification":
+      if (state.albumNotifications.some(notification => notification.id === action.payload.id)) {
+        return state;
+      }
+      return { ...state, albumNotifications: [...state.albumNotifications, action.payload] };
+    case "Remove_Album_Notification":
+      return { ...state, albumNotifications: state.albumNotifications.filter(notification => notification.id !== action.payload.id) };
+
+    case "Add_Friend_Request":
+      if (state.friendRequests.some(request => request.id === action.payload.id)) {
+        return state;
+      }
+      return { ...state, friendRequests: [...state.friendRequests, action.payload] };
+    case "Remove_Friend_Request":
+      return {
+        ...state,
+        friendRequests: state.friendRequests.filter(request => (
+          !(request.sender_id === action.payload.receiver_id && request.receiver_id === action.payload.sender_id)
+        ))
+      };
+    default:
+      return state;
+  }
+}
+
+const friendRequests = (state = { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }, action) => {
+  switch (action.type) {
+    case "Add_Sended_Request":
+      if (state.sendedRequests.some(request => request.id === action.payload.id)) {
+        return state;
+      }
+      return { ...state, sendedRequests: [...state.sendedRequests, action.payload] }
+    case "Remove_Sended_Request":
+      return { ...state, sendedRequests: state.sendedRequests.filter(request => request.id !== action.payload.id) };
+    case "Add_Received_Request":
+      if (state.receivedRequests.some(request => request.id === action.payload.id)) {
+        return state;
+      }
+      return { ...state, receivedRequests: [...state.receivedRequests, action.payload] };
+    case "Remove_Received_Request":
+      return { ...state, receivedRequests: state.receivedRequests.filter(request => request.id !== action.payload.id) };
+    case "Add_Accepted_Request":
+      if (state.acceptedRequests.some(request => request.id === action.payload.id)) {
+        return state;
+      }
+      return { ...state, acceptedRequests: [...state.acceptedRequests, action.payload] };
+    case "Remove_Accepted_Request":
+      return { ...state, acceptedRequests: state.acceptedRequests.filter(request => request.id !== action.payload.id) };
+    default:
+      return state;
+  }
+}
+
+
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, friendsList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState }, action) => {
+const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, notificationState, friendsList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState, requestsState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -243,7 +313,9 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         onlineUsers: [],
         chatPartnerList: [],
         readMsgsState: [],
-        friendsList: []
+        friendsList: [],
+        notificationState: { albumNotifications: [], friendRequests: [] },
+        requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }
       };
     default:
       return {
@@ -262,7 +334,9 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         onlineUsers: onlineUsersReducer(onlineUsers, action),
         chatPartnerList: chatPartnerListReducer(chatPartnerList, action),
         readMsgsState: readMsgsReducer(readMsgsState, action),
-        friendsList: friendsListReducer(friendsList, action)
+        friendsList: friendsListReducer(friendsList, action),
+        notificationState: notificationsReducer(notificationState, action),
+        requestsState: friendRequests(requestsState, action)
       };
   }
 };
@@ -297,7 +371,9 @@ export const StoreProvider = ({ children }) => {
     onlineUsers: [],
     chatPartnerList: [],
     readMsgsState: [],
-    friendsList: []
+    friendsList: [],
+    notificationState: { albumNotifications: [], friendRequests: [] },
+    requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }
   });
 
   useEffect(() => {

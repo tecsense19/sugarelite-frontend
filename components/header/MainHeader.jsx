@@ -7,13 +7,14 @@ import notificationIcon from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { useStore } from "@/store/store"
-import { logout_user, private_album_notification, read_message_action, search_profile_action } from "@/app/lib/actions"
+import { friend_request_notifications, logout_user, private_album_notification, read_message_action, search_profile_action } from "@/app/lib/actions"
 import Link from "next/link"
 import Notification from "../common/Notification"
 import { useEffect, useState } from "react"
 import { disconnectSocket, getSocket } from "@/app/lib/socket"
 import SideDrawer from "../common/SideDrawer"
 import { notification } from "antd"
+import NotificationComaponent from "../common/Notifications/NotificationComaponent"
 
 // const useSocket = () => {
 //   const [socket, setSocket] = useState(null);
@@ -31,25 +32,63 @@ import { notification } from "antd"
 // };
 
 
-const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
+const MainHeader = ({ decryptedUser, allUsers, chatList, allFriendNotifications }) => {
   const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, onlineUsers }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
   const socket = getSocket()
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
-  const [notifications, setNotifications] = useState([])
 
   useEffect(() => {
     setUser(userState ? userState : decryptedUser)
   }, [userState])
 
+  useEffect(() => {
+    // console.log(allFriendNotifications)
+    if (userState) {
+      const mySendedRequests = allFriendNotifications.filter(i => (i.sender_id === userState.id && !i.message))
+      const myRecievedRequests = allFriendNotifications.filter(i => (i.receiver_id === userState.id && !i.message))
+      const myAcceptedRequests = allFriendNotifications.filter(i => ((i.user_id === userState.id || i.sender_id === userState.id) && i.message))
+      if (mySendedRequests.length) {
+        mySendedRequests.forEach(i => {
+          dispatch({ type: "Add_Sended_Request", payload: { id: i.receiver_id } })
+        })
+      }
+
+      if (myRecievedRequests.length) {
+        myRecievedRequests.forEach(i => {
+          dispatch({ type: "Add_Received_Request", payload: { id: i.sender_id } })
+        })
+      }
+
+      if (myAcceptedRequests.length) {
+        myAcceptedRequests.forEach(i => {
+          dispatch({ type: "Add_Accepted_Request", payload: { id: i.user_id === userState.id ? i.sender_id : i.user_id } })
+        })
+      }
+    }
+  }, [userState])
+
   async function fetchNotifications() {
     const tempNotifications = await private_album_notification({ user_id: userState?.id })
-    if (tempNotifications.success) {
-      setNotifications(tempNotifications.data)
+    const tempFriendRequests = await friend_request_notifications(userState.id)
+    if (tempNotifications.success && tempFriendRequests) {
+      // setFriendNotifications(tempFriendRequests.data)
+      tempNotifications.data.forEach(i => {
+        dispatch({ type: "Add_Album_Notification", payload: i })
+      })
+      tempFriendRequests.data.forEach(i => {
+        dispatch({ type: "Add_Friend_Request", payload: i })
+      })
     }
   }
+
+  useEffect(() => {
+    if (userState) {
+      fetchNotifications()
+    }
+  }, [userState])
 
   const newMessageHandler = (obj) => {
     const finduser = chatProfileState.some(i => i.id === obj.sender_id)
@@ -84,14 +123,14 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
   }, [userState])
 
   useEffect(() => {
-    if (chatList?.length) {
-      const myReceivedMsgs = chatList.filter(msg => msg.receiver_id === decryptedUser.id)
+    if (chatList?.length && userState) {
+      const myReceivedMsgs = chatList.filter(msg => msg.receiver_id === userState.id)
       if (myReceivedMsgs.length) {
         const senderId = Array.from(new Set(myReceivedMsgs.filter(msg => msg.status === "sent")?.map(i => i.sender_id)))
         if (senderId.length) {
           senderId.forEach(id => {
             const msgs = myReceivedMsgs.filter((i) => i.sender_id === id)?.map(j => j.id).toString()
-            read_message_action({ sender_id: id, receiver_id: decryptedUser.id, status: "delivered", messageId: msgs })
+            read_message_action({ sender_id: id, receiver_id: userState.id, status: "delivered", messageId: msgs })
           })
         }
       }
@@ -116,6 +155,9 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
     const albumAccessHandler = (obj) => {
       dispatch({ type: "Add_Decision_User", payload: obj })
       const { data, status } = obj
+      if (userState.id === data.receiver_id && status === "pending") {
+        dispatch({ type: "Add_Album_Notification", payload: data })
+      }
       if (!notificationOpenState && status === "pending" && data.receiver_id === decryptedUser.id) {
         dispatch({ type: "Add_Notification_Badge", payload: true })
       }
@@ -138,12 +180,29 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
       dispatch({ type: "Add_Partner", payload: obj })
     }
 
+    const swipeHandler = (obj) => {
+      if (obj.receiver_id === userState.id && obj.is_friend === 0) {
+        console.log("receiver", obj)
+        dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
+        dispatch({ type: "Add_Friend_Request", payload: obj })
+      }
+      else if (obj.receiver_id === userState.id && obj.is_friend === 1) {
+        console.log("receiver", obj)
+        dispatch({ type: "Add_Friend_Request", payload: obj })
+        dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
+      } else if (obj.receiver_id === userState.id && obj.is_friend === 2) {
+        console.log("removed")
+
+      }
+    }
+
     socket.on("blocked-status", blockUserHandler);
     socket.on("unblocked-status", unblockUserHandler);
     socket.on("receive-message", receiveMessageHandler);
     socket.on("album-notification", albumAccessHandler);
     socket.on("onlineUsers", onlineUserHandler)
     socket.on("opened-chat-user", myChattingPartner)
+    socket.on('swipe-notify', swipeHandler)
 
     return () => {
       if (socket) {
@@ -152,6 +211,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
         socket.off("album-notification", albumAccessHandler)
         socket.off("receive-message", receiveMessageHandler);
         socket.off("onlineUsers", onlineUserHandler)
+        socket.off('swipe-notify', swipeHandler)
       }
     };
 
@@ -230,12 +290,13 @@ const MainHeader = ({ decryptedUser, allUsers, chatList }) => {
           </div>
         </div>
       </header>
+      {/* {
+        user && <Notification open={notificationOpenState} notifications={notifications} user={user} allUsers={allUsers} socket={socket} friendNotifications={friendNotifications} />
+      } */}
       {
-        user && <Notification open={notificationOpenState} notifications={notifications} user={user} allUsers={allUsers} socket={socket} />
+        user && <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} />
       }
-      {
-        <SideDrawer />
-      }
+      <SideDrawer />
     </>
   )
 }

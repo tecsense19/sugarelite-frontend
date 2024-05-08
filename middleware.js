@@ -34,7 +34,7 @@ export const middleware = (request) => {
     }
 
     if (user && isPublic) {
-        return NextResponse.redirect(url + client_routes.profile)
+        return NextResponse.redirect(url + client_routes.search)
     }
 }
 

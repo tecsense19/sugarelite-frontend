@@ -56,119 +56,6 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
     AOS.init();
   }, [])
 
-  // const submitHandler = () => {
-  //   // console.log("Submit ::", watch())
-  //   const selectedMenu = watch();
-  //   let dummyData = allUsers;
-  //   // For name
-  //   dummyData = dummyData.filter((item) => {
-  //     if (item.username.toLowerCase().includes(selectedMenu.name.toLowerCase())) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   })
-
-  //   // For age
-  //   dummyData = dummyData.filter((item) => {
-  //     if (item.age) {
-  //       if (selectedMenu.age_from <= item.age && selectedMenu.age_to >= item.age) {
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     } else {
-  //       return true
-  //     }
-  //   })
-
-  //   // For sugartype
-  //   if (selectedMenu.sugar_type) {
-  //     dummyData = dummyData.filter((item) => {
-  //       if (selectedMenu.sugar_type === item.sugar_type) {
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     })
-  //   }
-
-  //   // For Country
-  //   if (selectedMenu.country) {
-  //     dummyData = dummyData.filter((item) => {
-  //       if (selectedMenu.country === item.country) {
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     })
-  //   }
-
-  //   // For Region
-  //   if (selectedMenu.region) {
-  //     dummyData = dummyData.filter((item) => {
-  //       if (selectedMenu.region === item.region) {
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     })
-  //   }
-
-  //   // For has profile picture
-  //   if (selectedMenu.has_profile_picture) {
-  //     dummyData = dummyData.filter((item) => {
-  //       if (item.avatar_url) {
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     })
-  //   }
-
-  //   // For has public picture
-  //   if (selectedMenu.has_public_photos) {
-  //     dummyData = dummyData.filter((item) => {
-  //       if (item.get_all_profileimg && item.get_all_profileimg.length) {
-  //         let flag = false;
-  //         for (let tempObj of item.get_all_profileimg) {
-  //           if (tempObj.image_type === "public") {
-  //             flag = true;
-  //             break
-  //           }
-  //         }
-  //         if (flag) {
-  //           return true
-  //         } else {
-  //           return false
-  //         }
-  //       } else {
-  //         return false
-  //       }
-  //     })
-  //   }
-
-  //   // For is verified
-  //   if (selectedMenu.is_verified) {
-  //     dummyData = dummyData.filter((item) => {
-  //       if (item.premium !== "false") {
-  //         return true
-  //       } else {
-  //         return false
-  //       }
-  //     })
-  //   }
-  //   // console.log("dummyData :: ", dummyData)
-  //   dispatch({ type: "all_users_data", payload: dummyData })
-  //   setDummyUsers(dummyData)
-  // }
-
-  // const handleReset = () => {
-  //   reset()
-  //   // submitHandler()
-  //   // dispatch({ type: "all_users_data", payload: allUsers })
-  //   // setDummyUsers(allUsers)
-  // }
 
   return (
     // Filter Section
@@ -184,9 +71,9 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
 
         <div className="mt-[30px]">
           <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age from ( {watch("age_from")} )</div>
-          <Controller name="age_from" control={control} defaultValue={1} render={({ field }) => (
+          <Controller name="age_from" control={control} defaultValue={18} render={({ field }) => (
             <ConfigProvider theme={customSliderTheme}>
-              <Slider {...field} className="!mt-[15px] !mb-0 !mx-[10px]" min={1} max={99}
+              <Slider {...field} className="!mt-[15px] !mb-0 !mx-[10px]" min={18} max={99}
                 onChange={(val) => { (val <= watch("age_to")) ? setValue("age_from", val) : setValue("age_to", val); setValue("age_from", val) }}
               />
             </ConfigProvider>
@@ -197,7 +84,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
           <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age to ( {watch("age_to")} )</div>
           <Controller name="age_to" control={control} defaultValue={99} render={({ field }) => (
             <ConfigProvider theme={customSliderTheme}>
-              <Slider {...field} className="!mt-[15px] !mb-0 !mx-[10px]" min={1} max={99}
+              <Slider {...field} className="!mt-[15px] !mb-0 !mx-[10px]" min={18} max={99}
                 onChange={(val) => { (watch("age_from") <= val) ? setValue("age_to", val) : setValue("age_from", val); setValue("age_to", val) }} />
             </ConfigProvider>
           )} />

@@ -23,6 +23,7 @@ import { client_notification, client_routes } from "@/app/lib/helpers"
 import { register_action } from "@/app/lib/actions"
 import { notification } from "antd"
 import Loader from "@/components/common/Loader"
+import AuthLoader from "@/components/common/AuthLoader"
 
 const Register = () => {
 
@@ -93,7 +94,7 @@ const Register = () => {
 
 	return (
 		<>
-			<Suspense fallback={<Loader />}>
+			<Suspense fallback={<AuthLoader />}>
 				{/* Mobile View */}
 				<main className="sm:hidden block h-dvh ">
 					{contextHolder}

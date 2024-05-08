@@ -57,7 +57,7 @@ const Login = ({ setIsForgotOpen }) => {
         setIsLoading(false)
         connectSocket(res.data.id)
         client_notification(api, "topRight", "success", res.message, 2)
-        navigate.push(client_routes.profile)
+        navigate.push(client_routes.search)
     }
 
     // const loadingHandler = () => {
@@ -85,7 +85,7 @@ const Login = ({ setIsForgotOpen }) => {
                                         {...register('email', { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })}
                                         onChange={(e) => setValue("email", e.target.value)}
                                         placeholder='Email id'
-                                        className='w-full placeholder:text-[rgba(255,255,255,0.5)] bg-transparent text-[16px] text-white text-opacity-[90%] font-medium outline-none'
+                                        className='w-full placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none'
                                         autoComplete='off'
                                     />
                                 </div>
@@ -96,7 +96,7 @@ const Login = ({ setIsForgotOpen }) => {
                                         {...register('password', { required: true, })}
                                         onChange={(e) => setValue("password", e.target.value)}
                                         placeholder='Password'
-                                        className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255,0.5)] text-white text-opacity-[90%] outline-none ' autoComplete='new-password' />
+                                        className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255)] text-white outline-none ' autoComplete='new-password' />
                                     {
                                         showPass ?
                                             <Image src={eyeCloseImg} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close")} /> :
@@ -115,14 +115,14 @@ const Login = ({ setIsForgotOpen }) => {
                                 </div>
                                 <span className="underline pb-1 cursor-pointer select-none font-normal transition-all duration-150 hover:text-white/80" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
                             </div>
-                            <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-medium flex justify-center items-center text-primary-dark-5 ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit">
+                            <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-bold flex justify-center items-center text-[#263238] ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit">
                                 {!isLoading ? "Log in" :
                                     <div className="loader after:border-t-black after:border-b-black"></div>
                                 }
                             </button>
                         </form>
                         <div className="mt-[50px] text-center">
-                            <p className="text-[14px] text-white text-opacity-80 mb-[10px]">Don’t have an account?</p>
+                            <p className="text-[14px] text-white mb-[10px]">Don’t have an account?</p>
                             <Link href={"/register"} className="text-white font-semibold text-[16px] transition-all duration-150 hover:text-white/70">Sign Up</Link>
                         </div>
                     </div>

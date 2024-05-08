@@ -1,6 +1,6 @@
 "use client"
 
-import Loader from "@/components/common/Loader"
+import AuthLoader from "@/components/common/AuthLoader"
 import Forgot_Component from "@/components/login/Forgot_Component"
 import Login_component from "@/components/login/Login_component"
 import { Suspense, useState } from "react"
@@ -11,7 +11,7 @@ const Login = () => {
 
   return (
     <>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<AuthLoader />}>
         {
           !isForgotOpen && <Login_component setIsForgotOpen={setIsForgotOpen} />
         }

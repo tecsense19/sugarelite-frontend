@@ -104,7 +104,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                     <Image src={sugar_password} alt="pad_lock" width={120} height={126} className="pointer-events-none select-none" />
                 </div>
                 <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">What should your password be?</p>
-                <p className='text-white opacity-[50%] mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet</p>
+                <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <Popover placement='bottomLeft' open={showPopOver} content={content}>
@@ -117,7 +117,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                             onFocus={() => setShowPopOver(true)} // Show Popover when input is focused
                             onBlur={() => setShowPopOver(false)}
                             placeholder='Password'
-                            className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white outline-none '
+                            className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255)] text-white outline-none '
                             autoComplete='new-password' />
                         {
                             showPass ?
@@ -134,7 +134,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         {...register('cpassword', { required: true })}
                         onChange={(e) => setValue("cpassword", e.target.value)}
                         placeholder='Confirm Password'
-                        className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255,0.5)] text-white outline-none '
+                        className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255)] text-white outline-none '
                         autoComplete='new-password' />
                     {
                         showCPass ?
@@ -146,12 +146,12 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-black w-full h-[42px] mb-3 rounded-[5px] text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
-                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
+                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
                         BACK
                     </div>
                 </button>
                 <button
-                    className={`bg-white w-full h-[42px] rounded-[5px] relative text-primary-dark-5 ${((isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6) ? "" : "transition-all duration-150 hover:scale-[1.02]"}`}
+                    className={`bg-white w-full h-[42px] rounded-[5px] relative text-[#263238] ${((isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6) ? "" : "transition-all duration-150 hover:scale-[1.02]"}`}
                     onClick={nextStepHandler} type="button"
                     disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValidPass.mixChar || !isValidPass.numChar || !isValidPass.sixChar || !isValidPass.spclChar || !isValidPass.sqncChar}>
                     <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal] sm:ms-4 ">

@@ -129,7 +129,7 @@ export const logout_user = () => {
 
 export const all_profiles_action = async () => {
     try {
-        const res = await fetch(server_routes.allProfiles, { cache: "no-store" })
+        const res = await fetch(server_routes.allProfiles)
         const data = await res.json()
         return data
     } catch (error) {
@@ -254,11 +254,19 @@ export const friend_request_action = async (form) => {
     }
 }
 
+export const all_friend_Notifications = async () => {
+    try {
+        const res = await fetch(server_routes.friends_request_notification)
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const friend_request_notifications = async (id) => {
     try {
-        const res = await fetch(server_routes.friends_request_notification + '?user_id=' + id, {
-            cache: "no-cache"
-        })
+        const res = await fetch(server_routes.friends_request_notification + '?user_id=' + id,)
         const data = await res.json()
         return data
     } catch (error) {

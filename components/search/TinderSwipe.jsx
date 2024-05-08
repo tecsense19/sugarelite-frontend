@@ -11,39 +11,25 @@ import RequestsComponent from './RequestsComponent';
 import Butterflies from "/public/assets/butterfly.gif"
 import Like from "/public/assets/like.gif"
 import { useStore } from '@/store/store';
+import { getSocket } from '@/app/lib/socket';
 
-const TinderSwipe = ({ users, filterHandler, pendingList, currentUser }) => {
+const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecievedRequests }) => {
 
-    const { state: { friendsList, blockedUsersState } } = useStore()
+    const { state: { friendsList, blockedUsersState, requestsState, userState } } = useStore()
     const navigate = useRouter()
     const [toggle, setToggle] = useState(false)
     const [offSet, setOffSet] = useState(null)
-    const [removalId, setRemovalId] = useState([])
+    const [user, setUser] = useState([])
+    const socket = getSocket()
 
     useEffect(() => {
-        const pendingIds = pendingList.map(i => i.sender_id)
-        const blockList = blockedUsersState.filter((i) => i.is_blocked === 1)
-        const otherIDsSet = new Set();
-
-        blockList.forEach(message => {
-            if (message.sender_id !== currentUser.id) {
-                otherIDsSet.add(message.sender_id);
-            }
-            if (message.receiver_id !== currentUser.id) {
-                otherIDsSet.add(message.receiver_id);
-            }
-        });
-
-        const otherIDs = Array.from(otherIDsSet);
-        const ids = [...friendsList, ...pendingIds, ...otherIDs]
-        setRemovalId(ids)
-    }, [friendsList, pendingList, blockedUsersState])
+        const { sendedRequests, receivedRequests, acceptedRequests } = requestsState
+        const allIds = [...sendedRequests, ...receivedRequests, ...acceptedRequests].map(i => i.id)
+        setUser(users.filter(i => !allIds.includes(i.id)))
+    }, [requestsState])
 
     return (
         <div className="h-full flex flex-col text-white items-center overflow-hidden">
-            {/* <div className={`h-full w-full absolute pointer-events-none ${offSet === "right" ? "block" : "hidden"}`}>
-                <Image className='h-full w-full object-cover pointer-events-none' src={Butterflies} width={1000} height={1000} alt='gif' />
-            </div> */}
             <div className="md:hidden flex justify-between items-center w-full px-4 pt-3" data-aos="fade-down" data-aos-duration="800" data-aos-anchor="#example-anchor">
                 <div className="flex justify-center items-center " onClick={() => navigate.push(client_routes.profile)}>
                     <Image src={chevron_left} alt="" height={24} width={24} priority className="pointer-events-none" />
@@ -57,10 +43,9 @@ const TinderSwipe = ({ users, filterHandler, pendingList, currentUser }) => {
                 </button>
             </div>
             <Buttons setToggle={setToggle} toggle={toggle} />
-            <SwiperComponent users={users.filter(user => !removalId.includes(user.id))} toggle={toggle} offSet={offSet} setOffSet={setOffSet} />
-            <RequestsComponent toggle={toggle} pendingList={pendingList} />
-
-        </div >
+            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} remainingList={remainingList} socket={socket} />
+            <RequestsComponent toggle={toggle} remainingList={remainingList} currentUser={currentUser} socket={socket} myRecievedRequests={users.filter(i => myRecievedRequests.some(j => i.id === j.sender_id))} />
+        </div>
     );
 };
 

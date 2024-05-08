@@ -1,11 +1,10 @@
-import React from 'react'
+import AuthLoader from "@/components/common/AuthLoader";
 
-const loading = () => {
+export default function Loading() {
     return (
-        <div className='h-dvh w-full flex justify-center items-center '>
-            <span className='loader after:border-[30px]'></span>
-        </div>
+        <AuthLoader />
+        // <div className='h-dvh w-full flex justify-center items-center '>
+        //     <span className='loader after:border-[30px]'></span>
+        // </div>
     )
 }
-
-export default loading

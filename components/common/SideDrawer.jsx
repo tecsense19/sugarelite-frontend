@@ -84,11 +84,11 @@ const SideDrawer = () => {
                                     <Image height={30} width={30} src={Close} alt="" className="pointer-events-none" priority />
                                 </button>
                             </div>
-                            <div className='text-[16px] pt-4 w-full  font-medium'>
+                            <div className='pt-4 w-full'>
                                 {
                                     navs.map((i, inx) => {
-                                        return <div className='px-4  w-full' key={inx}>
-                                            <button onClick={() => { router.push(i.path); dispatch({ type: "Close_Menu" }); }} className={` py-3  px-2 ${i.path === path && "bg-secondary border-none"} border-b border-primary-dark-4 tracking-normal w-full text-left h-full capitalize`}>{i.name}</button>
+                                        return <div className='px-4 w-full' key={inx}>
+                                            <button onClick={() => { router.push(i.path); dispatch({ type: "Close_Menu" }); }} className={`py-3 px-4 ${i.path === path && "bg-secondary border-none"} border-b border-primary-dark-4 w-full text-left h-full capitalize text-[20px] tracking-wide font-[550]`}>{i.name}</button>
                                         </div>
                                     })
                                 }
