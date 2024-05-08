@@ -385,3 +385,10 @@ button:disabled {
   flex-shrink: 0;
   border-radius: 5px;
 }
+
+/* phone number dropdown */
+.react-tel-input .country-list {
+  @apply !max-h-[160px];
+}
+
+/* phone number dropdown */

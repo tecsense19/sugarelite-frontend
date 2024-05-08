@@ -1,3 +1,55 @@
+export const specificCountries = [
+    {
+        "name": "Denmark",
+        "code": "+45",
+        "flag": "https://flagcdn.com/dk.svg"
+    },
+    {
+        "name": "Faroe Islands",
+        "code": "+298",
+        "flag": "https://flagcdn.com/fo.svg"
+    },
+    {
+        "name": "France",
+        "code": "+33",
+        "flag": "https://flagcdn.com/fr.svg"
+    },
+    {
+        "name": "Germany",
+        "code": "+49",
+        "flag": "https://flagcdn.com/de.svg"
+    },
+    {
+        "name": "Greenland",
+        "code": "+299",
+        "flag": "https://flagcdn.com/gl.svg"
+    },
+    {
+        "name": "Italy",
+        "code": "+39",
+        "flag": "https://flagcdn.com/it.svg"
+    },
+    {
+        "name": "Norway",
+        "code": "+47",
+        "flag": "https://flagcdn.com/no.svg"
+    },
+    {
+        "name": "Spain",
+        "code": "+34",
+        "flag": "https://flagcdn.com/es.svg"
+    },
+    {
+        "name": "Sweden",
+        "code": "+46",
+        "flag": "https://flagcdn.com/se.svg"
+    },
+    {
+        "name": "Turkey",
+        "code": "+90",
+        "flag": "https://flagcdn.com/tr.svg"
+    }
+]
 export const allCountries = [
     {
         "name": "Afghanistan",
