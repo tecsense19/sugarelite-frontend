@@ -31,7 +31,7 @@ const Register = () => {
 
 	const [api, contextHolder] = notification.useNotification();
 
-	const [nextStep, setNextStep] = useState(2)
+	const [nextStep, setNextStep] = useState(1)
 	const [isLoading, setIsLoading] = useState(false)
 
 	const navigate = useRouter()
