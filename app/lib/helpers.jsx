@@ -42,6 +42,8 @@ export const server_routes = {
   stripe_subscription: base_path + "/create/subscription",
   cancel_subscription: base_path + "/cancel/subscription",
   start_stop_subscription: base_path + "/start/stop/subscription",
+  send_otp: base_path + "/otp",
+  verify_otp: base_path + "/verifyotp",
   block_user: base_path + "/block/user",
   report_user: base_path + "/report/user"
 }

@@ -91,7 +91,6 @@ export const checkuser_action = async (email) => {
     }
 }
 
-
 export const forgot_password_action = async (form) => {
     try {
         const res = await fetch(server_routes.forgotPassword, {
@@ -289,9 +288,42 @@ export const block_user_action = async (form) => {
         console.log(error)
     }
 }
+
 export const report_user_action = async (form) => {
     try {
         const res = await fetch(server_routes.report_user, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const send_otp_action = async (form) => {
+    try {
+        const res = await fetch(server_routes.send_otp, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const verify_otp_action = async (form) => {
+    try {
+        const res = await fetch(server_routes.verify_otp, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
