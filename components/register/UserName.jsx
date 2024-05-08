@@ -13,8 +13,6 @@ import username_email_black from "/public/assets/username_email_black.svg"
 import username_telephone_white from "/public/assets/username_telephone_white.svg"
 import username_telephone_black from "/public/assets/username_telephone_black.svg"
 import GetCountries from './GetCountries'
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
 import { specificCountries } from '@/app/lib/allCountries'
 
 
