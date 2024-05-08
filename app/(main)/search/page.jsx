@@ -8,12 +8,12 @@ import { client_routes } from "@/app/lib/helpers"
 const Search = async () => {
 
   const userId = cookies().get("user")?.value
-  const bytes = CryptoJS.AES.decrypt(userId, 'SecretKey');
-  const id = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-
   if (!userId) {
     redirect(client_routes.home)
   }
+
+  const bytes = CryptoJS.AES.decrypt(userId, 'SecretKey');
+  const id = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
   const all_users = await all_profiles_action()
   const allFriendNotifications = await all_friend_Notifications()

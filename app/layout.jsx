@@ -15,56 +15,56 @@ export const metadata = {
   description: "A dating app.",
 };
 
-// export default async function RootLayout({ children }) {
-
-//   const user = await get_user_action()
-//   const allUsers = await all_profiles_action()
-//   const chatList = await chat_list_action();
-
-//   return (
-//     <html className="overflow-x-hidden" lang="en">
-//       <AntdRegistry>
-//         <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
-//           <StoreProvider>
-//             <Header decryptedUser={user ? user[0] : null} allUsers={allUsers.success && allUsers.data} chatList={chatList} />
-//             {children}
-//           </StoreProvider>
-//         </body>
-//       </AntdRegistry>
-//     </html>
-//   );
-// }
-
-
 export default async function RootLayout({ children }) {
-  try {
-    const userPromise = get_user_action();
-    const allUsersPromise = all_profiles_action();
-    const chatListPromise = chat_list_action();
-    const allFriendNotifications = all_friend_Notifications()
 
-    const [user, allUsers, chatList, friendNotifications] = await Promise.all([userPromise, allUsersPromise, chatListPromise, allFriendNotifications]);
+  // const user = await get_user_action()
+  // const allUsers = await all_profiles_action()
+  // const chatList = await chat_list_action();
 
-
-    return (
-      <html className="overflow-x-hidden" lang="en">
-        <AntdRegistry>
-          <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
-            <StoreProvider>
-              <Header decryptedUser={user ? user[0] : null} allUsers={allUsers?.success && allUsers.data} chatList={chatList} friendNotifications={friendNotifications.data} />
-              {children}
-            </StoreProvider>
-          </body>
-        </AntdRegistry>
-      </html>
-    );
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    // Render an error message or handle the error in another appropriate way
-    return <html>
-      <body className="bg-primary">
-        <div>Error fetching data. Please try again later.</div>
-      </body>
-    </html>;
-  }
+  return (
+    <html className="overflow-x-hidden" lang="en">
+      <AntdRegistry>
+        <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
+          <StoreProvider>
+            {/* <Header decryptedUser={user ? user[0] : null} allUsers={allUsers.success && allUsers.data} chatList={chatList} /> */}
+            {children}
+          </StoreProvider>
+        </body>
+      </AntdRegistry>
+    </html>
+  );
 }
+
+
+// export default async function RootLayout({ children }) {
+//   try {
+//     const userPromise = get_user_action();
+//     const allUsersPromise = all_profiles_action();
+//     const chatListPromise = chat_list_action();
+//     const allFriendNotifications = all_friend_Notifications()
+
+//     const [user, allUsers, chatList, friendNotifications] = await Promise.all([userPromise, allUsersPromise, chatListPromise, allFriendNotifications]);
+
+
+//     return (
+//       <html className="overflow-x-hidden" lang="en">
+//         <AntdRegistry>
+//           <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
+//             <StoreProvider>
+//               {/* <Header decryptedUser={user ? user[0] : null} allUsers={allUsers?.success && allUsers.data} chatList={chatList} friendNotifications={friendNotifications.data} /> */}
+//               {children}
+//             </StoreProvider>
+//           </body>
+//         </AntdRegistry>
+//       </html>
+//     );
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     // Render an error message or handle the error in another appropriate way
+//     return <html>
+//       <body className="bg-primary">
+//         <div>Error fetching data. Please try again later.</div>
+//       </body>
+//     </html>;
+//   }
+// }
