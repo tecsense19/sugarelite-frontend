@@ -10,7 +10,7 @@ import { io } from "socket.io-client"
 
 let socket;
 
-const Header = ({ decryptedUser, allUsers, chatList }) => {
+const Header = ({ decryptedUser, allUsers, chatList, friendNotifications }) => {
   const pathname = usePathname()
 
   const { state: { userState, chatProfileState }, dispatch } = useStore()
@@ -48,13 +48,13 @@ const Header = ({ decryptedUser, allUsers, chatList }) => {
   return (
     <>
       {(pathname === client_routes.search || pathname === client_routes.profile || pathname === client_routes.edit_profile || pathname.includes(client_routes.profile + "/") || pathname.includes("/loader") || pathname === client_routes.discover || pathname === client_routes.chat || pathname === client_routes.msg || pathname === client_routes.subscription)
-        ? <MainHeader decryptedUser={user} allUsers={allUsers} chatList={chatList.data.filter(chat => chat.sender_id === userState?.id || chat.receiver_id === userState?.id)} />
+        ? <MainHeader decryptedUser={user} allUsers={allUsers} chatList={chatList.data.filter(chat => chat.sender_id === userState?.id || chat.receiver_id === userState?.id)} allFriendNotifications={friendNotifications} />
         : <>
           <div className={`${isUser ? "hidden" : ""}`}>
             <AuthHeader />
           </div>
           <div className={`${isUser ? "" : "hidden"}`}>
-            <MainHeader decryptedUser={user} allUsers={allUsers} />
+            <MainHeader decryptedUser={user} allUsers={allUsers} chatList={chatList.data.filter(chat => chat.sender_id === userState?.id || chat.receiver_id === userState?.id)} allFriendNotifications={friendNotifications} />
           </div>
         </>
       }

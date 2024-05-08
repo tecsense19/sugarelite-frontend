@@ -27,7 +27,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 colorBorder: "#ffffff",
                 controlItemBgHover: "none",
                 controlHeight: "42px",
-                colorTextPlaceholder: "rgba(255,255,255,0.7)",
+                colorTextPlaceholder: "rgba(255,255,255)",
                 colorText: "rgba(255,255,255)",
                 colorSuccessBorderHover: "none",
                 colorInfoBorderHover: "none",
@@ -68,7 +68,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                     <Image src={sugar_region} alt="pad_lock" width={137} height={126} className="pointer-events-none select-none" />
                 </div>
                 <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? Which region?</p>
-                <p className='text-white opacity-[50%] sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet</p>
+                <p className='text-white sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet</p>
             </div>
             <div className='mt-14 w-full relative region_dropdown sm:mt-[25px]'>
                 <div className="mb-3 relative flex justify-end items-center">
@@ -140,11 +140,11 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
             <div className='mt-14 w-full  sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center font-medium text-[16px] leading-[normal] gap-[5px]">
-                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
+                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden  " />
                         BACK
                     </div>
                 </button>
-                <button className={`w-full rounded bg-white h-[42px] relative text-primary-dark-5 ${(!isValid.region || !isValid.country || isValid.region === "Select your Region") ? "" : "transition-all duration-150 hover:scale-[1.02]"}`} type="button" disabled={!isValid.region || !isValid.country || isValid.region === "Select your Region"} onClick={nextStepHandler}>
+                <button className={`w-full rounded bg-white h-[42px] relative text-[#263238] ${(!isValid.region || !isValid.country || isValid.region === "Select your Region") ? "" : "transition-all duration-150 hover:scale-[1.02]"}`} type="button" disabled={!isValid.region || !isValid.country || isValid.region === "Select your Region"} onClick={nextStepHandler}>
                     <div className="flex justify-center font-medium text-[16px] leading-[normal] gap-[5px] sm:ms-4">
                         NEXT
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

@@ -1,5 +1,4 @@
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import womanPlaceolderImg from "/public/assets/woman.png";
 import manPlaceolderImg from "/public/assets/man.png";
 import placeholder from "/public/assets/place_holder.png";
@@ -12,21 +11,36 @@ import { useStore } from '@/store/store';
 import './animations/style.css'
 import { friend_request_action } from '@/app/lib/actions';
 
-const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
-    const [user, setUsers] = useState(users)
-    const { state: { onlineUsers, userState } } = useStore()
+const SwiperComponent = ({ users, toggle, offSet, setOffSet, remainingList, socket }) => {
+    const [user, setUsers] = useState(remainingList)
+    const { state: { onlineUsers, userState }, dispatch } = useStore()
     const [showLike, setShowLike] = useState({ id: null, d: null })
 
     const resetHandler = () => {
-        setUsers(users)
-    }
-
-    const sendFriendReq = async (receiver_id) => {
-        // const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 0 })
-        // console.log(res)
+        setUsers(users);
+        setTimeout(() => {
+            handleSetCards()
+        }, 500)
     }
 
     useEffect(() => {
+        // console.log(remainingList)
+    }, [remainingList])
+
+    useEffect(() => {
+        // setUsers(users)
+        handleSetCards()
+    }, [])
+
+    const sendFriendReq = async (receiver_id) => {
+        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 0 })
+        if (res.success) {
+            socket.emit("card-swiped", res.data)
+            dispatch({ type: "Add_Sended_Request", payload: { id: res.data.receiver_id } })
+        }
+    }
+
+    const handleSetCards = () => {
         const Swing = require("swing")
         const config = {
             throwOutConfidence: (xOffset, yOffset, element) => {
@@ -38,40 +52,40 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet }) => {
             minThrowOutDistance: 2000,
             maxThrowOutDistance: 2000
         };
-
-        const Direction = Swing.Direction
-        const stack = Swing.Stack(config)
         const cards = [].slice.call(document.querySelectorAll('.card'));
 
-        cards.forEach((targetElement, index) => {
-            stack.createCard(targetElement);
-        });
+        if (cards.length) {
+            const Direction = Swing.Direction
+            const stack = Swing.Stack(config)
+            cards.forEach((targetElement, index) => {
+                stack.createCard(targetElement);
+            });
 
-        stack.on('throwout', (event) => {
-            const id = event.target.id
-            const profile = users.find(i => i.id === parseInt(id))
-            // console.log(`You ${(event.throwDirection == Direction.LEFT ? 'removed' : 'liked')} ${profile.username} profile`)
-            if (event.throwDirection == Direction.RIGHT) {
-                sendFriendReq(profile.id)
-            }
-            setUsers(prev => prev.filter(i => i.id !== parseInt(id)))
-        });
+            stack.on('throwout', (event) => {
+                const id = event.target.id
+                const profile = remainingList.find(i => i.id === parseInt(id))
+                // console.log(`You ${(event.throwDirection == Direction.LEFT ? 'removed' : 'liked')} ${profile.username} profile`)
+                if (event.throwDirection == Direction.RIGHT) {
+                    sendFriendReq(profile.id)
+                }
+                setUsers(prev => prev.filter(i => i.id !== parseInt(id)))
+            });
 
-        stack.on("dragmove", (e) => {
-            if (e.offset > 0) {
-                setOffSet("right")
-                setShowLike({ id: parseInt(e.target.id), d: "right" })
-            } else if (e.offset < 0) {
-                setOffSet("left")
-                setShowLike({ id: parseInt(e.target.id), d: "left" })
-            }
-        })
-        stack.on("dragend", (e) => {
-            setOffSet(null)
-            setShowLike({ id: null, d: null })
-        })
-
-    }, [])
+            stack.on("dragmove", (e) => {
+                if (e.offset > 0) {
+                    setOffSet("right")
+                    setShowLike({ id: parseInt(e.target.id), d: "right" })
+                } else if (e.offset < 0) {
+                    setOffSet("left")
+                    setShowLike({ id: parseInt(e.target.id), d: "left" })
+                }
+            })
+            stack.on("dragend", (e) => {
+                setOffSet(null)
+                setShowLike({ id: null, d: null })
+            })
+        }
+    }
 
     const handleClick = (type, id) => {
         const card = document.getElementById(id)

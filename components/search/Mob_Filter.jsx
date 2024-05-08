@@ -197,9 +197,9 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                     </div>
                     <div className="mt-[25px]">
                         <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age from ( {watch("age_from")} )</div>
-                        <Controller name="age_from" control={control} defaultValue={1} render={({ field }) => (
+                        <Controller name="age_from" control={control} defaultValue={18} render={({ field }) => (
                             <ConfigProvider theme={customSliderTheme}>
-                                <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_from > 2 ? "!ms-0" : "!ms-[10px]"} ${age.age_from > 97 && "!me-[10px]"}`} min={1} max={99}
+                                <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_from > 19 ? "!ms-0" : "!ms-[10px]"} ${age.age_from > 97 && "!me-[10px]"}`} min={18} max={99}
                                     onChange={(val) => { (val <= watch("age_to")) ? setValue("age_from", val) : setValue("age_to", val); setValue("age_from", val) }}
                                 />
                             </ConfigProvider>
@@ -209,7 +209,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                         <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age to ( {watch("age_to")} )</div>
                         <Controller name="age_to" control={control} defaultValue={99} render={({ field }) => (
                             <ConfigProvider theme={customSliderTheme}>
-                                <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_to > 2 ? "!ms-0" : "!ms-[10px]"} ${age.age_to > 97 && "!me-[10px]"}`} min={1} max={99}
+                                <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_to > 19 ? "!ms-0" : "!ms-[10px]"} ${age.age_to > 97 && "!me-[10px]"}`} min={18} max={99}
                                     onChange={(val) => { (watch("age_from") <= val) ? setValue("age_to", val) : setValue("age_from", val); setValue("age_to", val) }} />
                             </ConfigProvider>
                         )} />

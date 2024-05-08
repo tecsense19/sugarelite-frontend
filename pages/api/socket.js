@@ -63,6 +63,10 @@ export default function SocketHandler(req, res) {
             io.emit("new-status")
         })
 
+        socket.on('card-swiped', (obj) => {
+            io.emit('swipe-notify', obj)
+        })
+
         socket.on("disconnect", () => {
             for (const [userId, socketId] of onlineUsers.entries()) {
                 if (socketId === socket.id) {
@@ -72,6 +76,7 @@ export default function SocketHandler(req, res) {
                     break;
                 }
             }
+            console.log(`Socket ${socket.id} closed.`);
         });
     });
 

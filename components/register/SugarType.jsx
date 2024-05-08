@@ -59,7 +59,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
 
             </div>
             <button className={`bg-white w-full max-w-[26rem] sm:max-w-full text-primary-dark-5 h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
-                <div className="flex justify-center gap-[5px] font-bold">
+                <div className="flex justify-center gap-[5px] font-bold text-[#263238]">
                     NEXT
                     <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                 </div>

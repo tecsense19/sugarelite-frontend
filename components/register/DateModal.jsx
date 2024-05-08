@@ -13,12 +13,11 @@ const DateModal = ({ isOpen, setIsModalOpened, setValue, day, setDay, month, set
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ];
-    const years = Array.from({ length: 100 }, (_, index) => 2024 - index);
 
+    const currentYear = new Date().getFullYear();
+    const minYear = currentYear - 19;
 
-    const handleYearClick = (year) => {
-        setYear(year);
-    };
+    const years = Array.from({ length: 100 }, (_, index) => minYear - index);
 
     const onSubmit = () => {
         setIsModalOpened(false);

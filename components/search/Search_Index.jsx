@@ -7,8 +7,9 @@ import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Countries } from "@/app/lib/constants"
 import TinderSwipe from "./TinderSwipe"
+import Loader from "../common/Loader"
 
-const Search_Index = ({ allUsers, pendingList, decryptedUser }) => {
+const Search_Index = ({ allUsers, remainingList, decryptedUser, myRecievedRequests }) => {
 
     const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
     const [currentUser, setCurrentUser] = useState(decryptedUser)
@@ -100,7 +101,7 @@ const Search_Index = ({ allUsers, pendingList, decryptedUser }) => {
 
     const handleReset = () => {
         reset()
-        setValue("age_from", 1)
+        setValue("age_from", 18)
         setValue("age_to", 99)
         setDummyUsers(users)
         dispatch({ type: "Filter_Close" })
@@ -136,7 +137,7 @@ const Search_Index = ({ allUsers, pendingList, decryptedUser }) => {
                     {
                         !isFiltered ? (
                             isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                                <TinderSwipe filterHandler={filterHandler} users={allUsers} pendingList={pendingList} currentUser={currentUser} />
+                                <TinderSwipe filterHandler={filterHandler} users={allUsers} remainingList={remainingList} currentUser={currentUser} myRecievedRequests={myRecievedRequests} />
                         ) :
                             (
                                 isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
@@ -148,9 +149,7 @@ const Search_Index = ({ allUsers, pendingList, decryptedUser }) => {
             </>
         )
     } else {
-        return <div className="h-dvh flex justify-center items-center">
-            <span className="loader after:border-[30px]"></span>
-        </div>
+        return <Loader />
     }
 
 }
