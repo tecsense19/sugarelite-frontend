@@ -8,6 +8,7 @@ import { client_routes } from "@/app/lib/helpers"
 const Search = async () => {
 
   const userId = cookies().get("user")?.value
+
   if (!userId) {
     redirect(client_routes.home)
   }
@@ -17,6 +18,7 @@ const Search = async () => {
 
   const all_users = await all_profiles_action()
   const allFriendNotifications = await all_friend_Notifications()
+
   if (!all_users?.success || !allFriendNotifications?.success) {
     return <div>Fetch Failed</div>
   }
@@ -46,7 +48,7 @@ const Search = async () => {
     })
   }
   return (
-    <Search_Index allUsers={users} remainingList={users.filter(i => !removalUsers.includes(i.id))} decryptedUser={currentUser} myRecievedRequests={myRecievedRequests} />
+    <Search_Index allUsers={users} remainingList={users.filter(i => !removalUsers.includes(i.id))} user={currentUser} myRecievedRequests={myRecievedRequests} />
   )
 }
 

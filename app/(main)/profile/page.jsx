@@ -15,7 +15,7 @@ const Profile = async () => {
     return (
       <>
         <Suspense fallback={<Loader />}>
-          <ProfileIndex decryptedUser={user[0]} allUsers={allUsers.data} accessList={accessList[0]} />
+          <ProfileIndex user={user[0]} allUsers={allUsers.data} accessList={accessList[0]} />
         </Suspense>
       </>
     )

@@ -17,15 +17,9 @@ import subscription_logo from "/public/assets/subscription_logo.svg"
 import prohibition from "/public/assets/prohibition.svg"
 import NotificationIcon from "/public/assets/bell_icon.svg"
 
-const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileToggle }) => {
+const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) => {
 
-    const { state: { userState, notifyBadgeState }, dispatch } = useStore()
-
-    const [user, setUser] = useState(userState ? userState : decryptedUser)
-
-    useEffect(() => {
-        setUser(userState ? userState : decryptedUser)
-    }, [userState])
+    const { state: { notifyBadgeState }, dispatch } = useStore()
 
     const path = usePathname()
     const [profilPic, setProfilePic] = useState("")
@@ -156,7 +150,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                     path === client_routes.profile &&
                     <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                         <div className="p-4 text-[16px] font-light">
-                            <p className='line-clamp-3'>{decryptedUser.bio ? decryptedUser.bio : "No Bio Added"}</p>
+                            <p className='line-clamp-3'>{user.bio ? user.bio : "No Bio Added"}</p>
                         </div>
                         <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
                             <p className="text-[18px] font-medium">Biography</p>
@@ -169,7 +163,7 @@ const SideContent = ({ control, decryptedUser, setAvatar, register, setProfileTo
                     path === client_routes.edit_profile &&
                     <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                         <div className=" text-[16px] font-light">
-                            <textarea {...register("bio")} defaultValue={decryptedUser.bio} id="bio" rows={5} placeholder='Enter Bio' className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
+                            <textarea {...register("bio")} defaultValue={user.bio} id="bio" rows={5} placeholder='Enter Bio' className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
                         </div>
                         <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
                             <p className="text-[18px] font-medium">Biography</p>

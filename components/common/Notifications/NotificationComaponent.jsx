@@ -7,7 +7,7 @@ import { useStore } from '@/store/store';
 import AlbumNotification from './AlbumNotification';
 import FriendNotification from './FriendNotification';
 
-const NotificationComaponent = ({ open, allUsers, socket }) => {
+const NotificationComaponent = ({ open, allUsers, socket, user }) => {
     const { state: { notificationState }, dispatch } = useStore()
     const [allNotifications, setAllNotifications] = useState([])
 
@@ -56,7 +56,7 @@ const NotificationComaponent = ({ open, allUsers, socket }) => {
                                             if (i.hasOwnProperty('status')) {
                                                 return <AlbumNotification key={inx} notification={i} allUsers={allUsers} socket={socket} />
                                             } else {
-                                                return <FriendNotification key={inx} notification={i} allUsers={allUsers} socket={socket} />
+                                                return <FriendNotification key={inx} notification={i} allUsers={allUsers} socket={socket} user={user} />
                                             }
                                         })
                                     }

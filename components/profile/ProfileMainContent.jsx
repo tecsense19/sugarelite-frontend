@@ -11,14 +11,7 @@ import Image from 'next/image';
 import AOS from 'aos';
 import { useStore } from '@/store/store';
 
-const ProfileMainContent = ({ decryptedUser }) => {
-
-    const { state: { userState } } = useStore()
-    useEffect(() => {
-        setUser(userState ? userState : decryptedUser)
-    }, [userState])
-
-    const [user, setUser] = useState(userState ? userState : decryptedUser)
+const ProfileMainContent = ({ user }) => {
 
     const profile = {
         appearance: [

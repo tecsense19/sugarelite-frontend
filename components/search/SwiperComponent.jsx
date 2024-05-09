@@ -11,9 +11,9 @@ import { useStore } from '@/store/store';
 import './animations/style.css'
 import { friend_request_action } from '@/app/lib/actions';
 
-const SwiperComponent = ({ users, toggle, offSet, setOffSet, remainingList, socket }) => {
+const SwiperComponent = ({ users, toggle, setOffSet, remainingList, socket, currentUser }) => {
     const [user, setUsers] = useState(remainingList)
-    const { state: { onlineUsers, userState }, dispatch } = useStore()
+    const { state: { onlineUsers }, dispatch } = useStore()
     const [showLike, setShowLike] = useState({ id: null, d: null })
 
     const resetHandler = () => {
@@ -33,7 +33,7 @@ const SwiperComponent = ({ users, toggle, offSet, setOffSet, remainingList, sock
     }, [])
 
     const sendFriendReq = async (receiver_id) => {
-        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 0 })
+        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 0 })
         if (res.success) {
             socket.emit("card-swiped", res.data)
             dispatch({ type: "Add_Sended_Request", payload: { id: res.data.receiver_id } })
