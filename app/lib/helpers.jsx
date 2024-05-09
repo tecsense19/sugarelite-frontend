@@ -13,7 +13,8 @@ export const client_routes = {
   disclaimer: "/disclaimer",
   privacyPolicy: "/privacy-policy",
   termsOfUse: "/terms-of-use",
-  subscription: "/subscription"
+  subscription: "/subscription",
+  contactUs: "/contact-us"
 }
 
 const server_domain = "https://admin-sugarelite.tec-sense.co.in";
