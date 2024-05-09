@@ -89,13 +89,12 @@ const Index = ({ decryptedUser }) => {
                 }
             })
             if (data.success) {
-                dispatch({ type: "Current_User", payload: data.user })
                 client_notification(api, "topRight", 'success', data.message, 4)
-                // const token = CryptoJS.AES.encrypt(JSON.stringify(data.user), "SecretKey").toString()
-                // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
                 setIsLoading(false)
-                navigate.push(client_routes.profile)
-                navigate.refresh()
+                window.location.pathname = client_routes.profile
+                // navigate.push(client_routes.profile)
+                // window.location.reload()
+                // navigate.refresh()
             }
         } catch (error) {
             console.log(error)

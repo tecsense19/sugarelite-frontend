@@ -28,7 +28,7 @@ const FriendNotification = ({ notification, allUsers }) => {
                 return res
             } else {
                 allUsers.forEach((i) => {
-                    if (i.id === id.sender_id) {
+                    if (i.id === id.user_id) {
                         value = i[type]
                     }
                 })
@@ -42,7 +42,7 @@ const FriendNotification = ({ notification, allUsers }) => {
             }
             else {
                 allUsers.forEach((i) => {
-                    if (i.id === id.sender_id) {
+                    if (i.id === id.receiver_id) {
                         value = i[type]
                     }
                 })

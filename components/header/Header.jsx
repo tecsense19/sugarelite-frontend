@@ -13,8 +13,8 @@ const Header = () => {
     return (
         <>
             {/* mobile view */}
-            {(pathname !== client_routes.login && pathname !== client_routes.register) &&
-                <header className="md:hidden top-0 fixed w-full z-[2]" data-aos="fade-down" data-aos-duration="500">
+            {(pathname !== client_routes.login || pathname !== client_routes.register) &&
+                <header className="md:hidden top-0 fixed w-full z-[2]">
                     <div className="flex bg-black text-white items-center justify-center">
                         <div className="w-full sm:w-11/12 xl:w-9/12 px-4">
                             <div className="flex justify-between items-center h-[65px]">
@@ -24,7 +24,7 @@ const Header = () => {
                                     </button>
                                 </div>
                                 <div className="flex items-center gap-x-[8.6px]">
-                                    <Link prefetch={true} href={client_routes.register} className={`w-[78.5px] h-[31px] flex justify-center items-center ${(pathname === client_routes.register || pathname === client_routes.home) ? "bg-secondary" : "bg-neutral border border-white/30"} text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]`}>Register</Link>
+                                    <Link prefetch={true} href={client_routes.register} className={`w-[78.5px] h-[31px] flex justify-center items-center bg-secondary text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]`}>Register</Link>
                                     <Link prefetch={true} href={client_routes.login} className="w-[57px] h-[31px] flex justify-center items-center bg-neutral border border-white/30 text-white text-[12px] font-medium leading-[normal] tracking-[-0.11px] rounded-[2.5px]">Login</Link>
                                 </div>
                             </div>
