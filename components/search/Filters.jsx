@@ -45,11 +45,6 @@ const sugarTypes = [
 
 const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, Controller, submitHandler, reset, cities, setCities, handleReset, dummyUsers }) => {
 
-
-  // const [cities, setCities] = useState([])
-
-  const { dispatch } = useStore()
-
   useEffect(() => {
     reset(watch())
     const AOS = require("aos");

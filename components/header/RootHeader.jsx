@@ -15,10 +15,10 @@ import NotificationComaponent from '../common/Notifications/NotificationComapone
 import SideDrawer from '../common/SideDrawer'
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) => {
-    const socket = getSocket()
 
     const { state: { notificationOpenState, notifyBadgeState }, dispatch } = useStore()
 
+    const socket = getSocket()
     const router = useRouter()
     const pathname = usePathname()
 
@@ -102,21 +102,14 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) 
 
     }, [user, socket, notificationOpenState, pathname])
 
-    const handleLogout = () => {
-        logout_user()
-        router.push(client_routes.home)
-        dispatch({ type: "Logout" })
-        disconnectSocket()
-        fetch(server_routes.logout, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id: user.id })
-        })
-    }
 
     useEffect(() => {
+        if (user.is_blocked_users.length) {
+            user.is_blocked_users.forEach(i => {
+                i = { ...i, is_blocked: 1 }
+                dispatch({ type: "Add_Blocked_User", payload: i })
+            })
+        }
         if (albumNotifications.length) {
             albumNotifications.forEach(i => {
                 dispatch({ type: "Add_Album_Notification", payload: i })
@@ -127,13 +120,22 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) 
                 dispatch({ type: "Add_Friend_Request", payload: i })
             })
         }
-        if (user.is_blocked_users.length) {
-            user.is_blocked_users.forEach(i => {
-                i = { ...i, is_blocked: 1 }
-                dispatch({ type: "Add_Blocked_User", payload: i })
-            })
-        }
     }, [])
+
+    const handleLogout = () => {
+        logout_user()
+        router.push(client_routes.home)
+        router.refresh()
+        dispatch({ type: "Logout" })
+        disconnectSocket()
+        fetch(server_routes.logout, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: user.id })
+        })
+    }
 
     return (
         <>
@@ -176,7 +178,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) 
                     </div>
                 </div>
             </header>
-            <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} />
+            <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} user={user} />
             <SideDrawer />
         </>
     )

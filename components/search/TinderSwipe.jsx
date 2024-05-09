@@ -15,7 +15,7 @@ import { getSocket } from '@/app/lib/socket';
 
 const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecievedRequests }) => {
 
-    const { state: { friendsList, blockedUsersState, requestsState, userState } } = useStore()
+    const { state: { requestsState } } = useStore()
     const navigate = useRouter()
     const [toggle, setToggle] = useState(false)
     const [offSet, setOffSet] = useState(null)
@@ -43,7 +43,7 @@ const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecie
                 </button>
             </div>
             <Buttons setToggle={setToggle} toggle={toggle} />
-            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} remainingList={remainingList} socket={socket} />
+            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} currentUser={currentUser} remainingList={remainingList} socket={socket} />
             <RequestsComponent toggle={toggle} remainingList={remainingList} currentUser={currentUser} socket={socket} myRecievedRequests={users.filter(i => myRecievedRequests.some(j => i.id === j.sender_id))} />
         </div>
     );

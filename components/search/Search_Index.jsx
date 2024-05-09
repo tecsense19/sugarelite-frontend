@@ -9,10 +9,10 @@ import { Countries } from "@/app/lib/constants"
 import TinderSwipe from "./TinderSwipe"
 import Loader from "../common/Loader"
 
-const Search_Index = ({ allUsers, remainingList, decryptedUser, myRecievedRequests }) => {
+const Search_Index = ({ allUsers, remainingList, user, myRecievedRequests }) => {
 
-    const { state: { filterState: { isFilterOpen }, blockedUsersState, userState }, dispatch } = useStore()
-    const [currentUser, setCurrentUser] = useState(decryptedUser)
+    const { state: { filterState: { isFilterOpen }, blockedUsersState }, dispatch } = useStore()
+
     const [users, setUsers] = useState([])
     const { register, handleSubmit, control, watch, setValue, reset } = useForm()
     const [dummyUsers, setDummyUsers] = useState([]);
@@ -28,18 +28,14 @@ const Search_Index = ({ allUsers, remainingList, decryptedUser, myRecievedReques
     }
 
     useEffect(() => {
-        setCurrentUser(userState)
-    }, [userState])
-
-    useEffect(() => {
         const blockList = blockedUsersState.filter((i) => i.is_blocked === 1)
         const otherIDsSet = new Set();
 
         blockList.forEach(message => {
-            if (message.sender_id !== userState.id) {
+            if (message.sender_id !== user.id) {
                 otherIDsSet.add(message.sender_id);
             }
-            if (message.receiver_id !== userState.id) {
+            if (message.receiver_id !== user.id) {
                 otherIDsSet.add(message.receiver_id);
             }
         });
@@ -63,34 +59,34 @@ const Search_Index = ({ allUsers, remainingList, decryptedUser, myRecievedReques
     }, [])
 
     const submitHandler = ({ name, age_from, age_to, sugar_type, country, region, has_profile_picture, has_public_photos, is_verified }) => {
-        const filteredUsers = users.filter(user => {
+        const filteredUsers = users.filter(i => {
             let condition = true;
             if (name !== undefined) {
-                condition = condition && user.username.toLowerCase().includes(name.toLowerCase());
+                condition = condition && i.username.toLowerCase().includes(name.toLowerCase());
             }
             if (age_from !== undefined) {
-                condition = condition && user.age >= age_from;
+                condition = condition && i.age >= age_from;
             }
             if (age_to !== undefined) {
-                condition = condition && user.age <= age_to;
+                condition = condition && i.age <= age_to;
             }
             if (sugar_type) {
-                condition = condition && user.sugar_type === sugar_type;
+                condition = condition && i.sugar_type === sugar_type;
             }
             if (country) {
-                condition = condition && user.country === country;
+                condition = condition && i.country === country;
             }
             if (region) {
-                condition = condition && user.region === region;
+                condition = condition && i.region === region;
             }
             if (has_profile_picture) {
-                condition = condition && user.avatar_url;
+                condition = condition && i.avatar_url;
             }
             if (has_public_photos) {
-                condition = condition && user.get_all_profileimg.length > 0;
+                condition = condition && i.get_all_profileimg.length > 0;
             }
             if (is_verified) {
-                condition = condition && user.is_subscribe;
+                condition = condition && i.is_subscribe;
             }
             return condition;
         });
@@ -120,37 +116,37 @@ const Search_Index = ({ allUsers, remainingList, decryptedUser, myRecievedReques
         setDummyUsers(users)
     }, [users])
 
-    if (userState) {
-        return (
-            <>
+    // if (user) {
+    return (
+        <>
 
-                {/* web view */}
+            {/* web view */}
 
-                <div className="font-bold hidden md:flex md:h-dvh pt-0 md:pt-[66px] flex-col md:flex-row">
-                    <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} />
-                    <Cards allUsers={dummyUsers} />
-                </div>
+            <div className="font-bold hidden md:flex md:h-dvh pt-0 md:pt-[66px] flex-col md:flex-row">
+                <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} />
+                <Cards allUsers={dummyUsers} />
+            </div>
 
-                {/* mobile view */}
+            {/* mobile view */}
 
-                <div className={`${isFilterOpen ? "" : "h-dvh"} md:hidden`}>
-                    {
-                        !isFiltered ? (
+            <div className={`${isFilterOpen ? "" : "h-dvh"} md:hidden`}>
+                {
+                    !isFiltered ? (
+                        isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
+                            <TinderSwipe filterHandler={filterHandler} users={allUsers} remainingList={remainingList} currentUser={user} myRecievedRequests={myRecievedRequests} />
+                    ) :
+                        (
                             isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                                <TinderSwipe filterHandler={filterHandler} users={allUsers} remainingList={remainingList} currentUser={currentUser} myRecievedRequests={myRecievedRequests} />
-                        ) :
-                            (
-                                isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                                    <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} />
-                            )
-                    }
-                </div>
+                                <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} />
+                        )
+                }
+            </div>
 
-            </>
-        )
-    } else {
-        return <Loader />
-    }
+        </>
+    )
+    // } else {
+    //     return <Loader />
+    // }
 
 }
 

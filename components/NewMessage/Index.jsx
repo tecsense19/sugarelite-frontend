@@ -1,30 +1,11 @@
 "use client"
 
-import { client_routes, socket_server } from "@/app/lib/helpers";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+import { useEffect, useState } from "react";
 import ChatComponent from "./ChatComponent/ChatComponent";
 import { useStore } from "@/store/store";
 import NoChatFound from "./NoChatFound";
-import { useRouter } from "next/navigation";
 import ProfileList from "./Profiles/ProfileList";
 import { getSocket } from "@/app/lib/socket";
-
-// const useSocket = () => {
-//     const [socket, setSocket] = useState(null);
-
-//     useEffect(() => {
-//         const newSocket = io(socket_server);
-//         setSocket(newSocket);
-
-//         return () => {
-//             newSocket.disconnect();
-//         };
-//     }, []);
-
-//     return socket;
-// };
-
 
 const Index = ({ decryptedUser, allUsers, myChats }) => {
 
@@ -51,7 +32,6 @@ const Index = ({ decryptedUser, allUsers, myChats }) => {
 
     useEffect(() => {
         dispatch({ type: "Add_Msg_Badge", payload: false })
-
     }, [])
 
 

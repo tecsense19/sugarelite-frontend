@@ -34,7 +34,7 @@ export const server_routes = {
   chatList: base_path + "/chat/list",
   sendMessage: base_path + "/chat/send",
   readMessage: base_path + "/readmessage",
-  friends: base_path + "/friends",
+  friends: base_path + "/friendsnew",
   friends_request: base_path + "/friends",
   private_album_notification: base_path + "/push/privatealbum",
   friends_request_notification: base_path + "/push/friendrequest",

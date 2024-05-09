@@ -12,24 +12,13 @@ import { setCookie } from 'nookies'
 import CryptoJS from "crypto-js"
 import { useRouter } from 'next/navigation'
 
-const Index = ({ decryptedUser }) => {
-
-    const { state: { userState } } = useStore()
-
-    const [user, setUser] = useState(userState ? userState : decryptedUser)
-
-    useEffect(() => {
-        setUser(userState ? userState : decryptedUser)
-    }, [userState])
-
-    const { dispatch } = useStore()
-    const navigate = useRouter()
+const Index = ({ user }) => {
 
     const { handleSubmit, control, setValue, register } = useForm()
     const [publicPhotoList, setPublicPhotoList] = useState([])
     const [privatePhotoList, setPrivatePhotoList] = useState([])
     const [removalArray, setRemovalArray] = useState([])
-    const [avatar, setAvatar] = useState(decryptedUser.avatar_url)
+    const [avatar, setAvatar] = useState(user.avatar_url)
     const [isLoading, setIsLoading] = useState(false)
     const [progress, setProgress] = useState(0)
 
@@ -61,7 +50,7 @@ const Index = ({ decryptedUser }) => {
             }
         }
 
-        obj = { ...obj, user_id: user.id, "public_images[]": getPhotoList("public"), "total_private_images[]": getPhotoList("private"), avatar_url: avatar, remove_images: removalArray.toString() }
+        obj = { ...obj, user_id: user.id, "public_images[]": getPhotoList("public"), "total_private_images[]": getPhotoList("private"), avatar_url: avatar, remove_images: removalArray.toString(), mobile_no: user.mobile_no === null ? "" : user.mobile_no }
         let temp = { ...user, ...obj }
 
         let formData = new FormData();
@@ -105,8 +94,8 @@ const Index = ({ decryptedUser }) => {
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(editHanlder)} className='w-full overflow-x-hidden flex flex-col lg:flex-row'>
-                <SideContent decryptedUser={user} control={control} setValue={setValue} setAvatar={setAvatar} register={register} />
-                <EditMainContent progress={progress} decryptedUser={user} control={control} setValue={setValue} publicPhotoList={publicPhotoList} setPrivatePhotoList={setPrivatePhotoList} privatePhotoList={privatePhotoList} setPublicPhotoList={setPublicPhotoList} setRemovalArray={setRemovalArray} isLoading={isLoading} />
+                <SideContent user={user} control={control} setValue={setValue} setAvatar={setAvatar} register={register} />
+                <EditMainContent progress={progress} user={user} control={control} setValue={setValue} publicPhotoList={publicPhotoList} setPrivatePhotoList={setPrivatePhotoList} privatePhotoList={privatePhotoList} setPublicPhotoList={setPublicPhotoList} setRemovalArray={setRemovalArray} isLoading={isLoading} />
             </form>
         </>
     )

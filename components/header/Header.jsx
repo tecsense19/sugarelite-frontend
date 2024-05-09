@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <>
             {/* mobile view */}
-            {(pathname !== client_routes.login || pathname !== client_routes.register) &&
+            {(pathname !== client_routes.login && pathname !== client_routes.register) &&
                 <header className="md:hidden top-0 fixed w-full z-[2]">
                     <div className="flex bg-black text-white items-center justify-center">
                         <div className="w-full sm:w-11/12 xl:w-9/12 px-4">

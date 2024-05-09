@@ -15,16 +15,10 @@ import { friend_request_action } from '@/app/lib/actions';
 const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) => {
 
     const [users, setUsers] = useState(myRecievedRequests)
-    const { state: { onlineUsers, userState, requestsState, notificationState }, dispatch } = useStore()
+    const { state: { onlineUsers, requestsState, notificationState }, dispatch } = useStore()
     const [showLike, setShowLike] = useState({ id: null, d: null })
 
-    // useEffect(() => {
-    //     console.log(myRecievedRequests)
-    //     console.log(userState.is_subscribe)
-    // }, [])
-
     useEffect(() => {
-        // setUsers(users)
         handleSetCards()
     }, [])
 
@@ -33,7 +27,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
     }, [requestsState.receivedRequests])
 
     const acceptReq = async (receiver_id) => {
-        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 1 })
+        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 1 })
         if (res.success) {
             socket.emit("card-swiped", res.data)
             dispatch({ type: "Add_Accepted_Request", payload: { id: receiver_id } })
@@ -42,7 +36,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
     }
 
     const declineReq = async (receiver_id) => {
-        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: userState.id, is_approved: 2 })
+        const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 2 })
         if (res.success) {
             socket.emit("card-swiped", res.data)
             dispatch({ type: "Remove_Friend_Request", payload: res.data })
@@ -123,7 +117,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
                 users.length ? (
                     <>
                         {
-                            userState.is_subscribe ?
+                            currentUser.is_subscribe ?
                                 <div className='relative max-w-[500px] max-h-[800px] h-[calc(100dvh-180px)] w-[calc(100vw-60px)] text-black'>
                                     {
                                         users.map((profile, inx) => {

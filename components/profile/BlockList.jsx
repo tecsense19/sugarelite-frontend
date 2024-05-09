@@ -6,20 +6,20 @@ import { block_user_action } from '@/app/lib/actions'
 import { notification } from 'antd'
 import { client_notification } from '@/app/lib/helpers'
 
-const BlockList = ({ setProfileToggle, type, allUsers, socket }) => {
+const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 
 	const [data, setData] = useState([])
-	const { state: { userState, blockedUsersState, }, dispatch } = useStore()
+	const { state: { blockedUsersState } } = useStore()
 	const [api, contextHolder] = notification.useNotification()
 	const [isLoading, setIsLoading] = useState([])
 
 	useEffect(() => {
-		const arr = allUsers.filter((i) => blockedUsersState.some(j => (j.receiver_id === i.id && j.sender_id === userState.id && j.is_blocked === 1)))
+		const arr = allUsers.filter((i) => blockedUsersState.some(j => (j.receiver_id === i.id && j.sender_id === user.id && j.is_blocked === 1)))
 		setData(arr)
 	}, [blockedUsersState])
 
 	const handleSubmit = async (id) => {
-		const res = await block_user_action({ sender_id: userState?.id, receiver_id: id, is_blocked: 0 })
+		const res = await block_user_action({ sender_id: user?.id, receiver_id: id, is_blocked: 0 })
 		if (res.success) {
 			client_notification(api, "topRight", "success", res.message, 4)
 			socket.emit("user-unblocked", res.data)
