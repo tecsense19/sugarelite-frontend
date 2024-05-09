@@ -196,11 +196,12 @@ const FriendNotification = ({ notification, allUsers, user }) => {
     return (
         <div className='w-full h-auto px-[30px]'>
             <div className='flex gap-4'>
-                <div className='min-w-[50px] max-h-[50px] rounded-full bg-primary flex justify-center items-center text-[22px] uppercase'>
-                    {
-                        getUserData(notification, "avatar_url") ? <Image src={getUserData(notification, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full object-cover h-full w-full' /> : <>{getUserData(notification, "username")?.charAt(0)}</>
-                    }
-                </div>
+
+                {
+                    getUserData(notification, "avatar_url") ?
+                        <Image src={getUserData(notification, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full  min-w-[50px] max-h-[50px] object-cover' /> : <p className='h-[50px] min-w-[50px] rounded-full bg-primary flex justify-center items-center text-[22px] uppercase'>{getUserData(notification, "username")?.charAt(0)}</p>
+                }
+
                 <div className='w-full'>
                     <div className='flex justify-between'>
                         <p className='text-[20px] font-semibold leading-[20px] capitalize'>
@@ -209,9 +210,9 @@ const FriendNotification = ({ notification, allUsers, user }) => {
                         <p className='text-[16px] font-medium leading-[20px]'>{getUserData(notification, "time")}</p>
                     </div>
                     <p className='text-[16px] font-light leading-[20px] text-white/80 mt-[6px]'>
-                        {!notification?.is_friend === 1 ?
-                            `💌 Match request from ${getUserData(notification, "username")}. Swipe right to match or left to unmatch.` :
-                            `🎉 It's a match. You can chat with ${getUserData(notification, "username")}.`
+                        {(notification.is_friend && notification.is_friend === 1) ?
+                            `🎉 It's a match. You can chat with ${getUserData(notification, "username")}.` :
+                            `💌 Match request from ${getUserData(notification, "username")}. Swipe right to match or left to unmatch.`
                         }
                     </p>
                 </div>

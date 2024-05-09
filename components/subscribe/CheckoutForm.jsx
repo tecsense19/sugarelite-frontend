@@ -8,12 +8,12 @@ import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { notification } from "antd";
 
-const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen }) => {
+const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen, user }) => {
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useRouter();
     const [isLoading, setIsLoading] = useState(false)
-    const { state: { userState }, dispatch } = useStore()
+    const { dispatch } = useStore()
 
     const [api, contextHolder] = notification.useNotification();
 
@@ -26,10 +26,10 @@ const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen }) => {
             const { token, error } = await stripe.createToken(cardElement, { address_city: "Kakinada", name: "Tester" },)
             setIsLoading(true)
             if (token) {
-                // const res = await stripe_action({ user_id: userState.id, stripe_token: token.id, price_id: process.env.STRIPE_12_WEEKS })
+                // const res = await stripe_action({ user_id: user.id, stripe_token: token.id, price_id: process.env.STRIPE_12_WEEKS })
                 // console.log(token)
                 let obj = {
-                    "user_id": userState.id,
+                    "user_id": user.id,
                     "price_id": selectedPaymentObj.key,
                     "stripe_token": token.id, // tok_visa For Testing Token
                     "plan_type": selectedPaymentObj.value, // 4week, 6week, 12week
@@ -38,7 +38,7 @@ const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen }) => {
                 console.log("obj ::", obj);
                 const res = await stripe_action(obj);
                 if (res.success) {
-                    const userRes = await search_profile_action(userState.id)
+                    const userRes = await search_profile_action(user.id)
                     // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
                     // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
                     client_notification(api, "topRight", "success", res.message, 2)

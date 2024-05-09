@@ -14,11 +14,11 @@ import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 
 
-const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
+const Index = ({ subscriptions, STRIPE_TEST_KEY, user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentObj, setSelectedPaymentObj] = useState("")
-  const { state: { userState }, dispatch } = useStore()
-  const [isPremium, setIsPremium] = useState(false)
+  const { dispatch } = useStore()
+  const [isPremium, setIsPremium] = useState(user.is_subscribe ? true : false)
   const [isLoading, setIsLoading] = useState(false)
   const [isCancelLoading, setIsCancelLoading] = useState(false)
   const [isStartStopLoading, setIsStartStopLoading] = useState(false)
@@ -33,12 +33,6 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
     // { including: true, desc: "Lorem ipsum dolor sit amet" },
     // { including: true, desc: "Lorem ipsum dolor sit amet" },
   ]
-
-  useEffect(() => {
-    if (userState) {
-      setIsPremium(userState?.is_subscribe ? true : false)
-    }
-  }, [userState])
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -65,13 +59,13 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
     setIsCancelLoading(true)
     console.log("Cancel plan");
     let obj = {
-      "user_id": userState?.id,
+      "user_id": user?.id,
       "at_cancel": "yes"
     }
     const res = await cancel_subscription_action(obj);
     console.log("res ::", res);
     if (res.success) {
-      const userRes = await search_profile_action(userState.id)
+      const userRes = await search_profile_action(user.id)
       // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
       // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
       client_notification(api, "topRight", "success", res.message, 2)
@@ -86,13 +80,13 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
     setIsLoading(true)
     setIsStartStopLoading(true)
     let obj = {
-      "user_id": userState?.id,
-      "start_stop": userState?.is_subscription_stop ? "start" : "stop"
+      "user_id": user?.id,
+      "start_stop": user?.is_subscription_stop ? "start" : "stop"
     }
     const res = await start_stop_subscription_action(obj);
     console.log("res ::", res);
     if (res.success) {
-      const userRes = await search_profile_action(userState.id)
+      const userRes = await search_profile_action(user.id)
       // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
       // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
       client_notification(api, "topRight", "success", res.message, 2)
@@ -142,37 +136,37 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
               <div className='flex flex-col items-start'>
                 <div className='text-[15px] sm:text-[16px] font-semibold leading-[normal]'>Current Plan</div>
                 <div className='mt-[10px] text-[24px] sm:text-[30px] font-semibold leading-[24px] sm:leading-[30px]'>
-                  {getSubscriptionPlan(userState?.user_subscriptions?.subscription_plan)}
+                  {getSubscriptionPlan(user?.user_subscriptions?.subscription_plan)}
                   {/* 4 Weeks  */}
                 </div>
               </div>
               <div className='text-[30px] sm:text-[40px] font-semibold leading-[normal]'>
-                ${userState?.user_subscriptions?.subscription_amount}
+                ${user?.user_subscriptions?.subscription_amount}
               </div>
             </div>
             <div className="bg-primary-dark-6 p-6 sm:p-10">
               <div className='flex justify-between sm:px-0 md:px-[20px] xl:px-[60px] 2xl:px-[80px]'>
                 <div className="flex flex-col items-start">
-                  <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">{getDate(userState?.subscription_start_date)}</div>
+                  <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">{getDate(user?.subscription_start_date)}</div>
                   <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">Subscription Date</div>
                 </div>
                 <div className="flex flex-col items-start">
                   <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">
-                    {userState?.is_subscription_cancel
-                      ? getDate(userState?.subscription_cancel_date)
+                    {user?.is_subscription_cancel
+                      ? getDate(user?.subscription_cancel_date)
                       : <>
-                        {userState?.is_subscription_stop
-                          ? <>{getDate(userState?.subscription_stop_date)}</>
-                          : <>{getDate(userState?.next_subscription_date)}</>
+                        {user?.is_subscription_stop
+                          ? <>{getDate(user?.subscription_stop_date)}</>
+                          : <>{getDate(user?.next_subscription_date)}</>
                         }
                       </>
                     }
                   </div>
                   <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">
-                    {userState?.is_subscription_cancel
+                    {user?.is_subscription_cancel
                       ? "Cancel Date"
                       : <>
-                        {userState?.is_subscription_stop
+                        {user?.is_subscription_stop
                           ? "Pause Date"
                           : "Renewal Date"
                         }
@@ -181,7 +175,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
                   </div>
                 </div>
               </div>
-              {!userState?.is_subscription_cancel
+              {!user?.is_subscription_cancel
                 ? <div className='flex flex-col sm:flex-row justify-center mt-7 sm:mt-10 gap-3 sm:gap-5'>
                   <button className={`w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-primary-dark-4 uppercase ${isLoading ? "pointer-events-none" : ""}`} onClick={handleCancelPlan}>
                     {isCancelLoading
@@ -193,7 +187,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
                     {isStartStopLoading
                       ? <div className="loader"></div>
                       : <>
-                        {userState?.is_subscription_stop ? "RESUME PLAN" : "STOP PLAN"}
+                        {user?.is_subscription_stop ? "RESUME PLAN" : "STOP PLAN"}
                       </>
                     }
                   </button>
@@ -241,7 +235,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY }) => {
         }
       }}>
         <Modal title="Enter card details" centered footer={false} open={isModalOpen} onCancel={handleCancel}>
-          <StripeModal selectedPaymentObj={selectedPaymentObj} setIsModalOpen={setIsModalOpen} STRIPE_TEST_KEY={STRIPE_TEST_KEY} />
+          <StripeModal selectedPaymentObj={selectedPaymentObj} setIsModalOpen={setIsModalOpen} STRIPE_TEST_KEY={STRIPE_TEST_KEY} user={user} />
         </Modal>
       </ConfigProvider>
     </div>

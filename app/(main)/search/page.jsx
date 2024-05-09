@@ -28,9 +28,8 @@ const Search = async () => {
 
   const mySendedRequests = allFriendNotifications.data.filter(i => (i.sender_id === id && !i.message))
   const myRecievedRequests = allFriendNotifications.data.filter(i => (i.receiver_id === id && !i.message))
-  const myAcceptedRequests = allFriendNotifications.data.filter(i => ((i.user_id === id || i.sender_id === id) && i.message))
-
-  let removalUsers = [];
+  const myFrnds = currentUser.is_friends.map(i => i?.user_id)
+  let removalUsers = [...myFrnds];
 
   if (mySendedRequests.length) {
     mySendedRequests.forEach(i => {
@@ -42,11 +41,7 @@ const Search = async () => {
       removalUsers.push(i.sender_id)
     })
   }
-  if (myAcceptedRequests.length) {
-    myAcceptedRequests.forEach(i => {
-      removalUsers.push(i.user_id === id ? i.sender_id : i.user_id)
-    })
-  }
+
   return (
     <Search_Index allUsers={users} remainingList={users.filter(i => !removalUsers.includes(i.id))} user={currentUser} myRecievedRequests={myRecievedRequests} />
   )

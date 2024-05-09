@@ -80,7 +80,7 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, se
 
 
             <div className=' justify-center items-center hidden md:flex 2xl:hidden'>
-                <PopOver user={user} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+                <PopOver user={user} currentUser={currentUser} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
             </div>

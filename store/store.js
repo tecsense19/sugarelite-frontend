@@ -254,9 +254,7 @@ const notificationsReducer = (state = { albumNotifications: [], friendRequests: 
     case "Remove_Friend_Request":
       return {
         ...state,
-        friendRequests: state.friendRequests.filter(request => (
-          !(request.sender_id === action.payload.receiver_id && request.receiver_id === action.payload.sender_id)
-        ))
+        friendRequests: state.friendRequests.filter(request => request.id !== action.payload.id)
       };
     default:
       return state;
@@ -378,21 +376,9 @@ export const StoreProvider = ({ children }) => {
 
   useEffect(() => {
 
-    const fetchuser = async () => {
-      try {
-        const res = await fetch(server_routes.allProfiles + `?id=${userId}`)
-        const data = await res.json()
-        if (data.success) {
-          dispatch({ type: "Current_User", payload: data.data[0] })
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
 
     if (userId) {
       connectSocket(userId)
-      fetchuser()
     }
   }, [])
 

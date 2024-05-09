@@ -38,7 +38,7 @@ const Chat = async () => {
         return latestMessageIDB - latestMessageIDA;
     });
 
-    return <Index decryptedUser={currentUser} profilesList={myChatsWithProfiles} allUsers={users} myChats={user_chats} />
+    return <Index user={currentUser} profilesList={myChatsWithProfiles} allUsers={users} myChats={user_chats} />
 };
 
 export default Chat;

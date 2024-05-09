@@ -16,9 +16,9 @@ import { block_user_action, logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
 import { disconnectSocket } from '@/app/lib/socket'
 
-const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
+const PopOver = ({ children, user, currentUser, socket, isModalOpen, setIsModalOpen }) => {
 	const [showOptions, setShowOptions] = useState(false);
-	const { state: { userState, notificationOpenState }, dispatch } = useStore()
+	const { state: { notificationOpenState }, dispatch } = useStore()
 	const path = usePathname()
 	const navigate = useRouter()
 	const [api, contextHolder] = notification.useNotification()
@@ -30,7 +30,7 @@ const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
 
 	const blockHandler = async (type) => {
 		if (type === "block") {
-			const res = await block_user_action({ sender_id: userState?.id, receiver_id: user.id, is_blocked: 1 })
+			const res = await block_user_action({ sender_id: currentUser?.id, receiver_id: user.id, is_blocked: 1 })
 			if (res.success) {
 				client_notification(api, 'topRight', "success", res.message, 4)
 				navigate.push(client_routes.search)
@@ -86,6 +86,7 @@ const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
 			if (nav.name === "Logout") {
 				logout_user()
 				navigate.push(client_routes.home)
+				navigate.refresh()
 				dispatch({ type: "Logout" })
 				disconnectSocket()
 				fetch(server_routes.logout, {
@@ -93,7 +94,7 @@ const PopOver = ({ children, user, socket, isModalOpen, setIsModalOpen }) => {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify({ id: userState.id })
+					body: JSON.stringify({ id: currentUser.id })
 				})
 			} else {
 				if (notificationOpenState) {

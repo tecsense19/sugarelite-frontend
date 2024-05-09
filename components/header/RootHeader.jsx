@@ -71,13 +71,13 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) 
                 dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
                 dispatch({ type: "Add_Friend_Request", payload: obj })
             }
-            else if (obj.receiver_id === user.id && obj.is_friend === 1) {
+            else if (obj.sender_id === user.id && obj.is_friend === 1) {
                 console.log("receiver", obj)
                 dispatch({ type: "Add_Friend_Request", payload: obj })
                 dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
             } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
                 console.log("removed")
-
+                dispatch({ type: "Remove_Friend_Request", payload: obj })
             }
         }
 
@@ -179,7 +179,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications }) 
                 </div>
             </header>
             <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} user={user} />
-            <SideDrawer />
+            <SideDrawer user={user} />
         </>
     )
 }

@@ -15,9 +15,9 @@ import { disconnectSocket } from '@/app/lib/socket';
 import { logout_user } from '@/app/lib/actions';
 import { useState } from 'react';
 
-const SideDrawer = () => {
+const SideDrawer = ({ user }) => {
 
-    const { state: { sideMenu, userState }, dispatch } = useStore()
+    const { state: { sideMenu }, dispatch } = useStore()
 
     const router = useRouter()
     const path = usePathname()
@@ -50,13 +50,14 @@ const SideDrawer = () => {
         logout_user()
         dispatch({ type: "Logout" })
         router.push(client_routes.home)
+        router.refresh()
         disconnectSocket()
         fetch(server_routes.logout, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: userState.id })
+            body: JSON.stringify({ id: user.id })
         })
     }
 

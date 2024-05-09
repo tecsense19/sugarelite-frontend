@@ -7,9 +7,9 @@ import single_tick from "/public/assets/single_tick.svg";
 import double_tick from "/public/assets/double_tick.svg";
 import React, { useEffect } from 'react'
 
-const UserComponent = ({ user, message, unReadCount, isTyping }) => {
+const UserComponent = ({ user, message, unReadCount, currentUser }) => {
 
-    const { dispatch, state: { onlineUsers, toMessageState, userState, chatPartnerList } } = useStore()
+    const { dispatch, state: { onlineUsers, toMessageState, chatPartnerList } } = useStore()
     const socket = getSocket()
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
@@ -59,7 +59,7 @@ const UserComponent = ({ user, message, unReadCount, isTyping }) => {
             className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer"
             onClick={() => {
                 if (toMessageState && toMessageState.id !== user.id) {
-                    socket.emit("open-chat", { sender_id: userState.id, receiver_id: toMessageState.id, type: "closed" });
+                    socket.emit("open-chat", { sender_id: currentUser.id, receiver_id: toMessageState.id, type: "closed" });
                 }
                 dispatch({ type: "Message_To", payload: user });
             }}

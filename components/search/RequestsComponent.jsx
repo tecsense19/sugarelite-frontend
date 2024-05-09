@@ -36,6 +36,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
     }
 
     const declineReq = async (receiver_id) => {
+        console.log(receiver_id, currentUser.id)
         const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 2 })
         if (res.success) {
             socket.emit("card-swiped", res.data)
