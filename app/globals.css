@@ -209,6 +209,10 @@ button:disabled {
   @apply !p-3 !px-0 !pt-0 !rounded-md
 }
 
+.verify-container .ant-modal-content {
+  @apply !p-0 !rounded-none overflow-hidden;
+}
+
 .dob-container .ant-modal-content {
   @apply !p-0 !rounded-[5px]
 }
