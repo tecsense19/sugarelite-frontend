@@ -1,0 +1,41 @@
+.typing {
+    @apply flex items-center h-[17px];
+}
+
+.typing .dot {
+    animation: typingAnimation 0.9s infinite ease-in-out;
+    @apply bg-[#D9D9D9] rounded-full w-[6px] h-[6px] lg:h-2 lg:w-2 me-[10px] lg:me-3 align-middle inline-block -translate-y-[6px];
+}
+
+.typing .dot:nth-child(1) {
+    animation-delay: 0ms;
+}
+
+.typing .dot:nth-child(2) {
+    animation-delay: 150ms;
+}
+
+.typing .dot:nth-child(3) {
+    animation-delay: 300ms;
+}
+
+.typing .dot:last-child {
+    @apply me-0;
+}
+
+@keyframes typingAnimation {
+    0% {
+        transform: translateY(-6px);
+        /* @apply -translate-y-[6px] */
+    }
+
+    50% {
+        transform: translateY(6px);
+        /* @apply translate-y-[6px] */
+    }
+
+    100% {
+        transform: translateY(-6px);
+        /* @apply -translate-y-[6px] */
+    }
+}
