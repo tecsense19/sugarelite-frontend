@@ -10,8 +10,12 @@ import { useRouter } from 'next/navigation'
 import { useStore } from '@/store/store'
 import { private_image_request } from '@/app/lib/actions'
 import { useEffect, useState } from 'react'
+import { useSocket } from '@/store/SocketContext'
 
-const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIsModalOpen }) => {
+const Buttons = ({ user, currentUser, privateAlbumState, isModalOpen, setIsModalOpen }) => {
+
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification();
     const { dispatch, state: { chatProfileState } } = useStore()

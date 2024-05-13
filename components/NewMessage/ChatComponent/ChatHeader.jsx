@@ -10,13 +10,16 @@ import { client_notification, client_routes } from "@/app/lib/helpers";
 import ReportModal from "@/components/profile/searched_Profile/ReportModal";
 import { useStore } from "@/store/store";
 import { block_user_action } from "@/app/lib/actions";
+import { useSocket } from "@/store/SocketContext";
 
-const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMobileProfile, currentUser, socket }) => {
+const ChatHeader = ({ setDrawerOpen, toUser, setShowMobileChatContent, setShowMobileProfile, currentUser, }) => {
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useRouter()
     const [modalOpen, setModalOpen] = useState(false)
     const { dispatch, state: { onlineUsers } } = useStore()
     const [api, contextHolder] = notification.useNotification()
+    const { mySocket } = useSocket()
+    const socket = mySocket
 
     const handleShowOptionsChange = (val) => {
         setShowOptions(val)

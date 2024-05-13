@@ -1,4 +1,4 @@
-import { getSocket } from '@/app/lib/socket';
+
 import { useStore } from '@/store/store';
 import Image from 'next/image';
 import Stroke_Online from '/public/assets/online_stroke.svg'
@@ -6,11 +6,13 @@ import read_tick from "/public/assets/read_tick.svg";
 import single_tick from "/public/assets/single_tick.svg";
 import double_tick from "/public/assets/double_tick.svg";
 import React, { useEffect } from 'react'
+import { useSocket } from '@/store/SocketContext';
 
 const UserComponent = ({ user, message, unReadCount, currentUser }) => {
 
     const { dispatch, state: { onlineUsers, toMessageState, chatPartnerList } } = useStore()
-    const socket = getSocket()
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
         const today = new Date();

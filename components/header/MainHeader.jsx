@@ -11,7 +11,6 @@ import { friend_request_notifications, logout_user, private_album_notification, 
 import Link from "next/link"
 import Notification from "../common/Notification"
 import { useEffect, useState } from "react"
-import { disconnectSocket, getSocket } from "@/app/lib/socket"
 import SideDrawer from "../common/SideDrawer"
 import { notification } from "antd"
 import NotificationComaponent from "../common/Notifications/NotificationComaponent"
@@ -36,7 +35,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList, allFriendNotifications 
   const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, onlineUsers }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
-  const socket = getSocket()
+  // const socket = getSocket()
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
 
@@ -222,7 +221,7 @@ const MainHeader = ({ decryptedUser, allUsers, chatList, allFriendNotifications 
     router.push(client_routes.home)
     dispatch({ type: "Logout" })
 
-    disconnectSocket()
+    // disconnectSocket()
     fetch(server_routes.logout, {
       method: "POST",
       headers: {

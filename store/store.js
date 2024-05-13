@@ -2,8 +2,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { parseCookies } from 'nookies';
 import CryptoJS from "crypto-js"
-import { server_routes } from '@/app/lib/helpers';
-import { connectSocket } from '@/app/lib/socket';
 
 const initialState = {
   isOpenMobileNavbar: false,
@@ -374,13 +372,13 @@ export const StoreProvider = ({ children }) => {
     requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }
   });
 
-  useEffect(() => {
+  // useEffect(() => {
 
 
-    if (userId) {
-      connectSocket(userId)
-    }
-  }, [])
+  //   if (userId) {
+  //     connectSocket(userId)
+  //   }
+  // }, [])
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

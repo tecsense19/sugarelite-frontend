@@ -14,14 +14,12 @@ import eyeOpenImg from "/public/assets/eye_open.svg";
 import bgMobileImg from "/public/assets/Group 427318831.png";
 import bgDesktopImg from "/public/assets/large_image.png";
 import { login_action } from "@/app/lib/actions"
-import { client_notification, client_routes, socket_server } from "@/app/lib/helpers"
+import { client_notification, client_routes } from "@/app/lib/helpers"
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { useRouter } from "next/navigation"
 import { useStore } from "@/store/store"
-import { connectSocket } from "@/app/lib/socket"
 
-let socket;
 const Login = ({ setIsForgotOpen }) => {
 
     const { dispatch } = useStore()
@@ -51,11 +49,9 @@ const Login = ({ setIsForgotOpen }) => {
             client_notification(api, "topRight", "error", res.message, 2)
             return;
         }
-        dispatch({ type: "Current_User", payload: res.data })
         const id = CryptoJS.AES.encrypt(JSON.stringify(res.data.id), "SecretKey").toString()
         setCookie(null, "user", id, { maxAge: 36000, secure: true, path: '/' })
         setIsLoading(false)
-        connectSocket(res.data.id)
         client_notification(api, "topRight", "success", res.message, 2)
         navigate.push(client_routes.search)
     }

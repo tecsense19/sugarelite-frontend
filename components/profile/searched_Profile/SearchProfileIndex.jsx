@@ -7,36 +7,21 @@ import { useEffect, useState } from "react"
 import 'aos/dist/aos.css';
 import Side from "./side"
 import Main from "./Main"
-import { io } from "socket.io-client"
-import { client_notification, client_routes, socket_server } from "@/app/lib/helpers"
+import { client_notification, client_routes } from "@/app/lib/helpers"
 import { block_user_action } from "@/app/lib/actions"
 import { useRouter } from "next/navigation"
 import { notification } from "antd"
 import { useStore } from "@/store/store"
 import Aos from "aos"
 import ReportModal from "./ReportModal"
-import { getSocket } from "@/app/lib/socket"
-
-// const useSocket = () => {
-//     const [socket, setSocket] = useState(null);
-
-//     useEffect(() => {
-//         const newSocket = io(socket_server);
-//         setSocket(newSocket);
-
-//         return () => {
-//             newSocket.disconnect();
-//         };
-//     }, []);
-
-//     return socket;
-// };
+import { useSocket } from "@/store/SocketContext"
 
 
 const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
 
     const { state: { decisionState } } = useStore()
-    const socket = getSocket()
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const accessList = queried_user.allow_privateImage_access_users
     const [privateAlbumState, setPrivateAlbumState] = useState(null)
     const navigate = useRouter()
@@ -96,8 +81,8 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
     return (
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full relative">
             {contextHolder}
-            <Side currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-            <Main currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+            <Side currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+            <Main currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 
             {/* report and block functionality */}
 

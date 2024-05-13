@@ -11,11 +11,15 @@ import closeSecondaryIcon from "/public/assets/cross_secondary.svg";
 import LoveLock from "/public/assets/lock.png";
 import { useStore } from '@/store/store';
 import { friend_request_action } from '@/app/lib/actions';
+import { useSocket } from '@/store/SocketContext';
+import { useChat } from '@/store/ChatContext';
 
-const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) => {
-
+const RequestsComponent = ({ toggle, myRecievedRequests, currentUser }) => {
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const [users, setUsers] = useState(myRecievedRequests)
-    const { state: { onlineUsers, requestsState, notificationState }, dispatch } = useStore()
+    const { state: { requestsState, notificationState }, dispatch } = useStore()
+    const { state: { onlineUsers } } = useChat()
     const [showLike, setShowLike] = useState({ id: null, d: null })
 
     useEffect(() => {
@@ -154,7 +158,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
                                                             <Image src={closeSecondaryIcon} alt='' height={50} width={50} className={`pointer-events-none transition-all duration-300 ${(profile.id === showLike?.id && showLike?.d === "left" ? "scale-100" : "scale-0")}`} />
                                                         </div>
                                                         {
-                                                            (onlineUsers.some(i => i === profile.id)) && <div className='absolute right-3 top-3 h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
+                                                            (onlineUsers.some(i => i.userId === profile.id)) && <div className='absolute right-3 top-3 h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
                                                         }
                                                     </div>
                                                 </div>

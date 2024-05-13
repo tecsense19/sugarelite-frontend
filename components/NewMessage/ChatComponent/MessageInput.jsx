@@ -13,8 +13,9 @@ import Picker from '@emoji-mart/react'
 import Link from 'next/link';
 import cross from "/public/assets/cross.svg"
 import { useStore } from '@/store/store';
+import { useSocket } from '@/store/SocketContext';
 
-const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, setUnsendedMsgs }) => {
+const MessageInput = ({ toUser, currentUser, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, setUnsendedMsgs }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
@@ -23,6 +24,8 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
     const [isEmoji, setIsEmoji] = useState(false)
     const [isdisabled, setIsDisabled] = useState(false)
     const { state: { onlineUsers, chatPartnerList } } = useStore()
+    const { mySocket } = useSocket()
+    const socket = mySocket
 
     const isUserOnline = (id) => {
         const isOnline = onlineUsers.some(i => i === id)

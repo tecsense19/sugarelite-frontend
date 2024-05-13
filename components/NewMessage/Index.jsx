@@ -5,12 +5,13 @@ import ChatComponent from "./ChatComponent/ChatComponent";
 import { useStore } from "@/store/store";
 import NoChatFound from "./NoChatFound";
 import ProfileList from "./Profiles/ProfileList";
-import { getSocket } from "@/app/lib/socket";
+import { useSocket } from "@/store/SocketContext";
 
 const Index = ({ user, allUsers, myChats }) => {
 
     const { state: { newMsgState, toMessageState, chatProfileState, chatPartnerList }, dispatch } = useStore()
-    const socket = getSocket()
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const toUser = toMessageState
 
     const [profiles, setProfiles] = useState([])
@@ -199,14 +200,14 @@ const Index = ({ user, allUsers, myChats }) => {
             <>
                 <div className="font-bold hidden h-dvh pt-0 md:pt-[66px] text-white md:flex">
                     <ProfileList currentUser={user} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} setProfiles={setProfiles} isTyping={isTyping} />
-                    <ChatComponent currentUser={user} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} setUnsendedMsgs={setUnsendedMsgs} unsendedMsgs={unsendedMsgs} />
+                    <ChatComponent currentUser={user} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} setUnsendedMsgs={setUnsendedMsgs} unsendedMsgs={unsendedMsgs} />
                 </div>
                 <div className="font-bold md:hidden h-dvh pt-0 md:pt-[66px] text-white flex">
                     {
                         !showMobileChatContent ?
                             <ProfileList currentUser={user} toUser={toUser} unReadCount={unReadCount} allUsers={allUsers} myChats={chats} profileList={profiles} setProfiles={setProfiles} isTyping={isTyping} />
                             :
-                            <ChatComponent currentUser={user} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} socket={socket} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} setUnsendedMsgs={setUnsendedMsgs} unsendedMsgs={unsendedMsgs} />
+                            <ChatComponent currentUser={user} sendingImages={sendingImages} myChats={chats} setSendingImages={setSendingImages} setShowMobileChatContent={setShowMobileChatContent} toUser={toUser} userChats={toUser && chats.filter(i => i.sender_id === toUser.id || i.receiver_id === toUser.id)} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} setUnsendedMsgs={setUnsendedMsgs} unsendedMsgs={unsendedMsgs} />
                     }
                 </div>
             </>

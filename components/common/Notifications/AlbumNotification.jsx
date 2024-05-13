@@ -4,6 +4,7 @@ import { useStore } from '@/store/store'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { notification as customNotification } from 'antd';
+import { useSocket } from '@/store/SocketContext';
 
 const months = [
     "Jan",
@@ -21,10 +22,12 @@ const months = [
 ];
 
 
-const AlbumNotification = ({ notification, allUsers, socket }) => {
+const AlbumNotification = ({ notification, allUsers }) => {
     const i = notification
     const [loadingArr, setLoadingArr] = useState([])
     const { dispatch } = useStore()
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const [api, contextHolder] = customNotification.useNotification();
 
     const getUserData = (id, type) => {

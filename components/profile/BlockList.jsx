@@ -5,13 +5,16 @@ import { useStore } from '@/store/store'
 import { block_user_action } from '@/app/lib/actions'
 import { notification } from 'antd'
 import { client_notification } from '@/app/lib/helpers'
+import { useSocket } from '@/store/SocketContext'
 
-const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
+const BlockList = ({ setProfileToggle, type, allUsers, user }) => {
 
 	const [data, setData] = useState([])
 	const { state: { blockedUsersState } } = useStore()
 	const [api, contextHolder] = notification.useNotification()
 	const [isLoading, setIsLoading] = useState([])
+	const { mySocket } = useSocket()
+	const socket = mySocket
 
 	useEffect(() => {
 		const arr = allUsers.filter((i) => blockedUsersState.some(j => (j.receiver_id === i.id && j.sender_id === user.id && j.is_blocked === 1)))
