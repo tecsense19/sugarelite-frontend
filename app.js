@@ -1,6 +1,7 @@
-import { createServer } from "node:http";
-import next from "next";
-import { Server } from "socket.io";
+
+const next = require('next')
+const { Server } = require("socket.io")
+const { createServer } = require("node:http")
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
