@@ -8,17 +8,19 @@ import premium from "../../../public/assets/premium.svg"
 import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import Buttons from './Buttons'
+import { useChat } from '@/store/ChatContext'
 
-const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, isModalOpen }) => {
+const Side = ({ user, currentUser, privateAlbumState, setIsModalOpen, isModalOpen }) => {
 
     const path = usePathname()
+    const { state: { onlineUsers } } = useChat()
 
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
                 <Link href={path === client_routes.edit_profile ? client_routes.profile : client_routes.search}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
                 <p className="text-[24px] font-semibold select-none">Profile</p>
-                <PopOver user={user} currentUser={currentUser} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+                <PopOver user={user} currentUser={currentUser} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
 
@@ -43,7 +45,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                         <div className={`flex items-center ${!user?.premium ? "justify-center lg:justify-start" : "justify-start"} gap-2 `}>
                             <div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative capitalize">{user?.username},{user?.age}
                                 {
-                                    user?.online === 1 &&
+                                    (onlineUsers.some(i => (i.userId === user.id && i.status === "online"))) &&
                                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-success absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
                                 }
                             </div>
@@ -64,7 +66,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                 <div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center items-center md:flex-row flex-col gap-3'>
                     {/* <ButtonProfile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} /> */}
                     {
-                        <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                        <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
                     }
                 </div>
                 <div className="w-full bg-primary-dark-4 mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>

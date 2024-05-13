@@ -11,7 +11,6 @@ import RequestsComponent from './RequestsComponent';
 import Butterflies from "/public/assets/butterfly.gif"
 import Like from "/public/assets/like.gif"
 import { useStore } from '@/store/store';
-import { getSocket } from '@/app/lib/socket';
 
 const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecievedRequests }) => {
 
@@ -20,7 +19,6 @@ const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecie
     const [toggle, setToggle] = useState(false)
     const [offSet, setOffSet] = useState(null)
     const [user, setUser] = useState([])
-    const socket = getSocket()
 
     useEffect(() => {
         const { sendedRequests, receivedRequests, acceptedRequests } = requestsState
@@ -43,8 +41,8 @@ const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecie
                 </button>
             </div>
             <Buttons setToggle={setToggle} toggle={toggle} />
-            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} currentUser={currentUser} remainingList={remainingList} socket={socket} />
-            <RequestsComponent toggle={toggle} remainingList={remainingList} currentUser={currentUser} socket={socket} myRecievedRequests={users.filter(i => myRecievedRequests.some(j => i.id === j.sender_id))} />
+            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} currentUser={currentUser} remainingList={remainingList} />
+            <RequestsComponent toggle={toggle} remainingList={remainingList} currentUser={currentUser} myRecievedRequests={users.filter(i => myRecievedRequests.some(j => i.id === j.sender_id))} />
         </div>
     );
 };

@@ -10,10 +10,16 @@ import Image from 'next/image';
 import { useStore } from '@/store/store';
 import './animations/style.css'
 import { friend_request_action } from '@/app/lib/actions';
+import { useSocket } from '@/store/SocketContext';
+import { useChat } from '@/store/ChatContext';
 
-const SwiperComponent = ({ users, toggle, setOffSet, remainingList, socket, currentUser }) => {
+const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser }) => {
+
+    const { mySocket } = useSocket()
+    const socket = mySocket
     const [user, setUsers] = useState(remainingList)
-    const { state: { onlineUsers }, dispatch } = useStore()
+    const { dispatch } = useStore()
+    const { state: { onlineUsers } } = useChat()
     const [showLike, setShowLike] = useState({ id: null, d: null })
 
     const resetHandler = () => {
@@ -161,7 +167,7 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, socket, curr
                                             </div> */}
                                         </div>
                                         {
-                                            (onlineUsers.some(i => i === profile.id)) && <div className='absolute right-3 top-3 h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
+                                            (onlineUsers.some(i => i.userId === profile.id)) && <div className='absolute right-3 top-3 h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
                                         }
                                     </div>
                                 </div>

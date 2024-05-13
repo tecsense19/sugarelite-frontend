@@ -7,11 +7,17 @@ import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { contact_us_action } from '@/app/lib/actions'
 import { notification } from 'antd'
-import { client_notification } from '@/app/lib/helpers'
+import { client_notification, client_routes } from '@/app/lib/helpers'
+import NotificationIcon from "/public/assets/bell_icon.svg"
+import Bars_Icon from "/public/assets/bars.svg"
+import { useStore } from '@/store/store'
+import arrowLeft from "/public/assets/arrow_left.svg";
+import Link from 'next/link'
 
 const ContactUs = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { register, setValue, watch, handleSubmit } = useForm();
+  const { dispatch, state: { notifyBadgeState } } = useStore()
   const [isEmail, setIsEmail] = useState(true);
   const [api, contextHolder] = notification.useNotification();
   const boxes = [
@@ -64,9 +70,24 @@ const ContactUs = ({ user }) => {
   }
 
   return (
-    <div className='pt-5 md:pt-10 flex flex-col items-center w-full md:mb-20 mb-10'>
+    <div className=' md:pt-10 flex flex-col items-center w-full md:mb-20 mb-10'>
       {contextHolder}
-      <div className="font-bold text-[30px] leading-[40px]">Contact Us</div>
+      <div className="md:hidden w-full px-[15px] mb-[30px] mt-[12px] flex justify-center items-center relative">
+        <Link href={client_routes.profile} className='absolute left-[15px]'>
+          <Image src={arrowLeft} alt="left" width={24} height={24} priority className="cursor-pointer" />
+        </Link>
+        <p className="text-[24px] font-semibold select-none">Contact Us</p>
+        <div className='flex gap-x-4 items-center absolute right-[15px]'>
+          <div className='relative'>
+            <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
+            {notifyBadgeState.notify &&
+              <p className="h-2 w-2 bg-secondary animate-bounce rounded-full absolute -top-1 -right-1 "></p>
+            }
+          </div>
+          <Image src={Bars_Icon} alt="more" width={24} height={24} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} />
+        </div>
+      </div>
+      <div className="font-bold text-[30px] leading-[40px] hidden md:block">Contact Us</div>
       <div className='flex flex-col-reverse xs:flex-col items-center w-full'>
         <div className='mt-6 md:mt-[100px] grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 items-center gap-y-5 md:w-[61%] md:min-w-[750px] w-full'>
           {boxes.map((obj, inx) => (

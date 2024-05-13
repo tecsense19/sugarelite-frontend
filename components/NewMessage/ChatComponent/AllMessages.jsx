@@ -6,10 +6,13 @@ import { useStore } from '@/store/store';
 import TypingAnimation from '../TypingAnimation/TypingAnimation';
 import NewMessage from './NewMessage';
 import { read_message_action } from '@/app/lib/actions';
+import { useSocket } from '@/store/SocketContext';
 
-const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg, isTyping, unsendedMsgs }) => {
+const AllMessages = ({ chats, toUser, currentUser, setEditingMsg, setShowMobileProfile, setDrawerOpen, sendingImages, setSelectedImages, lastUpdatedMsg, setLastUpdatedMsg, isTyping, unsendedMsgs }) => {
 
   const msgRef = useRef(null)
+  const { mySocket } = useSocket()
+  const socket = mySocket
 
   const [isScroller, setIsScroller] = useState(false)
   const { state: { newMsgState, onlineUsers, chatPartnerList, toMessageState, readMsgsState }, dispatch } = useStore()

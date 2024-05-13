@@ -5,11 +5,8 @@ import { useEffect, useState } from 'react'
 import { useStore } from '@/store/store'
 import AlbumAccessList from './AlbumAccessList'
 import BlockList from './BlockList'
-import { getSocket } from '@/app/lib/socket'
 
 const ProfileIndex = ({ user, allUsers, accessList }) => {
-
-    const socket = getSocket()
 
     const [profileToggle, setProfileToggle] = useState('')
 
@@ -17,7 +14,7 @@ const ProfileIndex = ({ user, allUsers, accessList }) => {
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full">
             <SideContent user={user} setProfileToggle={setProfileToggle} />
             {
-                !profileToggle ? <ProfileMainContent user={user} /> : profileToggle === "photo" ? <AlbumAccessList albumAccessList={accessList.allow_privateImage_access_users} user={user} type={profileToggle} allUsers={allUsers} setProfileToggle={setProfileToggle} socket={socket} /> : <BlockList type={profileToggle} setProfileToggle={setProfileToggle} user={user} allUsers={allUsers} socket={socket} />
+                !profileToggle ? <ProfileMainContent user={user} /> : profileToggle === "photo" ? <AlbumAccessList albumAccessList={accessList.allow_privateImage_access_users} user={user} type={profileToggle} allUsers={allUsers} setProfileToggle={setProfileToggle} /> : <BlockList type={profileToggle} setProfileToggle={setProfileToggle} user={user} allUsers={allUsers} />
             }
         </main>
     )

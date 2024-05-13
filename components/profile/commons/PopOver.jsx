@@ -14,9 +14,11 @@ import { usePathname, useRouter } from 'next/navigation'
 import { client_notification, client_routes, server_routes } from '@/app/lib/helpers'
 import { block_user_action, logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
-import { disconnectSocket } from '@/app/lib/socket'
+import { useSocket } from '@/store/SocketContext'
 
-const PopOver = ({ children, user, currentUser, socket, isModalOpen, setIsModalOpen }) => {
+const PopOver = ({ children, user, currentUser, isModalOpen, setIsModalOpen }) => {
+	const { mySocket } = useSocket()
+	const socket = mySocket
 	const [showOptions, setShowOptions] = useState(false);
 	const { state: { notificationOpenState }, dispatch } = useStore()
 	const path = usePathname()
@@ -88,7 +90,7 @@ const PopOver = ({ children, user, currentUser, socket, isModalOpen, setIsModalO
 				navigate.push(client_routes.home)
 				navigate.refresh()
 				dispatch({ type: "Logout" })
-				disconnectSocket()
+				// disconnectSocket()
 				fetch(server_routes.logout, {
 					method: "POST",
 					headers: {

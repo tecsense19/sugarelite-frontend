@@ -9,8 +9,9 @@ import { useStore } from '@/store/store'
 import ImagesModal from '../ImagesModal'
 import { block_user_action } from '@/app/lib/actions'
 import { client_notification } from '@/app/lib/helpers'
+import { useSocket } from '@/store/SocketContext'
 
-const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUser, socket, sendingImages, setSendingImages, myChats, lastUpdatedMsg, setLastUpdatedMsg, isTyping, setUnsendedMsgs, unsendedMsgs }) => {
+const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUser, sendingImages, setSendingImages, myChats, lastUpdatedMsg, setLastUpdatedMsg, isTyping, setUnsendedMsgs, unsendedMsgs }) => {
 
     const [showMobileProfile, setShowMobileProfile] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -19,6 +20,8 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUse
     const [api, contextHolder] = notification.useNotification()
     const [selectedImages, setSelectedImages] = useState([])
     const { state: { newMsgState, blockedUsersState } } = useStore()
+    const { mySocket } = useSocket()
+    const socket = mySocket
 
     const onDrawerClose = () => {
         setDrawerOpen(false)
@@ -49,12 +52,12 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUse
             {toUser ? (
                 <div className='w-full h-full flex'>
                     <div className='w-full 2xl:w-[calc(100%-400px)]'>
-                        <ChatHeader toUser={toUser} currentUser={currentUser} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} socket={socket} />
+                        <ChatHeader toUser={toUser} currentUser={currentUser} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} />
                         {
                             !blockedUsersState.some(i => (i.sender_id === toUser.id || i.receiver_id === toUser.id) && i.is_blocked === 1) ?
                                 <>
-                                    <AllMessages toUser={toUser} currentUser={currentUser} socket={socket} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} sendingImages={sendingImages} setSelectedImages={setSelectedImages} chats={userChats} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} unsendedMsgs={unsendedMsgs} />
-                                    <MessageInput socket={socket} toUser={toUser} currentUser={currentUser} todayMsgs={todayMsgs} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} setUnsendedMsgs={setUnsendedMsgs} />
+                                    <AllMessages toUser={toUser} currentUser={currentUser} setTodayMsgs={setTodayMsgs} setEditingMsg={setEditingMsg} setDrawerOpen={setDrawerOpen} setShowMobileProfile={setShowMobileProfile} sendingImages={sendingImages} setSelectedImages={setSelectedImages} chats={userChats} lastUpdatedMsg={lastUpdatedMsg} setLastUpdatedMsg={setLastUpdatedMsg} isTyping={isTyping} unsendedMsgs={unsendedMsgs} />
+                                    <MessageInput toUser={toUser} currentUser={currentUser} todayMsgs={todayMsgs} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} setUnsendedMsgs={setUnsendedMsgs} />
                                 </> : <div className='h-full w-full flex justify-center items-center text-white/80 font-normal'>
                                     {
                                         blockedUsersState.some(i => (i.sender_id === currentUser.id) && i.is_blocked === 1) ?

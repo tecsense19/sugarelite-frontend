@@ -59,10 +59,6 @@ export default function SocketHandler(req, res) {
             io.emit('unblocked-status', obj)
         })
 
-        socket.on("new-socket", () => {
-            io.emit("new-status")
-        })
-
         socket.on('card-swiped', (obj) => {
             io.emit('swipe-notify', obj)
         })

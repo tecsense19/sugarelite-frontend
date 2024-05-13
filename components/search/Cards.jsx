@@ -10,11 +10,12 @@ import Link from "next/link";
 import chevron_down from "/public/assets/arrow_left.svg"
 import settingsIcon from "/public/assets/settings_icon.svg";
 import No_profiles from "/public/assets/no_profile.svg";
+import { useChat } from "@/store/ChatContext";
 
 
 const Cards = ({ allUsers, filterHandler, resetHandler }) => {
 
-  const { state: { onlineUsers } } = useStore()
+  const { state: { onlineUsers } } = useChat()
   return (
     <>
       <div className="md:hidden text-white p-4 flex justify-between items-center mb-2 ">
@@ -44,7 +45,7 @@ const Cards = ({ allUsers, filterHandler, resetHandler }) => {
                     }
                     <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
                       <div className="flex justify-end">
-                        {onlineUsers.some(i => i === item.id) && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-success" />}
+                        {onlineUsers.some(i => i.userId === item.id) && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-success" />}
                       </div>
                       <div className="">
                         <div className="flex items-center">

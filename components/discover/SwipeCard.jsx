@@ -10,13 +10,13 @@ import heartIcon from "/public/assets/heart_swipe_icon.svg";
 import womanPlaceolderImg from "/public/assets/woman.png";
 import manPlaceolderImg from "/public/assets/man.png";
 import placeholder from "/public/assets/place_holder.png";
-import { useStore } from '@/store/store';
+import { useChat } from '@/store/ChatContext';
 
 const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, activeIndex, currentPhotoNumber }) => {
   const cardRef = useRef(null);
   let dragCardValues = {}
 
-  const { state: { onlineUsers } } = useStore()
+  const { state: { onlineUsers } } = useChat()
 
   useEffect(() => {
     if (cardRef.current) {
@@ -147,7 +147,7 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
           <div className="absolute inset-0 w-full h-full flex flex-col justify-end items-center pt-[14px] pb-[17px] px-[17px]">
             <div className='relative h-full w-full flex flex-col justify-between'>
               {
-                (onlineUsers.some(i => i === profile.id)) && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
+                (onlineUsers.some(i => (i.userId === profile.id && i.status === "online"))) && <div className='absolute right-[-3px] top-[-1px] h-[13.2px] w-[13px] border-[2px] border-white bg-success rounded-full'></div>
               }
               <div className='flex w-full justify-center gap-x-[5.5px]'>
                 {/* {

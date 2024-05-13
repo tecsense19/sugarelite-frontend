@@ -5,13 +5,16 @@ import { notification } from 'antd'
 import { private_image_access } from '@/app/lib/actions'
 import { client_notification } from '@/app/lib/helpers'
 import { useStore } from '@/store/store'
+import { useSocket } from '@/store/SocketContext'
 
-const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUsers, socket }) => {
+const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUsers }) => {
 
   const [api, contextHolder] = notification.useNotification()
   const { state: { decisionState } } = useStore()
   const [isLoading, setIsLoading] = useState([])
   const [data, setData] = useState([])
+  const { mySocket } = useSocket()
+  const socket = mySocket
 
   useEffect(() => {
     const matchedProfiles = allUsers.filter(user1 => {
