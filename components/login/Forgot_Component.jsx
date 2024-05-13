@@ -64,7 +64,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
                                         onChange={(e) => { setValue("email", e.target.value) }}
                                         placeholder='Email id'
                                         className='w-full placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none'
-                                        autoComplete='off'
+                                        autoComplete='off' required
                                     />
                                 </div>
 

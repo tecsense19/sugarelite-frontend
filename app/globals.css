@@ -198,7 +198,20 @@ button:disabled {
 }
 
 .ant-popover {
-  @apply !z-[1]
+  @apply !z-[2]
+}
+
+.rootHeaderPopOver {
+  @apply mt-2;
+}
+
+.rootHeaderPopOver .ant-popover-arrow,
+.rootHeaderPopOver .ant-popover-content {
+  @apply !top-2;
+}
+
+.rootHeaderPopOver .ant-popover-content .ant-popover-inner {
+  @apply !rounded-none;
 }
 
 .ant-popover.ant-popconfirm {

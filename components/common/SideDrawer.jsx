@@ -11,7 +11,7 @@ import LogoutIcon from "/public/assets/logout.svg"
 import EditIcon from "/public/assets/edit.svg"
 import searchIcon from "/public/assets/search.svg"
 import NotificationIcon from "/public/assets/Mask group (1).svg"
-import { disconnectSocket } from '@/app/lib/socket';
+// import { disconnectSocket } from '@/app/lib/socket';
 import { logout_user } from '@/app/lib/actions';
 import { useState } from 'react';
 
@@ -43,22 +43,32 @@ const SideDrawer = ({ user }) => {
             icon: searchIcon,
             path: client_routes.search
         },
+        {
+            name: "Identity Verification",
+            icon: searchIcon,
+            path: client_routes.verifyIdentity
+        },
+        {
+            name: "Conatct Us",
+            icon: searchIcon,
+            path: client_routes.contactUs
+        },
 
     ]
 
-    const logoutHandler = () => {
+    const logoutHandler = async () => {
         logout_user()
         dispatch({ type: "Logout" })
-        router.push(client_routes.home)
-        router.refresh()
-        disconnectSocket()
-        fetch(server_routes.logout, {
+        // disconnectSocket()
+        await fetch(server_routes.logout, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ id: user.id })
         })
+        router.push(client_routes.home);
+        window.location.reload();
     }
 
     return (
@@ -76,7 +86,7 @@ const SideDrawer = ({ user }) => {
             >
                 <Drawer open={sideMenu} className='!text-white' closeIcon={false}>
                     <div className='flex justify-between flex-col h-full w-full'>
-                        <div>
+                        <div className=''>
                             <div className='w-full h-[66px] bg-black px-4 flex items-center justify-between'>
                                 <button onClick={() => router.push(client_routes.home)}>
                                     <Image height={22} width={102} src={logo} alt="" className="pointer-events-none h-[30px] w-[150px]" priority />

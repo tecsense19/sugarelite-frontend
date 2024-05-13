@@ -79,7 +79,7 @@ const SideProfile = ({ selectedObj, setShowMobileProfile }) => {
                     </div>
                 </div>
 
-                <div className="w-full mt-[30px]" data-aos='zoom-in'>
+                <div className="w-full mt-[30px]">
                     <div className="bg-primary-dark-4 rounded-t-[5px] p-5 md:px-4 md:pt-4 md:pb-4 text-[16px] font-light leading-[22px] md:leading-[24px]">
                         {selectedObj.bio ? selectedObj.bio : "No Bio added"}
                     </div>

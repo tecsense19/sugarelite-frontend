@@ -375,11 +375,7 @@ export const StoreProvider = ({ children }) => {
   });
 
   useEffect(() => {
-
-
-    if (userId) {
-      connectSocket(userId)
-    }
+    connectSocket(userId)
   }, [])
 
   return (

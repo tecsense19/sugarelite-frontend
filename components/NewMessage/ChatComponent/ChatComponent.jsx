@@ -68,7 +68,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUse
                         }
                     </div>
                     <ImagesModal list={selectedImages} setSelctedImages={setSelectedImages} />
-                    <div className="hidden 2xl:block w-[400px]" data-aos='fade-left'>
+                    <div className="hidden 2xl:block w-[400px]">
                         <SideProfile selectedObj={toUser} />
                     </div>
                     <div className='block 2xl:hidden'>
@@ -83,7 +83,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUse
                     </div>
                 </div>
             ) : (
-                <div className="flex justify-center items-center w-full h-full" data-aos="fade-left" data-aos-duration="800">
+                <div className="flex justify-center items-center w-full h-full">
                     <div className="text-[22px]">Please click on a profile to chat</div>
                 </div>
             )}

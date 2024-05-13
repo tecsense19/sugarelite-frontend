@@ -36,10 +36,10 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
         }
     }
 
-    // useEffect(() => {
-    //     console.log(onlineUsers)
-    //     console.log(chatPartnerList)
-    // }, [onlineUsers, chatPartnerList])
+    useEffect(() => {
+        console.log(onlineUsers)
+        console.log(chatPartnerList)
+    }, [onlineUsers, chatPartnerList])
 
     const getFormData = ({ sender_id, receiver_id, message, type, id }) => {
         let formdata = new FormData

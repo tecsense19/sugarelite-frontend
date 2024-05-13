@@ -42,10 +42,33 @@ const Login = ({ setIsForgotOpen }) => {
         }
     }
 
+    const validateMobileNumber = (number) => {
+        // Regex pattern to match mobile numbers
+        var regex = /^\+?[1-9]\d{1,14}$/;
+
+        // Test if the number matches the regex pattern
+        return regex.test(number);
+    }
+
 
     const loginHandler = async (data) => {
         setIsLoading(true)
-        const res = await login_action(data)
+        let tempUserName = watch("email");
+        let mobile_no = validateMobileNumber(tempUserName);
+        let obj = {};
+        if (mobile_no) {
+            obj = {
+                mobile_no: tempUserName,
+                password: watch("password")
+            }
+        } else {
+            obj = {
+                email: tempUserName,
+                password: watch("password")
+            }
+        }
+        const res = await login_action(obj)
+        console.log(res)
         if (!res.success) {
             setIsLoading(false)
             client_notification(api, "topRight", "error", res.message, 2)
@@ -81,12 +104,12 @@ const Login = ({ setIsForgotOpen }) => {
                                 <div className='flex items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
                                     <Image src={emailImg} width={20} height={20} alt='email' className='me-[10px] w-[20px] h-[20px]' />
                                     <input
-                                        type="email"
-                                        {...register('email', { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })}
+                                        type="text"
+                                        {...register('email', { required: true })}
                                         onChange={(e) => setValue("email", e.target.value)}
-                                        placeholder='Email id'
+                                        placeholder='Email id / Mobile number'
                                         className='w-full placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none'
-                                        autoComplete='off'
+                                        autoComplete='off' required
                                     />
                                 </div>
                                 <div className=' flex h-[42px] items-center border border-white ps-[12px] mt-[12px] sm:ps-[20px] rounded-[5px]'>
@@ -96,7 +119,7 @@ const Login = ({ setIsForgotOpen }) => {
                                         {...register('password', { required: true, })}
                                         onChange={(e) => setValue("password", e.target.value)}
                                         placeholder='Password'
-                                        className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255)] text-white outline-none ' autoComplete='new-password' />
+                                        className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255)] text-white outline-none ' autoComplete='new-password' required />
                                     {
                                         showPass ?
                                             <Image src={eyeCloseImg} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close")} /> :
@@ -106,12 +129,12 @@ const Login = ({ setIsForgotOpen }) => {
                             </div>
                             <div className="w-full flex justify-between text-[12px] text-white mt-[10px]">
                                 <div className="flex items-center gap-[5px]">
-                                    <Controller name="remember" defaultValue={false} control={control} render={() => (
+                                    {/* <Controller name="remember" defaultValue={false} control={control} render={() => (
                                         <ConfigProvider theme={{ token: { colorPrimary: "#F16667", fontSize: 20 } }}>
                                             <Checkbox className='h-4 w-4 flex justify-end' id="remember" onChange={(e) => setValue("remember", e.target.checked)} checked={watch("remember")} />
                                         </ConfigProvider>
                                     )} />
-                                    <label htmlFor="remember" className="select-none cursor-pointer font-normal">Remember me</label>
+                                    <label htmlFor="remember" className="select-none cursor-pointer font-normal">Remember me</label> */}
                                 </div>
                                 <span className="underline pb-1 cursor-pointer select-none font-normal transition-all duration-150 hover:text-white/80" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
                             </div>
