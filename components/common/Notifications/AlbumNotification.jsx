@@ -101,7 +101,7 @@ const AlbumNotification = ({ notification, allUsers }) => {
             {contextHolder}
             <div className='flex gap-4'>
                 {getUserData(i, "avatar_url") ?
-                    <Image src={getUserData(i, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full  min-w-[50px] max-h-[50px]' />
+                    <Image src={getUserData(i, "avatar_url")} width={50} height={50} alt='icon' className='rounded-full  min-w-[50px] max-h-[50px] object-cover' />
                     :
                     <p className='h-[50px] min-w-[50px] rounded-full bg-primary flex justify-center items-center text-[22px] uppercase'>
                         {getUserData(i, "username").charAt(0)}

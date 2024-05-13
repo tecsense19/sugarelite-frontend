@@ -176,19 +176,20 @@ const onlineUsersReducer = (state, action) => {
 const chatPartnerListReducer = (state, action) => {
   switch (action.type) {
     case "Add_Partner":
-      const id = action.payload.sender_id
-      const findIdIndex = state.findIndex(i => i.sender_id === id);
-      if (findIdIndex !== -1) {
-        const newState = [...state];
-        if (action.payload.type === "closed") {
-          newState[findIdIndex] = { ...state[findIdIndex], type: "closed" }
-          return newState;
-        }
-        newState[findIdIndex] = action.payload
-        return newState;
-      } else {
-        return [...state, action.payload];
-      }
+      // const id = action.payload.sender_id
+      // const findIdIndex = state.findIndex(i => i.sender_id === id);
+      // if (findIdIndex !== -1) {
+      //   const newState = [...state];
+      //   if (action.payload.type === "closed") {
+      //     newState[findIdIndex] = { ...state[findIdIndex], type: "closed" }
+      //     return newState;
+      //   }
+      //   newState[findIdIndex] = action.payload
+      //   return newState;
+      // } else {
+      //   return [...state, action.payload];
+      // }
+      return action.payload;
     default:
       return state;
   }

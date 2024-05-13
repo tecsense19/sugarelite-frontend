@@ -1,13 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/Index";
-import { redirect } from "next/navigation"
 
 import 'aos/dist/aos.css';
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { StoreProvider } from "@/store/store";
-import { all_friend_Notifications, all_profiles_action, chat_list_action, decrypt_user, get_user_action } from "./lib/actions";
-import { client_routes } from "./lib/helpers";
 import { SocketProvider } from "@/store/SocketContext";
 import { ChatProvider } from "@/store/ChatContext";
 const inter = Inter({ subsets: ["latin"] });
