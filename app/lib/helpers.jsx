@@ -14,7 +14,8 @@ export const client_routes = {
   privacyPolicy: "/privacy-policy",
   termsOfUse: "/terms-of-use",
   subscription: "/subscription",
-  contactUs: "/contact-us"
+  contactUs: "/contact-us",
+  verifyIdentity: "/verify-identity",
 }
 
 const server_domain = "https://admin-sugarelite.tec-sense.co.in";
@@ -46,7 +47,9 @@ export const server_routes = {
   send_otp: base_path + "/otp",
   verify_otp: base_path + "/verifyotp",
   block_user: base_path + "/block/user",
-  report_user: base_path + "/report/user"
+  report_user: base_path + "/report/user",
+  contactUs: base_path + "/contactus",
+  verifyIdentity: base_path + "/verifyidentity",
 }
 
 

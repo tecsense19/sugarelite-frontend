@@ -213,6 +213,10 @@ button:disabled {
   @apply !p-0 !rounded-none overflow-hidden;
 }
 
+.verify-cancel-container .ant-modal-content {
+  @apply !p-0 !rounded-[5px] overflow-hidden;
+}
+
 .dob-container .ant-modal-content {
   @apply !p-0 !rounded-[5px]
 }

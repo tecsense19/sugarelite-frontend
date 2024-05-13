@@ -11,7 +11,7 @@ const Verification = ({ user }) => {
 
   return (
     <div className='pt-5 md:pt-10 flex flex-col items-center w-full md:mb-20 mb-10'>
-      <VerificationModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <VerificationModal user={user} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       <div className="font-bold text-[30px] leading-[40px]">Verification</div>
       <Image src={verification_img} alt='' height={300} width={250} className='pointer-events-none mx-2 mb-5 mt-12' />
       <div className='flex flex-col justify-center px-2 md:px-0'>

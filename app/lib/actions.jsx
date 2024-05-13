@@ -337,6 +337,35 @@ export const verify_otp_action = async (form) => {
     }
 }
 
+export const contact_us_action = async (form) => {
+    try {
+        const res = await fetch(server_routes.contactUs, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const verify_identity_action = async (form) => {
+    try {
+        const res = await fetch(server_routes.verifyIdentity, {
+            method: "POST",
+            body: form
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Stripe Actions
 export const stripe_action = async (form) => {
     try {

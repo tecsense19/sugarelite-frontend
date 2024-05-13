@@ -23,7 +23,7 @@ export const middleware = (request) => {
 
 
     const public_routes = [client_routes.login, client_routes.register]
-    const private_routes = [client_routes.chat, client_routes.discover, client_routes.edit_profile, client_routes.profile, client_routes.profile_id, client_routes.search, client_routes.subscription, client_routes.contactUs]
+    const private_routes = [client_routes.chat, client_routes.discover, client_routes.edit_profile, client_routes.profile, client_routes.profile_id, client_routes.search, client_routes.subscription, client_routes.contactUs, client_routes.verifyIdentity]
 
     const isPublic = public_routes.some((i) => i === path)
     const isPrivate = private_routes.some((i) => i === path)

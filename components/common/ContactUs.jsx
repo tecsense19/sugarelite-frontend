@@ -5,10 +5,15 @@ import mailIcon from "/public/assets/contact_mail.svg"
 import locationIcon from "/public/assets/contact_location.svg"
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
+import { contact_us_action } from '@/app/lib/actions'
+import { notification } from 'antd'
+import { client_notification } from '@/app/lib/helpers'
 
 const ContactUs = ({ user }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { register, setValue, watch, handleSubmit } = useForm();
   const [isEmail, setIsEmail] = useState(true);
+  const [api, contextHolder] = notification.useNotification();
   const boxes = [
     {
       name: "Email",
@@ -39,12 +44,28 @@ const ContactUs = ({ user }) => {
     }
   }, [])
 
-  const handleContactUsSubmit = () => {
-
+  const handleContactUsSubmit = async () => {
+    let obj = {
+      user_id: user.id,
+      subject: watch("subject"),
+      message: watch("message")
+    }
+    setIsLoading(true);
+    let res = await contact_us_action(obj);
+    console.log(res);
+    if (res.success) {
+      client_notification(api, "topRight", "success", res.message, 3);
+    } else {
+      client_notification(api, "topRight", "error", res.message, 3);
+    }
+    setValue("subject", "")
+    setValue("message", "")
+    setIsLoading(false);
   }
 
   return (
     <div className='pt-5 md:pt-10 flex flex-col items-center w-full md:mb-20 mb-10'>
+      {contextHolder}
       <div className="font-bold text-[30px] leading-[40px]">Contact Us</div>
       <div className='flex flex-col-reverse xs:flex-col items-center w-full'>
         <div className='mt-6 md:mt-[100px] grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 items-center gap-y-5 md:w-[61%] md:min-w-[750px] w-full'>
@@ -77,16 +98,19 @@ const ContactUs = ({ user }) => {
             }
             <div className='w-full flex flex-col justify-between mt-3 sm:mt-0'>
               <div className='text-[16px] font-normal leading-[normal]'>Subject</div>
-              <input type="text" {...register("subject")} className='mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 h-10 w-full' />
+              <input type="text" {...register("subject", { required: true })} className={`mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 h-10 w-full ${isLoading ? "pointer-events-none" : ""}`} required />
             </div>
           </div>
           <div className='w-full mt-3 sm:mt-5'>
             <div className='text-[16px] font-normal leading-[normal]'>Message</div>
-            <textarea type="text" {...register("message")} className='mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 w-full resize-none py-2' rows={4} />
+            <textarea type="text" {...register("message", { required: true })} className={`mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 w-full resize-none py-2 ${isLoading ? "pointer-events-none" : ""}`} rows={4} required />
           </div>
           <div className='mt-5 md:mt-10 w-full flex justify-center'>
-            <button type='submit' className='flex justify-center items-center bg-tinder rounded-[5px] w-full max-w-[340px] h-10 sm:h-[56px] text-center font-semibold text-[18px] leading-[18px]'>
-              SEND
+            <button type='submit' className={`flex justify-center items-center bg-tinder rounded-[5px] w-full max-w-[340px] h-10 sm:h-[56px] text-center font-semibold text-[18px] leading-[18px] ${isLoading ? "pointer-events-none" : ""}`}>
+              {isLoading
+                ? <div className='loader'></div>
+                : "SEND"
+              }
             </button>
           </div>
         </form>
