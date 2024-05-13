@@ -76,6 +76,7 @@ const VerificationModal = ({ user, setIsModalOpen, isModalOpen }) => {
     console.log(res);
     if (res.success) {
       client_notification(api, "topRight", "success", res.message, 3)
+      window.location.reload();
     } else {
       client_notification(api, "topRight", "error", res.message, 3)
     }

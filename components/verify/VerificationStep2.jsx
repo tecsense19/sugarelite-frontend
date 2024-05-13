@@ -23,6 +23,9 @@ const VerificationStep2 = ({ user, nextStepHandler, backStepHandler, closeModal,
           break;
         }
       }
+      if (tempOptions.length === 0) {
+        tempOptions = verificationCards[0].cards;
+      }
       setOptions(tempOptions)
     }
   }, [])
