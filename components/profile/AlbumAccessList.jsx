@@ -17,7 +17,9 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
     const matchedProfiles = allUsers.filter(user1 => {
       return albumAccessList.some(user2 => user2.user_id === user1.id);
     });
-    setData(matchedProfiles)
+    console.log("matchedProfiles ::", matchedProfiles);
+    let tempData = matchedProfiles.filter(obj => obj.id !== user.id);
+    setData(tempData)
   }, [albumAccessList])
 
   useEffect(() => {
@@ -25,7 +27,9 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
       const matchedProfiles = allUsers.filter(user1 => {
         return decisionState.some(user2 => (user2.data.sender_id === user1.id && user2.status === "accept"));
       });
-      setData((prev) => Array.from(new Set([...matchedProfiles, ...prev])))
+      console.log("matchedProfiles 2 ::", matchedProfiles);
+      let tempData = matchedProfiles.filter(obj => obj.id !== user.id);
+      setData((prev) => Array.from(new Set([...tempData, ...prev])))
     }
   }, [decisionState])
 
@@ -100,7 +104,7 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
             <table className='w-full border-0 table-auto'>
               <thead>
                 <tr className='bg-primary-dark h-[58px]'>
-                  <th className='text-start ps-4 sm:ps-0 sm:text-center text-[16px] font-normal leading-[20px]'>Name</th>
+                  <th className='text-start ps-4 sm:ps-0 sm:text-center text-[16px] font-normal leading-[20px] 2xl:text-start 2xl:ps-[100px]'>Name</th>
                   <th className='text-center text-[16px] font-normal leading-[20px] 2xl:table-cell hidden'></th>
                   <th className='text-center text-[16px] font-normal leading-[20px] hidden sm:table-cell'>Created On</th>
                   <th className='text-end pe-4 sm:text-center text-[16px] font-normal leading-[20px]'>Actions</th>
@@ -143,7 +147,7 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
                         </td>
                         <td className='text-center px-2 h-full text-[20px] font-normal leading-[20px] sm:table-cell hidden'>{getDateOfAccess(item.id)}</td>
                         <td className='text-end pe-4 ps-2 sm:text-center sm:px-2 h-full sm:table-cell hidden'>
-                          <button className={`bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px] ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[95px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
+                          <button className={`bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px] 2xl:ms-3 ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[95px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
                             {(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[10px] '></span> : "Decline"}
                           </button>
                         </td>

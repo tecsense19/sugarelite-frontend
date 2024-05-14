@@ -7,7 +7,7 @@ import sugar_email from "/public/assets/sugar_email.svg"
 import email from "/public/assets/email.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
 import { checkuser_action, send_otp_action, verify_otp_action } from '@/app/lib/actions'
-import { Alert } from 'antd'
+import { Alert, notification } from 'antd'
 import username_email_white from "/public/assets/username_email_white.svg"
 import username_email_black from "/public/assets/username_email_black.svg"
 import username_telephone_white from "/public/assets/username_telephone_white.svg"
@@ -28,6 +28,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
     const [selectedCountry, setSelectedCountry] = useState(specificCountries[0]);
     const [showCountryCode, setShowCountryCode] = useState(false);
     const [otpId, setOtpId] = useState("")
+    const [api, contextHolder] = notification.useNotification();
 
     let handleSubmitCalls = true
 
@@ -139,7 +140,17 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
             }
             let res = await verify_otp_action(obj);
             if (res.success) {
-                setNextStep(3)
+                setNextStep(3);
+                if (isEmail) {
+
+                } else {
+                    let countryCode = selectedCountry.code.split("+")[1];
+                    setValue("mobile_no", countryCode + watch("phone"));
+                    setValue("otp", tempOtp);
+                }
+            } else {
+                client_notification(api, "topRight", "error", res.error, 3)
+                setOtpArr(["", "", "", "", "", ""])
             }
             setIsLoading(false);
         }
@@ -171,6 +182,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
 
     return (
         <>
+            {contextHolder}
             <div className="text-center flex flex-col items-center ">
                 <div className="flex justify-center items-center rounded-full">
                     <Image src={sugar_email} alt="Card_email" width={135.67} height={126} className="pointer-events-none select-none" />

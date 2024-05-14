@@ -77,7 +77,7 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 						<table className='w-full border-0'>
 							<thead>
 								<tr className='bg-primary-dark h-[58px]'>
-									<th className='text-start ps-4 sm:ps-0 sm:text-center text-[16px] font-normal leading-[20px]'>Name</th>
+									<th className='text-start ps-4 sm:ps-0 sm:text-center text-[16px] font-normal leading-[20px] 2xl:text-start 2xl:ps-[100px]'>Name</th>
 									<th className='text-center text-[16px] font-normal leading-[20px] 2xl:table-cell hidden'></th>
 									<th className='text-center text-[16px] font-normal leading-[20px] hidden sm:table-cell'>Created On</th>
 									<th className='text-end pe-4 sm:text-center text-[16px] font-normal leading-[20px]'>Actions</th>
@@ -120,7 +120,7 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 												</td>
 												<td className='text-center px-2 h-full text-[20px] font-normal leading-[20px] sm:table-cell hidden'>{getDateOfAccess(item.id)}</td>
 												<td className='text-end pe-4 ps-2 sm:text-center sm:px-2 h-full sm:table-cell hidden'>
-													<button className={`bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px] ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[95px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
+													<button className={`bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px] 2xl:ms-3 ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[95px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
 														{(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[10px] '></span> : "Unblock"}
 													</button>
 												</td>

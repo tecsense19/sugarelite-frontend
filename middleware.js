@@ -26,7 +26,7 @@ export const middleware = (request) => {
     const private_routes = [client_routes.chat, client_routes.discover, client_routes.edit_profile, client_routes.profile, client_routes.profile_id, client_routes.search, client_routes.subscription, client_routes.contactUs, client_routes.verifyIdentity]
 
     const isPublic = public_routes.some((i) => i === path)
-    const isPrivate = private_routes.some((i) => i === path)
+    const isPrivate = private_routes.some((i) => i === client_routes.profile_id ? path.includes("profile/") : i === path)
 
 
     if (!user && isPrivate) {
