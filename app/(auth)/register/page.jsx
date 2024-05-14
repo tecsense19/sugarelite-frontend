@@ -178,7 +178,7 @@ const Register = () => {
 								</form>
 							</div>
 						</div>
-						<Image src={large_image} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+						{/* <Image src={large_image} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" /> */}
 					</div>
 				</main>
 			</Suspense>

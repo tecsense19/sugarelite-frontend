@@ -49,7 +49,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
                             <Image src={eliteLogoImg} alt={"logo"} width={156} height={34} priority className="select-none pointer-events-none" />
                         </div>
                         <div className='flex items-center justify-center ms-5 relative min-[330px]:w-[20rem] mt-9 '>
-                            <Image src={Forgot_lock} alt={"logo"} width={80} height={80} priority
+                            <Image src={Forgot_lock} unoptimized alt={"logo"} width={80} height={80} priority
                                 className="select-none pointer-events-none absolute -left-5 hidden min-[330px]:block"
                             />
                             <p className='text-[20px] text-white'>Forgot Your Password?</p>

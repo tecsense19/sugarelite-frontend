@@ -109,7 +109,8 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <Popover placement='bottomLeft' open={showPopOver} content={content}>
                     <div className='mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px] relative'>
-                        <Image src={showPass ? password : lock} width={20} height={20} alt='password ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
+                        <Image src={password} width={20} height={20} alt='password ' className={`me-[10px] sm:me-[14px] w-[20px] h-[20px] ${showPass ? "block" : "hidden"}`} />
+                        <Image src={lock} width={20} height={20} alt='password ' className={`me-[10px] sm:me-[14px] w-[20px] h-[20px] ${showPass ? "hidden" : "block"}`} />
                         <input
                             type={showPass ? "text" : "password"}
                             {...register('password', { required: true })}
@@ -119,16 +120,15 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                             placeholder='Password'
                             className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255)] text-white outline-none '
                             autoComplete='new-password' />
-                        {
-                            showPass ?
-                                <Image src={eye_close} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "password")} /> :
-                                <Image src={eye_open} width={20} height={20} alt='password ' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open", "password")} />
-                        }
+
+                        <Image src={eye_close} width={20} height={20} alt='password ' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showPass ? "block" : "hidden"}`} onClick={() => showPasswordHandler("close", "password")} />
+                        <Image src={eye_open} width={20} height={20} alt='password ' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showPass ? "hidden" : "block"}`} onClick={() => showPasswordHandler("open", "password")} />
 
                     </div>
                 </Popover>
                 <div className=' flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                    <Image src={showCPass ? password : lock} width={20} height={20} alt='password ' className='sm:me-[14px] me-[10px] w-[20px] h-[20px]' />
+                    <Image src={password} width={20} height={20} alt='password ' className={`sm:me-[14px] me-[10px] w-[20px] h-[20px] ${showCPass ? "block" : "hidden"}`} />
+                    <Image src={lock} width={20} height={20} alt='password ' className={`sm:me-[14px] me-[10px] w-[20px] h-[20px] ${showCPass ? "hidden" : "block"}`} />
                     <input
                         type={showCPass ? "text" : "password"}
                         {...register('cpassword', { required: true })}
@@ -136,11 +136,9 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         placeholder='Confirm Password'
                         className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255)] text-white outline-none '
                         autoComplete='new-password' />
-                    {
-                        showCPass ?
-                            <Image src={eye_close} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close", "cpass")} /> :
-                            <Image src={eye_open} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open", "cpass")} />
-                    }
+
+                    <Image src={eye_close} width={20} height={20} alt='password' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showCPass ? "block" : "hidden"}`} onClick={() => showPasswordHandler("close", "cpass")} />
+                    <Image src={eye_open} width={20} height={20} alt='password' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showCPass ? "hidden" : "block"}`} onClick={() => showPasswordHandler("open", "cpass")} />
                 </div>
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>

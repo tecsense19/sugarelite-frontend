@@ -10,14 +10,23 @@ import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
-import { disconnectSocket, getSocket } from '@/app/lib/socket'
+import { connectSocket, disconnectSocket, getSocket } from '@/app/lib/socket'
 import NotificationComaponent from '../common/Notifications/NotificationComaponent'
 import SideDrawer from '../common/SideDrawer'
 import { ConfigProvider, Popover } from 'antd'
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList }) => {
 
-    const { state: { notificationOpenState, notifyBadgeState }, dispatch } = useStore()
+    useEffect(() => {
+        let userId = user.id;
+        if (userId) {
+            connectSocket(userId);
+        }
+        return () => {
+            disconnectSocket();
+        }
+    }, [])
+    const { state: { notificationOpenState, notifyBadgeState, chatProfileState }, dispatch } = useStore();
 
     const socket = getSocket()
     const router = useRouter()

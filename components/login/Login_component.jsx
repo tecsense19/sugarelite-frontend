@@ -1,9 +1,9 @@
 "use client"
-import { Checkbox, ConfigProvider, notification } from "antd"
+import { notification } from "antd"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import unLockImg from "/public/assets/password.svg"
 import lockImg from "/public/assets/lock.svg";
 import loginLogoImg from "/public/assets/login_logo.svg";
@@ -11,17 +11,17 @@ import eliteLogoImg from "/public/assets/elite_logo.svg";
 import emailImg from "/public/assets/email.svg";
 import eyeCloseImg from "/public/assets/eye_close.svg";
 import eyeOpenImg from "/public/assets/eye_open.svg";
-import bgMobileImg from "/public/assets/Group 427318831.png";
-import bgDesktopImg from "/public/assets/large_image.png";
+// import bgMobileImg from "/public/assets/Group 427318831.png";
+// import bgDesktopImg from "/public/assets/large_image.png";
 import { login_action } from "@/app/lib/actions"
 import { client_notification, client_routes, socket_server } from "@/app/lib/helpers"
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { useRouter } from "next/navigation"
 import { useStore } from "@/store/store"
-import { connectSocket } from "@/app/lib/socket"
+// import { connectSocket } from "@/app/lib/socket"
 
-let socket;
+// let socket;
 const Login = ({ setIsForgotOpen }) => {
 
     const { dispatch } = useStore()
@@ -78,7 +78,7 @@ const Login = ({ setIsForgotOpen }) => {
         const id = CryptoJS.AES.encrypt(JSON.stringify(res.data.id), "SecretKey").toString()
         setCookie(null, "user", id, { maxAge: 36000, secure: true, path: '/' })
         setIsLoading(false)
-        connectSocket(res.data.id)
+        // connectSocket(res.data.id)
         client_notification(api, "topRight", "success", res.message, 2)
         navigate.push(client_routes.search)
     }
@@ -113,18 +113,17 @@ const Login = ({ setIsForgotOpen }) => {
                                     />
                                 </div>
                                 <div className=' flex h-[42px] items-center border border-white ps-[12px] mt-[12px] sm:ps-[20px] rounded-[5px]'>
-                                    <Image src={showPass ? unLockImg : lockImg} width={20} height={20} alt='password ' className='me-[10px] w-[20px] h-[20px]' />
+                                    <Image src={unLockImg} width={20} height={20} alt='password ' className={`me-[10px] w-[20px] h-[20px] ${showPass ? "block" : "hidden"}`} />
+                                    <Image src={lockImg} width={20} height={20} alt='password ' className={`me-[10px] w-[20px] h-[20px] ${showPass ? "hidden" : "block"}`} />
                                     <input
                                         type={showPass ? "text" : "password"}
                                         {...register('password', { required: true, })}
                                         onChange={(e) => setValue("password", e.target.value)}
                                         placeholder='Password'
                                         className='w-full bg-transparent text-[16px] placeholder:text-[rgba(255,255,255)] text-white outline-none ' autoComplete='new-password' required />
-                                    {
-                                        showPass ?
-                                            <Image src={eyeCloseImg} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("close")} /> :
-                                            <Image src={eyeOpenImg} width={20} height={20} alt='password' className='me-[14px]  w-[20px] h-[20px] cursor-pointer' onClick={() => showPasswordHandler("open")} />
-                                    }
+
+                                    <Image src={eyeCloseImg} width={20} height={20} alt='password' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showPass ? "block" : "hidden"}`} onClick={() => showPasswordHandler("close")} />
+                                    <Image src={eyeOpenImg} width={20} height={20} alt='password' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showPass ? "hidden" : "block"}`} onClick={() => showPasswordHandler("open")} />
                                 </div>
                             </div>
                             <div className="w-full flex justify-between text-[12px] text-white mt-[10px]">
@@ -151,7 +150,7 @@ const Login = ({ setIsForgotOpen }) => {
                     </div>
                 </div>
                 {/* <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" /> */}
-                <Image src={bgDesktopImg} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+                {/* <Image src={bgDesktopImg} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" /> */}
             </div>
         </main>
     )

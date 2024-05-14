@@ -4,9 +4,9 @@ import { socket_server } from './helpers';
 
 let socket;
 
-export const connectSocket = (id) => {
+export const connectSocket = async (id) => {
     if (id) {
-        fetch("/api/socket");
+        await fetch("/api/socket");
         socket = io();
         socket.emit("join", id)
     }

@@ -49,7 +49,6 @@ const messageToReducer = (state, action) => {
   }
 }
 
-
 const notificationReducer = (state, action) => {
   switch (action.type) {
     case 'Open_Notification':
@@ -108,7 +107,6 @@ const newMsgReducer = (state, action) => {
       return state;
   }
 }
-
 
 const editOrDeleteReducer = (state, action) => {
   switch (action.type) {
@@ -339,8 +337,6 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
   }
 };
 
-
-
 export const StoreProvider = ({ children }) => {
 
   const token = parseCookies("user")?.user
@@ -374,9 +370,11 @@ export const StoreProvider = ({ children }) => {
     requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }
   });
 
-  useEffect(() => {
-    connectSocket(userId)
-  }, [])
+  // useEffect(() => {
+  //   if (userId) {
+  //     connectSocket(userId)
+  //   }
+  // }, [])
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>
