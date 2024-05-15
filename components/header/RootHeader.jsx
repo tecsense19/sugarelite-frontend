@@ -10,7 +10,7 @@ import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
-import { connectSocket, disconnectSocket } from '@/app/lib/socket'
+// import { connectSocket, disconnectSocket } from '@/app/lib/socket'
 import NotificationComaponent from '../common/Notifications/NotificationComaponent'
 import SideDrawer from '../common/SideDrawer'
 import { ConfigProvider, Popover } from 'antd'
@@ -48,6 +48,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
     useEffect(() => {
         if (user) {
+            console.log(socket)
             socket.emit("join", user.id);
             setSocket(socket);
             const blockUserHandler = (obj) => {
@@ -83,6 +84,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             }
 
             const onlineUserHandler = (arr) => {
+                console.log(arr)
                 const filtered = arr.filter(i => i !== user.id)
                 dispatch({ type: "Update_Online_Users", payload: filtered })
             }
@@ -115,7 +117,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.on("opened-chat-user", myChattingPartner)
             socket.on('swipe-notify', swipeHandler)
         }
-    }, [user])
+    }, [user, socket])
 
 
     useEffect(() => {
@@ -152,7 +154,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     const handleLogout = async () => {
         logout_user()
         dispatch({ type: "Logout" })
-        disconnectSocket()
+        // disconnectSocket()
         await fetch(server_routes.logout, {
             method: "POST",
             headers: {

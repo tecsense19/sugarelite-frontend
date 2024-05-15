@@ -2,8 +2,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { parseCookies } from 'nookies';
 import CryptoJS from "crypto-js"
-import { server_routes } from '@/app/lib/helpers';
-import { connectSocket } from '@/app/lib/socket';
 
 const initialState = {
   isOpenMobileNavbar: false,
