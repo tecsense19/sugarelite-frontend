@@ -86,37 +86,6 @@ const AllMessages = ({ chats, toUser, currentUser, socket, setEditingMsg, setSho
     }
   }
 
-
-  // useEffect(() => {
-  //   if (!socket || !toUser) return;
-
-  //   const showAnimationHandler = (obj) => {
-  //     if (obj.receiver === currentUser.id && obj.sender === toUser.id) {
-  //       if (obj.decision) {
-  //         const findIndex = isTyping.findIndex(i => (i.receiver === obj.receiver || i.sender === obj.sender))
-  //         if (findIndex !== -1) {
-  //           let temp = [...isTyping]
-  //           temp[findIndex] = obj
-  //           setIsTyping(temp)
-  //         } else {
-  //           setIsTyping(prev => [...prev, obj])
-  //         }
-  //       } else {
-  //         setIsTyping(prev => prev.filter(i => (i.receiver !== obj.receiver && i.sender !== obj.sender)))
-  //       }
-
-  //       // setIsTyping(obj.decision)
-  //       // console.log(obj)
-  //     }
-  //   };
-
-  //   socket.on("show-animation", showAnimationHandler);
-
-  //   return () => {
-  //     socket.off("show-animation", showAnimationHandler);
-  //   };
-  // }, [socket, toUser, currentUser.id]);
-
   useEffect(() => {
     const msgs = chats.filter(msg => msg.receiver_id === currentUser.id && msg.status !== "read")?.map(i => i.id)
     if (msgs.length && !readMsgsState.some(i => i === msgs[msgs.length - 1])) {

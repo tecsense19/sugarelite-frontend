@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import chevron_left from "/public/assets/arrow_left.svg"
 import settingsIcon from "/public/assets/settings_icon.svg";
 import { useRouter } from 'next/navigation';
@@ -8,10 +8,11 @@ import { client_routes } from '@/app/lib/helpers';
 import Buttons from '@/components/search/Buttons';
 import SwiperComponent from './SwiperComponent';
 import RequestsComponent from './RequestsComponent';
-import Butterflies from "/public/assets/butterfly.gif"
-import Like from "/public/assets/like.gif"
+// import Butterflies from "/public/assets/butterfly.gif"
+// import Like from "/public/assets/like.gif"
 import { useStore } from '@/store/store';
-import { getSocket } from '@/app/lib/socket';
+// import { getSocket } from '@/app/lib/socket';
+import { useSocket } from '@/store/SocketContext';
 
 const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecievedRequests }) => {
 
@@ -20,7 +21,9 @@ const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecie
     const [toggle, setToggle] = useState(false)
     const [offSet, setOffSet] = useState(null)
     const [user, setUser] = useState([])
-    const socket = getSocket()
+    // const socket = getSocket()
+    const { mySocket } = useSocket();
+    const socket = mySocket;
 
     useEffect(() => {
         const { sendedRequests, receivedRequests, acceptedRequests } = requestsState

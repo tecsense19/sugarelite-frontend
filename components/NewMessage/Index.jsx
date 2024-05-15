@@ -5,12 +5,15 @@ import ChatComponent from "./ChatComponent/ChatComponent";
 import { useStore } from "@/store/store";
 import NoChatFound from "./NoChatFound";
 import ProfileList from "./Profiles/ProfileList";
-import { getSocket } from "@/app/lib/socket";
+import { useSocket } from "@/store/SocketContext";
+// import { getSocket } from "@/app/lib/socket";
 
 const Index = ({ user, allUsers, myChats }) => {
 
     const { state: { newMsgState, toMessageState, chatProfileState, chatPartnerList }, dispatch } = useStore()
-    const socket = getSocket()
+    const { mySocket } = useSocket();
+    const socket = mySocket;
+    // const socket = getSocket()
     const toUser = toMessageState
 
     const [profiles, setProfiles] = useState([])
@@ -46,10 +49,6 @@ const Index = ({ user, allUsers, myChats }) => {
         };
 
         socket.on("show-animation", showAnimationHandler);
-
-        return () => {
-            socket.off("show-animation", showAnimationHandler);
-        };
     }, [socket, toUser, user, isTyping]);
 
     useEffect(() => {
@@ -67,7 +66,7 @@ const Index = ({ user, allUsers, myChats }) => {
     }, [toUser])
 
     useEffect(() => {
-        if (!socket) return;
+        if (!socket) return
         const receiveMessageHandler = (obj) => {
             if (obj.receiver_id === user.id) {
                 dispatch({ type: "Add_Message", payload: obj })
@@ -91,10 +90,7 @@ const Index = ({ user, allUsers, myChats }) => {
         };
 
         socket.on("receive-message", receiveMessageHandler);
-        return () => {
-            socket.off("receive-message", receiveMessageHandler);
-        };
-    }, [socket, toUser, unReadCount]);
+    }, [toUser]);
 
     useEffect(() => {
         const mergedChats = myChats.map(i => {

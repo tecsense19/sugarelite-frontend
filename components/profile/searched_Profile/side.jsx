@@ -8,10 +8,13 @@ import premium from "../../../public/assets/premium.svg"
 import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import Buttons from './Buttons'
+import { useStore } from '@/store/store'
 
 const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, isModalOpen }) => {
 
     const path = usePathname()
+    const { state: { onlineUsers } } = useStore()
+
 
     return (
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
@@ -34,7 +37,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                             </p>
                     }
                     {
-                        user?.online === 1 &&
+                        (onlineUsers.some(i => i === user.id)) &&
                         <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-success absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
                     }
                 </div>

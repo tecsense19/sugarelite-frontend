@@ -5,11 +5,14 @@ import { useEffect, useState } from 'react'
 import { useStore } from '@/store/store'
 import AlbumAccessList from './AlbumAccessList'
 import BlockList from './BlockList'
-import { getSocket } from '@/app/lib/socket'
+import { useSocket } from '@/store/SocketContext'
+// import { getSocket } from '@/app/lib/socket'
 
 const ProfileIndex = ({ user, allUsers, accessList }) => {
 
-    const socket = getSocket()
+    // const socket = getSocket()
+    const { mySocket } = useSocket();
+    const socket = mySocket;
 
     const [profileToggle, setProfileToggle] = useState('')
 

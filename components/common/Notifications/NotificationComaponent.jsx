@@ -8,7 +8,7 @@ import AlbumNotification from './AlbumNotification';
 import FriendNotification from './FriendNotification';
 
 const NotificationComaponent = ({ open, allUsers, socket, user }) => {
-    const { state: { notificationState }, dispatch } = useStore()
+    const { state: { notificationState, notificationOpenState }, dispatch } = useStore()
     const [allNotifications, setAllNotifications] = useState([])
 
     const onClose = () => {
@@ -25,6 +25,11 @@ const NotificationComaponent = ({ open, allUsers, socket, user }) => {
         });
         setAllNotifications(mergedNotifications)
     }, [notificationState])
+
+    useEffect(() => {
+        dispatch({ type: "Add_Notification_Badge", payload: false })
+        console.log("first")
+    }, [notificationOpenState])
 
     return (
         <div className={`fixed md:top-[66px] bottom-0 right-0 w-full z-[10] h-full md:h-[calc(100%-66px)] transition-transform duration-300 ease-out origin-right ${open ? "scale-x-1" : "scale-x-0"}`}>

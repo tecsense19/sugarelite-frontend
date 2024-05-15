@@ -68,7 +68,6 @@ const Login = ({ setIsForgotOpen }) => {
             }
         }
         const res = await login_action(obj)
-        console.log(res)
         if (!res.success) {
             setIsLoading(false)
             client_notification(api, "topRight", "error", res.message, 2)

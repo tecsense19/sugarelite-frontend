@@ -11,32 +11,19 @@ import { friend_request_notifications, logout_user, private_album_notification, 
 import Link from "next/link"
 import Notification from "../common/Notification"
 import { useEffect, useState } from "react"
-import { disconnectSocket, getSocket } from "@/app/lib/socket"
+import { disconnectSocket } from "@/app/lib/socket"
 import SideDrawer from "../common/SideDrawer"
-import { notification } from "antd"
+// import { notification } from "antd"
 import NotificationComaponent from "../common/Notifications/NotificationComaponent"
-
-// const useSocket = () => {
-//   const [socket, setSocket] = useState(null);
-
-//   useEffect(() => {
-//     const newSocket = io(socket_server);
-//     setSocket(newSocket);
-
-//     return () => {
-//       newSocket.disconnect();
-//     };
-//   }, []);
-
-//   return socket;
-// };
-
+import { useSocket } from "@/store/SocketContext"
 
 const MainHeader = ({ decryptedUser, allUsers, chatList, allFriendNotifications }) => {
   const { state: { userState, notificationOpenState, notifyBadgeState, toMessageState, chatProfileState, onlineUsers }, dispatch } = useStore()
   const pathname = usePathname()
   const router = useRouter()
-  const socket = getSocket()
+  // const socket = getSocket()
+  const { mySocket } = useSocket();
+  const socket = mySocket;
 
   const [user, setUser] = useState(userState ? userState : decryptedUser)
 

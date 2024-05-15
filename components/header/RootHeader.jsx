@@ -10,25 +10,30 @@ import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { logout_user } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
-import { connectSocket, disconnectSocket, getSocket } from '@/app/lib/socket'
+import { connectSocket, disconnectSocket } from '@/app/lib/socket'
 import NotificationComaponent from '../common/Notifications/NotificationComaponent'
 import SideDrawer from '../common/SideDrawer'
 import { ConfigProvider, Popover } from 'antd'
+import { io } from 'socket.io-client'
+import { useSocket } from '@/store/SocketContext'
+
+const socket = io();
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList }) => {
 
-    useEffect(() => {
-        let userId = user.id;
-        if (userId) {
-            connectSocket(userId);
-        }
-        return () => {
-            disconnectSocket();
-        }
-    }, [])
+    // useEffect(() => {
+    //     let userId = user.id;
+    //     if (userId) {
+    //         connectSocket(userId);
+    //     }
+    //     return () => {
+    //         disconnectSocket();
+    //     }
+    // }, [])
+    const { setSocket } = useSocket();
     const { state: { notificationOpenState, notifyBadgeState, chatProfileState }, dispatch } = useStore();
 
-    const socket = getSocket()
+    // const socket = getSocket()
     const router = useRouter()
     const pathname = usePathname()
 
@@ -42,84 +47,75 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }
 
     useEffect(() => {
-        if (!socket) return
+        if (user) {
+            socket.emit("join", user.id);
+            setSocket(socket);
+            const blockUserHandler = (obj) => {
+                if (obj.sender_id === user.id || obj.receiver_id === user.id) {
+                    dispatch({ type: "Add_Blocked_User", payload: obj })
+                }
+            };
 
-        const blockUserHandler = (obj) => {
-            if (obj.sender_id === user.id || obj.receiver_id === user.id) {
-                dispatch({ type: "Add_Blocked_User", payload: obj })
-            }
-        };
+            const unblockUserHandler = (obj) => {
+                if (obj.sender_id === user.id || obj.receiver_id === user.id) {
+                    dispatch({ type: "Add_Blocked_User", payload: obj })
+                }
+            };
 
-        const unblockUserHandler = (obj) => {
-            if (obj.sender_id === user.id || obj.receiver_id === user.id) {
-                dispatch({ type: "Add_Blocked_User", payload: obj })
-            }
-        };
+            const albumAccessHandler = (obj) => {
+                dispatch({ type: "Add_Decision_User", payload: obj })
+                const { data, status } = obj
+                console.log(obj)
+                if (user.id === data.receiver_id && status === "pending") {
+                    dispatch({ type: "Add_Album_Notification", payload: data })
+                }
+                if (!notificationOpenState && status === "pending" && data.receiver_id === user.id) {
+                    dispatch({ type: "Add_Notification_Badge", payload: true })
+                }
 
-        const albumAccessHandler = (obj) => {
-            dispatch({ type: "Add_Decision_User", payload: obj })
-            const { data, status } = obj
-            if (user.id === data.receiver_id && status === "pending") {
-                dispatch({ type: "Add_Album_Notification", payload: data })
-            }
-            if (!notificationOpenState && status === "pending" && data.receiver_id === user.id) {
-                dispatch({ type: "Add_Notification_Badge", payload: true })
             }
 
+            const receiveMessageHandler = (obj) => {
+                if (obj.receiver_id === user.id && (pathname !== client_routes.chat)) {
+                    dispatch({ type: "Add_Msg_Badge", payload: true })
+                    newMessageHandler(obj)
+                }
+            }
+
+            const onlineUserHandler = (arr) => {
+                const filtered = arr.filter(i => i !== user.id)
+                dispatch({ type: "Update_Online_Users", payload: filtered })
+            }
+
+            const myChattingPartner = (obj) => {
+                dispatch({ type: "Add_Partner", payload: obj })
+            }
+
+            const swipeHandler = (obj) => {
+                if (obj.receiver_id === user.id && obj.is_friend === 0) {
+                    console.log("receiver", obj)
+                    dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
+                    dispatch({ type: "Add_Friend_Request", payload: obj })
+                }
+                else if (obj.sender_id === user.id && obj.is_friend === 1) {
+                    console.log("receiver", obj)
+                    dispatch({ type: "Add_Friend_Request", payload: obj })
+                    dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
+                } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
+                    console.log("removed")
+                    dispatch({ type: "Remove_Friend_Request", payload: obj })
+                }
+            }
+
+            socket.on("blocked-status", blockUserHandler);
+            socket.on("unblocked-status", unblockUserHandler);
+            socket.on("receive-message", receiveMessageHandler);
+            socket.on("album-notification", albumAccessHandler);
+            socket.on("onlineUsers", onlineUserHandler)
+            socket.on("opened-chat-user", myChattingPartner)
+            socket.on('swipe-notify', swipeHandler)
         }
-
-        const receiveMessageHandler = (obj) => {
-            if (obj.receiver_id === user.id && (pathname !== client_routes.chat)) {
-                dispatch({ type: "Add_Msg_Badge", payload: true })
-                newMessageHandler(obj)
-            }
-        }
-
-        const onlineUserHandler = (arr) => {
-            const filtered = arr.filter(i => i !== user.id)
-            dispatch({ type: "Update_Online_Users", payload: filtered })
-        }
-
-        const myChattingPartner = (obj) => {
-            dispatch({ type: "Add_Partner", payload: obj })
-        }
-
-        const swipeHandler = (obj) => {
-            if (obj.receiver_id === user.id && obj.is_friend === 0) {
-                console.log("receiver", obj)
-                dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
-                dispatch({ type: "Add_Friend_Request", payload: obj })
-            }
-            else if (obj.sender_id === user.id && obj.is_friend === 1) {
-                console.log("receiver", obj)
-                dispatch({ type: "Add_Friend_Request", payload: obj })
-                dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
-            } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
-                console.log("removed")
-                dispatch({ type: "Remove_Friend_Request", payload: obj })
-            }
-        }
-
-        socket.on("blocked-status", blockUserHandler);
-        socket.on("unblocked-status", unblockUserHandler);
-        socket.on("receive-message", receiveMessageHandler);
-        socket.on("album-notification", albumAccessHandler);
-        socket.on("onlineUsers", onlineUserHandler)
-        socket.on("opened-chat-user", myChattingPartner)
-        socket.on('swipe-notify', swipeHandler)
-
-        return () => {
-            if (socket) {
-                socket.off("blocked-status", blockUserHandler);
-                socket.off("unblocked-status", unblockUserHandler);
-                socket.off("album-notification", albumAccessHandler)
-                socket.off("receive-message", receiveMessageHandler);
-                socket.off("onlineUsers", onlineUserHandler)
-                socket.off('swipe-notify', swipeHandler)
-            }
-        };
-
-    }, [user, socket, notificationOpenState, pathname])
+    }, [user])
 
 
     useEffect(() => {

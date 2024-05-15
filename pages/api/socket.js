@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import { Server } from "socket.io";
 
 export default function SocketHandler(req, res) {
@@ -6,7 +7,9 @@ export default function SocketHandler(req, res) {
         return;
     }
 
-    const io = new Server(res.socket.server);
+    const io = new Server(res.socket.server, {
+        cors: ['http://localhost:3000', 'https://sugarelite.website4you.co.in']
+    });
     res.socket.server.io = io;
 
 
@@ -44,7 +47,14 @@ export default function SocketHandler(req, res) {
         })
 
         socket.on("request-album", (obj) => {
-            io.emit("album-notification", obj)
+            io.emit("album-notification", {
+                ...obj,
+                data: {
+                    ...obj.data,
+                    sender_id: parseInt(obj.data.sender_id),
+                    receiver_id: parseInt(obj.data.receiver_id)
+                }
+            })
         })
 
         socket.on("album-access", (obj) => {
