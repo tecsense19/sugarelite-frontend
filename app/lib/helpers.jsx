@@ -50,6 +50,8 @@ export const server_routes = {
   report_user: base_path + "/report/user",
   contactUs: base_path + "/contactus",
   verifyIdentity: base_path + "/verifyidentity",
+  getSupportMsg: base_path + "/getelitesupport",
+  sendSupportMsg: base_path + "/elitesupport"
 }
 
 

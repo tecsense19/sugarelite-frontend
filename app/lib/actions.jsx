@@ -366,6 +366,38 @@ export const verify_identity_action = async (form) => {
     }
 }
 
+export const post_support_msg = async (form) => {
+    try {
+        const res = await fetch(server_routes.sendSupportMsg, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const get_support_msg = async (form) => {
+    try {
+        const res = await fetch(server_routes.getSupportMsg, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(form)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Stripe Actions
 export const stripe_action = async (form) => {
     try {
