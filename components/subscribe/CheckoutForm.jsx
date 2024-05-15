@@ -6,19 +6,21 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
-import { notification } from "antd";
+import { Alert, notification } from "antd";
 
 const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen, user }) => {
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useRouter();
     const [isLoading, setIsLoading] = useState(false)
+    const [showError, setShowError] = useState(false);
     const { dispatch } = useStore()
 
     const [api, contextHolder] = notification.useNotification();
 
     const handleSubmit = async (ev) => {
         ev.preventDefault();
+        setShowError(false);
 
         const cardElement = elements.getElement("card");
 
@@ -51,6 +53,9 @@ const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen, user }) => {
                     setIsLoading(false)
                 }
                 console.log("res ::", res);
+            } else {
+                setShowError(true);
+                setIsLoading(false);
             }
         } catch (error) {
             setIsLoading(false)
@@ -61,14 +66,20 @@ const CheckoutForm = ({ selectedPaymentObj, setIsModalOpen, user }) => {
     return (
         <div className="m-2 mt-4 flex justify-center items-center">
             {contextHolder}
-            <form onSubmit={handleSubmit} className="bg-white w-full flex flex-col gap-6">
+            <form onSubmit={handleSubmit} className="bg-white w-full flex flex-col gap-5">
                 {/* {/ <label>Card details</label> /} */}
                 <CardElement />
                 {isLoading
                     ? <div className="bg-secondary text-white py-2 rounded-[5px] pointer-events-none">
                         <div className="loader"></div>
                     </div>
-                    : <button type="submit" className="bg-secondary text-white py-2 rounded-[5px]">Pay</button>
+                    : <div className="w-full">
+                        {showError
+                            ? <Alert message={"Please enter correct details."} type="warning" showIcon className="!mt-0 !px-0 !bg-transparent !text-primary text-[16px] !border-0 !rounded-[5px]" />
+                            : <></>
+                        }
+                        <button type="submit" className="bg-secondary w-full text-white py-2 rounded-[5px]">Pay</button>
+                    </div>
                 }
             </form>
         </div>

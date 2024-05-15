@@ -3,7 +3,9 @@ import Image from "next/image";
 import womanPlaceolderImg from "/public/assets/woman.png";
 import manPlaceolderImg from "/public/assets/man.png";
 import placeholder from "/public/assets/place_holder.png";
-import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
+import verifiedUserIcon from "../../public/assets/premium_user_icon.svg";
+// import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
+import premiumUserIcon from "../../public/assets/crown_yellow_icon.svg";
 import { client_routes } from "@/app/lib/helpers";
 import { useStore } from "@/store/store";
 import Link from "next/link";
@@ -42,8 +44,14 @@ const Cards = ({ allUsers, filterHandler, resetHandler }) => {
                         }
                       </div>
                     }
-                    <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75   flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
-                      <div className="flex justify-end">
+                    <div className="absolute w-full h-full bg-gradient-to-b to-black from-[53.12%] from-white/0 md:from-[45.69%] md:from-white/0 md:to-100% md:to-black/75 flex flex-col justify-between pt-[10px] pe-[10px] ps-4 pb-4 text-white rounded-[5px]">
+                      <div className="flex justify-between">
+                        <div>
+                          {item.is_identityverification === "approved"
+                            ? <Image src={verifiedUserIcon} alt="" height={30} width={30} priority className="pointer-events-none" />
+                            : <></>
+                          }
+                        </div>
                         {onlineUsers.some(i => i === item.id) && <div className="border-[1px] border-white h-[14px] w-[14px] rounded-full bg-success" />}
                       </div>
                       <div className="">
@@ -51,7 +59,10 @@ const Cards = ({ allUsers, filterHandler, resetHandler }) => {
                           <div className="text-[clamp(16px,2vw,22px)] lg:text-[clamp(19px,2vw,22px)] leading-[normal] lg:leading-[30px] font-bold">
                             <span className="hidden sm:inline capitalize">{item.username}</span><span className="sm:hidden inline capitalize">{item.username.split(' ')[0]}</span>,{(item.age)}
                           </div>
-                          {item.is_subscribe === 1 && <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none" />}
+                          {(item.is_subscribe === 1 && item.is_subscription_stop === 0 && item.is_subscription_cancel === 0)
+                            ? <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none mb-[5px]" />
+                            : <></>
+                          }
                         </div>
                         <div className="mt-1 md:mt-[2px] text-[clamp(12px,1.5vw,16px)]  lg:text-[clamp(14px,1.5vw,16px)] leading-[14px] font-semibold text-white/50">{item?.region}</div>
                       </div>

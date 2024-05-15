@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Img2 from "/public/assets/profile_img_3.png";
-import premiumUserIcon from "/public/assets/premium_user_icon.svg";
+import premiumUserIcon from "/public/assets/crown_yellow_icon.svg";
 import closeIcon from "/public/assets/cross_icon.svg";
 import starIcon from "/public/assets/star_icon.svg";
 import heartIcon from "/public/assets/heart_swipe_icon.svg";
@@ -162,7 +162,7 @@ const SwipeCard = ({ profile, onSwipe, i, profiles, onLeftClick, onRightClick, a
                 <div className="flex flex-col items-start">
                   <div className="flex items-center gap-x-[11px]">
                     <div className='text-[clamp(19px,2vw,22px)] leading-[22px] font-bold'>{profile.username},{profile.age}</div>
-                    {profile.is_premium && <Image src={premiumUserIcon} alt="" height={24} width={24} priority className="pointer-events-none" />}
+                    {(profile.is_subscribe === 1 && profile.is_subscription_stop === 0 && profile.is_subscription_cancel === 0) && <Image src={premiumUserIcon} alt="" height={24} width={24} priority className="pointer-events-none" />}
                   </div>
                   <div className="mt-[5px] text-[clamp(14px,1.5vw,15px)] leading-[14px] font-medium text-white/50">{profile.region}</div>
                 </div>

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import arrow_left from "../../../public/assets/arrow_left.svg"
 import more_horizontal from "../../../public/assets/more_horizontal.svg"
 import premium from "../../../public/assets/premium.svg"
+import crown_yellow_icon from "/public/assets/crown_yellow_icon.svg"
 import PopOver from '../commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import Buttons from './Buttons'
@@ -41,22 +42,28 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                         <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] hidden lg:block bg-success absolute top-[220px] right-[75px] lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
                     }
                 </div>
-                <div className="lg:self-start mt-[20px] lg:mt-[30px]">
-                    <div className="flex flex-col text-center lg:text-left ">
-                        <div className={`flex items-center ${!user?.premium ? "justify-center lg:justify-start" : "justify-start"} gap-2 `}>
+                <div className="lg:self-start mt-[20px] lg:mt-[30px] lg:w-full">
+                    <div className="flex flex-col text-center lg:text-left lg:w-full">
+                        <div className={`flex items-center justify-start gap-2 lg:w-full`}>
                             <div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative capitalize">{user?.username},{user?.age}
                                 {
                                     user?.online === 1 &&
                                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-success absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
                                 }
                             </div>
-                            {
-                                user?.is_subscribe === 1 &&
-                                <div className='flex items-center'>
-                                    <Image src={premium} alt='edit' className='ms-[20px]' width={30} height={30} priority />
-                                    <span className='text-[16px] font-semibold ms-2'>Premium</span>
-                                </div>
-                            }
+                            <div className='flex items-center justify-between ms-2' style={{ width: "-webkit-fill-available" }}>
+                                {user.is_identityverification === "approved"
+                                    ? <Image src={premium} alt='edit' width={30} height={30} priority />
+                                    : <></>
+                                }
+                                {user && (user.is_subscribe === 1 && user.is_subscription_stop === 0 && user.is_subscription_cancel === 0)
+                                    ? <div className='flex items-center ms-2 lg:ms-5'>
+                                        {/* <span className='text-[16px] font-semibold xs:block hidden'>Premium</span> */}
+                                        <Image src={crown_yellow_icon} alt='edit' width={30} height={30} priority className='' />
+                                    </div>
+                                    : <></>
+                                }
+                            </div>
                         </div>
                         <div className='mt-[11px]'>
                             <span className="text-[18px] md:text-[20px] font-semibold text-opacity-80 text-white me-[14px]">{user?.country},</span>

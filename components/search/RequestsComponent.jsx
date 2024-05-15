@@ -5,7 +5,7 @@ import womanPlaceolderImg from "/public/assets/woman.png";
 import manPlaceolderImg from "/public/assets/man.png";
 import placeholder from "/public/assets/place_holder.png";
 import heartIcon from "/public/assets/heart_swipe_icon.svg";
-import premiumUserIcon from "/public/assets/premium_user_icon.svg";
+import premiumUserIcon from "/public/assets/crown_yellow_icon.svg";
 import closeIcon from "/public/assets/cross_icon.svg";
 import closeSecondaryIcon from "/public/assets/cross_secondary.svg";
 import LoveLock from "/public/assets/lock.png";
@@ -118,7 +118,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
                 users.length ? (
                     <>
                         {
-                            currentUser.is_subscribe ?
+                            (currentUser.is_subscribe === 1 && currentUser.is_subscription_stop === 0 && currentUser.is_subscription_cancel === 0) ?
                                 <div className='relative max-w-[500px] max-h-[800px] h-[calc(100dvh-180px)] w-[calc(100vw-60px)] text-black'>
                                     {
                                         users.map((profile, inx) => {
@@ -135,7 +135,10 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
                                                         <div className='discover-card-bg h-full w-full absolute flex flex-col text-white p-4 justify-end'>
                                                             <div className="flex items-center gap-x-[11px]">
                                                                 <div className='text-[clamp(19px,2vw,22px)] leading-[22px] font-bold'>{profile.username},{profile.age}</div>
-                                                                {profile.is_subscribe === 1 && <Image src={premiumUserIcon} alt="" height={24} width={24} priority className="pointer-events-none" />}
+                                                                {(profile.is_subscribe === 1 && profile.is_subscription_stop === 0 && profile.is_subscription_cancel === 0)
+                                                                    ? <Image src={premiumUserIcon} alt="" height={24} width={24} priority className="pointer-events-none" />
+                                                                    : <></>
+                                                                }
                                                             </div>
                                                             <div className="mt-[5px] text-[clamp(14px,1.5vw,15px)] leading-[14px] font-medium text-white/50">{profile.region}</div>
                                                         </div>

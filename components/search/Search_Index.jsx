@@ -86,7 +86,8 @@ const Search_Index = ({ allUsers, remainingList, user, myRecievedRequests }) => 
                 condition = condition && i.get_all_profileimg.length > 0;
             }
             if (is_verified) {
-                condition = condition && i.is_subscribe;
+                condition = condition && (i.is_identityverification === "approved");
+                // condition = condition && (i.is_subscribe === 1 && i.is_subscription_stop === 0 && i.is_subscription_cancel === 0);
             }
             return condition;
         });
