@@ -28,7 +28,6 @@ const NotificationComaponent = ({ open, allUsers, socket, user }) => {
 
     useEffect(() => {
         dispatch({ type: "Add_Notification_Badge", payload: false })
-        console.log("first")
     }, [notificationOpenState])
 
     return (

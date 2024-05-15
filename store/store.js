@@ -285,10 +285,18 @@ const friendRequests = (state = { sendedRequests: [], receivedRequests: [], acce
   }
 }
 
+const supportMsgsReducer = (state, action) => {
+  switch (action.type) {
+    case "Add_Support_Message":
+      return [...state, action.payload]
+    default:
+      return state;
+  }
+}
 
 const StoreContext = createContext();
 
-const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, notificationState, friendsList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState, requestsState }, action) => {
+const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, supportMsgs, notificationState, friendsList, onlineUsers, sideMenu, userState, toMessageState, notifyBadgeState, notificationOpenState, messageUpdate, newMsgState, blockedUsersState, decisionState, chatProfileState, requestsState }, action) => {
   switch (action.type) {
     case 'Logout':
       return {
@@ -309,7 +317,8 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         readMsgsState: [],
         friendsList: [],
         notificationState: { albumNotifications: [], friendRequests: [] },
-        requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }
+        requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] },
+        supportMsgs: []
       };
     default:
       return {
@@ -330,7 +339,8 @@ const rootReducer = ({ firstState, filterState, chatPartnerList, readMsgsState, 
         readMsgsState: readMsgsReducer(readMsgsState, action),
         friendsList: friendsListReducer(friendsList, action),
         notificationState: notificationsReducer(notificationState, action),
-        requestsState: friendRequests(requestsState, action)
+        requestsState: friendRequests(requestsState, action),
+        supportMsgs: supportMsgsReducer(supportMsgs, action)
       };
   }
 };
@@ -351,7 +361,7 @@ export const StoreProvider = ({ children }) => {
       isFilterOpen: false,
     },
     userState: null,
-    toMessageState: null,
+    toMessageState: "admin",
     notificationOpenState: false,
     decisionState: [],
     chatProfileState: [],
@@ -365,7 +375,8 @@ export const StoreProvider = ({ children }) => {
     readMsgsState: [],
     friendsList: [],
     notificationState: { albumNotifications: [], friendRequests: [] },
-    requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] }
+    requestsState: { sendedRequests: [], receivedRequests: [], acceptedRequests: [] },
+    supportMsgs: []
   });
 
   // useEffect(() => {

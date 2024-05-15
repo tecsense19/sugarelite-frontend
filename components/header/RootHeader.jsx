@@ -8,7 +8,7 @@ import logo from "../../public/assets/Logo (1).svg"
 import notificationIcon from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
-import { logout_user } from '@/app/lib/actions'
+import { logout_user, post_support_msg } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
 // import { connectSocket, disconnectSocket } from '@/app/lib/socket'
 import NotificationComaponent from '../common/Notifications/NotificationComaponent'
@@ -19,7 +19,7 @@ import { useSocket } from '@/store/SocketContext'
 
 const socket = io();
 
-const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList }) => {
+const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
     // useEffect(() => {
     //     let userId = user.id;
@@ -31,7 +31,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     //     }
     // }, [])
     const { setSocket } = useSocket();
-    const { state: { notificationOpenState, notifyBadgeState, chatProfileState }, dispatch } = useStore();
+    const { state: { notificationOpenState, notifyBadgeState, chatProfileState, supportMsgs }, dispatch } = useStore();
 
     // const socket = getSocket()
     const router = useRouter()
@@ -48,7 +48,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
     useEffect(() => {
         if (user) {
-            console.log(socket)
             socket.emit("join", user.id);
             setSocket(socket);
             const blockUserHandler = (obj) => {
@@ -117,7 +116,11 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.on("opened-chat-user", myChattingPartner)
             socket.on('swipe-notify', swipeHandler)
         }
-    }, [user, socket])
+
+        return () => {
+            socket.disconnect()
+        }
+    }, [user])
 
 
     useEffect(() => {
@@ -136,6 +139,17 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             matchNotifications.forEach(i => {
                 dispatch({ type: "Add_Friend_Request", payload: i })
             })
+        }
+    }, [])
+
+    const postSupportMsg = async (id) => {
+        const res = await post_support_msg({ user_id: user.id, type_id: id })
+        dispatch({ type: "Add_Support_Message", payload: res.data })
+    }
+
+    useEffect(() => {
+        if (!supportChat.length) {
+            postSupportMsg(1)
         }
     }, [])
 

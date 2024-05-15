@@ -1,14 +1,15 @@
 import RootHeader from "@/components/header/RootHeader"
-import { all_friend_Notifications, all_profiles_action, chat_list_action, get_user_action, private_album_notification } from "../lib/actions";
+import { all_friend_Notifications, all_profiles_action, chat_list_action, get_support_msg, get_user_action, private_album_notification } from "../lib/actions";
 
 const Index = async ({ children }) => {
 
   try {
-    const [user, allUsers, matchNotifications, chatList, albumNotifications] = await Promise.all([
+    const [user, allUsers, matchNotifications, chatList, supportChat, albumNotifications] = await Promise.all([
       get_user_action(),
       all_profiles_action(),
       all_friend_Notifications(),
       chat_list_action(),
+      get_user_action().then(i => get_support_msg({ user_id: i[0].id })),
       get_user_action().then(user => private_album_notification({ user_id: user[0]?.id }))
     ]);
 
@@ -22,6 +23,7 @@ const Index = async ({ children }) => {
           )}
           albumNotifications={albumNotifications.data}
           chatList={chatList}
+          supportChat={supportChat.data}
         />
         {children}
       </>
