@@ -14,11 +14,12 @@ import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 
 
-const Index = ({ subscriptions, STRIPE_TEST_KEY, user }) => {
+const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentObj, setSelectedPaymentObj] = useState("")
-  const { dispatch } = useStore()
-  const [isPremium, setIsPremium] = useState(user.is_subscribe ? true : false)
+  const { dispatch } = useStore();
+  const [user, setUser] = useState(userData);
+  const [isPremium, setIsPremium] = useState((user.is_subscribe === 1) ? true : false)
   const [isLoading, setIsLoading] = useState(false)
   const [isCancelLoading, setIsCancelLoading] = useState(false)
   const [isStartStopLoading, setIsStartStopLoading] = useState(false)
@@ -64,11 +65,12 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, user }) => {
     }
     const res = await cancel_subscription_action(obj);
     console.log("res ::", res);
-    if (res.success) {
+    if (res?.success) {
       const userRes = await search_profile_action(user.id)
       // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
       // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
       client_notification(api, "topRight", "success", res.message, 2)
+      setUser(userRes.data[0]);
       dispatch({ type: "Current_User", payload: userRes.data[0] })
     }
     setIsLoading(false)
@@ -85,11 +87,14 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, user }) => {
     }
     const res = await start_stop_subscription_action(obj);
     console.log("res ::", res);
-    if (res.success) {
+    if (res?.success) {
       const userRes = await search_profile_action(user.id)
       // const token = CryptoJS.AES.encrypt(JSON.stringify(userRes.data[0]), "SecretKey").toString()
       // setCookie(null, "user", token, { maxAge: 36000, secure: true, path: '/' })
       client_notification(api, "topRight", "success", res.message, 2)
+      // window.location.reload();
+      console.log(userRes.data[0]);
+      setUser(userRes.data[0]);
       dispatch({ type: "Current_User", payload: userRes.data[0] })
     }
     setIsLoading(false)

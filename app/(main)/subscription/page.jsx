@@ -14,7 +14,7 @@ const Page = async () => {
     const STRIPE_TEST_KEY = process.env.STRIPE_TEST_KEY;
     return (
         <Suspense fallback={<Loader />}>
-            <Index subscriptions={subscriptions} STRIPE_TEST_KEY={STRIPE_TEST_KEY} user={user[0]} />
+            <Index subscriptions={subscriptions} STRIPE_TEST_KEY={STRIPE_TEST_KEY} userData={user[0]} />
         </Suspense>
     );
 }

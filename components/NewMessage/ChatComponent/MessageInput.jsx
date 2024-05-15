@@ -187,7 +187,7 @@ const MessageInput = ({ socket, toUser, currentUser, todayMsgs, editingMsg, setE
                     }
                 </div>
                 {
-                    (currentUser.is_subscribe || todayMsgs < 3) ?
+                    ((currentUser.is_subscribe === 1 && currentUser.is_subscription_stop === 0 && currentUser.is_subscription_cancel === 0) || (todayMsgs < 3)) ?
                         <div className={`w-full h-12 md:h-[70px] bg-black flex items-center ps-3 md:ps-[30px] relative ${sendingImages.length ? "border-t border-primary rounded-b-[5px]" : " rounded-[5px]"}`}>
                             <button ref={buttonRef} onClick={() => setIsEmoji((prev) => !prev)} className='hidden md:flex'>
                                 <Image src={smileIcon} priority alt="" height={28} width={28} className="hidden md:block pointer-events-none" />

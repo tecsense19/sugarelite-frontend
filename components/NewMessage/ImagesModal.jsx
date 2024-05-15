@@ -79,7 +79,7 @@ const ImagesModal = ({ setSelctedImages, list }) => {
                                 modifier: 2.5,
                             }}
                             modules={[EffectCoverflow]}
-                            className="w-full md:w-[90%] h-[85%] mt-8"
+                            className="w-full md:w-[90%] h-[90%] mt-8"
                         >
                             {
                                 list.map((i, inx) => {
@@ -91,7 +91,7 @@ const ImagesModal = ({ setSelctedImages, list }) => {
                                 })
                             }
                         </Swiper>
-                        <button type='button' className='mt-5 bg-secondary px-4 py-2 rounded-[5px]' onClick={handleDownloadImages}>Download</button>
+                        {/* <button type='button' className='mt-5 bg-secondary px-4 py-2 rounded-[5px]' onClick={handleDownloadImages}>Download</button> */}
                     </div>
                 </div>
             </Modal>

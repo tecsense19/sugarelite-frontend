@@ -9,6 +9,7 @@ import more_horizontal from "../../public/assets/more_horizontal.svg"
 import Bars_Icon from "/public/assets/bars.svg"
 import edit from "../../public/assets/edit.svg"
 import premium from "../../public/assets/premium.svg"
+import crown_yellow_icon from "../../public/assets/crown_yellow_icon.svg"
 import PopOver from './commons/PopOver'
 import { client_routes } from '@/app/lib/helpers'
 import { useStore } from '@/store/store'
@@ -124,21 +125,26 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                     {/* Edit Profile option ends */}
 
                 </div>
-                <div className="lg:self-start mt-[20px] lg:mt-[30px]">
-                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left" data-aos='zoom-in'>
-                        <div className='flex items-center gap-6'>
-                            <div className="text-[30px] font-bold leading-[30px] relative capitalize">
+                <div className="lg:self-start mt-[20px] lg:mt-[30px] lg:w-full">
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:w-full">
+                        <div className='flex items-center lg:justify-between lg:w-full'>
+                            <div className="text-[30px] font-bold leading-[30px] relative capitalize min-w-max">
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
                                 <div className='h-3 w-3 lg:hidden bg-success absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
                             </div>
-                            {
-                                user && user?.is_subscribe === 1 &&
-                                <div className='flex items-center'>
-                                    <Image src={premium} alt='edit' width={30} height={30} priority />
-                                    <span className='text-[16px] font-semibold ms-2'>Premium</span>
-                                </div>
-                            }
-
+                            <div className='flex items-center justify-between ms-4' style={{ width: "-webkit-fill-available" }}>
+                                {user.is_identityverification === "approved"
+                                    ? <Image src={premium} alt='edit' width={30} height={30} priority />
+                                    : <></>
+                                }
+                                {user && (user.is_subscribe === 1 && user.is_subscription_stop === 0 && user.is_subscription_cancel === 0)
+                                    ? <div className='flex items-center ms-2 lg:ms-5'>
+                                        {/* <span className='text-[16px] font-semibold xs:block hidden'>Premium</span> */}
+                                        <Image src={crown_yellow_icon} alt='edit' width={30} height={30} priority className='' />
+                                    </div>
+                                    : <></>
+                                }
+                            </div>
                         </div>
                         <div className='mt-[11px]'>
                             <span className="text-[20px] font-semibold text-opacity-80 text-white me-[14px] leading-[normal] uppercase">{user && user?.country},</span>
