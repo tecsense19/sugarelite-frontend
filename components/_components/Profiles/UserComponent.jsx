@@ -5,6 +5,7 @@ import read_tick from "/public/assets/read_tick.svg";
 import single_tick from "/public/assets/single_tick.svg";
 import double_tick from "/public/assets/double_tick.svg";
 import Stroke_Online from '/public/assets/online_stroke.svg'
+import Pending from "/public/assets/pending.svg"
 
 const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent }) => {
 
@@ -89,7 +90,7 @@ const LatestMessage = (user, latestMessage) => {
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
             {user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}
-            <span>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
+            <span className='max-w-[150px] line-clamp-1 break-all'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
         </>
     } else {
         return <>
@@ -104,7 +105,10 @@ const readStatus = (message) => {
         return <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none me-1`} />
     } else if ((message.status === "delivered")) {
         return <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none me-1" />
-    } else {
+    } else if ((message.status === "pending")) {
+        return <Image src={Pending} alt="edit-icon" height={14} width={14} priority className="pointer-events-none me-1" />
+    }
+    else {
         return <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none  me-1" />
     }
 }

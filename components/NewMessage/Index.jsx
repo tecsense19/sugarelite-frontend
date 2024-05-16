@@ -53,11 +53,11 @@ const Index = ({ user, allUsers, myChats }) => {
 
     useEffect(() => {
         return () => {
-            if (user && toMessageState) {
+            if (user && toMessageState && socket) {
                 socket.emit("open-chat", { sender_id: user.id, receiver_id: toMessageState.id, type: "closed" });
             }
         }
-    }, [])
+    }, [socket])
 
     useEffect(() => {
         if (window.innerWidth <= 768 && toUser) {

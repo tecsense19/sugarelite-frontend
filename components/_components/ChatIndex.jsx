@@ -1,10 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import ProfileSection from './Profiles/ProfileSection';
-import ChatSection from './ChatBody/ChatSection';
+
 import { useStore } from '@/store/store';
 import { useChat } from '@/store/ChatContext';
 import { read_message_action } from '@/app/lib/actions';
+import ProfileSection from './Profiles/ProfileSection';
+import ChatSection from './ChatBody/ChatSection';
 
 const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
 
@@ -13,9 +14,11 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
 
     const [messages, setMessages] = useState(chatList)
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
+    const [sendingImages, setSendingImages] = useState([])
 
     useEffect(() => {
-        const newMessages = state.messages.filter(msg => !messages.some(existingMsg => existingMsg.id === msg.id));
+
+        const newMessages = state.messages.filter(msg => !messages.some(existingMsg => (existingMsg.id === msg.id)));
         if (newMessages.length) {
             setMessages(prev => [...prev, ...newMessages])
         }
@@ -46,7 +49,7 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
                     <ProfileSection messages={messages} allUsers={allUsers} user={user} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
                 </div>
                 <div className='flex w-full md:w-[calc(100%-350px)] lg:w-[calc(100%-400px)] h-full flex-col '>
-                    <ChatSection toUser={toMessageState} user={user} messages={messages} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
+                    <ChatSection toUser={toMessageState} user={user} messages={messages} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} setMessages={setMessages} sendingImages={sendingImages} setSendingImages={setSendingImages} />
                 </div>
             </section>
 
@@ -57,7 +60,7 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
                     <ProfileSection messages={messages} allUsers={allUsers} user={user} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
                 </div>
                 <div className={`flex w-full transition-transform ease-linear duration-300 absolute h-full flex-col ${showMobileChatContent ? "translate-x-0" : "translate-x-full"}`}>
-                    <ChatSection toUser={toMessageState} user={user} messages={messages} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
+                    <ChatSection toUser={toMessageState} user={user} messages={messages} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} setMessages={setMessages} sendingImages={sendingImages} setSendingImages={setSendingImages} />
                 </div>
             </section>
         </>

@@ -1,6 +1,6 @@
 import { all_profiles_action, chat_list_action, get_support_msg, get_user_action } from "@/app/lib/actions"
+import ChatIndex from "@/components/_components/ChatIndex"
 import { cookies } from "next/headers"
-import ChatIndex from "./_components/ChatIndex"
 
 const Chat = async () => {
     const token = cookies().get("user")?.value

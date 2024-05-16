@@ -46,7 +46,7 @@ const ChatComponent = ({ toUser, setShowMobileChatContent, userChats, currentUse
     return (
         <div className="flex w-full md:w-[calc(100%-350px)] lg:w-[calc(100%-400px)] h-full flex-col">
             {contextHolder}
-            {toUser ? (
+            {toUser !== "Admin" ? (
                 <div className='w-full h-full flex'>
                     <div className='w-full 2xl:w-[calc(100%-400px)]'>
                         <ChatHeader toUser={toUser} currentUser={currentUser} setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} socket={socket} />

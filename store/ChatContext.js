@@ -36,9 +36,9 @@ const chatReducer = (state, action) => {
                 messages: state.messages.filter(message => message.id !== action.payload),
             };
         case EDIT_MESSAGE:
-            const { updatedMessage } = action.payload;
+            const updatedMessage = action.payload;
             const updatedMessages = state.messages.map(message => {
-                if (message.id === updatedMessage.id) {
+                if ((message.id === updatedMessage.id) || (message.id === updatedMessage.pid)) {
                     return updatedMessage;
                 }
                 return message;

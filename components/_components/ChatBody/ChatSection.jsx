@@ -7,30 +7,40 @@ import ChatInput from './ChatInput';
 import ImagesModal from './ImagesModel'
 import SupportMessges from './SupportMessges';
 import AdminSideProfile from '../AdminSideProfile';
+import { useStore } from '@/store/store';
+import BlockedComponent from './BlockedComponent';
 
-const ChatSection = ({ toUser, setShowMobileChatContent, user, messages, supportChat }) => {
+const ChatSection = ({ toUser, setShowMobileChatContent, user, messages, supportChat, setMessages, sendingImages, setSendingImages }) => {
+
+    const { state: { blockedUsersState } } = useStore()
 
     const [showMobileProfile, setShowMobileProfile] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [editingMsg, setEditingMsg] = useState(null)
     const [selectedImages, setSelectedImages] = useState([])
-    const [sendingImages, setSendingImages] = useState([])
 
     const filteredChatList = useMemo(() => {
         if (!toUser) return [];
         return messages.filter(msg => msg.sender_id === toUser.id || msg.receiver_id === toUser.id);
     }, [toUser, messages]);
 
+    const onDrawerClose = () => {
+        setDrawerOpen(false)
+    }
+
     return (
         <div className='h-full w-full flex'>
             <div className='w-full 2xl:w-[calc(100%-400px)]'>
+
                 <ChatHeader setShowMobileChatContent={setShowMobileChatContent} setShowMobileProfile={setShowMobileProfile} setDrawerOpen={setDrawerOpen} toUser={toUser} currentUser={user} />
                 {
                     toUser !== "Admin" ?
-                        <>
-                            <ChatBody chatList={filteredChatList} sendingImages={sendingImages} setSelectedImages={setSelectedImages} toUser={toUser} user={user} />
-                            <ChatInput toUser={toUser} user={user} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} />
-                        </> :
+                        (!blockedUsersState.some(i => (i.sender_id === toUser.id || i.receiver_id === toUser.id) && i.is_blocked === 1)) ?
+                            <>
+                                <ChatBody chatList={filteredChatList} sendingImages={sendingImages} setSelectedImages={setSelectedImages} toUser={toUser} user={user} />
+                                <ChatInput toUser={toUser} user={user} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} setMessages={setMessages} />
+                            </> : <BlockedComponent user={user} toUser={toUser} />
+                        :
                         <SupportMessges supportChat={supportChat.map(i => i.get_support)} />
                 }
             </div>
