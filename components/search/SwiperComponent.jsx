@@ -94,6 +94,7 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, socket, curr
         if (type === "like") {
             setShowLike({ id: parseInt(id), d: "right" })
             card.style.transition = "transform 1s ease-out";
+            sendFriendReq(profile.id);
             card.style.transform = "translateX(1000px) translateY(100px) rotate(70deg)";
             console.log(`You liked ${profile.username} profile`)
         } else {
