@@ -26,7 +26,7 @@ const Profiles = ({ messages, user, allUsers, setShowMobileChatContent, supportC
                     sortUsersByLatestMessage(messages, user).length ? sortUsersByLatestMessage(messages, user).map((latestMessage, index) => {
                         const otherUserId = latestMessage.sender_id === user.id ? latestMessage.receiver_id : latestMessage.sender_id;
                         const foundUser = allUsers.find(user => user.id === otherUserId);
-                        return <UserComponent key={index} latestMessage={latestMessage} foundUser={foundUser} setShowMobileChatContent={setShowMobileChatContent} />
+                        return <UserComponent key={index} latestMessage={latestMessage} foundUser={foundUser} setShowMobileChatContent={setShowMobileChatContent} user={user} />
                     }) : ""
                 }
             </div>

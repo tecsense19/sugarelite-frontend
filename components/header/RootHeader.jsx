@@ -23,7 +23,7 @@ const socket = io();
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
     const { setSocket } = useSocket();
-    const { addMessage } = useChat()
+    const { addMessage, addTypingUser, removerTypingUser } = useChat()
     const { state: { notificationOpenState, notifyBadgeState, chatProfileState, supportMsgs }, dispatch } = useStore();
 
     const router = useRouter()
@@ -101,6 +101,16 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                 }
             }
 
+            const showAnimationHandler = (obj) => {
+                if (obj.receiver_id === user.id) {
+                    if (obj.decision) {
+                        addTypingUser(obj)
+                    } else {
+                        removerTypingUser(obj)
+                    }
+                }
+            }
+
             socket.on("blocked-status", blockUserHandler);
             socket.on("unblocked-status", unblockUserHandler);
             socket.on("receive-message", receiveMessageHandler);
@@ -108,6 +118,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.on("onlineUsers", onlineUserHandler)
             socket.on("opened-chat-user", myChattingPartner)
             socket.on('swipe-notify', swipeHandler)
+            socket.on("show-animation", showAnimationHandler);
         }
 
         return () => {
@@ -140,10 +151,24 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         dispatch({ type: "Add_Support_Message", payload: res.data })
     }
 
+    const checkDate = (date) => {
+        let date1 = new Date(date);
+        let date2 = new Date();
+        return date1.getDate() === date2.getDate();
+    }
+
     useEffect(() => {
+        console.log(supportChat);
         if (!supportChat.length) {
-            postSupportMsg(1)
+            postSupportMsg(1);
         }
+        // if(supportChat.length) {
+        //     if((supportChat[supportChat.length-1].support_id < 2) && (checkDate(supportChat[supportChat.length - 1].created_at) !== true) && (!user.avatar_url)) {
+        //         postSupportMsg(2);
+        //     } else if((checkDate(supportChat[supportChat.length - 1].created_at) !== true) && (!user.bio)) {
+        //         postSupportMsg(3);
+        //     }
+        // }
     }, [])
 
     useEffect(() => {
