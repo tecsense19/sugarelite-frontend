@@ -7,6 +7,7 @@ import double_tick from "/public/assets/double_tick.svg";
 import Stroke_Online from '/public/assets/online_stroke.svg'
 import Pending from "/public/assets/pending.svg"
 import { useChat } from '@/store/ChatContext';
+import ProfileReadStatus from './ProfileReadStatus';
 
 const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, user }) => {
 
@@ -82,12 +83,12 @@ const LatestMessage = (user, latestMessage) => {
     if (latestMessage.type === "deleted") return "This message was deleted"
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
-            {user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}
+            {user.id === latestMessage.sender_id ? "" : <ProfileReadStatus message={latestMessage} />}
             <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
         </>
     } else {
         return <>
-            <span>{user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}</span>
+            <span>{user.id === latestMessage.sender_id ? "" : <ProfileReadStatus message={latestMessage} />}</span>
             <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.text}</span>
         </>
     }

@@ -14,6 +14,7 @@ import Pending from "/public/assets/pending.svg"
 import Image from 'next/image';
 import Msg from './Msg';
 import { send_message_action } from '@/app/lib/actions';
+import ReadTickRender from './ReadTickRender';
 
 const formatTime = (timestamp) => {
     const time = new Date(timestamp);
@@ -105,15 +106,7 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                         !message?.get_all_chat_with_image?.length ?
                             <span className={`text-white/50 font-normal text-end text-[12px] items-center mt-1 min-w-[5rem] gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"}  absolute bottom-[7px] right-[9px]`}>
                                 {formatTime(parseInt(message.milisecondtime))}
-                                {
-                                    message.status === "pending" ?
-                                        <Image src={Pending} alt="edit-icon" height={14} width={12} priority className="pointer-events-none ms-[2px]" /> :
-                                        message?.status === "read" ?
-                                            <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
-                                            message?.status === "delivered" ?
-                                                <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
-                                                <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
-                                }
+                                <ReadTickRender isImage={false} message={message} user={user} />
                             </span>
                             :
                             <div className={`absolute bottom-[10px] right-[6px] text-white font-normal text-end text-[12px] mt-1 min-w-[6rem] me-1 gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"} `}>
@@ -121,14 +114,7 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                                     <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
                                 </div>
                                 <span className='absolute right-[22px] -bottom-[2px]'>{formatTime(parseInt(message.milisecondtime))}</span>
-                                {
-                                    message?.status === "read" ?
-                                        <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none absolute bottom-0`} /> :
-                                        message?.status === "delivered" ?
-                                            <Image src={double_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" /> :
-                                            message?.status === "delivered" ? <Image src={Pending} alt="edit-icon" height={14} width={14} priority className="pointer-events-none me-1" /> :
-                                                <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" />
-                                }
+                                <ReadTickRender isImage={false} message={message} user={user} />
                             </div>
                     }
                 </div>

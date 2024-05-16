@@ -32,7 +32,7 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         const isOnline = onlineUsers.some(i => i === id)
         if (!isOnline) {
             return "sent"
-        } else if (chatPartnerList?.some(i => i.senderId === id && i.type === "open")) {
+        } else if (chatPartnerList.some(i => i.sender_id === id && i.type === "open")) {
             return "read"
         }
         else {

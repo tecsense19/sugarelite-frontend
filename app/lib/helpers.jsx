@@ -8,7 +8,7 @@ export const client_routes = {
   edit_profile: "/profile/edit",
   profile_id: "profile/:id",
   discover: "/discover",
-  chat: "/chat",
+  chat: "/message",
   message: "/message",
   disclaimer: "/disclaimer",
   privacyPolicy: "/privacy-policy",

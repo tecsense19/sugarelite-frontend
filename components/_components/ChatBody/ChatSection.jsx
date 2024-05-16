@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ChatHeader from './ChatHeader';
 import { ConfigProvider, Drawer } from 'antd';
 import ToUserProfile from './ToUserProfile';
@@ -9,10 +9,12 @@ import SupportMessges from './SupportMessges';
 import AdminSideProfile from '../AdminSideProfile';
 import { useStore } from '@/store/store';
 import BlockedComponent from './BlockedComponent';
+import { useSocket } from '@/store/SocketContext';
 
 const ChatSection = ({ toUser, setShowMobileChatContent, user, messages, supportChat, setMessages, sendingImages, setSendingImages }) => {
 
     const { state: { blockedUsersState } } = useStore()
+    const { mySocket } = useSocket()
 
     const [showMobileProfile, setShowMobileProfile] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(false);

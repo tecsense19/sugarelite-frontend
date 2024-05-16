@@ -9,7 +9,7 @@ import ChatSection from './ChatBody/ChatSection';
 
 const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
 
-    const { state: { toMessageState, readMsgsState }, dispatch } = useStore()
+    const { state: { toMessageState, readMsgsState, chatPartnerList }, dispatch } = useStore()
     const { state } = useChat()
 
     const [messages, setMessages] = useState(chatList)

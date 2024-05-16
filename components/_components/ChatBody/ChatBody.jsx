@@ -3,6 +3,7 @@ import { useStore } from '@/store/store';
 import { useChat } from '@/store/ChatContext';
 import { useSocket } from '@/store/SocketContext';
 import Message from './Message';
+import TypingAnimation from './TypingAnimation';
 
 
 const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) => {
@@ -25,6 +26,14 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) 
         }
     }, [])
 
+    useEffect(() => {
+        const lastMsgId = chatList[chatList.length - 1]
+        mySocket.emit('open-chat', { sender_id: user.id, receiver_id: toUser.id, type: "open", lastMsgId: lastMsgId.id })
+        return () => {
+            mySocket.emit('open-chat', { sender_id: user.id, receiver_id: toUser.id, type: "closed", lastMsgId: lastMsgId.id })
+        }
+    }, [toUser, chatList])
+
     return (
         <div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-285px)]" : "md:h-[calc(100%-185px)] h-[calc(100%-122px)]"} p-4 md:px-10`}>
             <div className='h-full flex flex-col justify-end'>
@@ -38,6 +47,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) 
                                 <MessageItem key={index} message={message} user={user} toUser={toUser} isLastMessage={isLastMessage} isFirstMessage={isFirstMessage} setSelectedImages={setSelectedImages} />
                             )
                         })}
+                        <TypingAnimation toUser={toUser} user={user} />
                     </div>
                 </div>
             </div>
