@@ -41,6 +41,10 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
         }
     }, [toMessageState])
 
+    useEffect(() => {
+        dispatch({ type: "Add_Msg_Badge", payload: false })
+    }, [])
+
     return (
         <>
             {/* Web View */}

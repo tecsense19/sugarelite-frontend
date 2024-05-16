@@ -5,12 +5,15 @@ import React, { createContext, useContext, useReducer } from 'react';
 const ADD_MESSAGE = 'ADD_MESSAGE';
 const DELETE_MESSAGE = 'DELETE_MESSAGE';
 const EDIT_MESSAGE = 'EDIT_MESSAGE';
-const ADD_ONLINE_USERS = "ADD_ONLINE_USERS"
+const ADD_ONLINE_USERS = "ADD_ONLINE_USERS";
+const ADD_TYPING_USER = "ADD_TYPING_USER"
+const REMOVE_TYPING_USER = "REMOVE_TYPING_USER"
 
 // Define the initial state
 const initialState = {
     messages: [],
-    onlineUsers: []
+    onlineUsers: [],
+    typingUsers: []
 };
 
 // Define the reducer function
@@ -52,6 +55,17 @@ const chatReducer = (state, action) => {
                 ...state,
                 onlineUsers: action.payload
             };
+        case ADD_TYPING_USER:
+            return {
+                ...state,
+                typingUsers: [...state.typingUsers, action.payload]
+            }
+        case REMOVE_TYPING_USER:
+            const obj = action.payload
+            return {
+                ...state,
+                typingUsers: state.typingUsers.filter(user => user.sender_id !== obj.sender_id && user.receiver_id !== obj.receiver_id),
+            }
         default:
             return state;
     }
@@ -88,8 +102,16 @@ export const ChatProvider = ({ children }) => {
         dispatch({ type: ADD_ONLINE_USERS, payload: arr })
     }
 
+    const addTypingUser = (id) => {
+        dispatch({ type: ADD_TYPING_USER, payload: id })
+    }
+
+    const removerTypingUser = (id) => {
+        dispatch({ type: REMOVE_TYPING_USER, payload: id })
+    }
+
     return (
-        <ChatContext.Provider value={{ state, addMessage, deleteMessage, editMessage, updateOnlineUsers }}>
+        <ChatContext.Provider value={{ state, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser }}>
             {children}
         </ChatContext.Provider>
     );

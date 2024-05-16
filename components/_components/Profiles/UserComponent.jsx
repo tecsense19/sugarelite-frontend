@@ -6,10 +6,12 @@ import single_tick from "/public/assets/single_tick.svg";
 import double_tick from "/public/assets/double_tick.svg";
 import Stroke_Online from '/public/assets/online_stroke.svg'
 import Pending from "/public/assets/pending.svg"
+import { useChat } from '@/store/ChatContext';
 
-const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent }) => {
+const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, user }) => {
 
     const { state: { onlineUsers }, dispatch } = useStore()
+    const { state: { typingUsers } } = useChat()
 
     const handleToUser = () => {
         setShowMobileChatContent(true)
@@ -56,7 +58,7 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent }) =
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{foundUser.username}</p>
                     <p className="text-white/70 flex items-center text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] ">
-                        {LatestMessage(foundUser, latestMessage)}
+                        {typingUsers.some(i => (i.receiver_id === user.id && foundUser.id === i.sender_id)) ? "Typing..." : LatestMessage(foundUser, latestMessage)}
                     </p>
                 </div>
             </div>
@@ -71,15 +73,6 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent }) =
                         </p> */}
                     </> : ""
                 }
-                {/* {
-                    latestMessage.sender_id === user.id ? readStatus(latestMessage) : <>
-                        {
-                            (unReadCount.find((ele) => ele.id === foundUser.id) && latestMessage.status !== "read") ? (
-                                <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">{unReadCount.find((ele) => ele.id === foundUser.id).count}</p>
-                            ) : ""
-                        }
-                    </>
-                } */}
             </div>
         </div>
     )
@@ -90,12 +83,12 @@ const LatestMessage = (user, latestMessage) => {
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
             {user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}
-            <span className='max-w-[150px] line-clamp-1 break-all'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
+            <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
         </>
     } else {
         return <>
             <span>{user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}</span>
-            <span className='max-w-[150px] line-clamp-1 break-all'>{latestMessage.text}</span>
+            <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.text}</span>
         </>
     }
 }
