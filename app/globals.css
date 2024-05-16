@@ -414,8 +414,17 @@ button:disabled {
 
 /* phone number dropdown */
 
+/* Swipe Request (Free User) */
 .blur-image {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(0, 0, 0, 0.83) 100%);
-
   backdrop-filter: blur(7.5px);
 }
+
+/* Swipe Request (Free User) */
+
+/* Emojis font-family */
+.emoji-fontFamily {
+  font-family: "Proxima Nova", EmojiMart, "Segoe UI Emoji", "Segoe UI Symbol", "Segoe UI", "Apple Color Emoji", "Twemoji Mozilla", "Noto Color Emoji", "Android Emoji" !important;
+}
+
+/* Emojis font-family */

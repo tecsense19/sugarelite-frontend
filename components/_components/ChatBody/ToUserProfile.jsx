@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
-import premium from "/public/assets/premium.svg"
+import premium from "/public/assets/crown_yellow_icon.svg"
 import starIcon from "/public/assets/chat_option_star_icon.svg";
 import reportIcon from "/public/assets/chat_report_icon.svg";
 import blockIcon from "/public/assets/chat_block_icon.svg";
@@ -65,10 +65,10 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile }) => {
 
                 </Link>
                 <div>
-                    <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${selectedObj.is_subscribe === 1 ? "md:items-start" : "md:items-center"}`}>
+                    <div className={`flex flex-col mt-5 md:mt-[30px] items-center ${(selectedObj.is_subscribe === 1 && selectedObj.is_subscription_stop === 0 && selectedObj.is_subscription_cancel === 0) ? "md:items-start" : "md:items-center"}`}>
                         <div className='flex items-center'>
                             <Link prefetch={true} href={client_routes.profile + "/" + selectedObj.id} className="text-[24px] md:text-[26px] font-bold leading-[30px] flex !text-white capitalize">{selectedObj.username}, {selectedObj.age}</Link>
-                            {selectedObj.is_subscribe === 1 && <>
+                            {(selectedObj.is_subscribe === 1 && selectedObj.is_subscription_stop === 0 && selectedObj.is_subscription_cancel === 0) && <>
                                 <Image src={premium} alt='premium' width={30} height={30} priority className='pointer-events-none ms-3 md:ms-4' />
                                 <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>Premium</span>
                             </>}

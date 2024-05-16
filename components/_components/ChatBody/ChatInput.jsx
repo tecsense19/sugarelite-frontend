@@ -64,10 +64,6 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         reset({ message: '' })
     }
 
-    useEffect(() => {
-        console.log(sendingImages)
-    }, [sendingImages])
-
     const sendeMsgHandler = async ({ message }) => {
         message = message?.trim(' ')
         if (message.length) {
@@ -88,6 +84,14 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
     const emojiSelector = (emoji) => {
         setValue('message', watch("message") + emoji.native);
     }
+
+    useEffect(() => {
+        if (watch("message").length === 1) {
+            mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: true })
+        } else if (watch("message").length === 0) {
+            mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: false })
+        }
+    }, [watch("message")])
 
     useEffect(() => {
         const emojiCloserHandler = (event) => {
@@ -144,7 +148,6 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         <div className="w-full flex flex-col px-4 pb-[18px] md:px-10 md:pb-10 relative ">
             {contextHolder}
             <div className={`h-[100px] rounded-t-[5px] bg-black w-full flex items-center px-2 gap-2 ${sendingImages.length ? "flex" : "hidden"}`}>
-                {console.log(sendingImages.length)}
                 {
                     sendingImages.map((i, inx) => {
                         return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] relative'>
@@ -163,7 +166,7 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
                     <Image src={smileIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
                 </button>
                 <form className='w-full flex items-center' onSubmit={handleSubmit(sendeMsgHandler)}>
-                    <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px]" autoComplete="off" />
+                    <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px] emoji-fontFamily" autoComplete="off" />
                     {
                         !editingMsg ?
                             <>
@@ -185,7 +188,7 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
                         <Image src={sendIcon} priority alt="sendIcon" height={15.5} width={15.5} className="md:hidden pointer-events-none" />
                     </button>
                 </form>
-                <div ref={emojiRef} className={`emoji absolute hidden md:block bottom-[55px] left-4 origin-bottom ease-linear transition-transform duration-200 ${isEmoji ? "scale-y-1" : " scale-y-0"}`}>
+                <div ref={emojiRef} className={`emoji absolute hidden z-[1] md:block bottom-[55px] left-4 origin-bottom ease-linear transition-transform duration-200 ${isEmoji ? "scale-y-1" : " scale-y-0"}`}>
                     <Picker data={data} onEmojiSelect={emojiSelector} theme={"dark"} previewPosition={"none"} searchPosition="none" perLine={10} />
                 </div>
             </div>

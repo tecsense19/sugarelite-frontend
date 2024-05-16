@@ -33,7 +33,7 @@ const Msg = ({ msg, setSelectedImages }) => {
             </div>
         )
     } else {
-        return <p className='py-1 px-1 break-all'>{msg?.text}<span className={`h-[10px] w-[80px] ${msg.type === "deleted" ? "deleted" : "inline-block"}`}></span></p>
+        return <p className='py-1 px-1 break-all emoji-fontFamily'>{msg?.text}<span className={`h-[10px] w-[80px] ${msg.type === "deleted" ? "deleted" : "inline-block"}`}></span></p>
     }
 }
 
