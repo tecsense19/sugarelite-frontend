@@ -16,7 +16,7 @@ import { useStore } from '@/store/store';
 import { useSocket } from '@/store/SocketContext';
 import { useChat } from '@/store/ChatContext';
 
-const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, }) => {
+const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, setMessages }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
@@ -26,7 +26,7 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
     const [isdisabled, setIsDisabled] = useState(false)
     const { state: { onlineUsers, chatPartnerList } } = useStore()
     const { mySocket } = useSocket()
-    const { addMessage } = useChat()
+    const { addMessage, editMessage, deleteMessage } = useChat()
 
     const isUserOnline = (id) => {
         const isOnline = onlineUsers.some(i => i === id)
@@ -51,16 +51,37 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         return formdata
     }
 
+    const generateRandomId = () => {
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+        const randomLetter = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        return `${randomNumber}${randomLetter}`;
+    };
+
+    const sendPendingMessage = (randomId, message) => {
+        const msg = { id: randomId, sender_id: user.id, receiver_id: toUser.id, text: message, type: "regular", milisecondtime: Date.now(), created_at: new Date().toISOString(), updated_at: new Date().toISOString(), status: "pending", deleted_at: null, get_all_chat_with_image: sendingImages }
+        addMessage(msg)
+        reset({ message: '' })
+    }
+
+    useEffect(() => {
+        console.log(sendingImages)
+    }, [sendingImages])
+
     const sendeMsgHandler = async ({ message }) => {
         message = message?.trim(' ')
         if (message.length) {
+            const randomId = generateRandomId()
+            await sendPendingMessage(randomId, message)
             let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "regular" })
             const res = await send_message_action(obj)
-            addMessage(res.message)
+            // addMessage(res.message)
             if (res.success) {
+                setMessages(prev => prev.filter(i => i.id !== randomId))
+                editMessage({ ...res.message, pid: randomId })
+                deleteMessage(randomId)
                 mySocket.emit("send-message", res.message)
             }
-            reset({ message: '' })
         }
     }
 
@@ -123,6 +144,7 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         <div className="w-full flex flex-col px-4 pb-[18px] md:px-10 md:pb-10 relative ">
             {contextHolder}
             <div className={`h-[100px] rounded-t-[5px] bg-black w-full flex items-center px-2 gap-2 ${sendingImages.length ? "flex" : "hidden"}`}>
+                {console.log(sendingImages.length)}
                 {
                     sendingImages.map((i, inx) => {
                         return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] relative'>

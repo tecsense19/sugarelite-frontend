@@ -8,7 +8,7 @@ import logo from "../../public/assets/Logo (1).svg"
 import notificationIcon from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
-import { logout_user, post_support_msg } from '@/app/lib/actions'
+import { logout_user, post_support_msg, read_message_action } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
 // import { connectSocket, disconnectSocket } from '@/app/lib/socket'
 import NotificationComaponent from '../common/Notifications/NotificationComaponent'
@@ -22,20 +22,10 @@ const socket = io();
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
-    // useEffect(() => {
-    //     let userId = user.id;
-    //     if (userId) {
-    //         connectSocket(userId);
-    //     }
-    //     return () => {
-    //         disconnectSocket();
-    //     }
-    // }, [])
     const { setSocket } = useSocket();
     const { addMessage } = useChat()
     const { state: { notificationOpenState, notifyBadgeState, chatProfileState, supportMsgs }, dispatch } = useStore();
 
-    // const socket = getSocket()
     const router = useRouter()
     const pathname = usePathname()
 
@@ -78,7 +68,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             }
 
             const receiveMessageHandler = (obj) => {
-                if (obj.receiver_id === user.id && (pathname !== client_routes.chat)) {
+                if (obj.receiver_id === user.id) {
                     dispatch({ type: "Add_Msg_Badge", payload: true })
                     newMessageHandler(obj)
                     addMessage(obj)
@@ -186,6 +176,19 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     const handleShowDDChange = (val) => {
         setShowDropdown(val)
     }
+
+    useEffect(() => {
+        if (chatList?.data.length && chatList?.data?.filter(msg => msg.receiver_id === user.id)?.length) {
+            const myReceivedMsgs = chatList?.data?.filter(msg => msg.receiver_id === user.id)
+            const senderId = Array.from(new Set(myReceivedMsgs.filter(msg => (msg.status === "sent" || msg.status === null))?.map(i => i.sender_id)))
+            if (senderId.length) {
+                senderId.forEach(id => {
+                    const msgs = myReceivedMsgs.filter((i) => i.sender_id === id)?.map(j => j.id).toString()
+                    read_message_action({ sender_id: id, receiver_id: user.id, status: "delivered", messageId: msgs })
+                })
+            }
+        }
+    }, [user])
 
     return (
         <>

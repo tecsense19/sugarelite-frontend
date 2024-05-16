@@ -11,11 +11,12 @@ import { useRouter } from "next/navigation";
 import { client_notification, client_routes } from "@/app/lib/helpers";
 import ReportModal from "@/components/profile/searched_Profile/ReportModal";
 import { block_user_action } from "@/app/lib/actions";
+import { useSocket } from "@/store/SocketContext";
 
-const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, socket, currentUser }) => {
+const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, currentUser, setDrawerOpen }) => {
 
-    const { dispatch, state: { onlineUsers } } = useStore()
-
+    const { dispatch, state: { onlineUsers, blockedUsersState } } = useStore()
+    const { mySocket } = useSocket()
 
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useRouter()
@@ -35,7 +36,7 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, so
         const res = await block_user_action({ sender_id: currentUser?.id, receiver_id: toUser.id, is_blocked: 1 })
         if (res.success) {
             client_notification(api, 'topRight', "success", res.message, 4)
-            socket.emit("user-blocked", res.data)
+            mySocket.emit("user-blocked", res.data)
         }
     }
 
@@ -83,28 +84,27 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, so
                                     </div>
                                 </button>
                             </div>
-                            <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
-                                <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
-                                    <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
-                                        {/* <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                                <Image src={starIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                <div className="text-[14px] font-medium leading-[20px]">Favorites</div>
-                            </button> */}
-                                        <button onClick={() => setModalOpen(true)} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                                            <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 " />
-                                            <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
-                                        </button>
-                                        <button onClick={blockHandler} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" >
-                                            <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                            <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
-                                        </button>
-                                    </div>
-                                )}>
-                                    <button className="h-[30px] w-[30px] flex items-center">
-                                        <Image src={optionsIcon} alt="" height={30} width={30} priority className="pointer-events-none" />
-                                    </button>
-                                </Popover>
-                            </ConfigProvider>
+                            {
+                                !blockedUsersState.some(i => (i.sender_id === toUser.id || i.receiver_id === toUser.id) && i.is_blocked === 1) ?
+                                    <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
+                                        <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
+                                            <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
+                                                <button onClick={() => setModalOpen(true)} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
+                                                    <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 " />
+                                                    <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
+                                                </button>
+                                                <button onClick={blockHandler} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" >
+                                                    <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                                                    <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                                                </button>
+                                            </div>
+                                        )}>
+                                            <button className="h-[30px] w-[30px] flex items-center">
+                                                <Image src={optionsIcon} alt="" height={30} width={30} priority className="pointer-events-none" />
+                                            </button>
+                                        </Popover>
+                                    </ConfigProvider> : <div></div>
+                            }
                             <ReportModal isModalOpen={modalOpen} setIsModalOpen={setModalOpen} toUser={toUser} currentUser={currentUser} />
                         </> :
                         <>

@@ -10,6 +10,7 @@ import read_tick from "/public/assets/read_tick.svg";
 import single_tick from "/public/assets/single_tick.svg";
 import single_tick_2 from "/public/assets/single_tick_2.svg";
 import shadow_bg_chat from "/public/assets/shadow_bg_chat.svg";
+import Pending from "/public/assets/pending.svg"
 import Image from 'next/image';
 import Msg from './Msg';
 import { send_message_action } from '@/app/lib/actions';
@@ -102,14 +103,16 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                     {
 
                         !message?.get_all_chat_with_image?.length ?
-                            <span className={`text-white/50 font-normal text-end text-[12px] mt-1 min-w-[5rem] gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"}  absolute bottom-[7px] right-[9px]`}>
+                            <span className={`text-white/50 font-normal text-end text-[12px] items-center mt-1 min-w-[5rem] gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"}  absolute bottom-[7px] right-[9px]`}>
                                 {formatTime(parseInt(message.milisecondtime))}
                                 {
-                                    message?.status === "read" ?
-                                        <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
-                                        message?.status === "delivered" ?
-                                            <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
-                                            <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
+                                    message.status === "pending" ?
+                                        <Image src={Pending} alt="edit-icon" height={14} width={12} priority className="pointer-events-none ms-[2px]" /> :
+                                        message?.status === "read" ?
+                                            <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none`} /> :
+                                            message?.status === "delivered" ?
+                                                <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " /> :
+                                                <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none " />
                                 }
                             </span>
                             :
@@ -123,7 +126,8 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                                         <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none absolute bottom-0`} /> :
                                         message?.status === "delivered" ?
                                             <Image src={double_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" /> :
-                                            <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" />
+                                            message?.status === "delivered" ? <Image src={Pending} alt="edit-icon" height={14} width={14} priority className="pointer-events-none me-1" /> :
+                                                <Image src={single_tick_2} alt="edit-icon" height={14} width={18} priority className="pointer-events-none absolute bottom-0" />
                                 }
                             </div>
                     }
