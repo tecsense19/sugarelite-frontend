@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import Logo from "/public/assets/fire_log.svg"
 import Stroke_Online from '/public/assets/online_stroke.svg'
 import Image from 'next/image'
+import { useStore } from '@/store/store'
 
-const AdminProfie = ({ message }) => {
+const AdminProfie = ({ message, setShowMobileChatContent }) => {
 
-    useEffect(() => {
-        console.log(message.description)
-    }, [])
+    const { dispatch } = useStore()
 
     const getTime = (timeStamp) => {
         const time = new Date(timeStamp);
@@ -35,9 +34,14 @@ const AdminProfie = ({ message }) => {
     };
 
     return (
-        <div className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer" >
+        <div className="rounded-[5px] border-[1px] border-white/30 bg-primary py-[10px] md:py-[16px] px-4 flex justify-between cursor-pointer"
+            onClick={() => {
+                setShowMobileChatContent(true)
+                dispatch({ type: "Message_To", payload: "Admin" })
+            }}
+        >
             <div className="flex gap-4 items-center">
-                <div className="relative bg-secondary rounded-full h-[40px] flex min-w-[40px] md:h-[50px] md:min-w-[50px]">
+                <div className="relative bg-tinder rounded-full h-[40px] flex min-w-[40px] md:h-[50px] md:min-w-[50px]">
                     <Image src={Logo} height={40} width={40} alt="avatar" className="h-[65%] w-[65%] object-cover m-auto" />
                     <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute top-[-1px] right-[3px] md:top-0 md:right-[5px]' />
                 </div>

@@ -16,6 +16,7 @@ import SideDrawer from '../common/SideDrawer'
 import { ConfigProvider, Popover } from 'antd'
 import { io } from 'socket.io-client'
 import { useSocket } from '@/store/SocketContext'
+import { useChat } from '@/store/ChatContext'
 
 const socket = io();
 
@@ -31,6 +32,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     //     }
     // }, [])
     const { setSocket } = useSocket();
+    const { addMessage } = useChat()
     const { state: { notificationOpenState, notifyBadgeState, chatProfileState, supportMsgs }, dispatch } = useStore();
 
     // const socket = getSocket()
@@ -79,6 +81,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                 if (obj.receiver_id === user.id && (pathname !== client_routes.chat)) {
                     dispatch({ type: "Add_Msg_Badge", payload: true })
                     newMessageHandler(obj)
+                    addMessage(obj)
                 }
             }
 

@@ -1,14 +1,18 @@
 import { useStore } from '@/store/store'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
+import read_tick from "/public/assets/read_tick.svg";
+import single_tick from "/public/assets/single_tick.svg";
+import double_tick from "/public/assets/double_tick.svg";
 import Stroke_Online from '/public/assets/online_stroke.svg'
 
-const UserComponent = ({ foundUser, latestMessage }) => {
+const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent }) => {
 
-    const { state: { onlineUsers } } = useStore()
+    const { state: { onlineUsers }, dispatch } = useStore()
 
     const handleToUser = () => {
-
+        setShowMobileChatContent(true)
+        dispatch({ type: "Message_To", payload: foundUser })
     }
 
     const getTime = (timeStamp) => {
@@ -27,6 +31,7 @@ const UserComponent = ({ foundUser, latestMessage }) => {
                 const timeDiffInHours = Math.floor(timeDiffInMinutes / 60);
                 return `${timeDiffInHours} hrs`;
             }
+            // return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         } else if (time.toDateString() === new Date(today.setDate(today.getDate() - 1)).toDateString()) {
             return "Yesterday";
         } else {
@@ -49,8 +54,7 @@ const UserComponent = ({ foundUser, latestMessage }) => {
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{foundUser.username}</p>
-                    <p className="text-white/70 flex text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">
-                        {/* {latestMessage?.id ? (latestMessage.type === "deleted" ? "Message deleted" : latestMessage?.text || `${latestMessage?.get_all_chat_with_image?.length} Images ${latestMessage.sender_id !== foundUser.id ? "sended" : "received"}`) : `You started chat with ${foundUser.username}`} */}
+                    <p className="text-white/70 flex items-center text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] ">
                         {LatestMessage(foundUser, latestMessage)}
                     </p>
                 </div>
@@ -59,6 +63,13 @@ const UserComponent = ({ foundUser, latestMessage }) => {
                 <p className="italic text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mb-[8px]">
                     {getTime(parseInt(latestMessage.milisecondtime))}
                 </p>
+                {
+                    latestMessage.sender_id === foundUser.id ? <>
+                        {/* <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">
+                            3
+                        </p> */}
+                    </> : ""
+                }
                 {/* {
                     latestMessage.sender_id === user.id ? readStatus(latestMessage) : <>
                         {
@@ -77,9 +88,24 @@ const LatestMessage = (user, latestMessage) => {
     if (latestMessage.type === "deleted") return "This message was deleted"
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
-            <div>{user.id === latestMessage.sender_id ? "" : "You"}</div>
-
+            {user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}
+            <span>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
         </>
+    } else {
+        return <>
+            <span>{user.id === latestMessage.sender_id ? "" : readStatus(latestMessage)}</span>
+            <span className='max-w-[150px] line-clamp-1 break-all'>{latestMessage.text}</span>
+        </>
+    }
+}
+
+const readStatus = (message) => {
+    if ((message.status === "read")) {
+        return <Image src={read_tick} alt="edit-icon" height={14} width={18} priority className={`pointer-events-none me-1`} />
+    } else if ((message.status === "delivered")) {
+        return <Image src={double_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none me-1" />
+    } else {
+        return <Image src={single_tick} alt="edit-icon" height={14} width={18} priority className="pointer-events-none  me-1" />
     }
 }
 

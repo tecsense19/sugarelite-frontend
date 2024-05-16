@@ -71,7 +71,12 @@ const TopNav = ({ messages, user, allUsers, setShowMobileChatContent }) => {
         const otherUserId = latestMessage.sender_id === user.id ? latestMessage.receiver_id : latestMessage.sender_id;
         const foundUser = allUsers.find(user => user.id === otherUserId);
 
-        return <button key={inx} className="flex items-center relative justify-center scroll-smooth">
+        return <button key={inx} className="flex items-center relative justify-center scroll-smooth"
+            onClick={() => {
+                setShowMobileChatContent(true);
+                dispatch({ type: "Message_To", payload: foundUser })
+            }}
+        >
             {
                 foundUser.avatar_url ?
                     <Image src={foundUser.avatar_url} alt="" height={40} width={40} priority className="aspect-square min-h-10 min-w-10 object-cover rounded-full pointer-events-none" />
@@ -83,9 +88,8 @@ const TopNav = ({ messages, user, allUsers, setShowMobileChatContent }) => {
 
     const renderTopUsers = () => {
         const sortedUsers = sortUsersByLatestMessage();
-        return sortedUsers.length && sortedUsers.map(renderTopUser);
+        return sortedUsers.length ? sortedUsers.map(renderTopUser) : "";
     }
-
 
     return (
         <>
@@ -116,17 +120,16 @@ const TopNav = ({ messages, user, allUsers, setShowMobileChatContent }) => {
                     className={`horizontal-profiles py-1 flex gap-x-4 overflow-x-auto items-center `}
                     style={{ scrollbarWidth: "none" }}
                 >
-                    <button className="flex h-10 min-w-10 bg-secondary rounded-full">
+                    <button className="flex h-10 min-w-10 bg-tinder rounded-full relative"
+                        onClick={() => {
+                            setShowMobileChatContent(true);
+                            dispatch({ type: "Message_To", payload: "Admin" })
+                        }}
+                    >
                         <Image src={Logo} alt="ELite_Logo" height={40} width={40} priority className="aspect-square m-auto h-[67%] w-[67%] object-cover rounded-full pointer-events-none" />
+                        <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />
                     </button>
                     {renderTopUsers()}
-                    {/* {
-                        Array.from({ length: 10 }).map((i, inx) => (
-                            <div className='h-10 min-w-10 bg-primary rounded-full flex md:min-w-[50px] md:h-[50px]' key={inx}>
-                                <p className='m-auto'>I</p>
-                            </div>
-                        ))
-                    } */}
                 </div>
                 <button
                     className={`absolute right-0 min-w-10 min-h-[52px] justify-center items-center ${showProfileScrollRightBtn ? "flex" : "hidden"}`}

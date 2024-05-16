@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TopNav from './TopNav'
 import Profiles from './Profiles'
 

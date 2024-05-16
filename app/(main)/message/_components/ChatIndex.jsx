@@ -3,16 +3,39 @@ import React, { useEffect, useState } from 'react'
 import ProfileSection from './Profiles/ProfileSection';
 import ChatSection from './ChatBody/ChatSection';
 import { useStore } from '@/store/store';
+import { useChat } from '@/store/ChatContext';
+import { read_message_action } from '@/app/lib/actions';
 
 const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
 
-    const { state: { toMessageState } } = useStore()
+    const { state: { toMessageState, readMsgsState }, dispatch } = useStore()
+    const { state } = useChat()
 
     const [messages, setMessages] = useState(chatList)
     const [showMobileChatContent, setShowMobileChatContent] = useState(false);
 
     useEffect(() => {
-        console.log(toMessageState)
+        const newMessages = state.messages.filter(msg => !messages.some(existingMsg => existingMsg.id === msg.id));
+        if (newMessages.length) {
+            setMessages(prev => [...prev, ...newMessages])
+        }
+        else {
+            const updatedMessages = messages.map(msg => {
+                const updatedMsg = state.messages.find(newMsg => newMsg.id === msg.id);
+                return updatedMsg ? updatedMsg : msg;
+            });
+            setMessages(updatedMessages);
+        }
+    }, [state.messages])
+
+    useEffect(() => {
+        if (toMessageState !== "Admin") {
+            const msgs = messages.filter(msg => msg.receiver_id === user.id && msg.status !== "read")?.map(i => i.id)
+            if (msgs.length && !readMsgsState.some(i => i === msgs[msgs.length - 1])) {
+                read_message_action({ sender_id: toMessageState.id, receiver_id: user.id, status: "read", messageId: msgs.toString() })
+                dispatch({ type: "Add_Read_Message", payload: msgs[msgs.length - 1] })
+            }
+        }
     }, [toMessageState])
 
     return (
@@ -23,7 +46,7 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
                     <ProfileSection messages={messages} allUsers={allUsers} user={user} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
                 </div>
                 <div className='flex w-full md:w-[calc(100%-350px)] lg:w-[calc(100%-400px)] h-full flex-col '>
-                    <ChatSection />
+                    <ChatSection toUser={toMessageState} user={user} messages={messages} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
                 </div>
             </section>
 
@@ -34,7 +57,7 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
                     <ProfileSection messages={messages} allUsers={allUsers} user={user} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
                 </div>
                 <div className={`flex w-full transition-transform ease-linear duration-300 absolute h-full flex-col ${showMobileChatContent ? "translate-x-0" : "translate-x-full"}`}>
-                    <ChatSection />
+                    <ChatSection toUser={toMessageState} user={user} messages={messages} setShowMobileChatContent={setShowMobileChatContent} supportChat={supportChat} />
                 </div>
             </section>
         </>
