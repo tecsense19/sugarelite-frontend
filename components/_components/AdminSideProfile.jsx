@@ -9,7 +9,7 @@ const AdminSideProfile = () => {
         <div className='hidden 2xl:block w-[400px] bg-primary-dark-3 pt-[50px] px-[30px]'>
             <div className="w-full flex justify-start items-center flex-col h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="flex justify-center items-center relative bg-tinder rounded-full h-[180px] max-h-[180px] min-w-[180px]">
-                    <Image src={Logo} width={180} height={180} alt="person" className={`hidden md:block rounded-full w-[70%] h-[70%] select-none pointer-events-none object-cover`} priority />                </div>
+                    <Image src={Logo} width={180} height={180} alt="person" className={`hidden md:block rounded-full w-[58%] h-[70%] select-none pointer-events-none object-cover`} priority />                </div>
                 <div>
                     <div className={`flex flex-col mt-5 md:mt-[30px] items-start`}>
                         <div className='flex items-center'>

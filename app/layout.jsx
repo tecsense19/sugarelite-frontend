@@ -22,7 +22,7 @@ export default async function RootLayout({ children }) {
   // const user = await get_user_action()
   // const allUsers = await all_profiles_action()
   // const chatList = await chat_list_action();
-  await fetch("https://sugarelite.website4you.co.in/api/socket");
+  await fetch("http://localhost:3000/api/socket");
 
   return (
     <html className="overflow-x-hidden" lang="en">

@@ -18,6 +18,7 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
     const { dispatch, state: { onlineUsers, blockedUsersState } } = useStore()
     const { mySocket } = useSocket()
 
+    const [showBlockLoader, setShowBlockLoader] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
     const navigate = useRouter()
     const [modalOpen, setModalOpen] = useState(false)
@@ -33,11 +34,13 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
     }
 
     const blockHandler = async () => {
+        setShowBlockLoader(true)
         const res = await block_user_action({ sender_id: currentUser?.id, receiver_id: toUser.id, is_blocked: 1 })
         if (res.success) {
             client_notification(api, 'topRight', "success", res.message, 4)
             mySocket.emit("user-blocked", res.data)
         }
+        setShowBlockLoader(false)
     }
 
     const handleShowOptionsChange = (val) => {
@@ -93,9 +96,14 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                                                     <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 " />
                                                     <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
                                                 </button>
-                                                <button onClick={blockHandler} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" >
-                                                    <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                                    <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                                                <button onClick={blockHandler} className={`bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex items-center gap-x-[10px] rounded-sm ${showBlockLoader ? "justify-center pointer-events-none" : "justify-start"}`} >
+                                                    {showBlockLoader
+                                                        ? <div className="loader after:border-[10px]"></div>
+                                                        : <>
+                                                            <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                                                            <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                                                        </>
+                                                    }
                                                 </button>
                                             </div>
                                         )}>
@@ -118,7 +126,7 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                             <div className="flex items-center">
                                 <button className="flex items-center" >
                                     <div className="bg-tinder rounded-full h-[40px] flex min-w-[40px] md:h-[60px] md:min-w-[60px]">
-                                        <Image src={Logo} alt="" height={40} width={40} priority className="m-auto object-cover h-[67%] w-[67%] pointer-events-none rounded-full" />
+                                        <Image src={Logo} alt="" height={40} width={40} priority className="m-auto object-cover h-[67%] w-[56%] pointer-events-none rounded-full" />
                                     </div>
                                     <div className="flex flex-col md:flex-row justify-center items-center ">
                                         <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">Team Elite</div>

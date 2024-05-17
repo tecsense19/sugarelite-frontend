@@ -16,7 +16,7 @@ import { useStore } from '@/store/store';
 import { useSocket } from '@/store/SocketContext';
 import { useChat } from '@/store/ChatContext';
 
-const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sendingImages, setSendingImages, setMessages }) => {
+const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, setSendingImages, setMessages }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
