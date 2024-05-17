@@ -42,14 +42,14 @@ const AdminProfie = ({ message, setShowMobileChatContent }) => {
         >
             <div className="flex gap-4 items-center">
                 <div className="relative bg-tinder rounded-full h-[40px] flex min-w-[40px] md:h-[50px] md:min-w-[50px]">
-                    <Image src={Logo} height={40} width={40} alt="avatar" className="h-[65%] w-[65%] object-cover m-auto" />
+                    <Image src={Logo} height={40} width={40} alt="avatar" className="h-[65%] w-[54%] object-cover m-auto" />
                     <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute top-[-1px] right-[3px] md:top-0 md:right-[5px]' />
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">
                         Team Elite
                     </p>
-                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[150px] line-clamp-1 break-all">
+                    <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[200px] line-clamp-1 break-all">
                         {
                             message ? message.description : "Welcome to the Elite Sugar Support"
                         }
@@ -58,7 +58,7 @@ const AdminProfie = ({ message, setShowMobileChatContent }) => {
             </div>
             <div className="flex flex-col items-end min-w-fit">
                 <p className="italic text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mb-[8px]">
-                    {getTime(message.updated_at)}
+                    {/* {getTime(message.updated_at)} */}
                 </p>
             </div>
         </div>

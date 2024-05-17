@@ -16,7 +16,7 @@ const SupportMessges = ({ supportChat }) => {
                                 <div key={inx}>
                                     <div className='flex items-end gap-x-2'>
                                         <div className="flex h-10 min-w-10 bg-tinder rounded-full relative">
-                                            <Image src={Logo} alt="ELite_Logo" height={40} width={40} priority className="aspect-square m-auto h-[67%] w-[67%] object-cover rounded-full pointer-events-none" />
+                                            <Image src={Logo} alt="ELite_Logo" height={40} width={40} priority className="aspect-square m-auto h-[67%] w-[55%] object-cover rounded-full pointer-events-none" />
                                         </div>
                                         <div className='min-h-10 px-3 py-2 max-w-[80%] md:max-w-[50%] break-words rounded-[10px] rounded-bl-none bg-[#626262]'>
                                             {msg.description}

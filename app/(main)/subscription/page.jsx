@@ -12,11 +12,13 @@ const Page = async () => {
         { name: "12 Weeks", value: "12week", key: process.env.STRIPE_12_WEEKS, amount: 228 },
     ]
     const STRIPE_TEST_KEY = process.env.STRIPE_TEST_KEY;
-    return (
-        <Suspense fallback={<Loader />}>
-            <Index subscriptions={subscriptions} STRIPE_TEST_KEY={STRIPE_TEST_KEY} userData={user[0]} />
-        </Suspense>
-    );
+    if (user) {
+        return (
+            <Suspense fallback={<Loader />}>
+                <Index subscriptions={subscriptions} STRIPE_TEST_KEY={STRIPE_TEST_KEY} userData={user[0]} />
+            </Suspense>
+        );
+    }
 }
 
 export default Page
