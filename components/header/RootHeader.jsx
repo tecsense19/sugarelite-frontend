@@ -23,7 +23,7 @@ const socket = io();
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
     const { setSocket } = useSocket();
-    const { addMessage, addTypingUser, removerTypingUser } = useChat()
+    const { addMessage, addTypingUser, removerTypingUser, editMessage } = useChat()
     const { state: { notificationOpenState, notifyBadgeState, chatProfileState, supportMsgs }, dispatch } = useStore();
 
     const router = useRouter()
@@ -69,9 +69,14 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
             const receiveMessageHandler = (obj) => {
                 if (obj.receiver_id === user.id) {
-                    dispatch({ type: "Add_Msg_Badge", payload: true })
-                    newMessageHandler(obj)
-                    addMessage(obj)
+                    if (obj.type === "deleted" || obj.type === "edited") {
+                        addMessage(obj)
+                        editMessage(obj)
+                    } else {
+                        dispatch({ type: "Add_Msg_Badge", payload: true })
+                        newMessageHandler(obj)
+                        addMessage(obj)
+                    }
                 }
             }
 
@@ -148,7 +153,9 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
     const postSupportMsg = async (id) => {
         const res = await post_support_msg({ user_id: user.id, type_id: id })
-        dispatch({ type: "Add_Support_Message", payload: res.data })
+        if (res.success) {
+            dispatch({ type: "Add_Support_Message", payload: res.data })
+        }
     }
 
     const checkDate = (date) => {
@@ -157,10 +164,76 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         return date1.getDate() === date2.getDate();
     }
 
+    const checkEndingDate = (date) => {
+        let date1 = new Date(date);
+        let date2 = new Date();
+        let difference = date1 - date2;
+        let daysLeft = Math.floor(difference / (1000 * 60 * 60 * 24));
+        if (daysLeft >= 0 && daysLeft < 5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     useEffect(() => {
         console.log(supportChat);
         if (!supportChat.length) {
             postSupportMsg(1);
+        }
+        if (supportChat.length) {
+            let messagesId = [];
+            let trigger7 = true;
+            supportChat.forEach((obj) => {
+                if (obj.get_support.id !== 7) {
+                    messagesId.push(obj.get_support.id)
+                } else if (obj.get_support.id === 7) {
+                    trigger7 = false;
+                }
+            })
+            // console.log(messagesId)
+            let userIsSubscribed = (user.is_subscribe === 1 && user.is_subscription_stop === 0 && user.is_subscription_cancel === 0);
+            if (trigger7 && !userIsSubscribed && user.is_friends?.length) {
+                // console.log(7);
+                postSupportMsg(7);
+            }
+            if (!checkDate(supportChat[supportChat.length - 1].created_at)) {
+                for (let i = 2; i < 7; i++) {
+                    if ((i === 2) && (messagesId.includes(2) === false)) {
+                        if (!user.avatar_url) {
+                            // console.log(2);
+                            postSupportMsg(2);
+                            break;
+                        }
+                    } else if ((i === 3) && (messagesId.includes(3) === false)) {
+                        if (!user.bio) {
+                            // console.log(3);
+                            postSupportMsg(3);
+                            break;
+                        }
+                    } else if ((i === 4) && (messagesId.includes(4) === false)) {
+                        if ((user.is_subscribe === 0) || (user.is_subscribe === 1 && user.is_subscription_stop === 1) || (user.is_subscribe === 1 && user.is_subscription_cancel === 1)) {
+                            // console.log(4);
+                            postSupportMsg(4);
+                            break;
+                        }
+                    } else if ((i === 5) && (messagesId.includes(5) === false)) {
+                        if (userIsSubscribed) {
+                            // console.log(5);
+                            postSupportMsg(5);
+                            break;
+                        }
+                    } else if ((i === 6) && (messagesId.includes(6) === false)) {
+                        if (userIsSubscribed) {
+                            if (checkEndingDate(user.subscription_end_date)) {
+                                // console.log(6);
+                                postSupportMsg(6);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
         // if(supportChat.length) {
         //     if((supportChat[supportChat.length-1].support_id < 2) && (checkDate(supportChat[supportChat.length - 1].created_at) !== true) && (!user.avatar_url)) {

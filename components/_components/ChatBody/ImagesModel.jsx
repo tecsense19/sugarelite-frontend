@@ -1,6 +1,6 @@
 import { ConfigProvider, Modal } from 'antd'
 import CloseIcon from '/public/assets/close.svg'
-import React from 'react'
+import React, { useRef } from 'react'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css';
@@ -10,6 +10,14 @@ import 'swiper/css/effect-coverflow';
 import { EffectCoverflow, } from 'swiper/modules';
 
 const ImagesModal = ({ setSelctedImages, list }) => {
+
+    const swiperRef = useRef(null);
+
+    const goToSlide = (index) => {
+        if (swiperRef.current && swiperRef.current.swiper) {
+            swiperRef.current.swiper.slideTo(index);
+        }
+    };
 
     const handleDownloadImages = async () => {
         try {
@@ -63,10 +71,11 @@ const ImagesModal = ({ setSelctedImages, list }) => {
                         <div className='flex gap-3 items-center mt-1'>
                             Images/Videos
                         </div>
-                        <Image src={CloseIcon} alt='colse' width={24} height={24} onClick={() => { setSelctedImages([]) }} className='cursor-pointer mt-1' />
+                        <Image src={CloseIcon} alt='colse' width={24} height={24} onClick={() => { setSelctedImages([]); goToSlide(0) }} className='cursor-pointer mt-1' />
                     </div>
                     <div className='h-[40rem] w-full flex flex-col items-center'>
                         <Swiper
+                            ref={swiperRef}
                             effect={'coverflow'}
                             grabCursor={true}
                             centeredSlides={true}
