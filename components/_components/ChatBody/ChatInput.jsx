@@ -45,9 +45,18 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         formdata.append("sender_id", sender_id)
         formdata.append("receiver_id", receiver_id)
         formdata.append("message", message)
-        formdata.append("id", id)
         formdata.append("type", type)
         formdata.append("status", isUserOnline(receiver_id))
+        sendingImages.forEach((image, index) => {
+            if (image.file) {
+                formdata.append(`chat_images[]`, image.file);
+            }
+        });
+        if (editingMsg) {
+            const data = editingMsg?.images.filter(i => !sendingImages.some(j => i.id === j.id)).map(z => z.id).toString()
+            formdata.append("id", id)
+            formdata.append("remove_chatimages", data)
+        }
         return formdata
     }
 
@@ -58,17 +67,20 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
         return `${randomNumber}${randomLetter}`;
     };
 
-    const sendPendingMessage = (randomId, message) => {
-        const msg = { id: randomId, sender_id: user.id, receiver_id: toUser.id, text: message, type: "regular", milisecondtime: Date.now(), created_at: new Date().toISOString(), updated_at: new Date().toISOString(), status: "pending", deleted_at: null, get_all_chat_with_image: sendingImages }
-        addMessage(msg)
-        reset({ message: '' })
+    const sendPendingMessage = (randomId, message, type) => {
+        if (type === "regular") {
+            const msg = { id: randomId, sender_id: user.id, receiver_id: toUser.id, text: message, type: type, milisecondtime: Date.now(), created_at: new Date().toISOString(), updated_at: new Date().toISOString(), status: "pending", deleted_at: null, get_all_chat_with_image: sendingImages }
+            addMessage(msg)
+            reset({ message: '' })
+        }
     }
 
     const sendeMsgHandler = async ({ message }) => {
         message = message?.trim(' ')
-        if (message.length) {
+        if ((message?.length || sendingImages.length) && !editingMsg) {
             const randomId = generateRandomId()
-            await sendPendingMessage(randomId, message)
+            await sendPendingMessage(randomId, message, "regular")
+            setSendingImages([])
             let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "regular" })
             const res = await send_message_action(obj)
             // addMessage(res.message)
@@ -76,6 +88,17 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
                 setMessages(prev => prev.filter(i => i.id !== randomId))
                 editMessage({ ...res.message, pid: randomId })
                 deleteMessage(randomId)
+                mySocket.emit("send-message", res.message)
+            }
+        } if ((message?.length || sendingImages.length) && editingMsg) {
+            setSendingImages([])
+            reset({ message: '' })
+            let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id })
+            const res = await send_message_action(obj)
+            if (res.success) {
+                setEditingMsg(null)
+                addMessage(res.message)
+                editMessage(res.message)
                 mySocket.emit("send-message", res.message)
             }
         }
@@ -86,10 +109,12 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
     }
 
     useEffect(() => {
-        if (watch("message").length === 1) {
-            mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: true })
-        } else if (watch("message").length === 0) {
-            mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: false })
+        if (!editingMsg) {
+            if (watch("message").length === 1) {
+                mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: true })
+            } else if (watch("message").length === 0) {
+                mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: false })
+            }
         }
     }, [watch("message")])
 
@@ -142,6 +167,15 @@ const ChatInput = ({ toUser, user, todayMsgs, editingMsg, setEditingMsg, sending
             }
         }
     }
+
+    useEffect(() => {
+        if (editingMsg) {
+            setValue('message', editingMsg.message)
+            setSendingImages(editingMsg.images)
+        } else {
+            reset()
+        }
+    }, [editingMsg])
 
 
     return (

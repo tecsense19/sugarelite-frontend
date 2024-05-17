@@ -80,7 +80,7 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
 }
 
 const LatestMessage = (user, latestMessage) => {
-    if (latestMessage.type === "deleted") return "This message was deleted"
+    if (latestMessage.type === "deleted") return <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>This message was deleted</span>
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
             {user.id === latestMessage.sender_id ? "" : <ProfileReadStatus message={latestMessage} />}

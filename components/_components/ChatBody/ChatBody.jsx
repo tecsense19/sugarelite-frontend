@@ -6,7 +6,7 @@ import Message from './Message';
 import TypingAnimation from './TypingAnimation';
 
 
-const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) => {
+const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, setEditingMsg }) => {
 
     const [messages, setMessages] = useState([]);
     const { mySocket } = useSocket()
@@ -27,10 +27,15 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) 
     }, [])
 
     useEffect(() => {
-        const lastMsgId = chatList[chatList.length - 1]
-        mySocket.emit('open-chat', { sender_id: user.id, receiver_id: toUser.id, type: "open", lastMsgId: lastMsgId.id })
+        if (chatList.length) {
+            const lastMsgId = chatList[chatList.length - 1]
+            mySocket.emit('open-chat', { sender_id: user.id, receiver_id: toUser.id, type: "open", lastMsgId: lastMsgId.id })
+        }
         return () => {
-            mySocket.emit('open-chat', { sender_id: user.id, receiver_id: toUser.id, type: "closed", lastMsgId: lastMsgId.id })
+            if (chatList.length) {
+                const lastMsgId = chatList[chatList.length - 1]
+                mySocket.emit('open-chat', { sender_id: user.id, receiver_id: toUser.id, type: "closed", lastMsgId: lastMsgId.id })
+            }
         }
     }, [toUser, chatList])
 
@@ -44,7 +49,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) 
                             const isFirstMessage = index === 0 || messages[index - 1]?.sender_id !== message.sender_id;
                             // console.log(message)
                             return (
-                                <MessageItem key={index} message={message} user={user} toUser={toUser} isLastMessage={isLastMessage} isFirstMessage={isFirstMessage} setSelectedImages={setSelectedImages} />
+                                <MessageItem key={index} message={message} user={user} toUser={toUser} isLastMessage={isLastMessage} isFirstMessage={isFirstMessage} setSelectedImages={setSelectedImages} setEditingMsg={setEditingMsg} />
                             )
                         })}
                         <TypingAnimation toUser={toUser} user={user} />
@@ -57,7 +62,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages }) 
 
 let currentDate = null
 
-const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages }) => {
+const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages, setEditingMsg }) => {
     const isCurrentUser = message.sender_id === user.id;
     const messageDate = new Date(parseInt(message.milisecondtime)).toDateString();
     const shouldPrintDate = currentDate !== messageDate;
@@ -72,13 +77,13 @@ const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstM
                     </p>
                 </div>
             )}
-            <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} my-[2px]`}>
-                <Message message={message} user={user} toUser={toUser} isFirstMessage={isFirstMessage} isLastMessage={isLastMessage} setSelectedImages={setSelectedImages} />
+            <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} my-1`}>
+                <Message message={message} user={user} toUser={toUser} isFirstMessage={isFirstMessage} isLastMessage={isLastMessage} setSelectedImages={setSelectedImages} setEditingMsg={setEditingMsg} />
             </div>
         </>
     );
 }, (prevProps, nextProps) => {
-    return prevProps.message.id === nextProps.message.id && prevProps.message.status === nextProps.message.status;
+    return prevProps.message.id === nextProps.message.id && prevProps.message.status === nextProps.message.status && prevProps.message.text === nextProps.message.text;
 });
 
 export default ChatBody;
