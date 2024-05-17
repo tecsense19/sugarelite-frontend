@@ -18,7 +18,7 @@ import { io } from 'socket.io-client'
 import { useSocket } from '@/store/SocketContext'
 import { useChat } from '@/store/ChatContext'
 
-const socket = io();
+const socket = io("https://socket.website4you.co.in");
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
