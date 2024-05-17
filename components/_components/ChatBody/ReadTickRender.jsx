@@ -12,10 +12,6 @@ import { useStore } from '@/store/store';
 const ReadTickRender = ({ isImage, message, user }) => {
     const { state: { chatPartnerList, onlineUsers } } = useStore()
 
-    useEffect(() => {
-        console.log(chatPartnerList)
-    }, [chatPartnerList])
-
     if (!isImage) {
         if (message.status === "pending") {
             return <Image src={Pending} alt="edit-icon" height={14} width={12} priority className="pointer-events-none ms-[2px]" />

@@ -17,7 +17,6 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
     const [sendingImages, setSendingImages] = useState([])
 
     useEffect(() => {
-
         const newMessages = state.messages.filter(msg => !messages.some(existingMsg => (existingMsg.id === msg.id)));
         if (newMessages.length) {
             setMessages(prev => [...prev, ...newMessages])

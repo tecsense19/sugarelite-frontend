@@ -15,17 +15,21 @@ import Image from 'next/image';
 import Msg from './Msg';
 import { send_message_action } from '@/app/lib/actions';
 import ReadTickRender from './ReadTickRender';
+import { useSocket } from '@/store/SocketContext';
+import { useChat } from '@/store/ChatContext';
 
 const formatTime = (timestamp) => {
     const time = new Date(timestamp);
     return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages }) => {
+const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages, setEditingMsg }) => {
+
+    const { mySocket } = useSocket()
+    const { addMessage, editMessage } = useChat()
 
     const [showOptions, setShowOptions] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
 
     const handleShowOptionsChange = (val) => {
         setShowOptions(val)
@@ -46,7 +50,9 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
         let obj = getFormData({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id })
         const res = await send_message_action(obj)
         if (res.success) {
-            socket.emit("send-message", { sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
+            mySocket.emit("send-message", { sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
+            addMessage({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
+            editMessage({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
         }
         setShowOptions(false)
         setIsLoading(false)
@@ -93,7 +99,12 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                     }
                     <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
                         {
-                            message.type === "deleted" ? <p className='p-2 text-[15px]'> You deleted this message <span className={`h-[10px] w-[80px] ${message.type === "deleted" ? "hidden" : "inline-block"} `}></span></p> : <Msg msg={message} setSelectedImages={setSelectedImages} />
+                            message.type === "deleted" ?
+                                <p className='px-2 py-1 text-[15px]'>
+                                    You deleted this message
+                                    <span className={`h-[10px] w-[80px] ${message.type === "deleted" ? "hidden" : "inline-block"} `}></span>
+                                </p> :
+                                <Msg msg={message} setSelectedImages={setSelectedImages} />
                         }
                     </div>
                     {
@@ -109,8 +120,8 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                                 <ReadTickRender isImage={false} message={message} user={user} />
                             </span>
                             :
-                            <div className={`absolute bottom-[10px] right-[6px] text-white font-normal text-end text-[12px] mt-1 min-w-[6rem] me-1 gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"} `}>
-                                <div className='absolute w-[225px]  -right-0 bottom-0'>
+                            <div className={`absolute bottom-[10px] right-[6px] text-white font-normal text-end text-[12px] mt-1 min-w-[6rem] me-1 gap-x-1 justify-end pointer-events-none ${message.type === "deleted" ? "hidden" : "flex"} `}>
+                                <div className='absolute w-[225px] -right-0 bottom-0'>
                                     <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
                                 </div>
                                 <span className='absolute right-[22px] -bottom-[2px]'>{formatTime(parseInt(message.milisecondtime))}</span>
@@ -126,7 +137,7 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
             <div className={`px-[7px] pt-2 pb-[7px] break-words relative  flex items-end`}>
                 <div className=" break-words text-[16px] font-normal leading-[22px] text-white/80 ">
                     {
-                        message.type === "deleted" ? <p className='p-2'> Message deleted</p> : <Msg msg={message} setSelectedImages={setSelectedImages} />
+                        message.type === "deleted" ? <p className='px-2 py-1'> Message deleted</p> : <Msg msg={message} setSelectedImages={setSelectedImages} />
                     }
                 </div>
                 {

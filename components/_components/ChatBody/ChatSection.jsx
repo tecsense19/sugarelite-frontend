@@ -39,7 +39,7 @@ const ChatSection = ({ toUser, setShowMobileChatContent, user, messages, support
                     toUser !== "Admin" ?
                         (!blockedUsersState.some(i => (i.sender_id === toUser.id || i.receiver_id === toUser.id) && i.is_blocked === 1)) ?
                             <>
-                                <ChatBody chatList={filteredChatList} sendingImages={sendingImages} setSelectedImages={setSelectedImages} toUser={toUser} user={user} />
+                                <ChatBody chatList={filteredChatList} sendingImages={sendingImages} setSelectedImages={setSelectedImages} toUser={toUser} user={user} setEditingMsg={setEditingMsg} />
                                 <ChatInput toUser={toUser} user={user} editingMsg={editingMsg} setEditingMsg={setEditingMsg} sendingImages={sendingImages} setSendingImages={setSendingImages} setMessages={setMessages} />
                             </> : <BlockedComponent user={user} toUser={toUser} />
                         :
