@@ -129,7 +129,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
         return () => {
             socket.disconnect()
-            socket.off("onlineUsers", onlineUserHandler)
+            socket.off("onlineUsers")
         }
     }, [user])
 
@@ -140,9 +140,11 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                     addMessage(obj)
                     editMessage(obj)
                 } else {
-                    dispatch({ type: "Add_Msg_Badge", payload: true })
                     newMessageHandler(obj)
                     addMessage(obj)
+                    if (pathname !== client_routes.chat) {
+                        dispatch({ type: "Add_Msg_Badge", payload: true })
+                    }
                     if (toMessageState.id !== obj.sender_id && obj?.type === "regular") {
                         if (unReadCount.some(i => i.id === obj.sender_id)) {
                             updateUnReadCount(obj.sender_id)
@@ -156,11 +158,10 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
         socket.on("receive-message", receiveMessageHandler)
 
-
         return () => {
             socket.off("receive-message", receiveMessageHandler)
         }
-    }, [toMessageState, unReadCount])
+    }, [toMessageState, unReadCount, pathname])
 
     useEffect(() => {
         if (user.is_blocked_users.length) {
@@ -333,6 +334,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             tempArr.forEach(i => {
                 addUnReadCount(i)
             })
+            dispatch({ type: "Add_Msg_Badge", payload: true })
         }
     }, [])
 

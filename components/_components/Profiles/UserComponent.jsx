@@ -68,17 +68,15 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
                     {getTime(parseInt(latestMessage.milisecondtime))}
                 </p>
                 {
-                    latestMessage.sender_id === foundUser.id ? <>
-                        {
-                            unReadCount.length ? unReadCount.some(i => i.id === foundUser.id) && <p className='h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center'>
-                                {unReadCount.find(i => i.id === foundUser.id).count}
-                            </p> : ""
-                        }
-                        {/* <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">
+                    unReadCount.length ? unReadCount.some(i => i.id === foundUser.id) && <p className='h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center'>
+                        {unReadCount.find(i => i.id === foundUser.id).count}
+                    </p> : ""
+                }
+                {/* <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">
                             3
                         </p> */}
-                    </> : ""
-                }
+                {/* </> : "" */}
+
             </div>
         </div>
     )
