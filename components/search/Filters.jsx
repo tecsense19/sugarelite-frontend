@@ -174,7 +174,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
             )} />
           </label>
         </div>
-        <button type='submit' className='mt-[30px] text-white/80 text-[16px] font-[600] bg-secondary h-[56px] text-center w-full rounded-[5px] transition-all duration-150 hover:scale-[1.02]' style={{ lineHeight: "normal" }}>
+        <button type='submit' className='mt-[30px] text-white text-[16px] font-[600] bg-secondary h-[56px] text-center w-full rounded-[5px] transition-all duration-150 hover:scale-[1.02]' style={{ lineHeight: "normal" }}>
           SAVE SEARCH
         </button>
         <div className='mt-[14px] text-[16px] font-[450] w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: {dummyUsers.length}</div>

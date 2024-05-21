@@ -284,7 +284,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                     <div className="mt-[21px]">
                         <Mob_Checkbox setValue={setValue} control={control} text={"Is Verified"} watch={watch} name={"is_verified"} />
                     </div>
-                    <button className='mt-[30px] text-white/80 text-[16px] font-[600] bg-secondary h-[42px] text-center w-full rounded-[5px]' style={{ lineHeight: "normal" }}>
+                    <button className='mt-[30px] text-white text-[16px] font-[600] bg-secondary h-[42px] text-center w-full rounded-[5px]' style={{ lineHeight: "normal" }}>
                         SAVE SEARCH
                     </button>
                     <div className='mt-[15px] text-[16px] font-medium w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: {dummyUsers.length}</div>
