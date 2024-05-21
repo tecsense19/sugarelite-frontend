@@ -182,17 +182,15 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
         <div className="w-full flex flex-col px-4 pb-[18px] md:px-10 md:pb-10 relative ">
             {contextHolder}
             <div className={`h-[100px] rounded-t-[5px] bg-black w-full flex items-center px-2 gap-2 ${sendingImages.length ? "flex" : "hidden"}`}>
-                {
-                    sendingImages.map((i, inx) => {
-                        return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] relative'>
-                            <Image src={i?.photo_url ? i?.photo_url : i.chat_images} alt='photo' width={1000} height={1000} className='object-contain h-20 w-20 min-w-20 min-h-20' />
-                            <div className='absolute bg-secondary h-[14px] w-[14px] flex justify-center -top-[6px] -right-2 rounded-full cursor-pointer'
-                                onClick={() => setSendingImages(prev => prev.filter(j => (j.name !== i.name || j.id !== i.id)))}>
-                                <Image src={cross} alt='photo' width={7} height={7} className='' />
-                            </div>
+                {sendingImages.map((i, inx) => {
+                    return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] relative'>
+                        <Image src={i?.photo_url ? i?.photo_url : i.chat_images} alt='photo' width={1000} height={1000} className='object-contain h-20 w-20 min-w-20 min-h-20' />
+                        <div className='absolute bg-secondary h-[14px] w-[14px] flex justify-center -top-[6px] -right-2 rounded-full cursor-pointer'
+                            onClick={() => setSendingImages(prev => prev.filter(j => (j.name !== i.name || j.id !== i.id)))}>
+                            <Image src={cross} alt='photo' width={7} height={7} className='' />
                         </div>
-                    })
-                }
+                    </div>
+                })}
             </div>
             <div className={`w-full h-12 md:h-[70px] bg-black flex items-center ps-3 md:ps-[30px] relative ${sendingImages.length ? "border-t border-primary rounded-b-[5px]" : " rounded-[5px]"}`}>
                 <button ref={buttonRef} onClick={() => setIsEmoji((prev) => !prev)} className='hidden md:flex'>
@@ -202,8 +200,8 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
                 <form className='w-full flex items-center' onSubmit={handleSubmit(sendeMsgHandler)}>
                     <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px] emoji-fontFamily" autoComplete="off" />
                     {
-                        !editingMsg ?
-                            <>
+                        !editingMsg
+                            ? <>
                                 <input type="file" {...register("photo")} id='photo' className='hidden' accept="image/x-png,image/gif,image/jpeg" onChange={photoHandler} />
                                 <label className='cursor-pointer' htmlFor='photo'>
                                     <Image src={attachmentIcon} priority alt="attachmentIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
@@ -223,7 +221,10 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
                     </button>
                 </form>
                 <div ref={emojiRef} className={`emoji absolute hidden z-[1] md:block bottom-[55px] left-4 origin-bottom ease-linear transition-transform duration-200 ${isEmoji ? "scale-y-1" : " scale-y-0"}`}>
-                    <Picker data={data} onEmojiSelect={emojiSelector} theme={"dark"} previewPosition={"none"} searchPosition="none" perLine={10} />
+                    {isEmoji
+                        ? <Picker data={data} onEmojiSelect={emojiSelector} theme={"dark"} previewPosition={"none"} searchPosition="none" perLine={10} />
+                        : <></>
+                    }
                 </div>
             </div>
 

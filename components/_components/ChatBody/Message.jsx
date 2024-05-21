@@ -58,8 +58,6 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
     setIsLoading(false)
   }
 
-
-
   const msgEditHandler = () => {
     setShowOptions(false)
     setEditingMsg({ message: message.text, id: message.id, images: message.get_all_chat_with_image })
@@ -68,43 +66,39 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
   if (message.sender_id === user.id) {
     return (
       <div className='flex flex-col lg:flex-row  max-w-[85%]'>
-        <div
-          className={`p-2  max-w-full bg-primary-dark-3 relative min-w-[5rem]  ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}
-        >
-          {
-            (message.type !== "deleted" && message.status !== "pending")
-              ? <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
-                <Popover placement="topRight" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
-                  <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
-                    {!isLoading ?
-                      <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
-                        <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                        <div className="text-[14px] font-medium leading-[20px]">Delete</div>
-                      </button> : <div className="bg-secondary  border-[1px] border-white/30 w-[125px] h-[32px] flex justify-center items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
-                        <span className='loader after:border-[10px] '></span>
-                      </div>
-                    }
-                    {(user.is_subscribe === 1 && user.is_subscription_stop === 0 && user.is_subscription_cancel === 0)
-                      ? <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
+        <div className={`p-2  max-w-full bg-primary-dark-3 relative min-w-[5rem] ${isFirstMessage ? "rounded-tr-[12px] rounded-bl-[12px] rounded-tl-[12px]" : isLastMessage ? "rounded-br-[12px] rounded-bl-[12px] rounded-tl-[12px]" : "rounded-e-none rounded-[12px]"} `}>
+          {(message.type !== "deleted" && message.status !== "pending")
+            ? <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
+              <Popover placement="topRight" trigger="click" rootClassName='message-container' open={showOptions} onOpenChange={handleShowOptionsChange} content={(
+                <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
+                  {!isLoading ?
+                    <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
+                      <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
+                      <div className="text-[14px] font-medium leading-[20px]">Delete</div>
+                    </button> : <div className="bg-secondary  border-[1px] border-white/30 w-[125px] h-[32px] flex justify-center items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
+                      <span className='loader after:border-[10px] '></span>
+                    </div>
+                  }
+                  {(user.is_subscribe === 1 && user.is_subscription_stop === 0 && user.is_subscription_cancel === 0)
+                    ? <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
+                      <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
+                      <div className="text-[14px] font-medium leading-[20px]">Edit</div>
+                    </button>
+                    : <Tooltip placement="bottom" title={"Please have subscription to edit."} arrow={true}>
+                      <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
                         <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
                         <div className="text-[14px] font-medium leading-[20px]">Edit</div>
                       </button>
-                      : <Tooltip placement="bottom" title={"Please have subscription to edit."} arrow={true}>
-                        <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
-                          <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
-                          <div className="text-[14px] font-medium leading-[20px]">Edit</div>
-                        </button>
-                      </Tooltip>
-                    }
-                  </div>
-                )}>
-
-                  <button className={`h-full w-[30px] flex justify-center items-start absolute -left-8 top-0 lg:top-1 lg:-translate-y-1   `}>
-                    <Image src={optionsIcon} alt="options" height={20} width={20} priority className={`pointer-events-none flex`} />
-                  </button>
-                </Popover>
-              </ConfigProvider>
-              : <></>
+                    </Tooltip>
+                  }
+                </div>
+              )}>
+                <button className={`h-full w-[30px] flex justify-center items-start absolute -left-8 top-0 lg:top-1 lg:-translate-y-1   `}>
+                  <Image src={optionsIcon} alt="options" height={20} width={20} priority className={`pointer-events-none flex`} />
+                </button>
+              </Popover>
+            </ConfigProvider>
+            : <></>
           }
           <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
             {
