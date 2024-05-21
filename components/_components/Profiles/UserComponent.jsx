@@ -12,7 +12,7 @@ import ProfileReadStatus from './ProfileReadStatus';
 const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, user }) => {
 
     const { state: { onlineUsers }, dispatch } = useStore()
-    const { state: { typingUsers } } = useChat()
+    const { state: { typingUsers, unReadCount } } = useChat()
 
     const handleToUser = () => {
         setShowMobileChatContent(true)
@@ -69,6 +69,11 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
                 </p>
                 {
                     latestMessage.sender_id === foundUser.id ? <>
+                        {
+                            unReadCount.length ? unReadCount.some(i => i.id === foundUser.id) && <p className='h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center'>
+                                {unReadCount.find(i => i.id === foundUser.id).count}
+                            </p> : ""
+                        }
                         {/* <p className="h-[20px] w-[20px] bg-green-active text-white text-[10px] font-medium leading-[20px] rounded-full flex justify-center items-center">
                             3
                         </p> */}
