@@ -101,7 +101,7 @@ const Login = ({ setIsForgotOpen }) => {
                         <form className="w-full max-w-[30rem]" onSubmit={handleSubmit(loginHandler)}>
                             <div className=" w-full mt-[97px]">
                                 <div className='flex items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                                    <Image src={emailImg} width={20} height={20} alt='email' className='me-[10px] w-[20px] h-[20px]' />
+                                    <Image src={emailImg} width={500} height={500} alt='email' className='me-[10px] w-[20px] h-[20px]' />
                                     <input
                                         type="text"
                                         {...register('email', { required: true })}
@@ -136,7 +136,7 @@ const Login = ({ setIsForgotOpen }) => {
                                 </div>
                                 <span className="underline pb-1 cursor-pointer select-none font-normal transition-all duration-150 hover:text-white/80" onClick={() => setIsForgotOpen(true)}>Forgotten Password</span>
                             </div>
-                            <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-bold flex justify-center items-center text-[#263238] ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit">
+                            <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-bold uppercase flex justify-center items-center text-[#263238] ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit">
                                 {!isLoading ? "Log in" :
                                     <div className="loader after:border-t-black after:border-b-black"></div>
                                 }

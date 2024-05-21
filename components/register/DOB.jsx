@@ -87,13 +87,13 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setV
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
-                    <div className="sm:flex justify-center font-medium text-[16px] leading-[normal] gap-[5px]">
+                    <div className="sm:flex justify-center font-bold text-[16px] leading-[normal] gap-[5px]">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
                         BACK
                     </div>
                 </button>
                 <button className={`w-full h-[42px] rounded bg-white relative text-[#263238] ${isValid ? "transition-all duration-150 hover:scale-[1.02]" : ""}`} type="submit" disabled={!isValid} >
-                    <div className="sm:flex justify-center gap-[5px] font-medium text-[16px] leading-[normal] ">
+                    <div className="sm:flex justify-center gap-[5px] font-bold text-[16px] leading-[normal] ">
                         {
                             !isLoading ?
                                 <>

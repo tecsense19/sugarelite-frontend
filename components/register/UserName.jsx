@@ -8,7 +8,7 @@ import email from "/public/assets/email.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
 import { checkuser_action, send_otp_action, verify_otp_action } from '@/app/lib/actions'
 import { Alert, notification } from 'antd'
-import username_email_white from "/public/assets/username_email_white.svg"
+import username_email_white from "/public/assets/email.svg"
 import username_email_black from "/public/assets/username_email_black.svg"
 import username_telephone_white from "/public/assets/username_telephone_white.svg"
 import username_telephone_black from "/public/assets/username_telephone_black.svg"
@@ -251,12 +251,12 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                             />
                         </div>
                         <div className='flex justify-center items-center my-6'>
-                            <div className='flex items-center relative ps-[20px] pe-[30px] py-[9px] gap-x-8 bg-white rounded-[30px] overflow-hidden'>
+                            <div className='flex items-center relative ps-[20px] pe-[30px] py-[9px] gap-x-8 bg-white rounded-[30px] '>
                                 <span className={`z-[1] cursor-pointer flex justify-center items-center gap-x-1 transition-all duration-200 text-[13px] font-medium leading-[13px] ${isEmail ? "text-black" : "text-white"}`} onClick={() => { setIsEmail(false); setValue("email", "") }}>
                                     <Image src={isEmail ? username_telephone_black : username_telephone_white} alt='' height={14} width={14} />
                                     <span>Phone Number</span>
                                 </span>
-                                <div id='isEmailSelected' className={`bg-black absolute rounded-[20px] z-0 h-[100%] transition-all duration-200 ${isEmail ? `translate-x-[calc(100%+12px)]` : "translate-x-[-22px]"}`} style={{ width: `calc(100% - 32px - ${getAnotherEleWidth()}px - ${isEmail ? "0px" : "10px"})` }}></div>
+                                <div id='isEmailSelected' className={`bg-black absolute rounded-[20px] z-0 h-[100%] transition-all duration-200 ${isEmail ? `translate-x-[calc(100%+11px)]` : "translate-x-[-22px]"}`} style={{ width: `calc(100% - 32px - ${getAnotherEleWidth()}px - ${isEmail ? "0px" : "10px"})` }}></div>
                                 <span className={`z-[1] cursor-pointer flex justify-center items-center gap-x-2 transition-all duration-200 text-[13px] font-medium leading-[13px] ${!isEmail ? "text-black" : "text-white"}`} onClick={() => { setIsEmail(true); setValue("phone", "") }}>
                                     <Image src={isEmail ? username_email_white : username_email_black} alt='' height={13} width={13} />
                                     <span>E-mail</span>
@@ -325,7 +325,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                     </div>
                     <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
                         <button className="sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button" disabled={isLoading ? isLoading : false}>
-                            <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
+                            <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                                 BACK
                             </div>
@@ -334,7 +334,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                             onClick={() => { handleUsernameSubmit() }}
                             type="button"
                             disabled={isLoading ? isLoading : getNextBtnDisablity()}>
-                            <div className="flex justify-center gap-[5px] font-medium sm:ms-4 text-[16px] leading-[normal] text-[#263238]">
+                            <div className="flex justify-center gap-[5px] font-bold sm:ms-4 text-[16px] leading-[normal] text-[#263238]">
                                 NEXT
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                             </div>

@@ -70,7 +70,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
 
                             </div>
 
-                            <button className={`rounded-[5px] bg-white text-[#263238] w-full max-w-[30rem] h-[42px] mt-[50px] font-bold flex justify-center items-center ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit" onClick={loadingHandler} >
+                            <button className={`rounded-[5px] uppercase bg-white text-[#263238] w-full max-w-[30rem] h-[42px] mt-[50px] font-bold flex justify-center items-center ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit" onClick={loadingHandler} >
                                 {!isLoading ? "Recover Password" :
                                     <div className="loader after:border-t-black after:border-b-black"></div>
                                 }
