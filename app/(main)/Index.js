@@ -32,7 +32,7 @@ const Index = async ({ children }) => {
               i => i.receiver_id === user[0].id || i.user_id === user[0].id || i.sender_id === user[0].id
             )}
             albumNotifications={albumNotifications.data}
-            chatList={chatList}
+            chatList={chatList.data.filter(i => (i.sender_id === user[0].id || i.receiver_id === user[0].id))}
             supportChat={supportChat.data}
           />
           {children}

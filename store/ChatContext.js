@@ -8,12 +8,16 @@ const EDIT_MESSAGE = 'EDIT_MESSAGE';
 const ADD_ONLINE_USERS = "ADD_ONLINE_USERS";
 const ADD_TYPING_USER = "ADD_TYPING_USER"
 const REMOVE_TYPING_USER = "REMOVE_TYPING_USER"
+const ADD_COUNT = "ADD_COUNT"
+const UPDATE_COUNT = "UPDATE_COUNT"
+const REMOVE_COUNT = 'REMOVE_COUNT'
 
 // Define the initial state
 const initialState = {
     messages: [],
     onlineUsers: [],
-    typingUsers: []
+    typingUsers: [],
+    unReadCount: []
 };
 
 // Define the reducer function
@@ -66,6 +70,36 @@ const chatReducer = (state, action) => {
                 ...state,
                 typingUsers: state.typingUsers.filter(user => user.sender_id !== obj.sender_id && user.receiver_id !== obj.receiver_id),
             }
+        case ADD_COUNT:
+            const item = action.payload
+            const isExist = state.unReadCount.some(i => i.id === item.id)
+            if (isExist) {
+                return state
+            } else {
+                return {
+                    ...state,
+                    unReadCount: [...state.unReadCount, action.payload]
+                }
+            }
+        case UPDATE_COUNT:
+            const id = action.payload
+            const updatedCount = state.unReadCount.map((user) => {
+                if (user.id === id) {
+                    return { ...user, count: user.count + 1 }
+                }
+                return user
+            })
+            return {
+                ...state,
+                unReadCount: updatedCount
+            }
+        case REMOVE_COUNT:
+            const removeId = action.payload;
+            const filteredCount = state.unReadCount.filter((user) => user.id !== removeId);
+            return {
+                ...state,
+                unReadCount: filteredCount
+            };
         default:
             return state;
     }
@@ -110,8 +144,20 @@ export const ChatProvider = ({ children }) => {
         dispatch({ type: REMOVE_TYPING_USER, payload: id })
     }
 
+    const addUnReadCount = (obj) => {
+        dispatch({ type: ADD_COUNT, payload: obj })
+    }
+
+    const updateUnReadCount = (id) => {
+        dispatch({ type: UPDATE_COUNT, payload: id })
+    }
+
+    const removeUnReadCount = (id) => {
+        dispatch({ type: REMOVE_COUNT, payload: id })
+    }
+
     return (
-        <ChatContext.Provider value={{ state, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser }}>
+        <ChatContext.Provider value={{ state, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser, addTypingUser, addUnReadCount, updateUnReadCount, removeUnReadCount }}>
             {children}
         </ChatContext.Provider>
     );
