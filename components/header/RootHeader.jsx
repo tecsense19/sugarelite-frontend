@@ -3,7 +3,7 @@ import { client_routes, server_routes } from '@/app/lib/helpers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import logo from "../../public/assets/Logo (1).svg"
 import notificationIcon from "../../public/assets/Mask group (1).svg"
 import messages from "../../public/assets/Mask group.svg"
@@ -18,13 +18,13 @@ import { io } from 'socket.io-client'
 import { useSocket } from '@/store/SocketContext'
 import { useChat } from '@/store/ChatContext'
 
-const socket = io();
+const socket = io("https://socket.website4you.co.in");
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
     const { setSocket } = useSocket();
-    const { addMessage, addTypingUser, removerTypingUser, editMessage } = useChat()
-    const { state: { notificationOpenState, notifyBadgeState, chatProfileState, supportMsgs }, dispatch } = useStore();
+    const { addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount } = useChat()
+    const { state: { notificationOpenState, notifyBadgeState, chatProfileState }, dispatch } = useStore();
 
     const router = useRouter()
     const pathname = usePathname()
@@ -40,6 +40,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
     useEffect(() => {
         if (user) {
+            // console.log(socket.io.engine.transport.n)
             socket.emit("join", user.id);
             setSocket(socket);
             const blockUserHandler = (obj) => {
@@ -130,7 +131,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.disconnect()
         }
     }, [user])
-
 
     useEffect(() => {
         if (user.is_blocked_users.length) {
@@ -245,8 +245,8 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }, [])
 
     useEffect(() => {
-        if (chatList.data.length) {
-            const user_chats = chatList.data.filter(chat => chat.sender_id === user?.id || chat.receiver_id === user?.id);
+        if (chatList.length) {
+            const user_chats = chatList.filter(chat => chat.sender_id === user?.id || chat.receiver_id === user?.id);
             const chatId = Array.from(new Set(user_chats.map(chat => chat.sender_id !== user.id ? chat.sender_id : chat.receiver_id)));
             if (chatId.length) {
                 chatId.forEach(i => {
@@ -276,8 +276,8 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }
 
     useEffect(() => {
-        if (chatList?.data.length && chatList?.data?.filter(msg => msg.receiver_id === user.id)?.length) {
-            const myReceivedMsgs = chatList?.data?.filter(msg => msg.receiver_id === user.id)
+        if (chatList.length && chatList.filter(msg => msg.receiver_id === user.id)?.length) {
+            const myReceivedMsgs = chatList.filter(msg => msg.receiver_id === user.id)
             const senderId = Array.from(new Set(myReceivedMsgs.filter(msg => (msg.status === "sent" || msg.status === null))?.map(i => i.sender_id)))
             if (senderId.length) {
                 senderId.forEach(id => {
@@ -287,6 +287,25 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             }
         }
     }, [user])
+
+
+    useEffect(() => {
+        const tempArr = []
+        const unReadMsgs = chatList.filter(i => (i.receiver_id === user.id && i.status !== "read"))
+        unReadMsgs.forEach((i) => {
+            const index = tempArr.findIndex(j => j.id === i.sender_id)
+            if (index !== -1) {
+                tempArr[index].count += 1
+            } else {
+                tempArr.push({ id: i.sender_id, count: 1 })
+            }
+        })
+        if (tempArr.length) {
+            tempArr.forEach(i => {
+                addUnReadCount(i)
+            })
+        }
+    }, [])
 
     return (
         <>
