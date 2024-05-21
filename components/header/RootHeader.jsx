@@ -23,8 +23,8 @@ const socket = io("https://socket.website4you.co.in");
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
 
     const { setSocket } = useSocket();
-    const { addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount } = useChat()
-    const { state: { notificationOpenState, notifyBadgeState, chatProfileState }, dispatch } = useStore();
+    const { addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount, updateUnReadCount, state: { unReadCount } } = useChat()
+    const { state: { notificationOpenState, notifyBadgeState, chatProfileState, toMessageState }, dispatch } = useStore();
 
     const router = useRouter()
     const pathname = usePathname()
@@ -119,7 +119,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
             socket.on("blocked-status", blockUserHandler);
             socket.on("unblocked-status", unblockUserHandler);
-            socket.on("receive-message", receiveMessageHandler);
+            // socket.on("receive-message", receiveMessageHandler);
             socket.on("album-notification", albumAccessHandler);
             socket.on("onlineUsers", onlineUserHandler)
             socket.on("opened-chat-user", myChattingPartner)
@@ -129,8 +129,38 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
         return () => {
             socket.disconnect()
+            socket.off("onlineUsers", onlineUserHandler)
         }
     }, [user])
+
+    useEffect(() => {
+        const receiveMessageHandler = (obj) => {
+            if (obj.receiver_id === user.id) {
+                if (obj.type === "deleted" || obj.type === "edited") {
+                    addMessage(obj)
+                    editMessage(obj)
+                } else {
+                    dispatch({ type: "Add_Msg_Badge", payload: true })
+                    newMessageHandler(obj)
+                    addMessage(obj)
+                    if (toMessageState.id !== obj.sender_id && obj?.type === "regular") {
+                        if (unReadCount.some(i => i.id === obj.sender_id)) {
+                            updateUnReadCount(obj.sender_id)
+                        } else {
+                            addUnReadCount({ id: obj.sender_id, count: 1 })
+                        }
+                    }
+                }
+            }
+        }
+
+        socket.on("receive-message", receiveMessageHandler)
+
+
+        return () => {
+            socket.off("receive-message", receiveMessageHandler)
+        }
+    }, [toMessageState, unReadCount])
 
     useEffect(() => {
         if (user.is_blocked_users.length) {
@@ -177,7 +207,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }
 
     useEffect(() => {
-        console.log(supportChat);
         if (!supportChat.length) {
             postSupportMsg(1);
         }

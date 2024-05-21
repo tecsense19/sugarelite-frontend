@@ -10,7 +10,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
 
     const [messages, setMessages] = useState([]);
     const { mySocket } = useSocket()
-    const { addMessage } = useChat()
+    const { addMessage, removeUnReadCount } = useChat()
 
     useEffect(() => {
         setMessages(chatList);
@@ -38,6 +38,10 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
             }
         }
     }, [toUser, chatList])
+
+    useEffect(() => {
+        removeUnReadCount(toUser.id)
+    }, [toUser])
 
     return (
         <div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-285px)]" : "md:h-[calc(100%-185px)] h-[calc(100%-122px)]"} p-4 md:px-10`}>
