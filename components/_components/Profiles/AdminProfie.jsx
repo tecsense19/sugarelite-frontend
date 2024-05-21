@@ -42,7 +42,7 @@ const AdminProfie = ({ message, setShowMobileChatContent }) => {
         >
             <div className="flex gap-4 items-center">
                 <div className="relative bg-tinder rounded-full h-[40px] flex min-w-[40px] md:h-[50px] md:min-w-[50px]">
-                    <Image src={Logo} height={40} width={40} alt="avatar" className="h-[65%] w-[54%] object-cover m-auto" />
+                    <Image src={Logo} height={40} width={40} alt="avatar" className="h-[26px] w-[22px] md:h-[32px] md:w-[27px] object-cover m-auto" />
                     <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute top-[-1px] right-[3px] md:top-0 md:right-[5px]' />
                 </div>
                 <div>

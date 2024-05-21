@@ -63,8 +63,8 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
                     </p>
                 </div>
             </div>
-            <div className="flex flex-col items-end min-w-fit">
-                <p className="italic text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mb-[8px]">
+            <div className="flex flex-col justify-between items-end min-w-fit">
+                <p className="italic text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px]">
                     {getTime(parseInt(latestMessage.milisecondtime))}
                 </p>
                 {

@@ -126,7 +126,7 @@ const TopNav = ({ messages, user, allUsers, setShowMobileChatContent }) => {
                             dispatch({ type: "Message_To", payload: "Admin" })
                         }}
                     >
-                        <Image src={Logo} alt="ELite_Logo" height={40} width={40} priority className="m-auto h-[67%] w-[55%] object-cover rounded-full pointer-events-none" />
+                        <Image src={Logo} alt="ELite_Logo" height={40} width={40} priority className="m-auto h-[26px] w-[22px] object-cover rounded-full pointer-events-none" />
                         <Image src={Stroke_Online} height={10} width={10} alt="avatar" className='absolute -top-[3px] right-1' />
                     </button>
                     {renderTopUsers()}

@@ -126,7 +126,7 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                             <div className="flex items-center">
                                 <button className="flex items-center" >
                                     <div className="bg-tinder rounded-full h-[40px] flex min-w-[40px] md:h-[60px] md:min-w-[60px]">
-                                        <Image src={Logo} alt="" height={40} width={40} priority className="m-auto object-cover h-[67%] w-[56%] pointer-events-none rounded-full" />
+                                        <Image src={Logo} alt="" height={40} width={40} priority className="m-auto object-cover w-[23.5px] h-[27px] md:w-[34px] md:h-[40px] pointer-events-none rounded-full" />
                                     </div>
                                     <div className="flex flex-col md:flex-row justify-center items-center ">
                                         <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">Team Elite</div>

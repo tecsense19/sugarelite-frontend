@@ -44,15 +44,15 @@ const Banner = ({ user }) => {
             In publishing and graphic design, Lorem ipsum is a placeholder demonstrate the visual form of a document or a typeface without relying
           </div>
           <div className="mt-[30px] lg:mt-[40px] flex justify-center lg:justify-start items-center w-full sm:w-8/12 lg:w-auto">
-            <Link href={client_routes.register} className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-secondary me-[20px] transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }}>
+            <Link href={client_routes.register} className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[600] bg-secondary me-[20px] transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }}>
               CREATE PROFILE
             </Link>
             {
               user ?
-                <button className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} onClick={handleReadMoreClick}>
+                <button className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[600] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} onClick={handleReadMoreClick}>
                   READ MORE
                 </button> :
-                <Link href={client_routes.login} prefetch className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[500] lg:font-[600] tracking-[-0.2px] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} >
+                <Link href={client_routes.login} prefetch className="rounded-[5px] max-w-[244px] w-10/12 lg:w-5/12 py-3 lg:py-4 text-[clamp(14px,4vw,17px)] lg:text-[20px] font-[600] bg-neutral lg:border lg:border-white/30 transition-all ease-linear duration-75 hover:scale-105 flex justify-center items-center" style={{ lineHeight: "normal" }} >
                   LOGIN
                 </Link>
             }

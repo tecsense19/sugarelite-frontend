@@ -12,6 +12,8 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
     const { mySocket } = useSocket()
     const { addMessage, removeUnReadCount } = useChat()
 
+    const [isScroller, setIsScroller] = useState(false)
+
     useEffect(() => {
         setMessages(chatList);
     }, [chatList]);
