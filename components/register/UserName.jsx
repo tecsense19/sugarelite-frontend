@@ -57,7 +57,13 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
             setValue("user_id", res.data.id)
             setShowOTP(true);
         } else {
-            setAlertMessage(res.message);
+            if (res.message) {
+                setAlertMessage(res.message);
+            } else {
+                if (res.error) {
+                    setAlertMessage(res.error);
+                }
+            }
             setShowUserAlreadyExistAlert(true);
         }
         // if (handleSubmitCalls) {
