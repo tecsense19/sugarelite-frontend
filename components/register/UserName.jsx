@@ -218,7 +218,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                         Resend OTP
                     </p>
                     <div className={`mt-[30px] w-full sm:grid grid-cols-2 gap-x-[37px]`}>
-                        <button className={`sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02] ${isLoading ? "pointer-events-none" : ""}`} type="button" onClick={() => setShowOTP(false)}>
+                        <button className={`sm:border-none bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02] ${isLoading ? "pointer-events-none" : ""}`} type="button" onClick={() => setShowOTP(false)}>
                             <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />
                                 BACK
@@ -263,33 +263,6 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                                 </span>
                             </div>
                         </div>
-                        {/* <div className=' flex items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                            <Image src={email} width={20} height={20} alt='email ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
-                            {isEmail
-                                ? <input
-                                    type="email"
-                                    {...register('email', { required: "Email needed" })}
-                                    onChange={(e) => { setShowUserAlreadyExistAlert(false); setValue("email", e.target.value) }}
-                                    placeholder='Enter Your Email Address'
-                                    className='w-full placeholder:text-[rgba(255,255,255)]  bg-transparent text-[16px] text-white font-medium outline-none'
-                                    autoComplete='off'
-                                />
-                                :
-                                <input
-                                    type="tel"
-                                    {...register('phone', { required: "Email needed" })}
-                                    onChange={(e) => { setShowUserAlreadyExistAlert(false); setValue("phone", e.target.value.replace(/\D/g, "").slice(0, 12)) }}
-                                    placeholder='Enter Your Phone Number'
-                                    className='w-full placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none'
-                                    autoComplete='off'
-                                />
-                            }
-                            {
-                                isLoading && <div className='me-3'>
-                                    <span className='loader'></span>
-                                </div>
-                            }
-                        </div> */}
                         <div className={`items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px] ${isEmail ? "flex" : "hidden"}`}>
                             <Image src={email} width={20} height={20} alt='email ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                             <input
@@ -307,7 +280,6 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                             }
                         </div>
                         <div className={`items-center h-[42px] gap-x-3 ${isEmail ? "hidden" : "flex"}`}>
-                            {/* <Image src={username_telephone_white} width={20} height={20} alt='phone ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' /> */}
                             <GetCountries countries={countries} setCountries={setCountries} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} showCountryCode={showCountryCode} setShowCountryCode={setShowCountryCode} />
                             <input
                                 type="tel"
@@ -324,7 +296,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                         }
                     </div>
                     <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
-                        <button className="sm:border-none bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button" disabled={isLoading ? isLoading : false}>
+                        <button className="sm:border-none bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button" disabled={isLoading ? isLoading : false}>
                             <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
                                 <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
                                 BACK

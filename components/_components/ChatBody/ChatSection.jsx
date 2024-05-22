@@ -65,7 +65,7 @@ const ChatSection = ({ toUser, setShowMobileChatContent, user, messages, support
                                 }
                             </>
                             : <BlockedComponent user={user} toUser={toUser} />
-                        : <SupportMessges supportChat={supportChat.map(i => i.get_support)} />
+                        : <SupportMessges supportChat={supportChat.reverse()} />
                 }
             </div>
             {
