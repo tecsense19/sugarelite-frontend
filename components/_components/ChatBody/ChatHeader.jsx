@@ -2,7 +2,7 @@ import { ConfigProvider, Popover, notification } from "antd";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import reportIcon from "/public/assets/chat_report_icon.svg";
-import blockIcon from "/public/assets/chat_block_icon.svg";
+import blockIcon from "/public/assets/prohibition.svg";
 import optionsIcon from "/public/assets/chat_options_icon.svg";
 import arrowLeft from "/public/assets/arrow_left.svg";
 import Logo from "/public/assets/fire_log.svg"

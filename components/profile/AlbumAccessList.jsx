@@ -113,20 +113,20 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
               <tbody className='w-full'>
                 {data && data.length
                   ? <>
-                    {data.map((item, inx) => (
+                    {data.reverse().map((item, inx) => (
                       <tr key={inx} className='bg-primary-dark-6 h-[70px] sm:h-[80px] px-10 w-full'>
                         <td className='text-center h-full items-center '>
                           <div className='sm:flex hidden ms-10 items-center'>
                             {item.avatar_url
                               ? <Image src={item.avatar_url} alt='' height={50} width={50} className='rounded-full object-cover pointer-events-none h-[50px] w-[50px]' />
-                              : <div className='h-[50px] w-[50px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
+                              : <div className='h-[50px] w-[50px] text-[25px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
                             }
                             <div className='ms-[14px] text-[20px] font-normal leading-[20px] flex items-center'>{item.username}</div>
                           </div>
                           <div className='sm:hidden flex ms-4 items-center'>
                             {item.avatar_url
                               ? <Image src={item.avatar_url} alt='' height={50} width={50} className='rounded-full object-cover pointer-events-none h-[40px] w-[40px]' />
-                              : <div className='h-[40px] w-[40px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
+                              : <div className='h-[40px] w-[40px] text-[25px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
                             }
                             <div className='ms-[10px] flex flex-col items-start gap-y-1'>
                               <div className='text-[17px] font-semibold leading-[20px]'>{item.username}</div>

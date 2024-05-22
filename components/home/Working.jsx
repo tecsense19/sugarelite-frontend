@@ -45,7 +45,7 @@ const Working = () => {
           </div>
           <div className="bg-primary-dark-2 px-3 py-10 sm:px-10 lg:py-[30px] rounded-[5px] flex flex-col items-center lg:items-start" data-aos="flip-right" data-aos-duration="500">
             <div className="h-[47px] w-[47px] lg:h-[75px] lg:w-[75px] bg-secondary rounded-full flex justify-center items-center">
-              <Image src={knowSiteIcon} alt="" height={40} width={40} className="h-[27px] w-[27px] lg:h-auto lg:w-auto select-none pointer-events-none" />
+              <Image src={knowSiteIcon} alt="" height={40} width={40} className="h-[27px] mt-[6px] w-[27px] lg:h-auto lg:w-auto select-none pointer-events-none" />
             </div>
             <div className="mt-5 text-[20px] lg:mt-7 lg:text-[24px] font-medium lg:font-bold leading-[normal] -tracking-[1px] text-center lg:text-start">
               Get to know the site
@@ -56,7 +56,7 @@ const Working = () => {
           </div>
           <div className="bg-primary-dark-2 px-3 py-10 sm:px-10 lg:py-[30px] rounded-[5px] flex flex-col items-center lg:items-end" data-aos="flip-left" data-aos-duration="500">
             <div className="h-[47px] w-[47px] lg:h-[75px] lg:w-[75px] bg-secondary rounded-full flex justify-center items-center">
-              <Image src={heartIcon} alt="" height={40} width={40} className="h-[27px] w-[27px] lg:h-auto lg:w-auto select-none pointer-events-none" />
+              <Image src={heartIcon} alt="" height={40} width={40} className="h-[27px] mt-[6px] w-[27px] lg:h-auto lg:w-auto select-none pointer-events-none" />
             </div>
             <div className="mt-5 text-[20px] lg:mt-7 lg:text-[24px] font-medium lg:font-bold leading-[normal] -tracking-[1px] text-center lg:text-end">Sugardate</div>
             <div className="mt-4 lg:mt-3 text-[16px] font-light leading-7 text-center lg:text-end">

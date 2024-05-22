@@ -49,7 +49,7 @@ const SideDrawer = ({ user }) => {
             path: client_routes.verifyIdentity
         },
         {
-            name: "Conatct Us",
+            name: "Contact Us",
             icon: searchIcon,
             path: client_routes.contactUs
         },
@@ -106,7 +106,7 @@ const SideDrawer = ({ user }) => {
                             </div>
                         </div>
                         <div className='w-full p-4 text-[16px] font-medium'>
-                            <button className='bg-primary-dark-5 p-2 rounded-[5px] tracking-[0.075em] w-full h-full uppercase' onClick={logoutHandler}>Logout</button>
+                            <button className='bg-primary-dark-5 p-2 rounded-[5px] tracking-[0.075em] w-full h-full uppercase font-semibold' onClick={logoutHandler}>Logout</button>
                         </div>
                     </div>
                 </Drawer>

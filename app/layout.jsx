@@ -8,6 +8,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { StoreProvider } from "@/store/store";
 import { SocketProvider } from "@/store/SocketContext";
 import { ChatProvider } from "@/store/ChatContext";
+import { StringProvider } from "@/store/LanguageContext";
 // import { all_friend_Notifications, all_profiles_action, chat_list_action, decrypt_user, get_user_action } from "./lib/actions";
 // import { client_routes } from "./lib/helpers";
 const inter = Inter({ subsets: ["latin"] });
@@ -29,12 +30,14 @@ export default async function RootLayout({ children }) {
       <AntdRegistry>
         <body className={inter.className + " select-none bg-primary overflow-hidden"} suppressHydrationWarning={true}>
           <StoreProvider>
-            <SocketProvider>
-              <ChatProvider>
-                {/* <Header decryptedUser={user ? user[0] : null} allUsers={allUsers.success && allUsers.data} chatList={chatList} /> */}
-                {children}
-              </ChatProvider>
-            </SocketProvider>
+            <StringProvider>
+              <SocketProvider>
+                <ChatProvider>
+                  {/* <Header decryptedUser={user ? user[0] : null} allUsers={allUsers.success && allUsers.data} chatList={chatList} /> */}
+                  {children}
+                </ChatProvider>
+              </SocketProvider>
+            </StringProvider>
           </StoreProvider>
         </body>
       </AntdRegistry>

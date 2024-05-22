@@ -3,16 +3,13 @@ import { useStore } from '@/store/store'
 import { ConfigProvider, Modal, notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import StripeModal from './StripeModal'
-import subscription_include from "/public/assets/subscription_include.png"
+import subscription_include from "/public/assets/subscription_include.svg"
 import subscription_not_include from "/public/assets/subscription_not_include.png"
 import Image from 'next/image'
 import arrow_left from "/public/assets/arrow_left.svg";
 import { client_notification, client_routes } from '@/app/lib/helpers'
 import Link from 'next/link'
 import { cancel_subscription_action, search_profile_action, start_stop_subscription_action } from '@/app/lib/actions'
-import CryptoJS from "crypto-js"
-import { setCookie } from "nookies"
-
 
 const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
