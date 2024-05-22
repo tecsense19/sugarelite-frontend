@@ -58,7 +58,7 @@ const ReportModal = ({ setIsModalOpen, isModalOpen, toUser, currentUser, }) => {
                         <div className=' border-t-[6px] border-secondary rounded-t-md w-full text-xl justify-between bg-white/10 flex items-center pb-[2px] px-5 text-Primary font-semibold h-14'>
                             <div className='flex gap-3 items-center mt-1'>
                                 {
-                                    toUser.avatar_url ? <Image src={toUser.avatar_url} alt='avatar' width={40} height={40} className='object-cover pointer-events-none rounded-full' /> : <p className='h-10 w-10 rounded-full bg-primary capitalize flex justify-center items-center'>{toUser.username.charAt(0)}</p>
+                                    toUser.avatar_url ? <Image src={toUser.avatar_url} alt='avatar' width={40} height={40} className='object-cover min-h-10 pointer-events-none rounded-full' /> : <p className='h-10 w-10 rounded-full bg-primary capitalize flex justify-center items-center'>{toUser.username.charAt(0)}</p>
                                 }
                                 <p className='capitalize'>{toUser.username}</p>
                             </div>

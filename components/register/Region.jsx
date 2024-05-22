@@ -138,7 +138,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 </div>
             </div>
             <div className='mt-14 w-full  sm:grid grid-cols-2 gap-x-[37px]'>
-                <button className="bg-black w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
+                <button className="bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center font-bold text-[16px] leading-[normal] gap-[5px]">
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden  " />
                         BACK

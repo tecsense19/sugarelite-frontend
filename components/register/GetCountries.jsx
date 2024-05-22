@@ -21,7 +21,7 @@ const GetCountries = ({ countries, setCountries, selectedCountry, setSelectedCou
             {showCountryCode
                 ? <div className='absolute bg-white rounded-[5px] left-0 top-12 z-[1] max-h-[160px] overflow-auto flex flex-col p-1' style={{ scrollbarWidth: "none" }}>
                     {countries.map((obj, inx) => (
-                        <span key={inx} className="flex gap-x-5 items-center justify-between w-full rounded-[5px] hover:bg-gray-600/30 px-2 py-1 cursor-pointer" onClick={() => handleCountryCodeChange(obj)}>
+                        <span key={inx} className="flex gap-x-5 items-center justify-between w-full rounded-[5px] hover:bg-gray-600/30 px-2 py-1 cursor-pointer" onClick={() => { handleCountryCodeChange(obj); setShowCountryCode(!showCountryCode) }}>
                             <div className="flex gap-x-2 w-max items-center">
                                 <Image src={obj.flag} alt='' width={20} height={20} className='pointer-events-none' />
                                 <div className='text-[#263238] font-semibold'>{obj.name}</div>

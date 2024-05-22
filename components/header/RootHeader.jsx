@@ -274,18 +274,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         // }
     }, [])
 
-    useEffect(() => {
-        if (chatList.length) {
-            const user_chats = chatList.filter(chat => chat.sender_id === user?.id || chat.receiver_id === user?.id);
-            const chatId = Array.from(new Set(user_chats.map(chat => chat.sender_id !== user.id ? chat.sender_id : chat.receiver_id)));
-            if (chatId.length) {
-                chatId.forEach(i => {
-                    dispatch({ type: "Add_Profile", payload: { id: i, milisecondtime: '' } })
-                })
-            }
-        }
-    }, [user])
-
     const handleLogout = async () => {
         logout_user()
         dispatch({ type: "Logout" })
@@ -352,13 +340,13 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                             <button className="transition-all duration-150 hover:scale-110 relative" onClick={() => notificationOpenState ? dispatch({ type: "Close_Notification", payload: false }) : dispatch({ type: "Open_Notification", payload: true })}>
                                 <Image height={20} width={20} src={notificationIcon} alt="" />
                                 {notifyBadgeState.notify &&
-                                    <p className="h-2 w-2 bg-secondary rounded-full absolute top-0 right-0 "></p>
+                                    <p className="h-2 w-2 bg-secondary bounce rounded-full absolute top-0 right-0 "></p>
                                 }
                             </button>
                             <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110 relative">
                                 <Image height={32} width={20} src={messages} alt="" className="" />
                                 {notifyBadgeState.msg &&
-                                    <p className="h-2 w-2 bg-secondary rounded-full absolute top-0 -right-1"></p>
+                                    <p className="h-2 w-2 bg-secondary bounce rounded-full absolute top-0 -right-1"></p>
                                 }
                             </Link>
                             <Link href={client_routes.search} className="py-[7px] rounded-[5px] h-[32px] flex items-center transition-all duration-150 hover:scale-110">
