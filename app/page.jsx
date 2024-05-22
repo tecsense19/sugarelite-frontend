@@ -1,5 +1,5 @@
 import Home from "@/components/home/Index";
-import { get_laguage_action, get_user_action } from "./lib/actions";
+import { get_language_action, get_user_action } from "./lib/actions";
 import Header from "@/components/header/Header";
 import Image from "next/image";
 import logo from "/public/assets/Logo (1).svg"
@@ -8,7 +8,7 @@ import { client_routes } from "./lib/helpers";
 
 const Page = async () => {
   const user = await get_user_action()
-  const allStrings = await get_laguage_action();
+  const allStrings = await get_language_action();
 
   if (allStrings?.success) {
     return (
@@ -37,6 +37,8 @@ const Page = async () => {
         <Home allStrings={allStrings.data} user={user ? user[0] : null} />
       </>
     );
+  } else {
+    return <>fetch failed</>
   }
 }
 

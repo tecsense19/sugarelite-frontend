@@ -51,6 +51,9 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 mobile_no: countryCode + watch("phone")
             }
         }
+        // if (isEmail) { // Temporary added because of smtp error from backend
+        //     setShowOTP(true);
+        // } else {
         let res = await send_otp_action(obj);
         if (res.success) {
             setOtpId(res.data.id);
@@ -66,6 +69,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
             }
             setShowUserAlreadyExistAlert(true);
         }
+        // }
         // if (handleSubmitCalls) {
         //     handleSubmitCalls = false
         //     setShowUserAlreadyExistAlert(false)
@@ -144,6 +148,14 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 id: otpId,
                 otp: tempOtp
             }
+            // if (isEmail) { // Temporary added because of smtp error from backend
+            //     if (tempOtp === "654321") {
+            //         setNextStep(3);
+            //     } else {
+            //         client_notification(api, "topRight", "error", "OTP Incorrect", 3)
+            //         setOtpArr(["", "", "", "", "", ""])
+            //     }
+            // } else {
             let res = await verify_otp_action(obj);
             if (res.success) {
                 setNextStep(3);
@@ -158,6 +170,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 client_notification(api, "topRight", "error", res.error, 3)
                 setOtpArr(["", "", "", "", "", ""])
             }
+            // }
             setIsLoading(false);
         }
     }
@@ -174,6 +187,9 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 mobile_no: selectedCountry.code + watch("phone")
             }
         }
+        // if (isEmail) {  // Temporary added because of smtp error from backend
+        //     setShowOTP(true);
+        // } else {
         let res = await send_otp_action(obj);
         if (res.success) {
             setOtpId(res.data.id);
@@ -183,6 +199,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
             setAlertMessage(res.message);
             setShowUserAlreadyExistAlert(true);
         }
+        // }
         setIsLoading(false);
     }
 

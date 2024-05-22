@@ -398,7 +398,7 @@ export const get_support_msg = async (form) => {
     }
 }
 
-export const get_laguage_action = async () => {
+export const get_language_action = async () => {
     try {
         const res = await fetch(server_routes.getLaguageMaster)
         const data = await res.json()
@@ -407,7 +407,6 @@ export const get_laguage_action = async () => {
         console.log(error)
     }
 }
-
 
 export const get_braodcast_msg = async () => {
     try {
