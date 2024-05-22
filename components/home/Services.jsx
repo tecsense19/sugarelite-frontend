@@ -6,14 +6,14 @@ import Img4 from "../../public/assets/date.svg"
 import Img5 from "../../public/assets/search (1).svg"
 import Img6 from "../../public/assets/profile.svg"
 
-const Services = () => {
+const Services = ({ allStrings }) => {
   const servicesArr = [
-    { id: 1, imgUrl: Img1, title: "Lorem Ipsum", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum." },
-    { id: 2, imgUrl: Img2, title: "Lorem Ipsum", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum." },
-    { id: 3, imgUrl: Img3, title: "Lorem Ipsum", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum." },
-    { id: 4, imgUrl: Img4, title: "Lorem Ipsum", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum." },
-    { id: 5, imgUrl: Img5, title: "Lorem Ipsum", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum." },
-    { id: 6, imgUrl: Img6, title: "Lorem Ipsum", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum." }
+    { id: 1, imgUrl: Img1, title: allStrings["string_sugar_dating"].danish_string, description: allStrings["string_sugar_dating_description"].danish_string },
+    { id: 2, imgUrl: Img2, title: allStrings["string_start_your_journey_here"].danish_string, description: allStrings["string_start_your_journey_here_description"].danish_string },
+    { id: 3, imgUrl: Img3, title: allStrings["string_successful_dating_online"].danish_string, description: allStrings["string_succesful_dating_online_description"].danish_string },
+    { id: 4, imgUrl: Img4, title: allStrings["string_the_concept"].danish_string, description: allStrings["string_the_concept_description"].danish_string },
+    { id: 5, imgUrl: Img5, title: allStrings["string_the_start_of_your_journey"].danish_string, description: allStrings["string_the_start_of_your_journey_description"].danish_string },
+    { id: 6, imgUrl: Img6, title: allStrings["string_dating_experience"].danish_string, description: allStrings["string_dating_experience_description"].danish_string }
   ]
   return (
     <div id="services_container" className="w-full flex justify-center">

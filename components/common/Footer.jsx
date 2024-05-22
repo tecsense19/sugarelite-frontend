@@ -19,7 +19,7 @@ import Link from "next/link";
 import { client_routes } from "@/app/lib/helpers";
 import { useState } from "react";
 
-const Footer = () => {
+const Footer = ({ allStrings }) => {
   const { register, handleSubmit, setValue, formState: { isValid } } = useForm()
   const [showNewsLetterAlert, setShowNewsLetterAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -33,9 +33,19 @@ const Footer = () => {
   ]
 
   const footerMiddleContent = [
-    { title: "Company", features: ["About", "Reviews", "Clients"] },
-    { title: "Feature", features: ["Quick Access", "Secure Payment", "24/7 Support"] },
-    { title: "Download", features: ["Android App", "IOS App", "Mobile Version"] }
+    // allStrings["string_happy_members"].danish_string
+    {
+      title: allStrings["string_company"].danish_string,
+      features: [allStrings["string_about"].danish_string, allStrings["string_reviews"].danish_string, allStrings["string_clients"].danish_string]
+    },
+    {
+      title: allStrings["string_feature"].danish_string,
+      features: [allStrings["string_quick_access"].danish_string, allStrings["string_secure_payment"].danish_string, allStrings["string_24/7_support"].danish_string]
+    },
+    {
+      title: allStrings["string_download"].danish_string,
+      features: [allStrings["string_android_app"].danish_string, allStrings["string_ios_app"].danish_string, allStrings["string_mobile_version"].danish_string]
+    }
   ]
 
   const getMobileMiddleContent = () => {
@@ -44,7 +54,7 @@ const Footer = () => {
       tempArr.push({
         key: idx,
         style: { marginBottom: 12 },
-        label: <div className={`text-[20px] font-medium md:text-[24px] md:font-extrabold leading-[30px] text-white ${((idx + 1) !== footerMiddleContent.length) ? "mb-3" : ""}`}>{item.title}</div>,
+        label: <div className={`text-[20px] font-medium md:text-[24px] md:font-extrabold leading-[30px] text-white capitalize ${((idx + 1) !== footerMiddleContent.length) ? "mb-3" : ""}`}>{item.title}</div>,
         children: <div className="mt-[5px] mb-5 2xl:mt-10 flex flex-col gap-y-3 2xl:gap-y-5">
           {item.features.map((name, index) => {
             return (
@@ -90,7 +100,6 @@ const Footer = () => {
     }, duration * 1000);
   };
 
-
   return (
     <div className="w-full flex justify-center items-center bg-black pb-[30px] home-footer-container text-white" >
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
@@ -101,7 +110,7 @@ const Footer = () => {
               <Image src={logo} priority alt="" height={35} width={177} className="select-none pointer-events-none 2xl:hidden" />
             </div>
             <div className="mt-4 2xl:mt-[25px] text-start text-[16px] font-normal leading-[28px]">
-              In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate
+              {allStrings["string_footer_description"].danish_string}
             </div>
             <div className="mt-6 flex items-center justify-start gap-x-[11px]">
               {socialButtons.map((item, idx) => {
@@ -116,7 +125,7 @@ const Footer = () => {
           </div>
           {/* {/ Mobile Middle Content Start /} */}
           <div className="block md:hidden mt-9 text-[26px] font-semibold leading-[30px]">
-            Information
+            {allStrings["string_information"].danish_string}
           </div>
           <div className="grid md:hidden w-full mt-9 border-b-[1px] border-white/25">
             <ConfigProvider theme={{ components: { Collapse: { contentPadding: "0px", headerPadding: "0px 4px 0px 0px", colorBorder: "rgba(255,255,255,0.25)" } } }}>
@@ -146,7 +155,9 @@ const Footer = () => {
           </div>
           {/* {/ Desktop Middle Content End /} */}
           <div className="2xl:col-span-3 mt-10 2xl:mt-0">
-            <div className="text-[24px] font-extrabold leading-[30px]">News Letter</div>
+            <div className="text-[24px] font-extrabold leading-[30px]">
+              {allStrings["string_news_letter"].danish_string}
+            </div>
             <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
               <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" autoComplete="off"
                 {...register("email", { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, required: true })} />
@@ -162,9 +173,9 @@ const Footer = () => {
         </div>
 
         <div className="w-full mt-[50px] 2xl:mt-[80px] border-t-[1px] border-white/25 lg:border-white/50 flex flex-col-reverse lg:flex-row justify-center items-center text-white/75 lg:text-white">
-          <div className="text-[14px] font-normal leading-[normal] mt-[15px] lg:mt-[18px]">Copyright © 2024 SugarElite All Rights Reserved.</div>
-          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  <Link href={client_routes.termsOfUse} className="hover:text-secondary">Terms of Use</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">Privacy Policy</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">Disclaimer</Link></div>
-          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden"><Link href={client_routes.termsOfUse} className="hover:text-secondary">Terms of Use</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">Privacy Policy</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">Disclaimer</Link></div>
+          <div className="text-[14px] font-normal leading-[normal] mt-[15px] lg:mt-[18px]">{allStrings["string_copyright_©_2024_sugarelite_all_rights_reserved"].danish_string}</div>
+          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"].danish_string}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"].danish_string}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"].danish_string}</Link></div>
+          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden"><Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"].danish_string}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"].danish_string}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"].danish_string}</Link></div>
         </div>
       </div>
     </div>

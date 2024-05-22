@@ -51,7 +51,9 @@ export const server_routes = {
   contactUs: base_path + "/contactus",
   verifyIdentity: base_path + "/verifyidentity",
   getSupportMsg: base_path + "/getelitesupport",
-  sendSupportMsg: base_path + "/elitesupport"
+  sendSupportMsg: base_path + "/elitesupport",
+  getBroadcastMsg: base_path + "/get_broadcast",
+  getLaguageMaster: base_path + "/get_laguage_master"
 }
 
 

@@ -398,6 +398,27 @@ export const get_support_msg = async (form) => {
     }
 }
 
+export const get_laguage_action = async () => {
+    try {
+        const res = await fetch(server_routes.getLaguageMaster)
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const get_braodcast_msg = async () => {
+    try {
+        const res = await fetch(server_routes.getBroadcastMsg)
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Stripe Actions
 export const stripe_action = async (form) => {
     try {

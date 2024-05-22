@@ -12,7 +12,7 @@ import HomeCounter from "./HomeCounter"
 import Working from "./Working"
 import Footer from "../common/Footer"
 
-const Home = ({ user }) => {
+const Home = ({ user, allStrings }) => {
   const [showScrollTopBtn, setShowScrollTopBtn] = useState(false)
 
   useEffect(() => {
@@ -44,14 +44,14 @@ const Home = ({ user }) => {
   return (
     <>
       <div className={`min-h-dvh w-full overflow-hidden md:pt-[80px] bg-primary text-white transition-all duration-150 ease-linear origin-top flex flex-col pt-[65px]`}>
-        <Banner user={user} />
-        <Services />
-        <UserFriendly />
-        <EasySearch />
-        <UniqueProfile />
-        <HomeCounter />
-        <Working />
-        <Footer />
+        <Banner allStrings={allStrings} user={user} />
+        <Services allStrings={allStrings} />
+        <UserFriendly allStrings={allStrings} />
+        <EasySearch allStrings={allStrings} />
+        <UniqueProfile allStrings={allStrings} />
+        <HomeCounter allStrings={allStrings} />
+        <Working allStrings={allStrings} />
+        <Footer allStrings={allStrings} />
       </div>
       {showScrollTopBtn &&
         <button className="fade-down fixed bottom-5 right-5 w-10 h-10 bg-secondary rounded-full flex justify-center items-center group" onClick={handleScrollTop} data-aos="fade-up">

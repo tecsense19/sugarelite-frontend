@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { client_routes } from "@/app/lib/helpers";
 import Link from "next/link";
 
-const EasySearch = () => {
+const EasySearch = ({ allStrings }) => {
   const router = useRouter();
 
   return (
@@ -25,24 +25,24 @@ const EasySearch = () => {
             </div>
           </div>
           <div className="text-[clamp(21px,5vw,25px)] lg:text-[clamp(32px,5vw,38px)] mt-4 lg:mt-5 font-semibold lg:font-extrabold text-center lg:text-end lg:max-w-[80%] -tracking-[1px] leading-[normal]">
-            Easily search for new acquaintances
+            {allStrings["string_easily_search_for_new_acquaintances"].danish_string}
           </div>
           <div className="w-full flex justify-center lg:justify-end">
             <div className="text-[16px] mt-3 font-light leading-7 w-11/12 text-end hidden lg:block">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum. Lorem ipsum dolor sit amet, consectetur.
+              {allStrings["string_easily_search_for_new_acquaintances_long_description"].danish_string}
             </div>
             <div className="text-[16px] mt-4 font-light leading-6 w-10/12 text-center block lg:hidden">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Laoreet pellentesque ac mauris ultricies laoreet dictum.
+              {allStrings["string_easily_search_for_new_acquaintances_short_description"].danish_string}
             </div>
           </div>
           <div className="hidden lg:flex justify-end">
             <Link href={client_routes.register} className="mt-[36px] rounded-[5px] bg-secondary h-[48px] px-[30px] text-[18px] font-bold tracking-[-0.18px] hidden lg:inline-flex justify-center items-center transition-all ease-linear duration-75 hover:scale-105">
-              CREATE PROFILE
+              {allStrings["string_create_profile"].danish_string}
             </Link>
           </div>
           <div className="lg:hidden w-full flex justify-center">
             <Link href={client_routes.register} className="mt-[38px] rounded-sm bg-secondary h-[42px] px-[18px] text-[16px] font-bold inline-flex justify-center items-center">
-              CREATE PROFILE
+              {allStrings["string_create_profile"].danish_string}
             </Link>
           </div>
         </div>

@@ -4,15 +4,15 @@ import counterBgMobileImage from "../../public/assets/counter_frame_mobile.svg"
 import CountUp from 'react-countup'
 import { useEffect, useRef, useState } from "react";
 
-const HomeCounter = () => {
+const HomeCounter = ({ allStrings }) => {
   const countRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const counters = [
-    { id: 1, name: "Happy Members", value: 150 },
-    { id: 2, name: "Elite Male", value: 80 },
-    { id: 3, name: "Elite Female", value: 70 },
-    { id: 4, name: "Happy Match", value: 60 }
+    { id: 1, name: allStrings["string_happy_members"].danish_string, value: 150 },
+    { id: 2, name: allStrings["string_elite_male"].danish_string, value: 80 },
+    { id: 3, name: allStrings["string_elite_female"].danish_string, value: 70 },
+    { id: 4, name: allStrings["string_happy_match"].danish_string, value: 60 }
   ]
 
   useEffect(() => {
