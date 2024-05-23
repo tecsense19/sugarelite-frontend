@@ -8,12 +8,12 @@ import Img6 from "../../public/assets/profile.svg"
 
 const Services = ({ allStrings }) => {
   const servicesArr = [
-    { id: 1, imgUrl: Img1, title: allStrings["string_sugar_dating"].danish_string, description: allStrings["string_sugar_dating_description"].danish_string },
-    { id: 2, imgUrl: Img2, title: allStrings["string_start_your_journey_here"].danish_string, description: allStrings["string_start_your_journey_here_description"].danish_string },
-    { id: 3, imgUrl: Img3, title: allStrings["string_successful_dating_online"].danish_string, description: allStrings["string_succesful_dating_online_description"].danish_string },
-    { id: 4, imgUrl: Img4, title: allStrings["string_the_concept"].danish_string, description: allStrings["string_the_concept_description"].danish_string },
-    { id: 5, imgUrl: Img5, title: allStrings["string_the_start_of_your_journey"].danish_string, description: allStrings["string_the_start_of_your_journey_description"].danish_string },
-    { id: 6, imgUrl: Img6, title: allStrings["string_dating_experience"].danish_string, description: allStrings["string_dating_experience_description"].danish_string }
+    { id: 1, imgUrl: Img1, title: allStrings["string_sugar_dating"], description: allStrings["string_sugar_dating_description"] },
+    { id: 2, imgUrl: Img2, title: allStrings["string_start_your_journey_here"], description: allStrings["string_start_your_journey_here_description"] },
+    { id: 3, imgUrl: Img3, title: allStrings["string_successful_dating_online"], description: allStrings["string_succesful_dating_online_description"] },
+    { id: 4, imgUrl: Img4, title: allStrings["string_the_concept"], description: allStrings["string_the_concept_description"] },
+    { id: 5, imgUrl: Img5, title: allStrings["string_the_start_of_your_journey"], description: allStrings["string_the_start_of_your_journey_description"] },
+    { id: 6, imgUrl: Img6, title: allStrings["string_dating_experience"], description: allStrings["string_dating_experience_description"] }
   ]
   return (
     <div id="services_container" className="w-full flex justify-center">

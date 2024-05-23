@@ -33,18 +33,18 @@ const Footer = ({ allStrings }) => {
   ]
 
   const footerMiddleContent = [
-    // allStrings["string_happy_members"].danish_string
+    // allStrings["string_happy_members"]
     {
-      title: allStrings["string_company"].danish_string,
-      features: [allStrings["string_about"].danish_string, allStrings["string_reviews"].danish_string, allStrings["string_clients"].danish_string]
+      title: allStrings["string_company"],
+      features: [allStrings["string_about"], allStrings["string_reviews"], allStrings["string_clients"]]
     },
     {
-      title: allStrings["string_feature"].danish_string,
-      features: [allStrings["string_quick_access"].danish_string, allStrings["string_secure_payment"].danish_string, allStrings["string_24/7_support"].danish_string]
+      title: allStrings["string_feature"],
+      features: [allStrings["string_quick_access"], allStrings["string_secure_payment"], allStrings["string_24/7_support"]]
     },
     {
-      title: allStrings["string_download"].danish_string,
-      features: [allStrings["string_android_app"].danish_string, allStrings["string_ios_app"].danish_string, allStrings["string_mobile_version"].danish_string]
+      title: allStrings["string_download"],
+      features: [allStrings["string_android_app"], allStrings["string_ios_app"], allStrings["string_mobile_version"]]
     }
   ]
 
@@ -110,7 +110,7 @@ const Footer = ({ allStrings }) => {
               <Image src={logo} priority alt="" height={35} width={177} className="select-none pointer-events-none 2xl:hidden" />
             </div>
             <div className="mt-4 2xl:mt-[25px] text-start text-[16px] font-normal leading-[28px]">
-              {allStrings["string_footer_description"].danish_string}
+              {allStrings["string_footer_description"]}
             </div>
             <div className="mt-6 flex items-center justify-start gap-x-[11px]">
               {socialButtons.map((item, idx) => {
@@ -125,7 +125,7 @@ const Footer = ({ allStrings }) => {
           </div>
           {/* {/ Mobile Middle Content Start /} */}
           <div className="block md:hidden mt-9 text-[26px] font-semibold leading-[30px]">
-            {allStrings["string_information"].danish_string}
+            {allStrings["string_information"]}
           </div>
           <div className="grid md:hidden w-full mt-9 border-b-[1px] border-white/25">
             <ConfigProvider theme={{ components: { Collapse: { contentPadding: "0px", headerPadding: "0px 4px 0px 0px", colorBorder: "rgba(255,255,255,0.25)" } } }}>
@@ -156,7 +156,7 @@ const Footer = ({ allStrings }) => {
           {/* {/ Desktop Middle Content End /} */}
           <div className="2xl:col-span-3 mt-10 2xl:mt-0">
             <div className="text-[24px] font-extrabold leading-[30px]">
-              {allStrings["string_news_letter"].danish_string}
+              {allStrings["string_news_letter"]}
             </div>
             <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
               <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" autoComplete="off"
@@ -173,9 +173,9 @@ const Footer = ({ allStrings }) => {
         </div>
 
         <div className="w-full mt-[50px] 2xl:mt-[80px] border-t-[1px] border-white/25 lg:border-white/50 flex flex-col-reverse lg:flex-row justify-center items-center text-white/75 lg:text-white">
-          <div className="text-[14px] font-normal leading-[normal] mt-[15px] lg:mt-[18px]">{allStrings["string_copyright_©_2024_sugarelite_all_rights_reserved"].danish_string}</div>
-          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"].danish_string}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"].danish_string}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"].danish_string}</Link></div>
-          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden"><Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"].danish_string}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"].danish_string}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"].danish_string}</Link></div>
+          <div className="text-[14px] font-normal leading-[normal] mt-[15px] lg:mt-[18px]">{allStrings["string_copyright_©_2024_sugarelite_all_rights_reserved"]}</div>
+          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link></div>
+          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden"><Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link></div>
         </div>
       </div>
     </div>

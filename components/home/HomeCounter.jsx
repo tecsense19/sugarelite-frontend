@@ -9,10 +9,10 @@ const HomeCounter = ({ allStrings }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const counters = [
-    { id: 1, name: allStrings["string_happy_members"].danish_string, value: 150 },
-    { id: 2, name: allStrings["string_elite_male"].danish_string, value: 80 },
-    { id: 3, name: allStrings["string_elite_female"].danish_string, value: 70 },
-    { id: 4, name: allStrings["string_happy_match"].danish_string, value: 60 }
+    { id: 1, name: allStrings["string_happy_members"], value: 150 },
+    { id: 2, name: allStrings["string_elite_male"], value: 80 },
+    { id: 3, name: allStrings["string_elite_female"], value: 70 },
+    { id: 4, name: allStrings["string_happy_match"], value: 60 }
   ]
 
   useEffect(() => {

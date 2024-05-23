@@ -1,8 +1,8 @@
 import Header from "@/components/header/Header";
-import { get_language_action } from "../lib/actions";
+import { getAllStrings } from "../lib/allStrings";
 
 export default async function RootLayout({ children }) {
-    const allStrings = await get_language_action();
+    const allStrings = await getAllStrings();
 
     if (allStrings?.success) {
         return <>

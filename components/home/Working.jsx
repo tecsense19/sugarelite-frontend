@@ -12,10 +12,10 @@ const Working = ({ allStrings }) => {
       <div className="w-full sm:w-9/12 flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center" data-aos="fade-in" data-aos-duration="500">
           <div className="text-[clamp(26px,5vw,60px)] font-extrabold leading-[normal] -tracking-[0.5px] lg:-tracking-[1px] text-center">
-            {allStrings["string_how_does_it_work?"].danish_string}
+            {allStrings["string_how_does_it_work?"]}
           </div>
           <div className="text-[16px] font-light leading-6 lg:leading-7 w-full sm:w-10/12 2xl:w-6/12 mt-3 px-2 sm:px-0 text-center">
-            {allStrings["string_working_description"].danish_string}
+            {allStrings["string_working_description"]}
           </div>
         </div>
         <div className="mt-10 2xl:mt-[100px] w-full justify-center items-center grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-x-[65px] gap-y-[22px]">
@@ -24,10 +24,10 @@ const Working = ({ allStrings }) => {
               <Image src={addUserIcon} alt="" height={40} width={40} className="h-[27px] w-[27px] lg:h-[40px] lg:w-[40px] select-none pointer-events-none" />
             </div>
             <div className="mt-5 text-[20px] lg:mt-7 lg:text-[24px] font-medium lg:font-bold leading-[normal] -tracking-[1px] text-center lg:text-start">
-              {allStrings["string_create_profile"].danish_string}
+              {allStrings["string_create_profile"]}
             </div>
             <div className="mt-4 lg:mt-3 text-[16px] font-light leading-7 text-center lg:text-start">
-              {allStrings["string_create_profile_description"].danish_string}
+              {allStrings["string_create_profile_description"]}
             </div>
           </div>
           <div className="row-start-1 2xl:col-span-1 lg:col-span-2 2xl:row-span-2 flex justify-center items-center" data-aos="fade-in" data-aos-duration="800">
@@ -39,10 +39,10 @@ const Working = ({ allStrings }) => {
               <Image src={premiumIcon} alt="" height={40} width={40} className="h-[27px] w-[27px] lg:h-[40px] lg:w-[40px] select-none pointer-events-none" />
             </div>
             <div className="mt-5 text-[20px] lg:mt-7 lg:text-[24px] font-medium lg:font-bold leading-[normal] -tracking-[1px] text-center lg:text-end">
-              {allStrings["string_confirm_your_email"].danish_string}
+              {allStrings["string_confirm_your_email"]}
             </div>
             <div className="mt-4 lg:mt-3 text-[16px] font-light leading-7 text-center lg:text-end">
-              {allStrings["string_confirm_your_email_description"].danish_string}
+              {allStrings["string_confirm_your_email_description"]}
             </div>
           </div>
           <div className="bg-primary-dark-2 px-3 py-10 sm:px-10 lg:py-[30px] rounded-[5px] flex flex-col items-center lg:items-start" data-aos="flip-right" data-aos-duration="500">
@@ -50,10 +50,10 @@ const Working = ({ allStrings }) => {
               <Image src={knowSiteIcon} alt="" height={40} width={40} className="h-[27px] mt-[6px] w-[27px] lg:h-[40px] lg:w-[40px] select-none pointer-events-none" />
             </div>
             <div className="mt-5 text-[20px] lg:mt-7 lg:text-[24px] font-medium lg:font-bold leading-[normal] -tracking-[1px] text-center lg:text-start">
-              {allStrings["string_get_to_know_the_site"].danish_string}
+              {allStrings["string_get_to_know_the_site"]}
             </div>
             <div className="mt-4 lg:mt-3 text-[16px] font-light leading-7 text-center lg:text-start">
-              {allStrings["string_get_to_know_the_site_description"].danish_string}
+              {allStrings["string_get_to_know_the_site_description"]}
             </div>
           </div>
           <div className="bg-primary-dark-2 px-3 py-10 sm:px-10 lg:py-[30px] rounded-[5px] flex flex-col items-center lg:items-end" data-aos="flip-left" data-aos-duration="500">
@@ -61,10 +61,10 @@ const Working = ({ allStrings }) => {
               <Image src={heartIcon} alt="" height={40} width={40} className="h-[27px] mt-[6px] w-[27px] lg:h-[40px] lg:w-[40px] select-none pointer-events-none" />
             </div>
             <div className="mt-5 text-[20px] lg:mt-7 lg:text-[24px] font-medium lg:font-bold leading-[normal] -tracking-[1px] text-center lg:text-end">
-              {allStrings["string_sugardate"].danish_string}
+              {allStrings["string_sugardate"]}
             </div>
             <div className="mt-4 lg:mt-3 text-[16px] font-light leading-7 text-center lg:text-end">
-              {allStrings["string_sugardate_description"].danish_string}
+              {allStrings["string_sugardate_description"]}
             </div>
           </div>
         </div>

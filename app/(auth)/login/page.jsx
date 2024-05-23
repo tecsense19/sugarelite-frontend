@@ -1,26 +1,22 @@
-"use client"
-
+import { getAllStrings } from "@/app/lib/allStrings"
 import AuthLoader from "@/components/common/AuthLoader"
-import Forgot_Component from "@/components/login/Forgot_Component"
-import Login_component from "@/components/login/Login_component"
-import { Suspense, useState } from "react"
+import LoginIndex from "@/components/login/LoginIndex";
+import { Suspense } from "react"
 
-const Login = () => {
+const Login = async () => {
+  const allStrings = await getAllStrings();
 
-  const [isForgotOpen, setIsForgotOpen] = useState(false)
-
-  return (
-    <>
-      <Suspense fallback={<AuthLoader />}>
-        {
-          !isForgotOpen && <Login_component setIsForgotOpen={setIsForgotOpen} />
-        }
-        {
-          isForgotOpen && <Forgot_Component setIsForgotOpen={setIsForgotOpen} />
-        }
-      </Suspense>
-    </>
-  )
+  if (allStrings.success) {
+    return (
+      <>
+        <Suspense fallback={<AuthLoader />}>
+          <LoginIndex allStrings={allStrings.data} />
+        </Suspense>
+      </>
+    )
+  } else {
+    return <>Fetch Failed</>
+  }
 }
 
 export default Login

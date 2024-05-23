@@ -25,22 +25,22 @@ const UserFriendly = ({ allStrings }) => {
             </div>
           </div>
           <div className="text-[clamp(21px,5vw,25px)] lg:text-[38px] mt-4 lg:mt-5 font-semibold lg:font-extrabold text-center lg:text-start -tracking-[1px] leading-[normal]">
-            {allStrings["string_user-friendly_settings"].danish_string}
+            {allStrings["string_user-friendly_settings"]}
           </div>
           <div className="w-full flex justify-center lg:justify-start">
             <div className="text-[16px] mt-3 font-light leading-7 w-9/12 text-start hidden lg:block">
-              {allStrings["string_user-friendly_settings_long_description"].danish_string}
+              {allStrings["string_user-friendly_settings_long_description"]}
             </div>
             <div className="text-[16px] mt-4 font-light leading-6 w-10/12 text-center block lg:hidden">
-              {allStrings["string_user-friendly_settings_short_description"].danish_string}
+              {allStrings["string_user-friendly_settings_short_description"]}
             </div>
           </div>
           <Link href={client_routes.register} className="mt-[36px] rounded-[5px] bg-secondary h-[48px] px-[30px] text-[18px] font-bold tracking-[-0.18px] hidden lg:inline-flex justify-center items-center transition-all ease-linear duration-75 hover:scale-105">
-            {allStrings["string_create_profile"].danish_string}
+            {allStrings["string_create_profile"]}
           </Link>
           <div className="lg:hidden w-full flex justify-center">
             <Link href={client_routes.register} className="mt-[38px] rounded-sm bg-secondary h-[42px] px-[18px] text-[16px] font-bold inline-flex justify-center items-center">
-              {allStrings["string_create_profile"].danish_string}
+              {allStrings["string_create_profile"]}
             </Link>
           </div>
         </div>

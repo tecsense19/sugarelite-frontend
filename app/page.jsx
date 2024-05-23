@@ -1,14 +1,15 @@
 import Home from "@/components/home/Index";
-import { get_language_action, get_user_action } from "./lib/actions";
+import { get_user_action } from "./lib/actions";
 import Header from "@/components/header/Header";
 import Image from "next/image";
 import logo from "/public/assets/Logo (1).svg"
 import Link from "next/link";
 import { client_routes } from "./lib/helpers";
+import { getAllStrings } from "./lib/allStrings";
 
 const Page = async () => {
   const user = await get_user_action()
-  const allStrings = await get_language_action();
+  const allStrings = await getAllStrings();
 
   if (allStrings?.success) {
     return (

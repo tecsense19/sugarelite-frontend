@@ -22,7 +22,7 @@ import { useStore } from "@/store/store"
 // import { connectSocket } from "@/app/lib/socket"
 
 // let socket;
-const Login = ({ setIsForgotOpen }) => {
+const Login = ({ setIsForgotOpen, allStrings }) => {
 
     const { dispatch } = useStore()
 
