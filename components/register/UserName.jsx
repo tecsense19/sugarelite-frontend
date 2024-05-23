@@ -6,7 +6,8 @@ import gmail from "/public/assets/gmail.svg"
 import sugar_email from "/public/assets/sugar_email.svg"
 import email from "/public/assets/email.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
-import { checkuser_action, send_otp_action, verify_otp_action } from '@/app/lib/actions'
+import chevron_right_white from "/public/assets/chevron_right_white.svg"
+import { all_profiles_action, checkuser_action, send_otp_action, verify_otp_action } from '@/app/lib/actions'
 import { Alert, notification } from 'antd'
 import username_email_white from "/public/assets/email.svg"
 import username_email_black from "/public/assets/username_email_black.svg"
@@ -14,6 +15,7 @@ import username_telephone_white from "/public/assets/username_telephone_white.sv
 import username_telephone_black from "/public/assets/username_telephone_black.svg"
 import GetCountries from './GetCountries'
 import { specificCountries } from '@/app/lib/allCountries'
+import { client_notification } from '@/app/lib/helpers'
 
 
 const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) => {
@@ -46,45 +48,64 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 email: watch("email")
             }
         } else {
-            let countryCode = selectedCountry.code.split("+")[1]
+            // let countryCode = selectedCountry.code.split("+")[1]
             obj = {
-                mobile_no: countryCode + watch("phone")
+                mobile_no: selectedCountry.code + watch("phone")
             }
         }
-        // if (isEmail) { // Temporary added because of smtp error from backend
-        //     setShowOTP(true);
-        // } else {
-        let res = await send_otp_action(obj);
-        if (res.success) {
-            setOtpId(res.data.id);
-            setValue("user_id", res.data.id)
-            setShowOTP(true);
-        } else {
-            if (res.message) {
-                setAlertMessage(res.message);
+        let allProfiles = await all_profiles_action();
+        if (allProfiles.success) {
+            allProfiles = allProfiles.data;
+            let isExist;
+            if (isEmail) {
+                isExist = allProfiles.some((i) => i.email === obj.email);
+                console.log(isExist);
             } else {
-                if (res.error) {
-                    setAlertMessage(res.error);
-                }
+                isExist = allProfiles.some((i) => i.mobile_no === obj.mobile_no);
+                console.log(isExist);
             }
-            setShowUserAlreadyExistAlert(true);
+            // if (isEmail) { // Temporary added because of smtp error from backend
+            //     setShowOTP(true);
+            // } else {
+            if (!isExist) {
+                let res = await send_otp_action(obj);
+                if (res.success) {
+                    setOtpId(res.data.id);
+                    setValue("user_id", res.data.id)
+                    setShowOTP(true);
+                } else {
+                    if (res.message) {
+                        setAlertMessage(res.message);
+                    } else {
+                        if (res.error) {
+                            setAlertMessage(res.error);
+                        }
+                    }
+                    setShowUserAlreadyExistAlert(true);
+                }
+            } else {
+                setAlertMessage("User already Exist!");
+                setShowUserAlreadyExistAlert(true);
+            }
+            // }
+            // if (handleSubmitCalls) {
+            //     handleSubmitCalls = false
+            //     setShowUserAlreadyExistAlert(false)
+            //     let tempEmail = watch("email");
+            //     const res = await checkuser_action(tempEmail);
+            //     if (res.success === false) {
+            //         setIsLoading(false)
+            //         setAlertMessage(res.message);
+            //         setShowUserAlreadyExistAlert(true);
+            //     } else {
+            //         handleSubmitCalls = true
+            //         setIsLoading(false)
+            //         setNextStep(3)
+            //     }
+            // }
+        } else {
+            client_notification(api, "topRight", "error", "Fetch failed! Try again.", 3)
         }
-        // }
-        // if (handleSubmitCalls) {
-        //     handleSubmitCalls = false
-        //     setShowUserAlreadyExistAlert(false)
-        //     let tempEmail = watch("email");
-        //     const res = await checkuser_action(tempEmail);
-        //     if (res.success === false) {
-        //         setIsLoading(false)
-        //         setAlertMessage(res.message);
-        //         setShowUserAlreadyExistAlert(true);
-        //     } else {
-        //         handleSubmitCalls = true
-        //         setIsLoading(false)
-        //         setNextStep(3)
-        //     }
-        // }
         setIsLoading(false);
     }
 
@@ -162,12 +183,12 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                 if (isEmail) {
 
                 } else {
-                    let countryCode = selectedCountry.code.split("+")[1];
-                    setValue("mobile_no", countryCode + watch("phone"));
-                    setValue("otp", tempOtp);
+                    // let countryCode = selectedCountry.code.split("+")[1];
+                    setValue("mobile_no", selectedCountry.code + watch("phone"));
                 }
+                setValue("otp", tempOtp);
             } else {
-                client_notification(api, "topRight", "error", res.error, 3)
+                client_notification(api, "topRight", "error", res.error, 3);
                 setOtpArr(["", "", "", "", "", ""])
             }
             // }
@@ -237,7 +258,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                     <div className={`mt-[30px] w-full sm:grid grid-cols-2 gap-x-[37px]`}>
                         <button className={`sm:border-none bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02] ${isLoading ? "pointer-events-none" : ""}`} type="button" onClick={() => setShowOTP(false)}>
                             <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
-                                <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />
+                                <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />
                                 BACK
                             </div>
                         </button>
@@ -315,7 +336,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                     <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
                         <button className="sm:border-none bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button" disabled={isLoading ? isLoading : false}>
                             <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
-                                <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden opacity-70 " />
+                                <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />
                                 BACK
                             </div>
                         </button>
@@ -325,7 +346,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep }) =
                             disabled={isLoading ? isLoading : getNextBtnDisablity()}>
                             <div className="flex justify-center gap-[5px] font-bold sm:ms-4 text-[16px] leading-[normal] text-[#263238]">
                                 NEXT
-                                <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
+                                <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto" />
                             </div>
                         </button>
                     </div>

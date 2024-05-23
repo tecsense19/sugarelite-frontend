@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import calendar_3 from "../../public/assets/calendar_3.svg"
 import sugar_DOB from "../../public/assets/sugar_DOB.svg"
 import chevron_right from "../../public/assets/chevron_right.svg"
+import chevron_right_white from "../../public/assets/chevron_right_white.svg"
 import calendar from "../../public/assets/calendar.svg"
 import { useState } from "react";
 import DateModal from "./DateModal";
@@ -88,7 +89,7 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setV
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="sm:flex justify-center font-bold text-[16px] leading-[normal] gap-[5px]">
-                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
+                        <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
                         BACK
                     </div>
                 </button>

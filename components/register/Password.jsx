@@ -10,6 +10,7 @@ import lock from "/public/assets/lock.svg"
 import eye_close from "/public/assets/eye_close.svg"
 import eye_open from "/public/assets/eye_open.svg"
 import chevron_right from "/public/assets/chevron_right.svg"
+import chevron_right_white from "/public/assets/chevron_right_white.svg"
 import { Popover } from 'antd'
 
 const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue }) => {
@@ -144,7 +145,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-stone-600 w-full h-[42px] mb-3 rounded-[5px] text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
-                        <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
+                        <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
                         BACK
                     </div>
                 </button>
