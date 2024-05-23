@@ -9,6 +9,7 @@ import { StoreProvider } from "@/store/store";
 import { SocketProvider } from "@/store/SocketContext";
 import { ChatProvider } from "@/store/ChatContext";
 import { StringProvider } from "@/store/LanguageContext";
+import CookieConsent from "@/components/common/CookieConsent/CookieConsent";
 // import { all_friend_Notifications, all_profiles_action, chat_list_action, decrypt_user, get_user_action } from "./lib/actions";
 // import { client_routes } from "./lib/helpers";
 const inter = Inter({ subsets: ["latin"] });
@@ -35,6 +36,7 @@ export default async function RootLayout({ children }) {
                 <ChatProvider>
                   {/* <Header decryptedUser={user ? user[0] : null} allUsers={allUsers.success && allUsers.data} chatList={chatList} /> */}
                   {children}
+                  {/* <CookieConsent /> */}
                 </ChatProvider>
               </SocketProvider>
             </StringProvider>
