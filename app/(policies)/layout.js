@@ -1,14 +1,15 @@
 import Header from "@/components/header/Header";
-import { get_language_action, get_user_action } from "../lib/actions";
+import { get_user_action } from "../lib/actions";
 import Image from "next/image";
 import { client_routes } from "../lib/helpers";
 import logo from "/public/assets/Logo (1).svg"
 import Link from "next/link";
 import Footer from "@/components/common/Footer";
+import { getAllStrings } from "../lib/allStrings";
 
 export default async function RootLayout({ children }) {
     const user = await get_user_action()
-    const allStrings = await get_language_action();
+    const allStrings = await getAllStrings();
     if (allStrings?.success) {
         return <>
             {

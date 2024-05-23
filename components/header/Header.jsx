@@ -10,7 +10,7 @@ import { usePathname, useRouter } from 'next/navigation'
 const Header = ({ allStrings }) => {
     const pathname = usePathname();
     const router = useRouter();
-    console.log(allStrings);
+    // console.log(allStrings);
     return (
         <>
             {/* mobile view */}
@@ -26,10 +26,10 @@ const Header = ({ allStrings }) => {
                                 </div>
                                 <div className="flex items-center gap-x-[8.6px]">
                                     <Link prefetch={true} href={client_routes.register} className={`w-[78.5px] h-[31px] flex justify-center items-center bg-secondary text-white text-[12px] font-bold uppercase leading-[normal] tracking-[-0.11px] rounded-[2.5px]`}>
-                                        {allStrings.string_register.danish_string}
+                                        {allStrings.string_register}
                                     </Link>
                                     <Link prefetch={true} href={client_routes.login} className="w-[57px] h-[31px] flex justify-center items-center bg-neutral border border-white/30 text-white uppercase text-[12px] font-bold leading-[normal] tracking-[-0.11px] rounded-[2.5px]">
-                                        {allStrings.string_login.danish_string}
+                                        {allStrings.string_login}
                                     </Link>
                                 </div>
                             </div>
@@ -43,16 +43,16 @@ const Header = ({ allStrings }) => {
             <header className="hidden sm:flex h-[80px] bg-black text-white items-center justify-center top-0 fixed w-full z-[2]">
                 <div className="w-11/12 xl:w-9/12 flex justify-between items-center">
                     <div className="flex items-center">
-                        <button onClick={() => router.push(client_routes.home)}>
+                        <Link prefetch={true} href={client_routes.home}>
                             <Image height={37} width={188} className="pointer-events-none select-none" src={logo} alt="" priority />
-                        </button>
+                        </Link>
                     </div>
                     <div className="flex items-center">
                         <Link prefetch={true} href={client_routes.register} className={`px-[35px] h-[42px] text-center ${(pathname === client_routes.register || pathname === client_routes.home) ? "bg-secondary" : "bg-neutral border border-white/30"} rounded-[5px] text-[18px] font-semibold tracking-[-0.18] me-4 transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase`}>
-                            {allStrings.string_register_now.danish_string}
+                            {allStrings.string_register_now}
                         </Link>
                         <Link prefetch={true} href={client_routes.login} className={`px-[35px] h-[42px] text-center ${pathname === client_routes.login ? "bg-secondary" : "bg-neutral border border-white/30"} rounded-[5px] text-[18px] font-semibold tracking-[-0.18] me-4 transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase`}>
-                            {allStrings.string_login.danish_string}
+                            {allStrings.string_login}
                         </Link>
                     </div>
                 </div>
