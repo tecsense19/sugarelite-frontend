@@ -9,7 +9,7 @@ import sugar_type from "/public/assets/sugar_type.svg"
 import chevron_right from '../../public/assets/chevron_right.svg'
 
 
-const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
+const SugarType = ({ register, nextStepHandler, watch, setValue, allStrings }) => {
 
     const isValid = watch("sugar_type")
 
@@ -39,7 +39,9 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
                 <div className="flex justify-center items-center rounded-full">
                     <Image src={sugar_type} alt="boy" width={165} height={125} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 sm:pt-[13px] font-medium">I am a</p>
+                <p className="text-2xl sm:text-[20px] pt-5 sm:pt-[13px] font-medium">
+                    {allStrings["string_i_am_a"]}
+                </p>
             </div>
             <div className="text-center mt-[50px] sm:mt-[28px] w-[20rem] sm:w-full md:w-[85%]">
                 <div className="flex gap-x-6 gap-y-2 sm:gap-3 flex-wrap justify-center sm:flex-nowrap">
@@ -60,7 +62,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue }) => {
             </div>
             <button className={`bg-white w-full max-w-[26rem] sm:max-w-full text-primary-dark-5 h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
                 <div className="flex justify-center gap-[5px] font-bold text-[#263238]">
-                    NEXT
+                    {allStrings["string_next"]}
                     <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                 </div>
             </button>

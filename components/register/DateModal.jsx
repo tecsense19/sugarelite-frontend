@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
-const DateModal = ({ isOpen, setIsModalOpened, setValue, day, setDay, month, setMonth, year, setYear }) => {
+const DateModal = ({ isOpen, setIsModalOpened, setValue, day, setDay, month, setMonth, year, setYear, allStrings }) => {
 
     const generateDays = () => {
         const daysInMonth = new Date(year, month, 0).getDate();
@@ -158,7 +158,7 @@ const DateModal = ({ isOpen, setIsModalOpened, setValue, day, setDay, month, set
         >
             <div className='flex flex-col  h-full  rounded-[5px]'>
                 <div className='h-[3.8rem] flex justify-between items-center px-5 text-[20px] font-bold border-b'>
-                    <p>Date of Birth</p>
+                    <p>{allStrings["string_date_of_birth"]}</p>
                     <p className='text-secondary'>{`${months[month - 1]} ${day < 10 ? ("0" + day) : day}, ${year}`}</p>
                 </div>
                 <div className='h-[12rem] w-full justify-center flex flex-col gap-4  relative'>
@@ -222,9 +222,11 @@ const DateModal = ({ isOpen, setIsModalOpened, setValue, day, setDay, month, set
                     </div>
                 </div>
                 <div className=' w-full pb-3 flex items-center justify-between gap-x-2 px-5'>
-                    <button onClick={onClose} className='text-center font-bold bg-primary-dark-4 text-white text-[17px] rounded-full w-[50%] py-[6px] uppercase'>Cancel</button>
+                    <button onClick={onClose} className='text-center font-bold bg-primary-dark-4 text-white text-[17px] rounded-full w-[50%] py-[6px] uppercase'>
+                        {allStrings["string_cancel"]}
+                    </button>
                     <button type='submit' className='uppercase text-center bg-secondary text-[17px] text-white font-bold rounded-full w-[50%] py-[6px]' onClick={onSubmit}>
-                        Ok
+                        {allStrings["string_ok"]}
                     </button>
                 </div>
             </div>

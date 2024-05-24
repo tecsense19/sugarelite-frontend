@@ -30,7 +30,9 @@ const RegisterIndex = ({ allStrings }) => {
   const [api, contextHolder] = notification.useNotification();
 
   const [nextStep, setNextStep] = useState(1)
+
   const [isLoading, setIsLoading] = useState(false)
+  const [allUsersProfile, setAllUsersProfile] = useState([]);
 
   const navigate = useRouter()
 
@@ -107,22 +109,22 @@ const RegisterIndex = ({ allStrings }) => {
             <div className="flex h-[calc(100%-32px)] justify-center text-white  ">
               <form className="flex flex-col items-center w-full my-auto" onSubmit={handleSubmit(registerhandler)} >
                 {
-                  nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} />
+                  nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} />
+                  nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} allStrings={allStrings} allUsersProfile={allUsersProfile} setAllUsersProfile={setAllUsersProfile} />
                 }
                 {
-                  nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+                  nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 4 && <Region setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+                  nextStep === 4 && <Region setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} isLoading={isLoading} />
+                  nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} isLoading={isLoading} />
                 }
                 {
-                  nextStep === 6 && <Success />
+                  nextStep === 6 && <Success allStrings={allStrings} />
                 }
               </form>
             </div>
@@ -157,22 +159,22 @@ const RegisterIndex = ({ allStrings }) => {
 
               <form className="flex flex-col items-center sm:w-[82%] lg:w-[665px]" onSubmit={handleSubmit(registerhandler)}>
                 {
-                  nextStep === 1 && <SugarType setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} />
+                  nextStep === 1 && <SugarType setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 2 && <UserName setValue={setValue} register={register} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} />
+                  nextStep === 2 && <UserName setValue={setValue} register={register} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} allStrings={allStrings} allUsersProfile={allUsersProfile} setAllUsersProfile={setAllUsersProfile} />
                 }
                 {
-                  nextStep === 3 && <Password setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+                  nextStep === 3 && <Password setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 4 && <Region register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} />
+                  nextStep === 4 && <Region register={register} setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} isLoading={isLoading} />
+                  nextStep === 5 && <DOB setValue={setValue} watch={watch} control={control} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} isLoading={isLoading} />
                 }
                 {
-                  nextStep === 6 && <Success />
+                  nextStep === 6 && <Success allStrings={allStrings} />
                 }
               </form>
             </div>
