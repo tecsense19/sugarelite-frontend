@@ -156,7 +156,7 @@ const months = [
     "Dec"
 ];
 
-const FriendNotification = ({ notification, allUsers, user }) => {
+const FriendNotification = ({ notification, allUsers, user, allStrings }) => {
     const getUserData = (notificationId, type) => {
         const id = notificationId.user_id ? (notificationId.user_id === user?.id ? notificationId.sender_id : notificationId.user_id) : (notificationId.receiver_id === user?.id ? notificationId.sender_id : notificationId.receiver_id);
         const currentUser = allUsers.find(i => i.id === id);
@@ -176,7 +176,7 @@ const FriendNotification = ({ notification, allUsers, user }) => {
                 const timeDiffInMilliseconds = today - time;
                 const timeDiffInMinutes = Math.floor(timeDiffInMilliseconds / (1000 * 60));
                 if (timeDiffInMinutes < 1) {
-                    return "just now";
+                    return allStrings["string_just_now"];
                 } else if (timeDiffInMinutes < 60) {
                     return `${timeDiffInMinutes} Min`;
                 } else {
@@ -184,9 +184,9 @@ const FriendNotification = ({ notification, allUsers, user }) => {
                     return `${timeDiffInHours} hrs`;
                 }
             } else if ((currDate - 1) === notificationDate) {
-                return `Yesterday`
+                return allStrings["string_yesterday"]
             } else {
-                return `${(currDate - notificationDate)} days`
+                return `${(currDate - notificationDate)} ${allStrings["string_days"]}`
             }
         } else {
             return `${notificationDate.toString().padStart(2, '0')} ${months[notiMon - 1]}`
@@ -211,8 +211,8 @@ const FriendNotification = ({ notification, allUsers, user }) => {
                     </div>
                     <p className='text-[16px] font-light leading-[20px] text-white/80 mt-[6px]'>
                         {(notification.is_friend && notification.is_friend === 1) ?
-                            `🎉 It's a match. You can chat with ${getUserData(notification, "username")}.` :
-                            `💌 Match request from ${getUserData(notification, "username")}. Swipe right to match or left to unmatch.`
+                            `🎉 ${allStrings["string_it's_a_match._you_can_chat_with"]} ${getUserData(notification, "username")}.` :
+                            `💌 ${allStrings["string_match_request_from"]} ${getUserData(notification, "username")}. ${allStrings["string_swipe_right_to_match_or_left_to_unmatch."]}`
                         }
                     </p>
                 </div>

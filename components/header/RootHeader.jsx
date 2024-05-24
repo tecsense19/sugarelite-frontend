@@ -20,7 +20,7 @@ import { useChat } from '@/store/ChatContext'
 
 const socket = io("https://socket.website4you.co.in");
 
-const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat }) => {
+const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat, allStrings }) => {
 
     const { setSocket } = useSocket();
     const { addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount, updateUnReadCount, state: { unReadCount } } = useChat()
@@ -131,7 +131,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.disconnect()
             socket.off("onlineUsers")
         }
-    }, [user])
+    }, [])
 
     useEffect(() => {
         const receiveMessageHandler = (obj) => {
@@ -295,16 +295,16 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
     useEffect(() => {
         if (chatList.length && chatList.filter(msg => msg.receiver_id === user.id)?.length) {
-            const myReceivedMsgs = chatList.filter(msg => msg.receiver_id === user.id)
-            const senderId = Array.from(new Set(myReceivedMsgs.filter(msg => (msg.status === "sent" || msg.status === null))?.map(i => i.sender_id)))
-            if (senderId.length) {
+            const myUnreadMsgs = chatList.filter(msg => (msg.receiver_id === user.id && msg.status === "sent"))
+            if (myUnreadMsgs.length) {
+                const senderId = Array.from(new Set(myUnreadMsgs.map(i => i.sender_id)))
                 senderId.forEach(id => {
-                    const msgs = myReceivedMsgs.filter((i) => i.sender_id === id)?.map(j => j.id).toString()
-                    read_message_action({ sender_id: id, receiver_id: user.id, status: "delivered", messageId: msgs })
+                    const msgId = myUnreadMsgs.filter((i) => i.sender_id === id)?.map(j => j.id).toString()
+                    read_message_action({ sender_id: id, receiver_id: user.id, status: "delivered", messageId: msgId })
                 })
             }
         }
-    }, [user])
+    }, [])
 
 
     useEffect(() => {
@@ -354,7 +354,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                             </Link>
                         </div>
                         <button className="h-8 w-[78px] me-[35px] rounded-[5px] flex items-center justify-center bg-secondary text-[12px] font-semibold leading-[normal] transition-all duration-150 hover:scale-105" onClick={handleLogout}>
-                            Logout
+                            {allStrings["string_logout"]}
                         </button>
                         {/* <div className='relative inline-flex justify-center items-center'> */}
                         {/* {showDropdown
@@ -364,11 +364,13 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                         <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "#000000" } }}>
                             <Popover placement="bottomRight" trigger="click" open={showDropdown} onOpenChange={handleShowDDChange} rootClassName='rootHeaderPopOver' content={(
                                 <div className='p-2 right-0 bg-black w-max flex flex-col text-[15px]'>
-                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.profile ? "bg-secondary" : ""}`} href={client_routes.profile} onClick={() => setShowDropdown(false)}>Profile</Link>
+                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.profile ? "bg-secondary" : ""}`} href={client_routes.profile} onClick={() => setShowDropdown(false)}>
+                                        {allStrings["string_profile"]}
+                                    </Link>
                                     <hr className='m-0 border-gray-500' />
-                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.verifyIdentity ? "bg-secondary" : ""}`} href={client_routes.verifyIdentity} onClick={() => setShowDropdown(false)}>Identity Verification</Link>
+                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.verifyIdentity ? "bg-secondary" : ""}`} href={client_routes.verifyIdentity} onClick={() => setShowDropdown(false)}>{allStrings["string_identity_verification"]}</Link>
                                     <hr className='m-0 border-gray-500' />
-                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.contactUs ? "bg-secondary" : ""}`} href={client_routes.contactUs} onClick={() => setShowDropdown(false)}>Contact us</Link>
+                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.contactUs ? "bg-secondary" : ""}`} href={client_routes.contactUs} onClick={() => setShowDropdown(false)}>{allStrings["string_contact_us"]}</Link>
                                 </div>
                             )}>
                                 <div className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105 cursor-pointer" >
@@ -391,8 +393,8 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                     </div>
                 </div>
             </header>
-            <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} user={user} />
-            <SideDrawer user={user} />
+            <NotificationComaponent open={notificationOpenState} allUsers={allUsers} socket={socket} user={user} allStrings={allStrings} />
+            <SideDrawer user={user} allStrings={allStrings} />
         </>
     )
 }

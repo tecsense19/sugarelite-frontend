@@ -15,7 +15,7 @@ import NotificationIcon from "/public/assets/Mask group (1).svg"
 import { logout_user } from '@/app/lib/actions';
 import { useState } from 'react';
 
-const SideDrawer = ({ user }) => {
+const SideDrawer = ({ user, allStrings }) => {
 
     const { state: { sideMenu }, dispatch } = useStore()
 
@@ -24,32 +24,32 @@ const SideDrawer = ({ user }) => {
 
     const navs = [
         {
-            name: "Profile",
+            name: allStrings["string_profile"],
             icon: EditIcon,
             path: client_routes.profile
         },
         {
-            name: "Edit Profile",
+            name: allStrings["string_edit_profile"],
             icon: EditIcon,
             path: client_routes.edit_profile
         },
         {
-            name: "Chat",
+            name: allStrings["string_chat"],
             icon: ChatIcon,
             path: client_routes.chat
         },
         {
-            name: "Search",
+            name: allStrings["string_search"],
             icon: searchIcon,
             path: client_routes.search
         },
         {
-            name: "Identity Verification",
+            name: allStrings["string_identity_verification"],
             icon: searchIcon,
             path: client_routes.verifyIdentity
         },
         {
-            name: "Contact Us",
+            name: allStrings["string_contact_us"],
             icon: searchIcon,
             path: client_routes.contactUs
         },
@@ -106,7 +106,9 @@ const SideDrawer = ({ user }) => {
                             </div>
                         </div>
                         <div className='w-full p-4 text-[16px] font-medium'>
-                            <button className='bg-primary-dark-5 p-2 rounded-[5px] tracking-[0.075em] w-full h-full uppercase font-semibold' onClick={logoutHandler}>Logout</button>
+                            <button className='bg-primary-dark-5 p-2 rounded-[5px] tracking-[0.075em] w-full h-full uppercase font-semibold' onClick={logoutHandler}>
+                                {allStrings["string_logout"]}
+                            </button>
                         </div>
                     </div>
                 </Drawer>

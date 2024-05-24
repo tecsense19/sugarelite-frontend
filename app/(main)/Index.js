@@ -1,5 +1,6 @@
 import RootHeader from "@/components/header/RootHeader"
 import { all_friend_Notifications, all_profiles_action, chat_list_action, get_support_msg, get_user_action, private_album_notification } from "../lib/actions";
+import { getAllStrings } from "../lib/allStrings";
 
 const Index = async ({ children }) => {
 
@@ -14,8 +15,9 @@ const Index = async ({ children }) => {
     // ]);
 
     const user = await get_user_action()
+    const allStrings = await getAllStrings();
 
-    if (user) {
+    if (user && allStrings.success) {
 
       const allUsers = await all_profiles_action()
       const matchNotifications = await all_friend_Notifications()
@@ -34,6 +36,7 @@ const Index = async ({ children }) => {
             albumNotifications={albumNotifications.data}
             chatList={chatList.data.filter(i => (i.sender_id === user[0].id || i.receiver_id === user[0].id))}
             supportChat={supportChat.data}
+            allStrings={allStrings.data}
           />
           {children}
         </>
