@@ -10,11 +10,14 @@ import Image from 'next/image';
 import { useStore } from '@/store/store';
 import './animations/style.css'
 import { friend_request_action } from '@/app/lib/actions';
+import { useSocket } from '@/store/SocketContext';
 
-const SwiperComponent = ({ users, toggle, setOffSet, remainingList, socket, currentUser }) => {
+const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser }) => {
     const [user, setUsers] = useState(remainingList)
     const { state: { onlineUsers }, dispatch } = useStore()
     const [showLike, setShowLike] = useState({ id: null, d: null })
+    const { mySocket } = useSocket()
+    const [socket, setSocket] = useState(mySocket)
 
     const resetHandler = () => {
         setUsers(users);
@@ -24,8 +27,8 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, socket, curr
     }
 
     useEffect(() => {
-        // console.log(remainingList)
-    }, [remainingList])
+        setSocket(mySocket)
+    }, [mySocket])
 
     useEffect(() => {
         // setUsers(users)

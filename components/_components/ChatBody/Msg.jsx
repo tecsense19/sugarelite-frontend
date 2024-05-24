@@ -6,20 +6,22 @@ import Link from "next/link"
 const Msg = ({ msg, setSelectedImages }) => {
 
     const containsUrl = (msg) => {
-        const urlRegex = /(https?:\/\/[^\s]+)|([^\s]+\.(com|in|dk|org)(\/[^\s]*)?)/gi;
+        if (msg) {
+            const urlRegex = /(https?:\/\/[^\s]+)|([^\s]+\.(com|in|dk|org)(\/[^\s]*)?)/gi;
 
-        const msgArr = msg.split(" ");
+            const msgArr = msg.split(" ");
 
-        const msgWithLinks = msgArr.map((word, index) => {
-            if (urlRegex.test(word)) {
-                return <Link href={(word.includes("https") || word.includes("http")) ? word : `https://${word}`} target="_blank" className='text-blue-400 font-normal' key={index}>{word}</Link>;
-            }
-            return word;
-        });
+            const msgWithLinks = msgArr.map((word, index) => {
+                if (urlRegex.test(word)) {
+                    return <Link href={(word.includes("https") || word.includes("http")) ? word : `https://${word}`} target="_blank" className='text-blue-400 font-normal' key={index}>{word}</Link>;
+                }
+                return word;
+            });
 
-        const processedMsg = msgWithLinks.map((word, index) => <React.Fragment key={index}>{word} </React.Fragment>);
+            const processedMsg = msgWithLinks.map((word, index) => <React.Fragment key={index}>{word} </React.Fragment>);
 
-        return processedMsg;
+            return processedMsg;
+        }
     };
 
     if (msg.get_all_chat_with_image?.length) {

@@ -26,9 +26,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
 		handleSetCards()
 	}, [])
 
-	useEffect(() => {
-		console.log(requestsState.receivedRequests)
-	}, [requestsState.receivedRequests])
+
 
 	const acceptReq = async (receiver_id) => {
 		const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 1 })

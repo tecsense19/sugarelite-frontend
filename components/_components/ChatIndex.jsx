@@ -34,6 +34,7 @@ const ChatIndex = ({ allUsers, chatList, user, supportChat }) => {
         if (toMessageState !== "Admin") {
             const msgs = messages.filter(msg => msg.receiver_id === user.id && msg.status !== "read")?.map(i => i.id)
             if (msgs.length && !readMsgsState.some(i => i === msgs[msgs.length - 1])) {
+
                 read_message_action({ sender_id: toMessageState.id, receiver_id: user.id, status: "read", messageId: msgs.toString() })
                 dispatch({ type: "Add_Read_Message", payload: msgs[msgs.length - 1] })
             }
