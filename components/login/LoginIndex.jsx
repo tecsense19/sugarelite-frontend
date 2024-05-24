@@ -8,10 +8,10 @@ const LoginIndex = ({ allStrings }) => {
   return (
     <>
       {
-        !isForgotOpen && <Login_component setIsForgotOpen={setIsForgotOpen} allStrings={allStrings.data} />
+        !isForgotOpen && <Login_component setIsForgotOpen={setIsForgotOpen} allStrings={allStrings} />
       }
       {
-        isForgotOpen && <Forgot_Component setIsForgotOpen={setIsForgotOpen} allStrings={allStrings.data} />
+        isForgotOpen && <Forgot_Component setIsForgotOpen={setIsForgotOpen} allStrings={allStrings} />
       }
     </>
   )
