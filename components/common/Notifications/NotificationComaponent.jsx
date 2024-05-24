@@ -7,7 +7,7 @@ import { useStore } from '@/store/store';
 import AlbumNotification from './AlbumNotification';
 import FriendNotification from './FriendNotification';
 
-const NotificationComaponent = ({ open, allUsers, socket, user }) => {
+const NotificationComaponent = ({ open, allUsers, socket, user, allStrings }) => {
     const { state: { notificationState, notificationOpenState }, dispatch } = useStore()
     const [allNotifications, setAllNotifications] = useState([])
 
@@ -48,34 +48,35 @@ const NotificationComaponent = ({ open, allUsers, socket, user }) => {
             >
                 <Drawer getContainer={false} closable={false} onClose={onClose} open={open} className='text-white' zIndex={0} >
                     {
-                        allNotifications.length ?
-                            <>
+                        allNotifications.length
+                            ? <>
                                 <div className='text-[26px] font-bold leading-[30px] px-[30px] py-[20px] flex items-center justify-between'>
-                                    Notification
+                                    {allStrings["string_notification"]}
                                     <Image src={Cross} width={30} height={30} alt='cross' className='md:hidden cursor-pointer' onClick={() => dispatch({ type: "Close_Notification", payload: false })} />
                                 </div>
                                 <div className='flex flex-col gap-y-7 mt-2'>
                                     {
                                         allNotifications.map((i, inx) => {
                                             if (i.hasOwnProperty('status')) {
-                                                return <AlbumNotification key={inx} notification={i} allUsers={allUsers} socket={socket} />
+                                                return <AlbumNotification key={inx} notification={i} allUsers={allUsers} socket={socket} allStrings={allStrings} />
                                             } else {
-                                                return <FriendNotification key={inx} notification={i} allUsers={allUsers} socket={socket} user={user} />
+                                                return <FriendNotification key={inx} notification={i} allUsers={allUsers} socket={socket} user={user} allStrings={allStrings} />
                                             }
                                         })
                                     }
                                 </div>
                             </>
-                            :
-                            <div className='w-full text-center h-full text-[20px]  px-[10px] py-[18px]'>
+                            : <div className='w-full text-center h-full text-[20px]  px-[10px] py-[18px]'>
                                 <div className='text-[26px] font-bold leading-[30px] px-[10px] py-[0px] flex md:hidden items-center justify-between'>
-                                    Notification
+                                    {allStrings["string_notification"]}
                                     <Image src={Cross} width={30} height={30} alt='cross' className='md:hidden cursor-pointer' onClick={() => dispatch({ type: "Close_Notification", payload: false })} />
                                 </div>
                                 <div className='h-[calc(100%-30px)] flex pt-[10rem] flex-col items-center w-full font-semibold'>
                                     <Image src={No_Notification} alt='No_notification' width={200} height={200} className='' />
-                                    <p className='font-[400] text-[18px] mt-6'>You are completely up to Date !</p>
-                                    <p className='px-8 leading-[20px] font-light text-[16px] mt-1 text-white/60'>Come back here to get about matches, messages, album access insights and much more! </p>
+                                    <p className='font-[400] text-[18px] mt-6'>{allStrings["string_you_are_completely_up_to_date_!"]}</p>
+                                    <p className='px-8 leading-[20px] font-light text-[16px] mt-1 text-white/60'>
+                                        {allStrings["string_come_back_here_to_get_about_matches,_messages,_album_access_insights_and_much_more!"]}
+                                    </p>
                                 </div>
                             </div>
                     }

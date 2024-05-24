@@ -21,7 +21,7 @@ const months = [
 ];
 
 
-const AlbumNotification = ({ notification, allUsers, socket }) => {
+const AlbumNotification = ({ notification, allUsers, socket, allStrings }) => {
     const i = notification
     const [loadingArr, setLoadingArr] = useState([])
     const { dispatch } = useStore()
@@ -117,7 +117,7 @@ const AlbumNotification = ({ notification, allUsers, socket }) => {
                         <p className='text-[16px] font-medium leading-[20px]'>{getUserData(i, "time")}</p>
                     </div>
                     <p className='text-[16px] text-white/80 font-light leading-[20px]  mt-[6px]'><span className='capitalize'>
-                        {getUserData(i, "username")}</span> has requested permission to view your profile photo.
+                        {getUserData(i, "username")}</span> {allStrings["string_has_requested_permission_to_view_your_profile_photo."]}
                     </p>
                     <div className='mt-[14px] flex gap-[10px]'>
                         {(!loadingArr.some((ele) => (ele.id === i.id && ele.type === "accept"))) ?
@@ -125,7 +125,7 @@ const AlbumNotification = ({ notification, allUsers, socket }) => {
                                 className='py-[6px] rounded-[5px] px-4 text-white bg-secondary text-[14px] font-medium leading-[20px] transition-all duration-150 ease-linear hover:scale-105'
                                 onClick={() => { acceptHandler(i.id, "socket", i); setLoadingArr((prev => [...prev, { id: i.id, type: "accept" }])) }}
                             >
-                                Accept
+                                {allStrings["string_accept"]}
                             </button>
                             : <div className='w-[82px] h-[32px] rounded-[5px] flex justify-center bg-secondary ' >
                                 <span className='loader after:border-[11px]'></span>
@@ -134,7 +134,7 @@ const AlbumNotification = ({ notification, allUsers, socket }) => {
                         {(!loadingArr.some((ele) => (ele.id === i.id && ele.type === "decline"))) ?
                             <button className='py-[6px] rounded-[5px] px-4 bg-black transition-all duration-150 ease-linear hover:scale-105'
                                 onClick={() => { setLoadingArr((prev => [...prev, { id: i.id, type: "decline" }])); declineHandler(i.id, "socket", i) }}>
-                                Decline
+                                {allStrings["string_decline"]}
                             </button>
                             : <div className='w-[82px] h-[32px] rounded-[5px] flex justify-center bg-black ' >
                                 <span className='loader after:border-[11px]'></span>
