@@ -4,6 +4,7 @@ import { useChat } from '@/store/ChatContext';
 import { useSocket } from '@/store/SocketContext';
 import Message from './Message';
 import TypingAnimation from './TypingAnimation';
+import ChatScroller from './ChatScroller';
 
 
 const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, setEditingMsg }) => {
@@ -47,7 +48,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
 
     return (
         <div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-285px)]" : "md:h-[calc(100%-185px)] h-[calc(100%-122px)]"} p-4 md:px-10`}>
-            <div className='h-full flex flex-col justify-end'>
+            <div className='h-full flex flex-col justify-end relative'>
                 <div className='flex flex-col-reverse overflow-y-auto scroll-smooth' style={{ scrollbarWidth: "none" }}>
                     <div>
                         {messages.map((message, index) => {
@@ -59,6 +60,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
                             )
                         })}
                         <TypingAnimation toUser={toUser} user={user} />
+                        {/* <ChatScroller /> */}
                     </div>
                 </div>
             </div>
