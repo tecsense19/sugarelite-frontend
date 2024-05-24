@@ -66,7 +66,7 @@ const CookieConsent = () => {
                 <p className='text-[15px] leading-[20px] mt-1'>
                     We use cookies to customize our content and ads, to show you social media features and to analyze our traffic. We also share information about your use of our website with our social media partners, advertising partners and analytics partners. Our partners may combine this data with other information you have provided to them or that they have collected from your use of their services.
                 </p>
-                <div className='flex gap-x-3 mt-3'>
+                <div className='flex gap-x-3 mt-3 justify-end'>
                     <button className='bg-secondary w-[150px] py-1 rounded-[5px] flex justify-center items-center' onClick={() => setIsModalOpen(true)}>
                         Customize
                         <Image src={Left} alt='logo' width={1000} height={1000} priority className='h-5 w-5 rotate-180 -me-2' />

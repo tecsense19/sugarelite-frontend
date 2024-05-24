@@ -1,8 +1,27 @@
 import Image from 'next/image'
 import React from 'react'
 import NO_Pitcure from "/public/assets/no_image.svg"
+import Link from "next/link"
 
 const Msg = ({ msg, setSelectedImages }) => {
+
+    const containsUrl = (msg) => {
+        const urlRegex = /(https?:\/\/[^\s]+)|([^\s]+\.(com|in|dk|org)(\/[^\s]*)?)/gi;
+
+        const msgArr = msg.split(" ");
+
+        const msgWithLinks = msgArr.map((word, index) => {
+            if (urlRegex.test(word)) {
+                return <Link href={(word.includes("https") || word.includes("http")) ? word : `https://${word}`} target="_blank" className='text-blue-400 font-normal' key={index}>{word}</Link>;
+            }
+            return word;
+        });
+
+        const processedMsg = msgWithLinks.map((word, index) => <React.Fragment key={index}>{word} </React.Fragment>);
+
+        return processedMsg;
+    };
+
     if (msg.get_all_chat_with_image?.length) {
         if (msg.status !== "pending") {
             return (
@@ -30,8 +49,9 @@ const Msg = ({ msg, setSelectedImages }) => {
                         }
                     </div>
                     {
+
                         msg.text &&
-                        <p className=''>{msg.text} <span className='h-[10px] w-[80px] inline-block'></span></p>
+                        <p className='select-text'>{containsUrl(msg.text)} <span className='h-[10px] w-[80px] inline-block'></span></p>
                     }
                 </div>
             )
@@ -41,7 +61,7 @@ const Msg = ({ msg, setSelectedImages }) => {
             </div>
         }
     } else {
-        return <p className='py-1 px-1 break-all emoji-fontFamily'>{msg?.text}<span className={`h-[10px] w-[80px] ${msg.type === "deleted" ? "deleted" : "inline-block"}`}></span></p>
+        return <p className='py-1 px-1 break-all emoji-fontFamily select-text'>{containsUrl(msg.text)} <span className={`h-[10px] w-[80px] ${msg.type === "deleted" ? "deleted" : "inline-block"}`}></span></p>
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStore } from '@/store/store';
 import { useChat } from '@/store/ChatContext';
 import { useSocket } from '@/store/SocketContext';
@@ -12,11 +12,13 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
     const [messages, setMessages] = useState([]);
     const { mySocket } = useSocket()
     const { addMessage, removeUnReadCount } = useChat()
+    const msgRef = useRef(null)
 
     const [isScroller, setIsScroller] = useState(false)
 
     useEffect(() => {
         setMessages(chatList);
+        scrollToBottom()
     }, [chatList]);
 
     useEffect(() => {
@@ -46,10 +48,29 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
         removeUnReadCount(toUser.id)
     }, [toUser])
 
+    const scrollerHandler = () => {
+        if (msgRef.current) {
+            const position = -(msgRef.current.scrollTop)
+            if (position >= 10) {
+                setIsScroller(true)
+            } else {
+                setIsScroller(false)
+            }
+        }
+    }
+
+    const scrollToBottom = () => {
+        if (msgRef.current) {
+            msgRef.current.scrollTop = (msgRef.current.scrollHeight + 100);
+        }
+    };
+
+
+
     return (
         <div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-285px)]" : "md:h-[calc(100%-185px)] h-[calc(100%-122px)]"} p-4 md:px-10`}>
             <div className='h-full flex flex-col justify-end relative'>
-                <div className='flex flex-col-reverse overflow-y-auto scroll-smooth' style={{ scrollbarWidth: "none" }}>
+                <div className='flex flex-col-reverse overflow-y-auto scroll-smooth' style={{ scrollbarWidth: "none" }} ref={msgRef} onScroll={scrollerHandler}>
                     <div>
                         {messages.map((message, index) => {
                             const isLastMessage = index === messages.length - 1 || messages[index + 1]?.sender_id !== message.sender_id;
@@ -60,7 +81,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
                             )
                         })}
                         <TypingAnimation toUser={toUser} user={user} />
-                        {/* <ChatScroller /> */}
+                        <ChatScroller isScroller={isScroller} msgRef={msgRef} />
                     </div>
                 </div>
             </div>

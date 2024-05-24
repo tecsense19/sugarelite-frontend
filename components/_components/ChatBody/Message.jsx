@@ -63,6 +63,7 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
     setEditingMsg({ message: message.text, id: message.id, images: message.get_all_chat_with_image })
   }
 
+
   if (message.sender_id === user.id) {
     return (
       <div className='flex flex-col lg:flex-row  max-w-[85%]'>
@@ -148,23 +149,13 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
             <Image src={penIcon} alt="edit-icon" height={16} width={16} priority className="opacity-50 pointer-events-none" />
           </div>
         }
-        {/* {
-          (message?.get_all_chat_with_image?.length || !message.text)
-            ? <div className={`w-[95%] absolute bottom-[7px] pt-[9px] px-1 h-8 rounded-b-md linear-bg ${message.type === "deleted" ? "hidden" : "flex"} gap-x-1 justify-end pointer-events-none items-center`}>
-              <span className='text-[12px] font-normal text-white/50'>{formatTime(parseInt(message.milisecondtime))}</span>
-            </div>
-            : <span className={`text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem] absolute right-[10px] bottom-[7px] ${message.type === "deleted" ? "hidden" : ""}`}>
-              {formatTime(parseInt(message.milisecondtime))}
-            </span>
-        } */}
         {
           (!message?.get_all_chat_with_image?.length || message.text)
             ? <span className={`text-white/50 font-normal text-end text-[12px] items-center mt-1 min-w-[5rem] gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"}  absolute bottom-[7px] right-[9px]`}>
               {formatTime(parseInt(message.milisecondtime))}
             </span>
-            : <div className={`w-[95%] absolute bottom-2 pt-[6px] px-1 h-8 rounded-b-md linear-bg ${message.type === "deleted" ? "hidden" : "flex"} gap-x-1 justify-end pointer-events-none items-center`}>
+            : <div className={`w-[95%] absolute bottom-[6px] pt-[6px] px-1 h-8 rounded-b-md linear-bg ${message.type === "deleted" ? "hidden" : "flex"} gap-x-1 justify-end pointer-events-none items-center`}>
               <span className='text-[12px] font-normal text-white/50'>{formatTime(parseInt(message.milisecondtime))}</span>
-              <ReadTickRender isImage={false} message={message} user={user} />
             </div>
         }
       </div>
