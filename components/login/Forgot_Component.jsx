@@ -14,7 +14,7 @@ import { forgot_password_action } from '@/app/lib/actions';
 import { notification } from 'antd';
 import { client_notification } from '@/app/lib/helpers';
 
-const Forgot_Component = ({ setIsForgotOpen }) => {
+const Forgot_Component = ({ setIsForgotOpen, allStrings }) => {
     const [api, contextHolder] = notification.useNotification();
     const { register, setValue, handleSubmit, control, watch, formState: { isValid } } = useForm()
     const [isLoading, setIsLoading] = useState(false)
@@ -52,7 +52,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
                             <Image src={Forgot_lock} unoptimized alt={"logo"} width={80} height={80} priority
                                 className="select-none pointer-events-none absolute -left-5 hidden min-[330px]:block"
                             />
-                            <p className='text-[20px] text-white'>Forgot Your Password?</p>
+                            <p className='text-[20px] text-white'>{allStrings["string_forgot_your_password?"]}</p>
                         </div>
                         <form className="w-full max-w-[30rem]" onSubmit={handleSubmit(forgotHandler)}>
                             <div className=" w-full mt-[50px]">
@@ -62,7 +62,7 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
                                         type="email"
                                         {...register('email', { required: true, pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ })}
                                         onChange={(e) => { setValue("email", e.target.value) }}
-                                        placeholder='Email id'
+                                        placeholder={allStrings["string_email"]}
                                         className='w-full placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none'
                                         autoComplete='off' required
                                     />
@@ -71,14 +71,14 @@ const Forgot_Component = ({ setIsForgotOpen }) => {
                             </div>
 
                             <button className={`rounded-[5px] uppercase bg-white text-[#263238] w-full max-w-[30rem] h-[42px] mt-[50px] font-bold flex justify-center items-center ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit" onClick={loadingHandler} >
-                                {!isLoading ? "Recover Password" :
+                                {!isLoading ? allStrings["string_recover_password"] :
                                     <div className="loader after:border-t-black after:border-b-black"></div>
                                 }
                             </button>
                         </form>
                         <div className="mt-[50px] text-center">
-                            <p className="text-[14px] text-white mb-[10px]">If you know Password? Back to</p>
-                            <button onClick={() => setIsForgotOpen(false)} className="text-white font-semibold text-[16px] transition-all duration-150 hover:text-white/70">Log In</button>
+                            <p className="text-[14px] text-white mb-[10px]">{allStrings["string_if_you_know_password?_back_to"]}</p>
+                            <button onClick={() => setIsForgotOpen(false)} className="text-white font-semibold text-[16px] transition-all duration-150 hover:text-white/70">{allStrings["string_login"]}</button>
                         </div>
                     </div>
                 </div>

@@ -400,7 +400,7 @@ export const get_support_msg = async (form) => {
 
 export const get_language_action = async () => {
     try {
-        const res = await fetch(server_routes.getLaguageMaster)
+        const res = await fetch(server_routes.getLaguageMaster, { cache: "no-cache" })
         const data = await res.json()
         return data
     } catch (error) {

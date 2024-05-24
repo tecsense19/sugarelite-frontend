@@ -197,11 +197,15 @@ import React, { Suspense } from 'react'
 
 const page = async () => {
 	const allStrings = await getAllStrings();
-	return (
-		<Suspense fallback={<AuthLoader />}>
-			<RegisterIndex allStrings={allStrings.data} />
-		</Suspense>
-	)
+	if (allStrings.success) {
+		return (
+			<Suspense fallback={<AuthLoader />}>
+				<RegisterIndex allStrings={allStrings.data} />
+			</Suspense>
+		)
+	} else {
+		return <>Fetch Failed</>
+	}
 }
 
 export default page
