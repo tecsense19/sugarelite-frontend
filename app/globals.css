@@ -499,3 +499,16 @@ button:disabled {
     transform: translateY(-100px);
   }
 }
+
+
+.image-uploader::-webkit-scrollbar {
+  @apply w-[6px]
+}
+
+.image-uploader::-webkit-scrollbar-thumb {
+  @apply bg-white rounded-full
+}
+
+.linear-bg {
+  background: linear-gradient(to top, rgb(14 14 14 / 72%), rgb(18 27 33 / 0%));
+}

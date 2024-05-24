@@ -10,7 +10,7 @@ import read_tick from "/public/assets/read_tick.svg";
 import single_tick from "/public/assets/single_tick.svg";
 import single_tick_2 from "/public/assets/single_tick_2.svg";
 import shadow_bg_chat from "/public/assets/shadow_bg_chat.svg";
-import Pending from "/public/assets/pending.svg"
+import Prohibition from "/public/assets/prohibition.svg"
 import Image from 'next/image';
 import Msg from './Msg';
 import { send_message_action } from '@/app/lib/actions';
@@ -103,7 +103,8 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
           <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
             {
               message.type === "deleted" ?
-                <p className='px-2 py-1 text-[15px]'>
+                <p className='px-2 py-1 text-[15px] flex gap-x-1'>
+                  <Image src={Prohibition} alt="deleted-icon" height={13} width={13} priority className="opacity-70 pointer-events-none" />
                   You deleted this message
                   <span className={`h-[10px] w-[80px] ${message.type === "deleted" ? "hidden" : "inline-block"} `}></span>
                 </p> :
@@ -114,16 +115,13 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
             <Image src={penIcon} alt="edit-icon" height={16} width={16} priority className="opacity-50 pointer-events-none" />
           </div>
           }
-          {!message?.get_all_chat_with_image?.length
+          {(!message?.get_all_chat_with_image?.length || message.text)
             ? <span className={`text-white/50 font-normal text-end text-[12px] items-center mt-1 min-w-[5rem] gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"}  absolute bottom-[7px] right-[9px]`}>
               {formatTime(parseInt(message.milisecondtime))}
               <ReadTickRender isImage={false} message={message} user={user} />
             </span>
-            : <div className={`absolute bottom-[10px] right-[6px] text-white font-normal text-end text-[12px] mt-1 min-w-[6rem] me-1 gap-x-1 justify-end pointer-events-none ${message.type === "deleted" ? "hidden" : "flex"} `}>
-              <div className='absolute w-[225px] -right-0 bottom-0'>
-                <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
-              </div>
-              <span className='absolute right-[22px] -bottom-[2px]'>{formatTime(parseInt(message.milisecondtime))}</span>
+            : <div className={`w-[95%] absolute bottom-2 pt-[6px] px-1 h-8 rounded-b-md linear-bg ${message.type === "deleted" ? "hidden" : "flex"} gap-x-1 justify-end pointer-events-none items-center`}>
+              <span className='text-[12px] font-normal text-white/50'>{formatTime(parseInt(message.milisecondtime))}</span>
               <ReadTickRender isImage={false} message={message} user={user} />
             </div>
           }
@@ -136,7 +134,12 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
       <div className={`px-[7px] pt-2 pb-[7px] break-words relative  flex items-end`}>
         <div className=" break-words text-[16px] font-normal leading-[22px] text-white/80 ">
           {
-            message.type === "deleted" ? <p className='px-2 py-1'> Message deleted</p> : <Msg msg={message} setSelectedImages={setSelectedImages} />
+            message.type === "deleted" ?
+              <p className='pe-2 ps-1 py-1 flex gap-x-1'>
+                <Image src={Prohibition} alt="deleted-icon" height={13} width={13} priority className="opacity-70 pointer-events-none" />
+                Message deleted
+              </p>
+              : <Msg msg={message} setSelectedImages={setSelectedImages} />
           }
         </div>
         {
@@ -145,12 +148,10 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
           </div>
         }
         {
-          message?.get_all_chat_with_image?.length
-            ? <div className={`absolute text-white w-[94%]  font-normal text-end text-[12px] mt-1 min-w-[4rem] gap-x-1 justify-end ${message.type === "deleted" ? "hidden" : "flex"}`}>
-              <div className='absolute w-[225px]  -right-1 bottom-0 pointer-events-none'>
-                <Image src={shadow_bg_chat} alt="edit-icon" height={220} width={224} priority className="pointer-events-none h-full w-full" />
-              </div>
-              <span className='absolute me-1 bottom-[2px] pointer-events-none'>{formatTime(parseInt(message.milisecondtime))}</span>
+          (message?.get_all_chat_with_image?.length || !message.text)
+            ? <div className={`w-[95%] absolute bottom-[7px] pt-[9px] px-1 h-8 rounded-b-md linear-bg ${message.type === "deleted" ? "hidden" : "flex"} gap-x-1 justify-end pointer-events-none items-center`}>
+              <span className='text-[12px] font-normal text-white/50'>{formatTime(parseInt(message.milisecondtime))}</span>
+              <ReadTickRender isImage={false} message={message} user={user} />
             </div>
             : <span className={`text-white/50 font-normal text-end text-[12px] mt-1 min-w-[4rem] absolute right-[10px] bottom-[7px] ${message.type === "deleted" ? "hidden" : ""}`}>
               {formatTime(parseInt(message.milisecondtime))}

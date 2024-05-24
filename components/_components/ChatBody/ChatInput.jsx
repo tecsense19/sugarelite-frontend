@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { useForm } from 'react-hook-form'
 import smileIcon from "/public/assets/smile_icon.svg";
 import attachmentIcon from "/public/assets/attachment_icon.svg";
@@ -146,27 +147,57 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
             reader.onerror = (error) => reject(error);
         });
 
-    const photoHandler = async (e) => {
-        let obj = {}
-        const { files } = e.target
+    // const photoHandler = async (e) => {
+    //     let obj = {}
+    //     const { files } = e.target
 
-        if (files[0]) {
-            let file = await getBase64(files[0])
-            obj.name = files[0].name
-            let alreadyUploaded = false;
-            for (let item of sendingImages) {
-                if (item.name === obj.name) {
-                    alreadyUploaded = true;
-                    break;
-                }
-            }
-            if (!alreadyUploaded) {
-                obj.photo_url = file
-                obj.file = files[0]
-                setSendingImages((prev) => [...prev, obj])
-            }
+    //     if (files[0]) {
+    //         let file = await getBase64(files[0])
+    //         obj.name = files[0].name
+    //         let alreadyUploaded = false;
+    //         for (let item of sendingImages) {
+    //             if (item.name === obj.name) {
+    //                 alreadyUploaded = true;
+    //                 break;
+    //             }
+    //         }
+    //         if (!alreadyUploaded) {
+    //             obj.photo_url = file
+    //             obj.file = files[0]
+    //             setSendingImages((prev) => [...prev, obj])
+    //         }
+    //     }
+    // }
+    const photoHandler = async (e) => {
+        const { files } = e.target;
+
+        if (files.length > 0) {
+            const newImages = await Promise.all(
+                Array.from(files).map(async (file) => {
+                    const base64 = await getBase64(file);
+                    const imageName = file.name;
+
+                    // Check if the image is already uploaded
+                    const alreadyUploaded = sendingImages.some((item) => item.name === imageName);
+
+                    // If not already uploaded, add it to sendingImages
+                    if (!alreadyUploaded) {
+                        return {
+                            name: imageName,
+                            photo_url: base64,
+                            file: file
+                        };
+                    }
+                    return null; // If already uploaded, return null
+                })
+            );
+
+            // Filter out null values (already uploaded images) and add new images to sendingImages
+            const filteredImages = newImages.filter((image) => image !== null);
+            setSendingImages((prev) => [...prev, ...filteredImages]);
         }
-    }
+    };
+
 
     useEffect(() => {
         if (editingMsg) {
@@ -181,7 +212,7 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
     return (
         <div className="w-full flex flex-col px-4 pb-[18px] md:px-10 md:pb-10 relative ">
             {contextHolder}
-            <div className={`h-[100px] rounded-t-[5px] bg-black w-full flex items-center px-2 gap-2 ${sendingImages.length ? "flex" : "hidden"}`}>
+            <div className={`h-[100px] rounded-t-[5px] bg-black w-full flex-wrap overflow-y-auto flex items-center image-uploader p-2 gap-3 gap-y-4 ${sendingImages.length ? "flex" : "hidden"}`}>
                 {sendingImages.map((i, inx) => {
                     return <div key={inx} className='border-primary-dark-5 border border-dashed rounded-[5px] relative'>
                         <Image src={i?.photo_url ? i?.photo_url : i.chat_images} alt='photo' width={1000} height={1000} className='object-contain h-20 w-20 min-w-20 min-h-20' />
@@ -202,7 +233,7 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
                     {
                         !editingMsg
                             ? <>
-                                <input type="file" {...register("photo")} id='photo' className='hidden' accept="image/x-png,image/gif,image/jpeg" onChange={photoHandler} />
+                                <input type="file" {...register("photo")} id='photo' className='hidden' accept="image/x-png,image/gif,image/jpeg" multiple onChange={photoHandler} />
                                 <label className='cursor-pointer' htmlFor='photo'>
                                     <Image src={attachmentIcon} priority alt="attachmentIcon" height={28} width={28} className="hidden md:block pointer-events-none" />
                                     <Image src={attachmentIcon} priority alt="attachmentIcon" height={20} width={20} className="md:hidden pointer-events-none" />

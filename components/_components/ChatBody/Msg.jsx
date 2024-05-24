@@ -16,7 +16,7 @@ const Msg = ({ msg, setSelectedImages }) => {
                                             width={1000} height={1000} src={i.chat_images} alt="phot"
                                             className={` rounded-md bg-primary-dark-4 object-cover ${msg.get_all_chat_with_image.length === 1 ? "h-full  w-full" : msg.get_all_chat_with_image.length === 2 ? "h-full w-[calc(7rem-2px)]" : "h-[calc(50%-2px)] w-[calc(7rem-2px)]"} `} />
                                         {inx > 3 &&
-                                            <p className='absolute bottom-0 h-[calc(50%-2px)] text-white flex justify-center items-center w-[calc(50%-2px)] right-0 bg-primary-dark/40 rounded-md'>+ {msg.get_all_chat_with_image.length - 4}</p>
+                                            <p className='absolute bottom-0 h-[calc(50%-2px)] text-white flex justify-center items-center w-[calc(50%-2px)] right-0 bg-primary-dark/20 rounded-md'>+ {msg.get_all_chat_with_image.length - 4}</p>
                                         }
                                         {
                                             msg.get_all_chat_with_image.length === 3 &&
@@ -29,7 +29,10 @@ const Msg = ({ msg, setSelectedImages }) => {
                             })
                         }
                     </div>
-                    {/* <p className=''>{msg.text}</p> */}
+                    {
+                        msg.text &&
+                        <p className=''>{msg.text} <span className='h-[10px] w-[80px] inline-block'></span></p>
+                    }
                 </div>
             )
         } else {
