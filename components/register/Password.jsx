@@ -13,7 +13,7 @@ import chevron_right from "/public/assets/chevron_right.svg"
 import chevron_right_white from "/public/assets/chevron_right_white.svg"
 import { Popover } from 'antd'
 
-const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue }) => {
+const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue, allStrings }) => {
 
     const [showCPass, setShowCPass] = useState(false)
     const [showPass, setShowPass] = useState(false)
@@ -72,27 +72,27 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
 
     const content = (
         <div className='w-full'>
-            <p className='font-semibold text-[17px]'>Password must contains</p>
+            <p className='font-semibold text-[17px]'>{allStrings["string_password_must_contains"]}</p>
             <div className='text-xs mt-[3px] me-1'>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.sixChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.sixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Minimum of 6 characters'}</p>
+                    <p className={isValidPass.sixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_minimum_of_6_characters"]}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.mixChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.mixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Include a mix of uppercase and lowercase letters'}</p>
+                    <p className={isValidPass.mixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_include_a_mix_of_uppercase_and_lowercase_letters"]}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.numChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.numChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Include at least one number (0-9)'}</p>
+                    <p className={isValidPass.numChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_include_at_least_one_number_(0-9)"]}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.spclChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.spclChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'At least one special character (!@#$%^&*)'}</p>
+                    <p className={isValidPass.spclChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_at_least_one_special_character_(!@#$%^&*)"]}</p>
                 </div>
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.sqncChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
-                    <p className={isValidPass.sqncChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{'Avoid repeating characters (e.g., "aaa")'}</p>
+                    <p className={isValidPass.sqncChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings['string_avoid_repeating_characters_(e.g.,_\"aaa\")']}</p>
                 </div>
             </div>
         </div>
@@ -104,8 +104,8 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 <div className="flex justify-center items-center rounded-full">
                     <Image src={sugar_password} alt="pad_lock" width={120} height={126} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">What should your password be?</p>
-                <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">{allStrings["string_what_should_your_password_be?"]}</p>
+                <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>{allStrings["string_password_description"]}</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <Popover placement='bottomLeft' open={showPopOver} content={content}>
@@ -118,7 +118,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                             onChange={(e) => setValue("password", e.target.value)}
                             onFocus={() => setShowPopOver(true)} // Show Popover when input is focused
                             onBlur={() => setShowPopOver(false)}
-                            placeholder='Password'
+                            placeholder={allStrings["string_password"]}
                             className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255)] text-white outline-none '
                             autoComplete='new-password' />
 
@@ -134,7 +134,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                         type={showCPass ? "text" : "password"}
                         {...register('cpassword', { required: true })}
                         onChange={(e) => setValue("cpassword", e.target.value)}
-                        placeholder='Confirm Password'
+                        placeholder={allStrings["string_confirm_password"]}
                         className='w-full bg-transparent text-[16px] font-medium placeholder:text-[rgba(255,255,255)] text-white outline-none '
                         autoComplete='new-password' />
 
@@ -146,7 +146,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                 <button className="bg-stone-600 w-full h-[42px] mb-3 rounded-[5px] text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
                         <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
-                        BACK
+                        {allStrings["string_back"]}
                     </div>
                 </button>
                 <button
@@ -154,7 +154,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue 
                     onClick={nextStepHandler} type="button"
                     disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValidPass.mixChar || !isValidPass.numChar || !isValidPass.sixChar || !isValidPass.spclChar || !isValidPass.sqncChar}>
                     <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal] sm:ms-4 ">
-                        NEXT
+                        {allStrings["string_next"]}
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                     </div>
                 </button>

@@ -11,7 +11,7 @@ import calendar from "../../public/assets/calendar.svg"
 import { useState } from "react";
 import DateModal from "./DateModal";
 
-const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setValue }) => {
+const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setValue, allStrings }) => {
 
     const isValid = watch("birthdate")
     const dateFormat = 'DD/MM/YYYY';
@@ -27,8 +27,8 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setV
                 <div className="flex justify-center items-center rounded-full">
                     <Image src={sugar_DOB} alt="calender" width={151} height={126} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Enter Date of Birth?</p>
-                <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>Lorem ipsum dolor sit amet</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">{allStrings["string_enter_date_of_birth?"]}</p>
+                <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>{allStrings["string_date_of_birth_description"]}</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
                 <div className="relative flex justify-end items-center">
@@ -84,13 +84,13 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setV
 
                     <p>{(day && month && year) ? year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day) : "YYYY-MM-DD"}</p>
                 </div>
-                <DateModal isOpen={modalOpened} setIsModalOpened={setIsModalOpened} setValue={setValue} day={day} month={month} setDay={setDay} setMonth={setMonth} setYear={setYear} year={year} />
+                <DateModal isOpen={modalOpened} setIsModalOpened={setIsModalOpened} setValue={setValue} day={day} month={month} setDay={setDay} setMonth={setMonth} setYear={setYear} year={year} allStrings={allStrings} />
             </div>
             <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="sm:flex justify-center font-bold text-[16px] leading-[normal] gap-[5px]">
                         <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
-                        BACK
+                        {allStrings["string_back"]}
                     </div>
                 </button>
                 <button className={`w-full h-[42px] rounded bg-white relative text-[#263238] ${isValid ? "transition-all duration-150 hover:scale-[1.02]" : ""}`} type="submit" disabled={!isValid} >
@@ -98,7 +98,7 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setV
                         {
                             !isLoading ?
                                 <>
-                                    SUBMIT
+                                    {allStrings["string_submit"]}
                                     <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                                 </>
                                 :

@@ -16,7 +16,7 @@ import { Countries } from "@/app/lib/constants"
 
 const { Option } = Select;
 
-const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) => {
+const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue, allStrings }) => {
     const [states, setStates] = useState([])
 
     const customStyles = {
@@ -68,8 +68,8 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 <div className="flex justify-center items-center rounded-full">
                     <Image src={sugar_region} alt="pad_lock" width={137} height={126} className="pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">Where are you from? Which region?</p>
-                <p className='text-white sm:hidden mt-3 text-[16px] max-w-[20rem] '>Lorem ipsum dolor sit amet</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">{allStrings["string_where_are_you_from?_which_region?"]}</p>
+                <p className='text-white sm:hidden mt-3 text-[16px] max-w-[20rem]'>{allStrings["string_country_region_description"]}</p>
             </div>
             <div className='mt-14 w-full relative region_dropdown sm:mt-[25px]'>
                 <div className="mb-3 relative flex justify-end items-center">
@@ -83,7 +83,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                 <Select
                                     {...field}
                                     showSearch
-                                    placeholder="Select your Country"
+                                    placeholder={allStrings["string_select_your_country"]}
                                     optionFilterProp="children"
                                     dropdownStyle={{ backgroundColor: '#232323' }}
                                     filterOption={(input, option) =>
@@ -117,7 +117,7 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                                 <Select
                                     {...field}
                                     showSearch
-                                    placeholder="Select your Region"
+                                    placeholder={allStrings["string_select_your_region"]}
                                     optionFilterProp="children"
                                     dropdownStyle={{ backgroundColor: '#232323' }}
                                     filterOption={(input, option) =>
@@ -142,12 +142,12 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue }) 
                 <button className="bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center font-bold text-[16px] leading-[normal] gap-[5px]">
                         <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden  " />
-                        BACK
+                        {allStrings["string_back"]}
                     </div>
                 </button>
                 <button className={`w-full rounded bg-white h-[42px] relative text-[#263238] ${(!isValid.region || !isValid.country || isValid.region === "Select your Region") ? "" : "transition-all duration-150 hover:scale-[1.02]"}`} type="button" disabled={!isValid.region || !isValid.country || isValid.region === "Select your Region"} onClick={nextStepHandler}>
                     <div className="flex justify-center font-bold text-[16px] leading-[normal] gap-[5px] sm:ms-4">
-                        NEXT
+                        {allStrings["string_next"]}
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />
                     </div>
                 </button>
