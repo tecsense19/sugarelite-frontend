@@ -43,7 +43,7 @@ const sugarTypes = [
   { name: "Elite Babe", value: "EliteBabe" }
 ]
 
-const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, Controller, submitHandler, reset, cities, setCities, handleReset, dummyUsers }) => {
+const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, Controller, submitHandler, reset, cities, setCities, handleReset, dummyUsers, allStrings }) => {
 
   useEffect(() => {
     reset(watch())
@@ -55,17 +55,17 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
   return (
     // Filter Section
     <div className="bg-primary-dark-3 h-full max-h-full overflow-y-auto min-w-[350px] xl:min-w-[380px] p-[30px] text-white filter-container hidden md:block" style={{ scrollbarWidth: "none" }} data-aos="fade-right" data-aos-duration="800">
-      <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px] transition-all duration-150 hover:scale-[1.02]" style={{ lineHeight: "normal" }} onClick={() => handleReset()}>
-        RESET SEARCH
+      <button className="bg-black w-full flex items-center justify-center h-[56px] text-white/80 text-[16px] font-[600] rounded-[5px] transition-all duration-150 hover:scale-[1.02] uppercase" style={{ lineHeight: "normal" }} onClick={() => handleReset()}>
+        {allStrings["string_reset_search"]}
       </button>
       <form onSubmit={handleSubmit(submitHandler)}>
         <label className="w-full">
-          <div className="text-white text-[16px] font-[500] mt-[20px] mb-[5px]" style={{ lineHeight: "normal" }}>Search by name</div>
-          <input type="text" placeholder="Search..." {...register('name')} className="bg-primary text-white outline-none border border-white/30 rounded-[5px] h-[56px] text-[15px] font-[300] px-[20px] w-full" style={{ lineHeight: "normal" }} />
+          <div className="text-white text-[16px] font-[500] mt-[20px] mb-[5px]" style={{ lineHeight: "normal" }}>{allStrings["string_search_by_name"]}</div>
+          <input type="text" placeholder={`${allStrings["string_search"]}...`} {...register('name')} className="bg-primary text-white outline-none border border-white/30 rounded-[5px] h-[56px] text-[15px] font-[300] px-[20px] w-full" style={{ lineHeight: "normal" }} />
         </label>
 
         <div className="mt-[30px]">
-          <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age from ( {watch("age_from")} )</div>
+          <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>{allStrings["string_age_from"]} ( {watch("age_from")} )</div>
           <Controller name="age_from" control={control} defaultValue={18} render={({ field }) => (
             <ConfigProvider theme={customSliderTheme}>
               <Slider {...field} className="!mt-[15px] !mb-0 !mx-[10px]" min={18} max={99}
@@ -76,7 +76,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
         </div>
 
         <div className="mt-[25px]">
-          <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age to ( {watch("age_to")} )</div>
+          <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>{allStrings["string_age_to"]} ( {watch("age_to")} )</div>
           <Controller name="age_to" control={control} defaultValue={99} render={({ field }) => (
             <ConfigProvider theme={customSliderTheme}>
               <Slider {...field} className="!mt-[15px] !mb-0 !mx-[10px]" min={18} max={99}
@@ -88,7 +88,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
         <div className='mt-[27px] flex justify-end items-center relative'>
           <Controller name="sugar_type" control={control} render={({ field }) => (
             <ConfigProvider theme={customDropdownTheme}>
-              <Select {...field} placeholder="Select Sugar Type" optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
+              <Select {...field} placeholder={allStrings["string_select_sugar_type"]} optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                 className="w-full text-[14px] font-[300]">
                 {sugarTypes.map((type) => (
                   <Option key={type.value} value={type.value} >
@@ -105,7 +105,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
         <div className='mt-[15px] flex justify-center items-center relative country-container'>
           <Controller name="country" control={control} render={({ field }) => (
             <ConfigProvider theme={customDropdownTheme}>
-              <Select {...field} placeholder="Select Country" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
+              <Select {...field} placeholder={allStrings["string_select_country"]} showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                 className="w-full text-[16px] font-[400] text-white/80"
                 filterOption={(input, option) => {
                   return option.children.props.children[1].toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -128,7 +128,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
         <div className='mt-[30px] flex justify-center items-center relative'>
           <Controller name="region" control={control} render={({ field }) => (
             <ConfigProvider theme={{ ...customDropdownTheme, components: { Select: { ...customDropdownTheme.components.Select, selectorBg: "#6C6C6C" } } }}>
-              <Select {...field} placeholder="Select City" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
+              <Select {...field} placeholder={allStrings["string_select_region"]} showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                 className="w-full text-[16px] font-[400] text-white/80"
                 filterOption={(input, option) => {
                   return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -146,7 +146,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
 
         <div className='mt-[30px]'>
           <label className='flex justify-between cursor-pointer'>
-            <div className='text-white/80 text-[16px] font-[500] select-none' style={{ lineHeight: "normal" }}>Has a profile picture</div>
+            <div className='text-white/80 text-[16px] font-[500] select-none' style={{ lineHeight: "normal" }}>{allStrings["string_has_a_profile_picture"]}</div>
             <Controller name="has_profile_picture" defaultValue={false} control={control} render={() => (
               <ConfigProvider theme={{ token: { colorPrimary: "#F16667", fontSize: 20 } }}>
                 <Checkbox className='h-6 w-6 flex justify-end' onChange={(e) => setValue("has_profile_picture", e.target.checked)} checked={watch("has_profile_picture")} />
@@ -156,7 +156,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
         </div>
         <div className='mt-5'>
           <label className='flex justify-between cursor-pointer mt-5'>
-            <div className='text-white/80 text-[16px] font-[500] select-none' style={{ lineHeight: "normal" }}>Has a public photos</div>
+            <div className='text-white/80 text-[16px] font-[500] select-none' style={{ lineHeight: "normal" }}>{allStrings["string_has_a_public_photos"]}</div>
             <Controller name="has_public_photos" defaultValue={false} control={control} render={() => (
               <ConfigProvider theme={{ token: { colorPrimary: "#F16667", fontSize: 20 } }}>
                 <Checkbox className='h-6 w-6 flex justify-end' onChange={(e) => setValue("has_public_photos", e.target.checked)} checked={watch("has_public_photos")} />
@@ -166,7 +166,7 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
         </div>
         <div className='mt-5'>
           <label className='flex justify-between cursor-pointer mt-5'>
-            <div className='text-white/80 text-[16px] font-[500] select-none' style={{ lineHeight: "normal" }}>Is verified</div>
+            <div className='text-white/80 text-[16px] font-[500] select-none' style={{ lineHeight: "normal" }}>{allStrings["string_is_verified"]}</div>
             <Controller name="is_verified" defaultValue={false} control={control} render={() => (
               <ConfigProvider theme={{ token: { colorPrimary: "#F16667", fontSize: 20 } }}>
                 <Checkbox className='h-6 w-6 flex justify-end' onChange={(e) => setValue("is_verified", e.target.checked)} checked={watch("is_verified")} />
@@ -174,10 +174,10 @@ const Filters = ({ allUsers, register, handleSubmit, control, watch, setValue, C
             )} />
           </label>
         </div>
-        <button type='submit' className='mt-[30px] text-white text-[16px] font-[600] bg-secondary h-[56px] text-center w-full rounded-[5px] transition-all duration-150 hover:scale-[1.02]' style={{ lineHeight: "normal" }}>
-          SAVE SEARCH
+        <button type='submit' className='mt-[30px] text-white text-[16px] font-[600] bg-secondary h-[56px] text-center w-full rounded-[5px] transition-all duration-150 hover:scale-[1.02] uppercase' style={{ lineHeight: "normal" }}>
+          {allStrings["string_save_search"]}
         </button>
-        <div className='mt-[14px] text-[16px] font-[450] w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: {dummyUsers.length}</div>
+        <div className='mt-[14px] text-[16px] font-[450] w-full text-center text-white/80' style={{ lineHeight: "normal" }}>{allStrings["string_profiles_found"]}: {dummyUsers.length}</div>
       </form>
     </div >
   )

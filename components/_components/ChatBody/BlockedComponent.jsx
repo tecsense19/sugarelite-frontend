@@ -5,7 +5,7 @@ import { useStore } from '@/store/store'
 import { notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 
-const BlockedComponent = ({ user, toUser }) => {
+const BlockedComponent = ({ user, toUser, allStrings }) => {
 
     const { state: { blockedUsersState } } = useStore()
     const { mySocket } = useSocket()
@@ -34,13 +34,13 @@ const BlockedComponent = ({ user, toUser }) => {
                     {unBlockLoader
                         ? <div className='loader after:border-[20px]'></div>
                         : <>
-                            <p className='text-[18px] mb-1'>You've blocked {user.username}</p>
-                            <p>You can <span className='text-secondary cursor-pointer' onClick={unblockHandler}>Unblock</span> by clicking here</p>
+                            <p className='text-[18px] mb-1'>{allStrings["string_you've_blocked"]} {user.username}</p>
+                            <p>{allStrings["string_you_can"]} <span className='text-secondary cursor-pointer' onClick={unblockHandler}>{allStrings["string_unblock"]}</span> {allStrings["string_by_clicking_here"]}</p>
                         </>
                     }
                 </div>
                 : <div className='text-[16px] font-medium'>
-                    Oops! It seems like {toUser.username} has blocked you
+                    {allStrings["string_oops!_it_seems_like"]} {toUser.username} {allStrings["string_has_blocked_you"]}
                 </div>
             }
 

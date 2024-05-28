@@ -9,7 +9,7 @@ import CloseIcon from '/public/assets/gray_cross_icon.svg';
 // import verify_work_permit from '/public/assets/verify_work_permit.svg';
 import { verificationCards } from '@/app/lib/identityVerificationCards';
 
-const VerificationStep2 = ({ user, nextStepHandler, backStepHandler, closeModal, selectedIdentity, setSelectedIdentity }) => {
+const VerificationStep2 = ({ user, nextStepHandler, backStepHandler, closeModal, selectedIdentity, setSelectedIdentity, allStrings }) => {
   const [countries, setcountries] = useState(verificationCards)
   const [options, setOptions] = useState([]);
   // console.log(user);
@@ -49,21 +49,21 @@ const VerificationStep2 = ({ user, nextStepHandler, backStepHandler, closeModal,
         {options.length
           ? <>
             <div className='mt-4 md:mt-6 text-start text-black text-[20px] font-bold leading-[30px]'>
-              Upload a photo ID
+              {allStrings["string_upload_a_photo_id"]}
             </div>
             <div className='mt-4 md:mt-6 text-start text-primary-dark-3 text-[16px] font-normal leading-[25px]'>
-              We require a photo of a government ID to verify your identity.
+              {allStrings["string_we_require_a_photo_of_a_government_id_to_verify_your_identity."]}
             </div>
             <div className='mt-4 md:mt-6 text-start text-primary-dark-3 text-[16px] font-normal leading-[25px]'>
-              Choose 1 of the following options
+              {allStrings["string_choose_1_of_the_following_options"]}
             </div>
           </>
           : <>
             <div className='mt-4 md:mt-6 text-start text-black text-[20px] font-bold leading-[30px]'>
-              Unable to verify
+              {allStrings["string_unable_to_verify"]}
             </div>
             <div className='mt-4 md:mt-6 text-start text-primary-dark-3 text-[16px] font-normal leading-[25px]'>
-              We are unable to verify identities in your country.
+              {allStrings["string_we_are_unable_to_verify_identities_in_your_country."]}
             </div>
           </>
         }

@@ -18,7 +18,7 @@ import ReportModal from "./ReportModal"
 // import { getSocket } from "@/app/lib/socket"
 import { useSocket } from "@/store/SocketContext"
 
-const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
+const SearchProfileIndex = ({ queried_user, currentUser, pendingList, allStrings }) => {
 
     const { state: { decisionState } } = useStore()
     const { mySocket } = useSocket();
@@ -83,8 +83,8 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
     return (
         <main className="min-h-dvh lg:pt-[66px] bg-primary flex flex-col lg:flex-row w-full relative">
             {contextHolder}
-            <Side currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-            <Main currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+            <Side currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} allStrings={allStrings} />
+            <Main currentUser={currentUser} user={queried_user} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} allStrings={allStrings} />
 
             {/* report and block functionality */}
 
@@ -92,17 +92,18 @@ const SearchProfileIndex = ({ queried_user, currentUser, pendingList }) => {
             <div className="absolute hidden 2xl:block  2xl:w-[169px] 2xl:max-w-[169px] right-[2%] 2xl:right-[4%] top-[108px] ">
                 <button className="w-full h-[38px] 2xl:h-[42px] bg-[#D97706] rounded-[5px] mb-2 2xl:mb-4 flex justify-start items-center px-[19px]" onClick={() => setIsModalOpen(true)}>
                     <Image src={ReportIcon} alt="report" width={18} height={18} />
-                    <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">RAPPORTER</span>
+                    <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">{allStrings["string_report"]}</span>
                 </button>
-                <ReportModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} toUser={queried_user} currentUser={currentUser} />
+                <ReportModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} toUser={queried_user} currentUser={currentUser} allStrings={allStrings} />
                 {
-                    !isLoading.block ? <button className="w-full h-[38px] 2xl:h-[42px] bg-danger rounded-[5px] flex justify-start items-center px-[19px]"
-                        onClick={() => { blockHandler("block"); setisLoading(prevState => ({ ...prevState, block: true })) }}>
-                        <Image src={BlockIcon} alt="block" width={18} height={18} />
-                        <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">BLOCKER</span>
-                    </button>
+                    !isLoading.block
+                        ? <button className="w-full h-[38px] 2xl:h-[42px] bg-danger rounded-[5px] flex justify-start items-center px-[19px]"
+                            onClick={() => { blockHandler("block"); setisLoading(prevState => ({ ...prevState, block: true })) }}>
+                            <Image src={BlockIcon} alt="block" width={18} height={18} />
+                            <span className="ms-2 text-white text-[14px] 2xl:text-[16px] leading-[normal] font-medium">{allStrings["string_block"]}</span>
+                        </button>
                         : <div className="w-full h-[38px] 2xl:h-[42px] bg-danger rounded-[5px] flex justify-center items-center px-[19px]">
-                            <span className='loader after:border-[14px] '></span>
+                            <span className='loader after:border-[14px]'></span>
                         </div>
                 }
             </div>

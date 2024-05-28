@@ -7,7 +7,7 @@ import CloseIcon from '/public/assets/close.svg'
 import { report_user_action } from '@/app/lib/actions';
 import { client_notification } from '@/app/lib/helpers';
 
-const ReportModal = ({ setIsModalOpen, isModalOpen, toUser, currentUser, }) => {
+const ReportModal = ({ setIsModalOpen, isModalOpen, toUser, currentUser, allStrings }) => {
 
     const [isLoading, setisLoading] = useState(false)
     const { handleSubmit, register, reset } = useForm()
@@ -66,13 +66,13 @@ const ReportModal = ({ setIsModalOpen, isModalOpen, toUser, currentUser, }) => {
                         </div>
                         <form className=' flex-col flex gap-2' onSubmit={handleSubmit(submitHandler)}>
                             <div className='px-4 pt-4'>
-                                <textarea {...register("reason", { required: true })} cols="30" rows="5" placeholder='Enter reason...' className='w-full bg-primary-dark-5 outline-none p-2 rounded-[5px] resize-none' required></textarea>
+                                <textarea {...register("reason", { required: true })} cols="30" rows="5" placeholder={allStrings["string_enter_reason..."]} className='w-full bg-primary-dark-5 outline-none p-2 rounded-[5px] resize-none' required></textarea>
                             </div>
                             <div className='flex justify-center gap-x-4 pb-2 pt-[6px]'>
-                                <button type='button' onClick={() => setIsModalOpen(false)} className='py-1 border border-white hover:border-secondary hover:text-secondary w-[6rem] font-semibold text-[17px] rounded-[7px] text-center'>Cancel</button>
+                                <button type='button' onClick={() => setIsModalOpen(false)} className='py-1 border border-white hover:border-secondary hover:text-secondary w-[6rem] font-semibold text-[17px] rounded-[7px] text-center'>{allStrings["string_cancel"]}</button>
                                 <button type='submit' className={`py-1 w-[6rem] border border-secondary bg-secondary text-[17px] font-semibold rounded-[7px] text-center ${isLoading && "pointer-events-none"}`}>
                                     {
-                                        isLoading ? <span className='loader after:border-[11px]'></span> : "Report"
+                                        isLoading ? <span className='loader after:border-[11px]'></span> : allStrings["string_report"]
                                     }
                                 </button>
                             </div>

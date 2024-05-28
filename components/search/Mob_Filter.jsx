@@ -12,7 +12,7 @@ import { Countries } from "@/app/lib/constants"
 
 const { Option } = Select;
 
-const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, watch, setValue, Controller, dummyUsers, submitHandler, reset, setDummyUsers, cities, setCities }) => {
+const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, watch, setValue, Controller, dummyUsers, submitHandler, reset, setDummyUsers, cities, setCities, allStrings }) => {
 
     // const [dummyUsers, setDummyUsers] = useState(allUsers);
 
@@ -183,20 +183,20 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
         <>
             <div className="md:hidden text-white p-4 flex justify-between items-center mb-2 ">
                 <Image src={chevron_left} alt='down_arrow' style={{ height: "auto", width: "auto" }} width={24} height={24} priority className='cursor-pointer' onClick={() => dispatch({ type: "Filter_Close" })} />
-                <span className="text-[24px] font-semibold leading-[22.8px]">Filter & Sort</span>
+                <span className="text-[24px] font-semibold leading-[22.8px]">{allStrings["string_filter_&_sort"]}</span>
                 <div></div>
             </div>
             <div className='text-white px-4 bg-primary md:hidden slide-in-bottom pb-4'>
-                <button className="bg-black w-full flex items-center justify-center h-[42px] text-white text-[16px] font-medium rounded-[5px] mt-3" style={{ lineHeight: "normal" }} onClick={handleReset}>
-                    RESET SEARCH
+                <button className="bg-black w-full flex items-center justify-center h-[42px] text-white text-[16px] font-medium rounded-[5px] mt-3 uppercase" style={{ lineHeight: "normal" }} onClick={handleReset}>
+                    {allStrings["string_reset_search"]}
                 </button>
                 <form onSubmit={handleSubmit(submitHandler)} className="w-full">
                     <div className="flex flex-col mt-[25px]">
-                        <label htmlFor="by_name" className="text-[16px] font-medium leading-[normal] mb-[6px]">Search by name</label>
-                        <input type="text" {...register("name")} id="by_name" placeholder="Search..." className="bg-primary-dark-3 outline-none border-none h-[42px] rounded-[5px] text-[14px] font-light placeholder:opacity-70 px-[20px]" />
+                        <label htmlFor="by_name" className="text-[16px] font-medium leading-[normal] mb-[6px]">{allStrings["string_search_by_name"]}</label>
+                        <input type="text" {...register("name")} id="by_name" placeholder={`${allStrings["string_search"]}...`} className="bg-primary-dark-3 outline-none border-none h-[42px] rounded-[5px] text-[14px] font-light placeholder:opacity-70 px-[20px]" />
                     </div>
                     <div className="mt-[25px]">
-                        <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age from ( {watch("age_from")} )</div>
+                        <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>{allStrings["string_age_from"]} ( {watch("age_from")} )</div>
                         <Controller name="age_from" control={control} defaultValue={18} render={({ field }) => (
                             <ConfigProvider theme={customSliderTheme}>
                                 <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_from > 19 ? "!ms-0" : "!ms-[10px]"} ${age.age_from > 97 && "!me-[10px]"}`} min={18} max={99}
@@ -206,7 +206,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                         )} />
                     </div>
                     <div className="mt-[25px]">
-                        <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>Age to ( {watch("age_to")} )</div>
+                        <div className="font-[500] text-[16px] text-white/80" style={{ lineHeight: "normal" }}>{allStrings["string_age_to"]} ( {watch("age_to")} )</div>
                         <Controller name="age_to" control={control} defaultValue={99} render={({ field }) => (
                             <ConfigProvider theme={customSliderTheme}>
                                 <Slider {...field} className={`!mt-[15px] !mb-0 ${age.age_to > 19 ? "!ms-0" : "!ms-[10px]"} ${age.age_to > 97 && "!me-[10px]"}`} min={18} max={99}
@@ -215,7 +215,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                         )} />
                     </div>
                     <div className="flex flex-col mt-[25px]">
-                        <label className="text-[16px] font-medium leading-[normal] mb-[6px]">Select Sugar Type</label>
+                        <label className="text-[16px] font-medium leading-[normal] mb-[6px]">{allStrings["string_select_sugar_type"]}</label>
                         <div className="grid grid-cols-2 w-full gap-4 text-center mt-[15px]">
                             {
                                 typeArray.map((type, inx) => (
@@ -238,7 +238,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                     <div className='mt-[25px] flex justify-center items-center relative country-container_filter w-full'>
                         <Controller name="country" control={control} render={({ field }) => (
                             <ConfigProvider theme={customDropdownTheme}>
-                                <Select {...field} placeholder="Select Country" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
+                                <Select {...field} placeholder={allStrings["string_select_country"]} showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                                     className="w-full text-[16px] font-[400] text-white/80"
                                     filterOption={(input, option) => {
                                         return option.children.props.children[1].toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -260,7 +260,7 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                     <div className='mt-[15px] flex justify-center items-center relative country-container_filter w-full'>
                         <Controller name="region" control={control} render={({ field }) => (
                             <ConfigProvider theme={{ ...customDropdownTheme, components: { Select: { ...customDropdownTheme.components.Select, } } }}>
-                                <Select {...field} placeholder="Select Region" showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
+                                <Select {...field} placeholder={allStrings["string_select_region"]} showSearch optionFilterProp="children" dropdownStyle={{ backgroundColor: '#131313' }}
                                     className="w-full text-[16px] font-medium text-white"
                                     filterOption={(input, option) => {
                                         return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -276,18 +276,18 @@ const Mob_Filter = ({ allUsers, register, handleSubmit, control, handleReset, wa
                         )} />
                     </div>
                     <div className='mt-[32px]'>
-                        <Mob_Checkbox setValue={setValue} control={control} text={"Has a profile picture"} watch={watch} name={"has_profile_picture"} />
+                        <Mob_Checkbox setValue={setValue} control={control} text={allStrings["string_has_a_profile_picture"]} watch={watch} name={"has_profile_picture"} />
                     </div>
                     <div className="mt-[21px]">
-                        <Mob_Checkbox setValue={setValue} control={control} text={"Has a public photos"} watch={watch} name={"has_public_photos"} />
+                        <Mob_Checkbox setValue={setValue} control={control} text={allStrings["string_has_a_public_photos"]} watch={watch} name={"has_public_photos"} />
                     </div>
                     <div className="mt-[21px]">
-                        <Mob_Checkbox setValue={setValue} control={control} text={"Is Verified"} watch={watch} name={"is_verified"} />
+                        <Mob_Checkbox setValue={setValue} control={control} text={allStrings["string_is_verified"]} watch={watch} name={"is_verified"} />
                     </div>
-                    <button className='mt-[30px] text-white text-[16px] font-[600] bg-secondary h-[42px] text-center w-full rounded-[5px]' style={{ lineHeight: "normal" }}>
-                        SAVE SEARCH
+                    <button className='mt-[30px] text-white text-[16px] font-[600] bg-secondary h-[42px] text-center w-full rounded-[5px] uppercase' style={{ lineHeight: "normal" }}>
+                        {allStrings["string_save_search"]}
                     </button>
-                    <div className='mt-[15px] text-[16px] font-medium w-full text-center text-white/80' style={{ lineHeight: "normal" }}>Profile found: {dummyUsers.length}</div>
+                    <div className='mt-[15px] text-[16px] font-medium w-full text-center text-white/80' style={{ lineHeight: "normal" }}>{allStrings["string_profiles_found"]}: {dummyUsers.length}</div>
                 </form>
             </div>
         </>

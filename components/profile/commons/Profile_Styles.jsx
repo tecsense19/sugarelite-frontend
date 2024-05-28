@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Profile_Styles = ({ title, list }) => {
+const Profile_Styles = ({ title, list, allStrings }) => {
     return (
         <div className="mb-[40px]">
             <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in' data-aos-anchor-placement="bottom">{title}</h1>
@@ -9,7 +9,7 @@ const Profile_Styles = ({ title, list }) => {
                     list.map((style, inx) => {
                         return <div key={inx} className='aspect-auto 2xl:ps-5' data-aos='zoom-in' data-aos-anchor-placement="bottom">
                             <p className='font-medium  text-[13px] md:text-[16px] text-white text-opacity-50 uppercase mb-[7px]'>{style.type}</p>
-                            <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value ? (style.value === "ask me" ? "NA" : style.value) : "NA"}</p>
+                            <p className='font-medium text-[18px] md:text-[20px] text-white text-opacity-80'>{style.value ? (style.value === allStrings["string_ask_me"] ? "NA" : style.value) : "NA"}</p>
                         </div>
                     })
                 }

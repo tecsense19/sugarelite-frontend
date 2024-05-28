@@ -2,7 +2,7 @@
 import Image from "next/image"
 import Loader from "/public/assets/loading.gif"
 
-const Profile_Photos = ({ title, list }) => {
+const Profile_Photos = ({ title, list, allStrings }) => {
 
     return (
         <div className="mb-[40px]">
@@ -21,7 +21,7 @@ const Profile_Photos = ({ title, list }) => {
                 }
             </div>
             {
-                !list?.length && <p className="text-center w-full text-white/50" data-aos='zoom-in' data-aos-anchor-placement="bottom">No {title}</p>
+                !list?.length && <p className="text-center w-full text-white/50" data-aos='zoom-in' data-aos-anchor-placement="bottom">{allStrings["string_no"]} {title}</p>
             }
         </div>
     )

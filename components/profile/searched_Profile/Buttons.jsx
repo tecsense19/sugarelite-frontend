@@ -10,12 +10,21 @@ import { useRouter } from 'next/navigation'
 import { useStore } from '@/store/store'
 import { private_image_request } from '@/app/lib/actions'
 import { useEffect, useState } from 'react'
+import { useChat } from '@/store/ChatContext'
 
-const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIsModalOpen }) => {
+const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, setIsModalOpen, allStrings }) => {
     const navigate = useRouter()
     const [api, contextHolder] = notification.useNotification();
     const { dispatch, state: { chatProfileState } } = useStore()
     const [isRequesting, setIsRequesting] = useState(false)
+    const { addMessage } = useChat();
+
+    const generateRandomId = () => {
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+        const randomLetter = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        return `${randomNumber}${randomLetter}`;
+    };
 
     const requestHandler = async (type) => {
         if (type === "request_view_album") {
@@ -30,6 +39,7 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, se
             const isThere = chatProfileState.some(i => i.id === user.id)
             if (!isThere) {
                 dispatch({ type: "Add_Profile", payload: { id: user.id, milisecondtime: new Date().getTime() } })
+                addMessage({ id: generateRandomId(), sender_id: currentUser.id, receiver_id: user.id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "You started chat", get_all_chat_with_image: "" })
                 dispatch({ type: "Message_To", payload: user })
                 navigate.push(client_routes.chat)
             } else {
@@ -48,17 +58,17 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, se
             {contextHolder}
             <button onClick={() => requestHandler("send_message")} className='bg-[#3DC73A] w-full max-w-[273px] md:w-[calc(100%/2-10px)] lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-right'>
                 <Image src={message_circle} width={22} height={22} alt='message' />
-                <span className='xl:text-[20px] font-[600] leading-[normal]'>SEND MESSAGE</span>
+                <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>{allStrings["string_send_message"]}</span>
             </button>
             {
                 !privateAlbumState && (
                     !isRequesting ?
                         <button onClick={() => { requestHandler("request_view_album"); setIsRequesting(true) }} className={`bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]`} data-aos='fade-left'>
                             <Image src={lock_1} width={22} height={22} alt='message' />
-                            <span className='xl:text-[20px] font-[600] leading-[normal]'>REQUEST VIEW ALBUM</span>
+                            <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>{allStrings["string_request_view_album"]}</span>
                         </button> :
                         <div className='bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]'>
-                            <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>REQUESTING...!</span>
+                            <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>{allStrings["string_requesting...!"]}</span>
                         </div>
                 )
             }
@@ -66,14 +76,14 @@ const Buttons = ({ user, currentUser, privateAlbumState, socket, isModalOpen, se
                 (privateAlbumState === "pending") &&
                 <div className='bg-primary-dark-3 w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
                     <Image src={lock_1} width={22} height={22} alt='message' />
-                    <span className='xl:text-[20px] font-[600] leading-[normal]'>REQUEST PENDING</span>
+                    <span className='xl:text-[20px] font-[600] leading-[normal]'>{allStrings["string_request_pending"]}</span>
                 </div>
             }
             {
                 privateAlbumState === "accept" &&
                 <div className='bg-secondary w-full max-w-[273px] md:w-[calc(100%/2-10px)]  lg:max-w-[300px] flex justify-center items-center gap-[10px] h-[42px] lg:h-[56px] rounded-[5px]' data-aos='fade-left'>
                     {/* <Image src={lock_1} width={22} height={22} alt='message' /> */}
-                    <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>you got access</span>
+                    <span className='xl:text-[20px] font-[600] leading-[normal] uppercase'>{allStrings["string_you_got_access"]}</span>
                 </div>
             }
 

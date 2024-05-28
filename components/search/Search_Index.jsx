@@ -9,7 +9,7 @@ import { Countries } from "@/app/lib/constants"
 import TinderSwipe from "./TinderSwipe"
 import Loader from "../common/Loader"
 
-const Search_Index = ({ allUsers, remainingList, user, myRecievedRequests }) => {
+const Search_Index = ({ allUsers, remainingList, user, myRecievedRequests, allStrings }) => {
 
     const { state: { filterState: { isFilterOpen }, blockedUsersState }, dispatch } = useStore()
 
@@ -124,21 +124,24 @@ const Search_Index = ({ allUsers, remainingList, user, myRecievedRequests }) => 
             {/* web view */}
 
             <div className="font-bold hidden md:flex md:h-dvh pt-0 md:pt-[66px] flex-col md:flex-row">
-                <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} />
-                <Cards allUsers={dummyUsers} />
+                <Filters allUsers={users} dummyUsers={dummyUsers} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} handleReset={handleReset} allStrings={allStrings} />
+                <Cards allUsers={dummyUsers} allStrings={allStrings} />
             </div>
 
             {/* mobile view */}
 
             <div className={`${isFilterOpen ? "" : "h-dvh"} md:hidden`}>
                 {
-                    !isFiltered ? (
-                        isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                            <TinderSwipe filterHandler={filterHandler} users={allUsers} remainingList={remainingList} currentUser={user} myRecievedRequests={myRecievedRequests} />
-                    ) :
-                        (
-                            isFilterOpen ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} /> :
-                                <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} />
+                    !isFiltered
+                        ? (
+                            isFilterOpen
+                                ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} allStrings={allStrings} />
+                                : <TinderSwipe filterHandler={filterHandler} users={allUsers} remainingList={remainingList} currentUser={user} myRecievedRequests={myRecievedRequests} allStrings={allStrings} />
+                        )
+                        : (
+                            isFilterOpen
+                                ? <Mob_Filter handleReset={handleReset} allUsers={users} register={register} handleSubmit={handleSubmit} control={control} watch={watch} setValue={setValue} Controller={Controller} setDummyUsers={setDummyUsers} dummyUsers={dummyUsers} submitHandler={submitHandler} reset={reset} cities={cities} setCities={setCities} allStrings={allStrings} />
+                                : <Cards allUsers={dummyUsers} filterHandler={filterHandler} resetHandler={handleReset} allStrings={allStrings} />
                         )
                 }
             </div>

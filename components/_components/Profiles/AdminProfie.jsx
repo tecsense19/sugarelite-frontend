@@ -4,7 +4,7 @@ import Stroke_Online from '/public/assets/online_stroke.svg'
 import Image from 'next/image'
 import { useStore } from '@/store/store'
 
-const AdminProfie = ({ message, setShowMobileChatContent }) => {
+const AdminProfie = ({ message, setShowMobileChatContent, allStrings }) => {
 
     const { dispatch } = useStore()
 
@@ -17,7 +17,7 @@ const AdminProfie = ({ message, setShowMobileChatContent }) => {
             const timeDiffInMinutes = Math.floor(timeDiffInMilliseconds / (1000 * 60));
 
             if (timeDiffInMinutes < 1) {
-                return "just now";
+                return allStrings["string_just_now"];
             } else if (timeDiffInMinutes < 60) {
                 return `${timeDiffInMinutes} mins`;
             } else {
@@ -25,7 +25,7 @@ const AdminProfie = ({ message, setShowMobileChatContent }) => {
                 return `${timeDiffInHours} hrs`;
             }
         } else if (time.toDateString() === new Date(today.setDate(today.getDate() - 1)).toDateString()) {
-            return "Yesterday";
+            return allStrings["string_yesterday"];
         } else {
             const timeString = time.toDateString().split(' ')
             const month = time.getMonth() + 1

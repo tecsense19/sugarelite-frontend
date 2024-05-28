@@ -7,7 +7,7 @@ import chevron_down from "../../../public/assets/chevron-down.svg"
 const { Option } = Select;
 
 
-const SelectBox = ({ name, options, text, control, inx, user }) => {
+const SelectBox = ({ name, options, text, control, inx, user, allStrings }) => {
 
     const customStyles = {
         components: {
@@ -77,14 +77,14 @@ const SelectBox = ({ name, options, text, control, inx, user }) => {
             <Controller
                 name={name}
                 control={control}
-                defaultValue={user[name] ? user[name] : "ask me"}
+                defaultValue={user[name] ? user[name] : allStrings["string_ask_me"]}
                 render={({ field }) => (
                     <ConfigProvider
                         theme={customStyles}
                     >
                         <Select
                             {...field}
-                            placeholder={"ask me"}
+                            placeholder={allStrings["string_ask_me"]}
                             optionFilterProp="children"
                             dropdownStyle={{ backgroundColor: '#535353' }}
                             filterOption={(input, option) =>

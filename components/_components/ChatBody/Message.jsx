@@ -23,7 +23,7 @@ const formatTime = (timestamp) => {
   return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages, setEditingMsg }) => {
+const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages, setEditingMsg, allStrings }) => {
 
   const { mySocket } = useSocket()
   const { addMessage, editMessage } = useChat()
@@ -50,9 +50,9 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
     let obj = getFormData({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id })
     const res = await send_message_action(obj)
     if (res.success) {
-      mySocket.emit("send-message", { sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
-      addMessage({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
-      editMessage({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
+      mySocket.emit("send-message", { sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime, status: message.status })
+      // addMessage({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime })
+      editMessage({ sender_id: message.sender_id, receiver_id: message.receiver_id, type: "deleted", id: message.id, updated_at: message.updated_at, milisecondtime: message.milisecondtime, status: message.statu })
     }
     setShowOptions(false)
     setIsLoading(false)
@@ -62,7 +62,6 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
     setShowOptions(false)
     setEditingMsg({ message: message.text, id: message.id, images: message.get_all_chat_with_image })
   }
-
 
   if (message.sender_id === user.id) {
     return (
@@ -75,7 +74,7 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                   {!isLoading ?
                     <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
                       <Image src={deleteIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                      <div className="text-[14px] font-medium leading-[20px]">Delete</div>
+                      <div className="text-[14px] font-medium leading-[20px]">{allStrings["string_delete"]}</div>
                     </button> : <div className="bg-secondary  border-[1px] border-white/30 w-[125px] h-[32px] flex justify-center items-center gap-x-[10px] rounded-sm" onClick={msgDeleteHandler}>
                       <span className='loader after:border-[10px] '></span>
                     </div>
@@ -83,12 +82,12 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
                   {(user.is_subscribe === 1 && user.is_subscription_stop === 0 && user.is_subscription_cancel === 0)
                     ? <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm" onClick={msgEditHandler}>
                       <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
-                      <div className="text-[14px] font-medium leading-[20px]">Edit</div>
+                      <div className="text-[14px] font-medium leading-[20px]">{allStrings["string_edit"]}</div>
                     </button>
                     : <Tooltip placement="bottom" title={"Please have subscription to edit."} arrow={true}>
                       <button className="bg-primary hover:bg-secondary border-[1px] border-white/30 h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
                         <Image src={editIcon} alt="" height={15} width={15} priority className="ms-5 pointer-events-none" />
-                        <div className="text-[14px] font-medium leading-[20px]">Edit</div>
+                        <div className="text-[14px] font-medium leading-[20px]">{allStrings["string_edit"]}</div>
                       </button>
                     </Tooltip>
                   }
@@ -103,13 +102,13 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
           }
           <div className=" break-words w-full max-w-full text-[16px] font-normal leading-[22px] text-white/80 ">
             {
-              message.type === "deleted" ?
-                <p className='px-2 py-1 text-[15px] flex gap-x-1'>
+              message.type === "deleted"
+                ? <p className='px-2 py-1 text-[15px] flex gap-x-1'>
                   <Image src={Prohibition} alt="deleted-icon" height={13} width={13} priority className="opacity-70 pointer-events-none" />
-                  You deleted this message
+                  {allStrings["string_you_deleted_this_message"]}
                   <span className={`h-[10px] w-[80px] ${message.type === "deleted" ? "hidden" : "inline-block"} `}></span>
-                </p> :
-                <Msg msg={message} setSelectedImages={setSelectedImages} />
+                </p>
+                : <Msg msg={message} setSelectedImages={setSelectedImages} />
             }
           </div>
           {message.type === "edited" && <div className='absolute -left-[25px] bottom-1'>
@@ -137,9 +136,9 @@ const Message = ({ message, user, toUser, isLastMessage, isFirstMessage, setSele
         <div className=" break-words text-[16px] font-normal leading-[22px] text-white/80 ">
           {
             message.type === "deleted" ?
-              <p className='pe-2 ps-1 py-1 flex gap-x-1'>
+              <p className='pe-2 ps-1 py-1 flex gap-x-1 select-text'>
                 <Image src={Prohibition} alt="deleted-icon" height={13} width={13} priority className="opacity-70 pointer-events-none" />
-                Message deleted
+                {allStrings["string_message_deleted"]}
               </p>
               : <Msg msg={message} setSelectedImages={setSelectedImages} />
           }

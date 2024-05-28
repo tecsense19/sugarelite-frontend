@@ -15,23 +15,32 @@ import { friend_request_action } from '@/app/lib/actions';
 import Stroke_Online from '/public/assets/online_stroke.svg'
 import Link from 'next/link';
 import { client_routes } from '@/app/lib/helpers';
+import { useChat } from '@/store/ChatContext'
 
-const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) => {
+const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket, allStrings }) => {
 
 	const [users, setUsers] = useState(myRecievedRequests)
 	const { state: { onlineUsers, requestsState, notificationState }, dispatch } = useStore()
 	const [showLike, setShowLike] = useState({ id: null, d: null })
+	const { addMessage } = useChat();
 
 	useEffect(() => {
 		handleSetCards()
 	}, [])
 
-
+	const generateRandomId = () => {
+		const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+		const randomLetter = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+		const randomNumber = Math.floor(Math.random() * 100) + 1;
+		return `${randomNumber}${randomLetter}`;
+	};
 
 	const acceptReq = async (receiver_id) => {
 		const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 1 })
 		if (res.success) {
 			socket.emit("card-swiped", res.data)
+			addMessage({ id: generateRandomId(), sender_id: currentUser.id, receiver_id: receiver_id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "Congratulations on your match", get_all_chat_with_image: "" })
+			socket.emit('send-message', { id: generateRandomId(), sender_id: currentUser.id, receiver_id: receiver_id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "Congratulations on your match", get_all_chat_with_image: "" })
 			dispatch({ type: "Add_Accepted_Request", payload: { id: receiver_id } })
 			dispatch({ type: "Remove_Friend_Request", payload: res.data })
 		}
@@ -174,18 +183,20 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
 											<div className='absolute blur-image top-0 left-0 w-full h-full px-3 py-4 flex flex-col justify-end'>
 												<div className='flex items-center gap-x-[6px]'>
 													<Image src={Stroke_Online} alt='' height={10} width={10} className='pointer-events-none rounded-full mb-[2px]' />
-													<div className='text-[12px] font-medium leading-[12px]'>Recently Active</div>
+													<div className='text-[12px] font-medium leading-[12px]'>{allStrings["string_recently_active"]}</div>
 												</div>
 											</div>
 										</div>
 									))}
 								</div>
 								<div className='mt-[30px] text-center'>
-									Upgrade your plan to see people who already like you.
+									{allStrings["string_upgrade_your_plan_to_see_people_who_already_like_you."]}
 								</div>
 							</div>
 							<div className='flex justify-center items-center'>
-								<Link href={client_routes.subscription} className='py-[13px] px-7 bg-secondary rounded-[5px] text-[18px] font-700 leading-[20px]'>Upgrade Your Plan</Link>
+								<Link href={client_routes.subscription} className='py-[13px] px-7 bg-secondary rounded-[5px] text-[18px] font-700 leading-[20px]'>
+									{allStrings["string_upgrade_your_plan"]}
+								</Link>
 							</div>
 							{/* <div className='px-8 leading-[20px] font-semibold text-[18px] rounded-[10px] text-black text-center flex flex-col gap-y-2 absolute top-1/2 -translate-y-1/2 justify-center items-center h-full background-no'>
 								<p>
@@ -201,10 +212,10 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket }) 
 				</>
 				: <div className={`h-[calc(100%-88px-123px)] mt-[-5rem] items-center flex-col justify-center px-4 w-full ${!toggle ? "hidden" : "flex"}`}>
 					<Image src={No_Request} alt='no' width={180} height={180} className='' />
-					<p className='font-[400] text-[18px] mt-1'>No requests yet</p>
+					<p className='font-[400] text-[18px] mt-1'>{allStrings["string_no_requests_yet"]}</p>
 					<p className='px-8 leading-[20px] font-light text-[16px] mt-1 text-white/60 text-center flex flex-col gap-y-2'>
-						<span>Don't worry though, your charm is just waiting for the right match to come along and light up your notifications!</span>
-						<span>✨ Keep shining ✨</span>
+						<span>{allStrings["string_don't_worry_though,_your_charm_is_just_waiting_for_the_right_match_to_come_along_and_light_up_your_notifications!"]}</span>
+						<span>✨ {allStrings["string_keep_shining"]} ✨</span>
 					</p>
 				</div>
 			}

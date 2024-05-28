@@ -10,7 +10,7 @@ import { ConfigProvider, Popover } from 'antd';
 import Link from 'next/link';
 import { client_routes } from '@/app/lib/helpers';
 
-const ToUserProfile = ({ selectedObj, setShowMobileProfile }) => {
+const ToUserProfile = ({ selectedObj, setShowMobileProfile, allStrings }) => {
 
     const [showOptions, setShowOptions] = useState(false);
 
@@ -24,7 +24,7 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile }) => {
                 <button className="flex md:hidden items-center justify-center" onClick={() => setShowMobileProfile(false)}>
                     <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
                 </button>
-                <div className="text-[24px] font-semibold leading-[23px]">Profile</div>
+                <div className="text-[24px] font-semibold leading-[23px]">{allStrings["string_profile"]}</div>
                 <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
                     <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
                         <div className="text-white flex flex-col p-[10px] gap-y-[6px] z-20">
@@ -34,11 +34,11 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile }) => {
                             </button>
                             <button className="bg-primary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
                                 <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
+                                <div className="text-[14px] font-medium leading-[20px]">{allStrings["string_report"]}</div>
                             </button>
                             <button className="bg-primary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
                                 <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                                <div className="text-[14px] font-medium leading-[20px]">{allStrings["string_block"]}</div>
                             </button>
                         </div>
                     )}>
@@ -85,7 +85,7 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile }) => {
                         {selectedObj.bio ? selectedObj.bio : "No Bio added"}
                     </div>
                     <div className="bg-primary-dark-3 2xl:bg-primary px-5 md:px-[24px] py-[13px] md:pt-[11px] md:pb-[15px] rounded-b-[5px]">
-                        <p className="text-[18px] font-medium leading-[normal] text-white/80">Biography</p>
+                        <p className="text-[18px] font-medium leading-[normal] text-white/80">{allStrings["string_biography"]}</p>
                         {/* <p className="mt-[7px] text-[12px] font-medium leading-[normal] text-white/80">No Cinema</p> */}
                     </div>
                 </div>

@@ -11,7 +11,7 @@ import { client_routes } from '@/app/lib/helpers'
 import Buttons from './Buttons'
 import { useStore } from '@/store/store'
 
-const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, isModalOpen }) => {
+const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, isModalOpen, allStrings }) => {
 
     const path = usePathname()
     const { state: { onlineUsers } } = useStore()
@@ -21,7 +21,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
         <div className="lg:bg-primary-dark-3 lg:h-[calc(100vh-66px)] lg:fixed lg:w-[350px] 2xl:w-[400px] text-white flex justify-start flex-col" data-aos='fade-right'>
             <div className="md:hidden w-full px-[15px] mt-[12px] mb-[30px] flex justify-between items-center">
                 <Link href={path === client_routes.edit_profile ? client_routes.profile : client_routes.search}><Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" /></Link>
-                <p className="text-[24px] font-semibold select-none">Profile</p>
+                <p className="text-[24px] font-semibold select-none">{allStrings["string_profile"]}</p>
                 <PopOver user={user} currentUser={currentUser} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver>
@@ -74,15 +74,15 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                 <div className='mt-[30px] mb-[10px] w-full sm:max-w-[75%] lg:hidden flex justify-center items-center md:flex-row flex-col gap-3'>
                     {/* <ButtonProfile user={user} allUsers={allUsers} pendingList={pendingList} accessList={accessList} /> */}
                     {
-                        <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+                        <Buttons user={user} currentUser={currentUser} privateAlbumState={privateAlbumState} socket={socket} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} allStrings={allStrings} />
                     }
                 </div>
                 <div className="w-full bg-primary-dark-4 mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                     <div className="p-4 text-[16px] font-light">
-                        {user.bio ? user.bio : "No Bio added"}
+                        {user.bio ? user.bio : allStrings["string_no_bio_added"]}
                     </div>
                     <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
-                        <p className="text-[18px] font-medium">Biography</p>
+                        <p className="text-[18px] font-medium">{allStrings["string_biography"]}</p>
                         {/* <p className="text-[12px] font-medium text-white text-opacity-80">No Cinema</p> */}
                     </div>
                 </div>

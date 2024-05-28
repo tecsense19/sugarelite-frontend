@@ -12,7 +12,7 @@ import { setCookie } from 'nookies'
 import CryptoJS from "crypto-js"
 import { useRouter } from 'next/navigation'
 
-const Index = ({ user }) => {
+const Index = ({ user, allStrings }) => {
 
     const { handleSubmit, control, setValue, register } = useForm()
     const [publicPhotoList, setPublicPhotoList] = useState([])
@@ -94,8 +94,8 @@ const Index = ({ user }) => {
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(editHanlder)} className='w-full overflow-x-hidden flex flex-col lg:flex-row'>
-                <SideContent user={user} control={control} setValue={setValue} setAvatar={setAvatar} register={register} />
-                <EditMainContent progress={progress} user={user} control={control} setValue={setValue} publicPhotoList={publicPhotoList} setPrivatePhotoList={setPrivatePhotoList} privatePhotoList={privatePhotoList} setPublicPhotoList={setPublicPhotoList} setRemovalArray={setRemovalArray} isLoading={isLoading} />
+                <SideContent user={user} control={control} setValue={setValue} setAvatar={setAvatar} register={register} allStrings={allStrings} />
+                <EditMainContent progress={progress} user={user} control={control} setValue={setValue} publicPhotoList={publicPhotoList} setPrivatePhotoList={setPrivatePhotoList} privatePhotoList={privatePhotoList} setPublicPhotoList={setPublicPhotoList} setRemovalArray={setRemovalArray} isLoading={isLoading} allStrings={allStrings} />
             </form>
         </>
     )

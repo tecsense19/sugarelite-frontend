@@ -60,7 +60,7 @@ const AlbumNotification = ({ notification, allUsers, socket, allStrings }) => {
                 const timeDiffInMilliseconds = today - time;
                 const timeDiffInMinutes = Math.floor(timeDiffInMilliseconds / (1000 * 60));
                 if (timeDiffInMinutes < 1) {
-                    return "just now";
+                    return allStrings["string_just_now"];
                 } else if (timeDiffInMinutes < 60) {
                     return `${timeDiffInMinutes} Min`;
                 } else {
@@ -68,7 +68,7 @@ const AlbumNotification = ({ notification, allUsers, socket, allStrings }) => {
                     return `${timeDiffInHours} hrs`;
                 }
             } else if ((currDate - 1) === notificationDate) {
-                return `Yesterday`
+                return allStrings["string_yesterday"]
             } else {
                 return `${(currDate - notificationDate)} days`
             }

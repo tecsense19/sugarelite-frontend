@@ -14,7 +14,7 @@ import { useStore } from '@/store/store';
 // import { getSocket } from '@/app/lib/socket';
 import { useSocket } from '@/store/SocketContext';
 
-const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecievedRequests }) => {
+const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecievedRequests, allStrings }) => {
 
     const { state: { requestsState } } = useStore()
     const navigate = useRouter()
@@ -38,16 +38,16 @@ const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecie
                     <Image src={chevron_left} alt="" height={24} width={24} priority className="pointer-events-none" />
                 </div>
                 <div className="flex flex-col justify-center items-center">
-                    <div className="text-white text-[24px] font-semibold leading-[23px]">Discover</div>
-                    <div className="text-white/70 text-[14px] font-medium leading-[16px] mt-2">You looking</div>
+                    <div className="text-white text-[24px] font-semibold leading-[23px]">{allStrings["string_discover"]}</div>
+                    <div className="text-white/70 text-[14px] font-medium leading-[16px] mt-2">{allStrings["string_you_looking"]}</div>
                 </div>
                 <button className="h-[42px] w-[42px] flex justify-center items-center bg-secondary rounded-[5px]" onClick={filterHandler}>
                     <Image src={settingsIcon} alt="" height={20} width={20} priority className="pointer-events-none" />
                 </button>
             </div>
-            <Buttons setToggle={setToggle} toggle={toggle} />
-            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} currentUser={currentUser} remainingList={remainingList} socket={socket} />
-            <RequestsComponent toggle={toggle} remainingList={remainingList} currentUser={currentUser} socket={socket} myRecievedRequests={users.filter(i => myRecievedRequests.some(j => i.id === j.sender_id))} />
+            <Buttons setToggle={setToggle} toggle={toggle} allStrings={allStrings} />
+            <SwiperComponent users={user} toggle={toggle} offSet={offSet} setOffSet={setOffSet} currentUser={currentUser} remainingList={remainingList} socket={socket} allStrings={allStrings} />
+            <RequestsComponent toggle={toggle} remainingList={remainingList} currentUser={currentUser} socket={socket} myRecievedRequests={users.filter(i => myRecievedRequests.some(j => i.id === j.sender_id))} allStrings={allStrings} />
         </div>
     );
 };
