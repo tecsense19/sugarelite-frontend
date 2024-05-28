@@ -38,7 +38,7 @@ const Profiles = ({ messages, user, allUsers, setShowMobileChatContent, supportC
                     <input type="text" placeholder={`${allStrings["string_search"]}...`} value={searchVal} className='h-full rounded-[5px] overflow-hidden w-full p-2 outline-none' onChange={(e) => setSearchVal(e.target.value)} />
                 </div>
             </div>
-            <div className={`flex flex-col mt-[10px] md:mt-5 gap-y-[10px] md:gap-y-4 overflow-y-auto h-[calc(100%-190px)] md:h-[calc(100%-170px)] ps-4 px- md:ps-[30px] me-0 pe-4 md:me-[18px] md:pe-3 pb-8 md:pb-3 second-child transition-all duration-150 ease-linear ${isSearch ? "translate-y-0" : "-translate-y-10 pb-12"}`} style={{ scrollbarWidth: "none" }}>
+            <div className={`flex flex-col mt-[10px] md:mt-5 gap-y-[10px] md:gap-y-4 overflow-y-auto h-[calc(100%-190px)] md:h-[calc(100%-170px)] ps-4 px- md:ps-[30px] me-0 pe-4 md:me-[18px] md:pe-3  second-child transition-all duration-150 ease-linear ${isSearch ? "translate-y-0 pb-20 md:pb-[48px]" : "-translate-y-10 pb-10 md:pb-3"}`} style={{ scrollbarWidth: "none" }}>
                 <AdminProfie message={supportChat[supportChat.length - 1]} setShowMobileChatContent={setShowMobileChatContent} allStrings={allStrings} />
                 {/* {console.log(sortUsersByLatestMessage(messages, user))} */}
                 {
