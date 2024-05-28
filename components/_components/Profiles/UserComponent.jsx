@@ -59,7 +59,7 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{foundUser.username}</p>
                     <p className="text-white/70 flex items-center text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] ">
-                        {typingUsers.some(i => (i.receiver_id === user.id && foundUser.id === i.sender_id)) ? allStrings["string_typing..."] : LatestMessage(foundUser, latestMessage)}
+                        {typingUsers.some(i => (i.receiver_id === user.id && foundUser.id === i.sender_id)) ? allStrings["string_typing..."] : LatestMessage(foundUser, latestMessage, allStrings)}
                     </p>
                 </div>
             </div>
@@ -82,11 +82,16 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
     )
 }
 
-const LatestMessage = (user, latestMessage) => {
-    if (latestMessage.type === "deleted") return <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>This message was deleted</span>
+const LatestMessage = (user, latestMessage, allStrings) => {
+    if (latestMessage.type === "deleted") {
+        return <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{allStrings["string_message_deleted"]}</span>
+    }
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
-            {user.id === latestMessage.sender_id ? "" : <ProfileReadStatus message={latestMessage} />}
+            {user.id === latestMessage.sender_id
+                ? ""
+                : <ProfileReadStatus message={latestMessage} />
+            }
             <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? allStrings["string_sended"] : allStrings["string_received"]}</span>
         </>
     } else {
