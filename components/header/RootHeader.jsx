@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import logo from "../../public/assets/Logo (1).svg"
 import notificationIcon from "../../public/assets/Mask group (1).svg"
-import messages from "../../public/assets/Mask group.svg"
+import messagesIcon from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"
 import { logout_user, post_support_msg, read_message_action } from '@/app/lib/actions'
 import { useStore } from '@/store/store'
@@ -17,14 +17,17 @@ import { ConfigProvider, Popover } from 'antd'
 import { io } from 'socket.io-client'
 import { useSocket } from '@/store/SocketContext'
 import { useChat } from '@/store/ChatContext'
+import { connectSocket } from '@/app/lib/socket'
 
 const socket = io("https://socket.website4you.co.in");
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat, allStrings }) => {
 
     const { setSocket } = useSocket();
-    const { addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount, updateUnReadCount, state: { unReadCount } } = useChat()
+    const { addAllMessages, addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount, updateUnReadCount, state: { unReadCount, messages } } = useChat()
     const { state: { notificationOpenState, notifyBadgeState, chatProfileState, toMessageState }, dispatch } = useStore();
+
+    const [unReadMsg, setUnReadMsgs] = useState(0)
 
     const router = useRouter()
     const pathname = usePathname()
@@ -43,6 +46,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             // console.log(socket.io.engine.transport.n)
             socket.emit("join", user.id);
             setSocket(socket);
+            connectSocket(socket)
             const blockUserHandler = (obj) => {
                 if (obj.sender_id === user.id || obj.receiver_id === user.id) {
                     dispatch({ type: "Add_Blocked_User", payload: obj })
@@ -58,7 +62,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             const albumAccessHandler = (obj) => {
                 dispatch({ type: "Add_Decision_User", payload: obj })
                 const { data, status } = obj
-                console.log(obj)
                 if (user.id === data.receiver_id && status === "pending") {
                     dispatch({ type: "Add_Album_Notification", payload: data })
                 }
@@ -134,10 +137,32 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }, [])
 
     useEffect(() => {
+        // const receiveMessageHandler = (obj) => {
+        //     if (obj.receiver_id === user.id) {
+        //         if (obj.type === "deleted" || obj.type === "edited") {
+        //             // addMessage(obj)
+        //             editMessage(obj)
+        //         } else {
+        //             newMessageHandler(obj)
+        //             addMessage(obj)
+        //             if (pathname !== client_routes.chat) {
+        //                 dispatch({ type: "Add_Msg_Badge", payload: true })
+        //             }
+        //             if (toMessageState.id !== obj.sender_id && obj?.type === "regular") {
+        //                 if (unReadCount.some(i => i.id === obj.sender_id)) {
+        //                     updateUnReadCount(obj.sender_id)
+        //                 } else {
+        //                     addUnReadCount({ id: obj.sender_id, count: 1 })
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
         const receiveMessageHandler = (obj) => {
-            if (obj.receiver_id === user.id) {
+            if (obj.receiver_id === user.id && !obj.seenType) {
                 if (obj.type === "deleted" || obj.type === "edited") {
-                    addMessage(obj)
+                    // addMessage(obj)
                     editMessage(obj)
                 } else {
                     newMessageHandler(obj)
@@ -153,6 +178,9 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                         }
                     }
                 }
+            }
+            if (obj.seenType) {
+                editMessage(obj)
             }
         }
 
@@ -297,6 +325,9 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         if (chatList.length && chatList.filter(msg => msg.receiver_id === user.id)?.length) {
             const myUnreadMsgs = chatList.filter(msg => (msg.receiver_id === user.id && msg.status === "sent"))
             if (myUnreadMsgs.length) {
+                myUnreadMsgs.forEach(i => {
+                    socket.emit("send-message", { ...i, status: "delivered", seenType: true })
+                })
                 const senderId = Array.from(new Set(myUnreadMsgs.map(i => i.sender_id)))
                 senderId.forEach(id => {
                     const msgId = myUnreadMsgs.filter((i) => i.sender_id === id)?.map(j => j.id).toString()
@@ -306,6 +337,17 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         }
     }, [])
 
+    useEffect(() => {
+        addAllMessages(chatList)
+        // const myFrnds = user.is_friends
+        // if (myFrnds.length) {
+        //     myFrnds.forEach(i => {
+        //         const stamp = new Date(i.time)
+        //         const timeStamp = Date.parse(stamp)
+        //         addMessage({ sender_id: user.id, receiver_id: i.user_id, text: "Its a match", type: "regular", milisecondtime: timeStamp, created_at: stamp, updated_at: stamp, status: "new", deleted_at: null, get_all_chat_with_image: "" })
+        //     })
+        // }
+    }, [])
 
     useEffect(() => {
         const tempArr = []
@@ -326,6 +368,27 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         }
     }, [])
 
+    useEffect(() => {
+        const unRead = messages.filter(i => (i.receiver_id === user.id && i.status !== "read"))
+        const senderId = Array.from(new Set(unRead.map(i => i.sender_id)))
+        setUnReadMsgs(senderId.length)
+    }, [messages])
+
+    useEffect(() => {
+        if (chatList.length) {
+            const chatId = Array.from(new Set(chatList.map(chat => chat.sender_id !== user.id ? chat.sender_id : chat.receiver_id)));
+            if (chatId.length) {
+                chatId.forEach(i => {
+                    dispatch({ type: "Add_Profile", payload: { id: i, milisecondtime: '' } })
+                })
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        dispatch({ type: "Message_To", payload: "Admin" })
+    }, [pathname])
+
     return (
         <>
             <header className="hidden md:flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]">
@@ -344,9 +407,12 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                                 }
                             </button>
                             <Link href={client_routes.chat} className="flex transition-all duration-150 hover:scale-110 relative">
-                                <Image height={32} width={20} src={messages} alt="" className="" />
-                                {notifyBadgeState.msg &&
+                                <Image height={32} width={20} src={messagesIcon} alt="" className="" />
+                                {/* {notifyBadgeState.msg &&
                                     <p className="h-2 w-2 bg-secondary bounce rounded-full absolute top-0 -right-1"></p>
+                                } */}
+                                {
+                                    unReadMsg ? <div className='absolute h-4 w-4 border-[1px] pt-[1px] border-white bg-secondary flex justify-center items-center text-[11px] font-medium rounded-full left-[10px] -top-[2px]'>{unReadMsg}</div> : ""
                                 }
                             </Link>
                             <Link href={client_routes.search} className="py-[7px] rounded-[5px] h-[32px] flex items-center transition-all duration-150 hover:scale-110">

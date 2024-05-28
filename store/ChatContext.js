@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 // Define action types
+const ADD_ALL_MESSAGES = "ADD_ALL_MESSAGES"
 const ADD_MESSAGE = 'ADD_MESSAGE';
 const DELETE_MESSAGE = 'DELETE_MESSAGE';
 const EDIT_MESSAGE = 'EDIT_MESSAGE';
@@ -23,19 +24,30 @@ const initialState = {
 // Define the reducer function
 const chatReducer = (state, action) => {
     switch (action.type) {
+        case ADD_ALL_MESSAGES:
+            return {
+                ...state,
+                messages: action.payload
+            }
+        // case ADD_MESSAGE:
+        //     const newMessage = action.payload;
+        //     // Check if the message with the same ID already exists
+        //     const existingMessageIndex = state.messages.findIndex(message => message.id === newMessage.id);
+        //     if (existingMessageIndex === -1) {
+        //         // Message does not exist, add it to the state
+        //         return {
+        //             ...state,
+        //             messages: [...state.messages, newMessage],
+        //         };
+        //     } else {
+        //         // Message already exists, return the current state
+        //         return state;
+        //     }
         case ADD_MESSAGE:
             const newMessage = action.payload;
-            // Check if the message with the same ID already exists
-            const existingMessageIndex = state.messages.findIndex(message => message.id === newMessage.id);
-            if (existingMessageIndex === -1) {
-                // Message does not exist, add it to the state
-                return {
-                    ...state,
-                    messages: [...state.messages, newMessage],
-                };
-            } else {
-                // Message already exists, return the current state
-                return state;
+            return {
+                ...state,
+                messages: [...state.messages, newMessage]
             }
         case DELETE_MESSAGE:
             return {
@@ -117,6 +129,10 @@ export const useChat = () => {
 export const ChatProvider = ({ children }) => {
     const [state, dispatch] = useReducer(chatReducer, initialState);
 
+    const addAllMessages = (arr) => {
+        dispatch({ type: ADD_ALL_MESSAGES, payload: arr });
+    }
+
     // Function to add a message to the chat
     const addMessage = (message) => {
         dispatch({ type: ADD_MESSAGE, payload: message });
@@ -157,7 +173,7 @@ export const ChatProvider = ({ children }) => {
     }
 
     return (
-        <ChatContext.Provider value={{ state, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser, addTypingUser, addUnReadCount, updateUnReadCount, removeUnReadCount }}>
+        <ChatContext.Provider value={{ state, addAllMessages, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser, addTypingUser, addUnReadCount, updateUnReadCount, removeUnReadCount }}>
             {children}
         </ChatContext.Provider>
     );

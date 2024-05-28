@@ -17,7 +17,7 @@ import { useStore } from '@/store/store';
 import { useSocket } from '@/store/SocketContext';
 import { useChat } from '@/store/ChatContext';
 
-const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, setSendingImages, setMessages }) => {
+const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, setSendingImages, setMessages, allStrings }) => {
 
     const emojiRef = useRef(null)
     const buttonRef = useRef(null);
@@ -76,6 +76,35 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
         }
     }
 
+    // const sendeMsgHandler = async ({ message }) => {
+    //     message = message?.trim(' ')
+    //     if ((message?.length || sendingImages.length) && !editingMsg) {
+    //         const randomId = generateRandomId()
+    //         await sendPendingMessage(randomId, message, "regular")
+    //         setSendingImages([])
+    //         let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "regular" })
+    //         const res = await send_message_action(obj)
+    //         // addMessage(res.message)
+    //         if (res.success) {
+    //             setMessages(prev => prev.filter(i => i.id !== randomId))
+    //             editMessage({ ...res.message, pid: randomId })
+    //             deleteMessage(randomId)
+    //             mySocket.emit("send-message", res.message)
+    //         }
+    //     } if ((message?.length || sendingImages.length) && editingMsg) {
+    //         setSendingImages([])
+    //         reset({ message: '' })
+    //         let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id })
+    //         const res = await send_message_action(obj)
+    //         if (res.success) {
+    //             setEditingMsg(null)
+    //             addMessage(res.message)
+    //             editMessage(res.message)
+    //             mySocket.emit("send-message", res.message)
+    //         }
+    //     }
+    // }
+
     const sendeMsgHandler = async ({ message }) => {
         message = message?.trim(' ')
         if ((message?.length || sendingImages.length) && !editingMsg) {
@@ -86,19 +115,18 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
             const res = await send_message_action(obj)
             // addMessage(res.message)
             if (res.success) {
-                setMessages(prev => prev.filter(i => i.id !== randomId))
                 editMessage({ ...res.message, pid: randomId })
-                deleteMessage(randomId)
                 mySocket.emit("send-message", res.message)
             }
         } if ((message?.length || sendingImages.length) && editingMsg) {
+            console.log("first")
             setSendingImages([])
             reset({ message: '' })
             let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id })
             const res = await send_message_action(obj)
             if (res.success) {
                 setEditingMsg(null)
-                addMessage(res.message)
+                // addMessage(res.message)
                 editMessage(res.message)
                 mySocket.emit("send-message", res.message)
             }
@@ -229,7 +257,7 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
                     <Image src={smileIcon} priority alt="" height={20} width={20} className="md:hidden pointer-events-none" />
                 </button>
                 <form className='w-full flex items-center' onSubmit={handleSubmit(sendeMsgHandler)}>
-                    <input type="text" {...register('message')} placeholder="Type a message..." className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px] emoji-fontFamily" autoComplete="off" />
+                    <input type="text" {...register('message')} placeholder={allStrings["string_type_a_message..."]} className="mx-[10px] md:mx-[30px] bg-transparent border-0 !outline-none w-[calc(100%-102px)] md:w-[calc(100%-181px)] text-[16px] md:text-[18px] font-medium leading-[24px] emoji-fontFamily" autoComplete="off" />
                     {
                         !editingMsg
                             ? <>

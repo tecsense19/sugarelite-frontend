@@ -1,24 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useStore } from '@/store/store';
 import { useChat } from '@/store/ChatContext';
 import { useSocket } from '@/store/SocketContext';
 import Message from './Message';
 import TypingAnimation from './TypingAnimation';
 import ChatScroller from './ChatScroller';
+import ChatStarted from './ChatStarted';
 
 
-const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, setEditingMsg }) => {
+const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, setEditingMsg, allStrings }) => {
 
     const [messages, setMessages] = useState([]);
     const { mySocket } = useSocket()
-    const { addMessage, removeUnReadCount } = useChat()
+    const { editMessage, removeUnReadCount } = useChat()
     const msgRef = useRef(null)
 
     const [isScroller, setIsScroller] = useState(false)
 
     useEffect(() => {
         setMessages(chatList);
-        scrollToBottom()
     }, [chatList]);
 
     useEffect(() => {
@@ -26,7 +25,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
         if (unReadMsgs.length) {
             mySocket.emit('read-msg', { unReadMsgs, receiver_id: toUser.id })
             unReadMsgs.forEach(i => {
-                addMessage({ ...i, status: "read" });
+                editMessage({ ...i, status: "read" });
             })
         }
     }, [])
@@ -65,19 +64,18 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
         }
     };
 
-
-
     return (
         <div className={`${sendingImages.length ? "h-[calc(100%-222px)] md:h-[calc(100%-285px)]" : "md:h-[calc(100%-185px)] h-[calc(100%-122px)]"} p-4 md:px-10`}>
             <div className='h-full flex flex-col justify-end relative'>
                 <div className='flex flex-col-reverse overflow-y-auto scroll-smooth' style={{ scrollbarWidth: "none" }} ref={msgRef} onScroll={scrollerHandler}>
                     <div>
+                        <ChatStarted messages={messages} user={user} toUser={toUser} allStrings={allStrings} />
                         {messages.map((message, index) => {
                             const isLastMessage = index === messages.length - 1 || messages[index + 1]?.sender_id !== message.sender_id;
                             const isFirstMessage = index === 0 || messages[index - 1]?.sender_id !== message.sender_id;
-                            // console.log(message)
+                            if (message.status === "new") return
                             return (
-                                <MessageItem key={index} message={message} user={user} toUser={toUser} isLastMessage={isLastMessage} isFirstMessage={isFirstMessage} setSelectedImages={setSelectedImages} setEditingMsg={setEditingMsg} />
+                                <MessageItem key={index} message={message} user={user} toUser={toUser} isLastMessage={isLastMessage} isFirstMessage={isFirstMessage} setSelectedImages={setSelectedImages} setEditingMsg={setEditingMsg} allStrings={allStrings} />
                             )
                         })}
                         <TypingAnimation toUser={toUser} user={user} />
@@ -91,7 +89,7 @@ const ChatBody = ({ toUser, user, chatList, sendingImages, setSelectedImages, se
 
 let currentDate = null
 
-const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages, setEditingMsg }) => {
+const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstMessage, setSelectedImages, setEditingMsg, allStrings }) => {
     const isCurrentUser = message.sender_id === user.id;
     const messageDate = new Date(parseInt(message.milisecondtime)).toDateString();
     const shouldPrintDate = currentDate !== messageDate;
@@ -107,13 +105,13 @@ const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstM
                 </div>
             )}
             <div className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} my-1`}>
-                <Message message={message} user={user} toUser={toUser} isFirstMessage={isFirstMessage} isLastMessage={isLastMessage} setSelectedImages={setSelectedImages} setEditingMsg={setEditingMsg} />
+                <Message message={message} user={user} toUser={toUser} isFirstMessage={isFirstMessage} isLastMessage={isLastMessage} setSelectedImages={setSelectedImages} setEditingMsg={setEditingMsg} allStrings={allStrings} />
             </div>
         </>
     );
 }, (prevProps, nextProps) => {
-    return prevProps.message.id === nextProps.message.id && prevProps.message.status === nextProps.message.status && prevProps.message.text === nextProps.message.text;
+    return prevProps.message.id === nextProps.message.id && prevProps.message.status === nextProps.message.status && prevProps.message.text === nextProps.message.text && prevProps.isFirstMessage === nextProps.isFirstMessage && prevProps.isLastMessage === nextProps.isLastMessage;
 });
 
-export default ChatBody;
+export default React.memo(ChatBody);
 

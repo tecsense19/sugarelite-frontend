@@ -253,6 +253,22 @@ export const friend_request_action = async (form) => {
     }
 }
 
+export const read_friend_request_action = async (id) => {
+    try {
+        const res = await fetch(server_routes.read_friends_request_notification, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(id)
+        })
+        const data = await res.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const all_friend_Notifications = async () => {
     try {
         const res = await fetch(server_routes.friends_request_notification)

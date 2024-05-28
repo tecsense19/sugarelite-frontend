@@ -17,7 +17,8 @@ const NotificationComaponent = ({ open, allUsers, socket, user, allStrings }) =>
 
     useEffect(() => {
         const { albumNotifications, friendRequests } = notificationState
-        const mergedNotifications = [...albumNotifications, ...friendRequests]
+        const myNotifications = friendRequests.filter(i => (i.receiver_id === user.id || i.user_id === user.id))
+        const mergedNotifications = [...albumNotifications, ...myNotifications]
         mergedNotifications.sort((a, b) => {
             const dateA = new Date(a.updated_at);
             const dateB = new Date(b.updated_at);
@@ -29,6 +30,7 @@ const NotificationComaponent = ({ open, allUsers, socket, user, allStrings }) =>
     useEffect(() => {
         dispatch({ type: "Add_Notification_Badge", payload: false })
     }, [notificationOpenState])
+
 
     return (
         <div className={`fixed md:top-[66px] bottom-0 right-0 w-full z-[10] h-full md:h-[calc(100%-66px)] transition-transform duration-300 ease-out origin-right ${open ? "scale-x-1" : "scale-x-0"}`}>

@@ -39,6 +39,7 @@ export const server_routes = {
   friends_request: base_path + "/friends",
   private_album_notification: base_path + "/push/privatealbum",
   friends_request_notification: base_path + "/push/friendrequest",
+  read_friends_request_notification: base_path + "/readfriend_request",
   private_image_request: base_path + "/privateimages/access",
   private_image_access: base_path + "/privateimages/access/decline",
   stripe_subscription: base_path + "/create/subscription",
