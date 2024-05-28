@@ -4,7 +4,7 @@ import Logo from "/public/assets/fire_log.svg"
 import Image from 'next/image'
 
 
-const AdminSideProfile = () => {
+const AdminSideProfile = ({ allStrings }) => {
     return (
         <div className='hidden 2xl:block w-[400px] bg-primary-dark-3 pt-[50px] px-[30px]'>
             <div className="w-full flex justify-start items-center flex-col h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
@@ -13,22 +13,22 @@ const AdminSideProfile = () => {
                 <div>
                     <div className={`flex flex-col mt-5 md:mt-[30px] items-start`}>
                         <div className='flex items-center'>
-                            <div className="text-[24px] md:text-[26px] font-bold leading-[30px] flex !text-white capitalize">Team Elite</div>
+                            <div className="text-[24px] md:text-[26px] font-bold leading-[30px] flex !text-white capitalize">{allStrings["string_team_elite"]}</div>
                             <Image src={premium} alt='premium' width={30} height={30} priority className='pointer-events-none ms-3 md:ms-4' />
-                            <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>Premium</span>
+                            <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>{allStrings["string_premium"]}</span>
                         </div>
                         <div className='mt-[11px] flex items-center self-center'>
-                            <span className="text-[18px] font-semibold text-white/80 me-[14px] leading-[normal]">India,</span>
-                            <span className="text-[16px] font-semibold text-white/80 leading-[normal]">Gujrat</span>
+                            <span className="text-[18px] font-semibold text-white/80 me-[14px] leading-[normal]">{allStrings["string_india"]},</span>
+                            <span className="text-[16px] font-semibold text-white/80 leading-[normal]">{allStrings["string_gujarat"]}</span>
                         </div>
                     </div>
                 </div>
                 <div className="w-full mt-[30px]">
                     <div className="bg-primary-dark-4 rounded-t-[5px] p-5 md:px-4 md:pt-4 md:pb-4 text-[16px] font-light leading-[22px] md:leading-[24px]">
-                        {"No Bio added"}
+                        {allStrings["string_no_bio_added"]}
                     </div>
                     <div className="bg-primary-dark-3 2xl:bg-primary px-5 md:px-[24px] py-[13px] md:pt-[11px] md:pb-[15px] rounded-b-[5px]">
-                        <p className="text-[18px] font-medium leading-[normal] text-white/80">Biography</p>
+                        <p className="text-[18px] font-medium leading-[normal] text-white/80">{allStrings["string_biography"]}</p>
                     </div>
                 </div>
             </div>

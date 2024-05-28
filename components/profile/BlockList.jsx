@@ -6,7 +6,7 @@ import { block_user_action } from '@/app/lib/actions'
 import { notification } from 'antd'
 import { client_notification } from '@/app/lib/helpers'
 
-const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
+const BlockList = ({ setProfileToggle, type, allUsers, socket, user, allStrings }) => {
 
 	const [data, setData] = useState([])
 	const { state: { blockedUsersState } } = useStore()
@@ -48,38 +48,44 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 							<Image src={arrow_left} alt='' width={24} height={24} className='pointer-events-none' />
 						</button>
 						{type === "photo"
-							? "Manage Photo Requests"
-							: "Manage Block List"
+							? allStrings["string_manage_photo_requests"]
+							: allStrings["string_manage_block_list"]
 						}
 					</div>
 					<div className='text-center mt-[14px] text-[18px] font-light leading-[20px]'>
 						{type === "photo"
-							? "Hear you Can Remove and Accept requests To See Your Private Photos."
-							: "Manage Your Blocked Profiles: View and Unblock Users You've Previously Blocked"
+							? allStrings["string_hear_you_can_remove_and_accept_requests_to_see_your_private_photos."]
+							: allStrings["string_manage_your_blocked_profiles:_view_and_unblock_users_you've_previously_blocked"]
 						}
 					</div>
 				</div>
 				<div className='mt-[14px] sm:mt-[70px]'>
 					<div className='text-[24px] sm:text-[20px] font-bold sm:font-normal leading-[normal] sm:leading-[20px]'>
 						{type === "photo"
-							? "Your Accepted request"
-							: "Your Block List"
+							? allStrings["string_your_accepted_request"]
+							: allStrings["string_your_block_list"]
 						}
 					</div>
 					<div className='flex sm:hidden mt-[10px] text-[13px] font-light leading-[normal] text-start'>
 						{type === "photo"
-							? "Hear you Can Remove and Accept requests To See Your Private Photos."
-							: "Manage Your Blocked Profiles: View and Unblock Users You've Previously Blocked"
+							? allStrings["string_hear_you_can_remove_and_accept_requests_to_see_your_private_photos."]
+							: allStrings["string_manage_your_blocked_profiles:_view_and_unblock_users_you've_previously_blocked"]
 						}
 					</div>
 					<div className='my-6'>
 						<table className='w-full border-0'>
 							<thead>
 								<tr className='bg-primary-dark h-[58px]'>
-									<th className='text-start ps-4 sm:ps-0 sm:text-center text-[16px] font-normal leading-[20px] 2xl:text-start 2xl:ps-[100px]'>Name</th>
+									<th className='text-start ps-4 sm:ps-0 sm:text-center text-[16px] font-normal leading-[20px] 2xl:text-start 2xl:ps-[100px]'>
+										{allStrings["string_name"]}
+									</th>
 									<th className='text-center text-[16px] font-normal leading-[20px] 2xl:table-cell hidden'></th>
-									<th className='text-center text-[16px] font-normal leading-[20px] hidden sm:table-cell'>Created On</th>
-									<th className='text-end pe-4 sm:text-center text-[16px] font-normal leading-[20px]'>Actions</th>
+									<th className='text-center text-[16px] font-normal leading-[20px] hidden sm:table-cell'>
+										{allStrings["string_created_on"]}
+									</th>
+									<th className='text-end pe-4 sm:text-center text-[16px] font-normal leading-[20px]'>
+										{allStrings["string_actions"]}
+									</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -104,8 +110,8 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 															<div className='text-[17px] font-semibold leading-[20px]'>{item.username}</div>
 															<div className='text-start text-[11px] font-normal leading-[normal]'>
 																{type === "photo"
-																	? `${item.username} can access your private photos.`
-																	: `You have blocked the profile of ${item.username}.`
+																	? `${item.username} ${allStrings["string_can_access_your_private_photos."]}`
+																	: `${allStrings["string_you_have_blocked_the_profile_of"]} ${item.username}.`
 																}
 															</div>
 														</div>
@@ -113,21 +119,21 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 												</td>
 												<td className=' ps-6 h-full text-[18px] font-normal leading-[20px] 2xl:table-cell hidden '>
 													{type === "photo"
-														? `${item.username} requested to view your photo.`
-														: `You have blocked the profile of ${item.username}.`
+														? `${item.username} ${allStrings["string_can_access_your_private_photos."]}`
+														: `${allStrings["string_you_have_blocked_the_profile_of"]} ${item.username}.`
 													}
 												</td>
 												<td className='text-center px-2 h-full text-[20px] font-normal leading-[20px] sm:table-cell hidden'>{getDateOfAccess(item.id)}</td>
 												<td className='text-end pe-4 ps-2 sm:text-center sm:px-2 h-full sm:table-cell hidden'>
 													<button className={`bg-danger px-4 py-[6px] text-[16px] font-medium rounded-[5px] leading-[20px] 2xl:ms-3 ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[95px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
-														{(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[10px] '></span> : "Unblock"}
+														{(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[10px] '></span> : allStrings["string_unblock"]}
 													</button>
 												</td>
 												<td className='text-end pe-4 ps-2 sm:text-center sm:px-2 h-full table-cell sm:hidden'>
 													<div className='flex flex-col items-end gap-y-3'>
 														<div className='text-[11px] font-normal leading-[normal]'>{getDateOfAccess(item.id)}</div>
 														<button className={`bg-danger px-3 py-[3px] text-[11px] sm:text-[16px] font-medium rounded-[5px] leading-[20px] ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[67.26px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
-															{(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[9px] '></span> : "Unblock"}
+															{(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[9px] '></span> : allStrings["string_unblock"]}
 														</button>
 													</div>
 												</td>
@@ -135,7 +141,7 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user }) => {
 										))}
 									</>
 									: <tr className='bg-primary-dark-6 h-[80px]'>
-										<td colSpan={4} className='text-center'>No data found !</td>
+										<td colSpan={4} className='text-center'>{allStrings["string_no_data_found!"]}</td>
 									</tr>
 								}
 							</tbody>

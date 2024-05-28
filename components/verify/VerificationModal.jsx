@@ -9,7 +9,7 @@ import VerificationStep4 from './VerificationStep4';
 import { verify_identity_action } from '@/app/lib/actions';
 import { client_notification } from '@/app/lib/helpers';
 
-const VerificationModal = ({ user, setIsModalOpen, isModalOpen }) => {
+const VerificationModal = ({ user, setIsModalOpen, isModalOpen, allStrings }) => {
 
   // const { handleSubmit, register, reset } = useForm()
   const [api, contextHolder] = notification.useNotification()
@@ -97,10 +97,10 @@ const VerificationModal = ({ user, setIsModalOpen, isModalOpen }) => {
         <Modal closeIcon={false} centered={true} open={isModalOpen} footer={null} className='verify-container m-3 !w-[454px]'>
           {/* <div className='w-full h-full'> */}
           <div className='w-full bg-white text-primary-dark-3'>
-            {step === 1 && <VerificationStep1 nextStepHandler={nextStepHandler} closeModal={closeModal} />}
-            {step === 2 && <VerificationStep2 user={user} nextStepHandler={nextStepHandler} backStepHandler={backStepHandler} closeModal={closeModal} selectedIdentity={selectedIdentity} setSelectedIdentity={setSelectedIdentity} />}
-            {step === 3 && <VerificationStep3 nextStepHandler={nextStepHandler} backStepHandler={backStepHandler} closeModal={closeModal} selectedIdentity={selectedIdentity} handleChange={handleChange} />}
-            {step === 4 && <VerificationStep4 backStepHandler={backStepHandler} closeModal={closeModal} uploadedPhoto={uploadedPhoto} handleSubmit={handleSubmit} isLoading={isLoading} />}
+            {step === 1 && <VerificationStep1 nextStepHandler={nextStepHandler} closeModal={closeModal} allStrings={allStrings} />}
+            {step === 2 && <VerificationStep2 user={user} nextStepHandler={nextStepHandler} backStepHandler={backStepHandler} closeModal={closeModal} selectedIdentity={selectedIdentity} setSelectedIdentity={setSelectedIdentity} allStrings={allStrings} />}
+            {step === 3 && <VerificationStep3 nextStepHandler={nextStepHandler} backStepHandler={backStepHandler} closeModal={closeModal} selectedIdentity={selectedIdentity} handleChange={handleChange} allStrings={allStrings} />}
+            {step === 4 && <VerificationStep4 backStepHandler={backStepHandler} closeModal={closeModal} uploadedPhoto={uploadedPhoto} handleSubmit={handleSubmit} isLoading={isLoading} allStrings={allStrings} />}
           </div>
           {/* </div> */}
         </Modal>
@@ -108,14 +108,18 @@ const VerificationModal = ({ user, setIsModalOpen, isModalOpen }) => {
         <Modal closeIcon={false} centered={true} open={confirmationModal} footer={null} className='verify-cancel-container m-3 !w-[400px]'>
           <div className='w-full bg-white text-primary-dark-3 px-5 pt-4 pb-5'>
             <div className='text-center text-black text-[22px] font-bold leading-[32px]'>
-              Cancel Verification
+              {allStrings["string_cancel_verification"]}
             </div>
             <div className='mt-3 md:mt-4 text-center text-primary-dark-3 text-[16px] font-normal leading-[25px]'>
-              Are you sure you want to cancel?
+              {allStrings["string_are_you_sure_you_want_to_cancel?"]}
             </div>
             <div className='mt-5 flex gap-x-[20px]'>
-              <button className='w-full rounded-[5px] bg-tinder text-white h-10 md:h-[56px] text-[18px] font-semibold leading-[20px]' onClick={() => setConfirmationModal(false)}>RESUME</button>
-              <button className='w-full rounded-[5px] border-secondary border-[2px] text-secondary h-10 md:h-[56px] text-[18px] font-semibold leading-[20px]' onClick={confirmCloseModal}>CANCEL</button>
+              <button className='w-full rounded-[5px] bg-tinder text-white h-10 md:h-[56px] text-[18px] font-semibold leading-[20px] uppercase' onClick={() => setConfirmationModal(false)}>
+                {allStrings["string_resume"]}
+              </button>
+              <button className='w-full rounded-[5px] border-secondary border-[2px] text-secondary h-10 md:h-[56px] text-[18px] font-semibold leading-[20px] uppercase' onClick={confirmCloseModal}>
+                {allStrings["string_cancel"]}
+              </button>
             </div>
           </div>
         </Modal>

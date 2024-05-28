@@ -14,7 +14,7 @@ import { useStore } from '@/store/store'
 import arrowLeft from "/public/assets/arrow_left.svg";
 import Link from 'next/link'
 
-const ContactUs = ({ user }) => {
+const ContactUs = ({ user, allStrings }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { register, setValue, watch, handleSubmit } = useForm();
   const { dispatch, state: { notifyBadgeState } } = useStore()
@@ -22,18 +22,18 @@ const ContactUs = ({ user }) => {
   const [api, contextHolder] = notification.useNotification();
   const boxes = [
     {
-      name: "Email",
-      desc: "supports@elitesugar.com",
+      name: allStrings["string_email"],
+      desc: allStrings["string_supports@elitesugar.com"],
       image: mailIcon
     },
     {
-      name: "Press & media",
-      desc: "press@elitesugar.com",
+      name: allStrings["string_press_&_media"],
+      desc: allStrings["string_press@elitesugar.com"],
       image: mailIcon
     },
     {
-      name: "Address",
-      desc: "Disp I/S Maglebjergvej 6 2800 CVR : 433433912",
+      name: allStrings["string_address"],
+      desc: allStrings["string_disp_i/s_maglebjergvej_6_2800_cvr_:_433433912"],
       image: locationIcon
     }
   ]
@@ -76,7 +76,7 @@ const ContactUs = ({ user }) => {
         <Link href={client_routes.profile} className='absolute left-[15px]'>
           <Image src={arrowLeft} alt="left" width={24} height={24} priority className="cursor-pointer" />
         </Link>
-        <p className="text-[24px] font-semibold select-none">Contact Us</p>
+        <p className="text-[24px] font-semibold select-none">{allStrings["string_contact_us"]}</p>
         <div className='flex gap-x-4 items-center absolute right-[15px]'>
           <div className='relative'>
             <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
@@ -87,7 +87,7 @@ const ContactUs = ({ user }) => {
           <Image src={Bars_Icon} alt="more" width={24} height={24} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} />
         </div>
       </div>
-      <div className="font-bold text-[30px] leading-[40px] hidden md:block">Contact Us</div>
+      <div className="font-bold text-[30px] leading-[40px] hidden md:block">{allStrings["string_contact_us"]}</div>
       <div className='flex flex-col-reverse xs:flex-col items-center w-full'>
         <div className='mt-6 md:mt-[100px] grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 items-center gap-y-5 md:w-[61%] md:min-w-[750px] w-full'>
           {boxes.map((obj, inx) => (
@@ -105,32 +105,32 @@ const ContactUs = ({ user }) => {
           ))}
         </div>
         <form className='mt-6 md:mt-[75px] w-full px-5 md:px-0 md:w-[49.3%] md:min-w-[600px]' onSubmit={handleSubmit(handleContactUsSubmit)}>
-          <div className='text-[25px] md:text-[30px] font-semibold leading-[25px] md:leading-[30px] text-center md:text-start'>Send us a message</div>
+          <div className='text-[25px] md:text-[30px] font-semibold leading-[25px] md:leading-[30px] text-center md:text-start'>{allStrings["string_send_us_a_message"]}</div>
           <div className='mt-5 md:mt-7 flex flex-col sm:flex-row gap-x-5 md:gap-x-10'>
             {isEmail
               ? <div className='w-full'>
-                <div className='text-[16px] font-normal leading-[normal]'>Email (cannot be changed)</div>
+                <div className='text-[16px] font-normal leading-[normal]'>{`${allStrings["string_email"]} (${allStrings["string_cannot_be_changed"]})`}</div>
                 <input type="text" {...register("email")} className='mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 h-10 w-full' disabled />
               </div>
               : <div className='w-full'>
-                <div className='text-[16px] font-normal leading-[normal]'>Phone (cannot be changed)</div>
+                <div className='text-[16px] font-normal leading-[normal]'>{`${allStrings["string_mobile_number"]} (${allStrings["string_cannot_be_changed"]})`}</div>
                 <input type="text" {...register("mobile_no")} className='mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 h-10 w-full' disabled />
               </div>
             }
             <div className='w-full flex flex-col justify-between mt-3 sm:mt-0'>
-              <div className='text-[16px] font-normal leading-[normal]'>Subject</div>
-              <input type="text" {...register("subject", { required: true })} className={`mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 h-10 w-full ${isLoading ? "pointer-events-none" : ""}`} required />
+              <div className='text-[16px] font-normal leading-[normal]'>{allStrings["string_subject"]}</div>
+              <input type="text" {...register("subject", { required: true })} className={`mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 h-10 w-full ${isLoading ? "pointer-events-none" : ""}`} required autoComplete='off' />
             </div>
           </div>
           <div className='w-full mt-3 sm:mt-5'>
-            <div className='text-[16px] font-normal leading-[normal]'>Message</div>
-            <textarea type="text" {...register("message", { required: true })} className={`mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 w-full resize-none py-2 ${isLoading ? "pointer-events-none" : ""}`} rows={4} required />
+            <div className='text-[16px] font-normal leading-[normal]'>{allStrings["string_message"]}</div>
+            <textarea type="text" {...register("message", { required: true })} className={`mt-1 md:mt-3 bg-primary-dark-6 rounded-md border-none focus:outline-none px-3 w-full resize-none py-2 ${isLoading ? "pointer-events-none" : ""}`} rows={4} required autoComplete='off' />
           </div>
           <div className='mt-5 md:mt-10 w-full flex justify-center'>
             <button type='submit' className={`flex justify-center items-center bg-tinder rounded-[5px] w-full max-w-[340px] h-10 sm:h-[56px] text-center font-semibold text-[18px] leading-[18px] ${isLoading ? "pointer-events-none" : ""}`}>
               {isLoading
                 ? <div className='loader'></div>
-                : "SEND"
+                : allStrings["string_send"]
               }
             </button>
           </div>

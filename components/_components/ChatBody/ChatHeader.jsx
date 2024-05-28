@@ -13,7 +13,7 @@ import ReportModal from "@/components/profile/searched_Profile/ReportModal";
 import { block_user_action } from "@/app/lib/actions";
 import { useSocket } from "@/store/SocketContext";
 
-const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, currentUser, setDrawerOpen }) => {
+const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, currentUser, setDrawerOpen, allStrings }) => {
 
     const { dispatch, state: { onlineUsers, blockedUsersState } } = useStore()
     const { mySocket } = useSocket()
@@ -80,7 +80,9 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                                             {
                                                 onlineUsers.some(i => i === toUser.id) && <div className="ms-[10px] flex items-center mt-2 md:mt-0">
                                                     <div className="h-[6px] w-[6px] md:h-[9px] md:w-[9px] bg-[#3DC73A] rounded-full" />
-                                                    <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">Active</div>
+                                                    <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">
+                                                        {allStrings["string_active"]}
+                                                    </div>
                                                 </div>
                                             }
                                         </div>
@@ -94,14 +96,16 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                                             <div className="text-white flex flex-col p-[10px] gap-y-[6px]">
                                                 <button onClick={() => setModalOpen(true)} className="bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
                                                     <Image src={reportIcon} alt="" height={14} width={14} priority className="ms-5 " />
-                                                    <div className="text-[14px] font-medium leading-[20px]">Rapporter</div>
+                                                    <div className="text-[14px] font-medium leading-[20px]">
+                                                        {allStrings["string_report"]}
+                                                    </div>
                                                 </button>
                                                 <button onClick={blockHandler} className={`bg-primary hover:bg-secondary border-[1px] border-white/30 w-[125px] h-[32px] flex items-center gap-x-[10px] rounded-sm ${showBlockLoader ? "justify-center pointer-events-none" : "justify-start"}`} >
                                                     {showBlockLoader
                                                         ? <div className="loader after:border-[10px]"></div>
                                                         : <>
                                                             <Image src={blockIcon} alt="" height={14} width={14} priority className="ms-5 pointer-events-none" />
-                                                            <div className="text-[14px] font-medium leading-[20px]">Blocker</div>
+                                                            <div className="text-[14px] font-medium leading-[20px]">{allStrings["string_block"]}</div>
                                                         </>
                                                     }
                                                 </button>
@@ -113,7 +117,7 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                                         </Popover>
                                     </ConfigProvider> : <div></div>
                             }
-                            <ReportModal isModalOpen={modalOpen} setIsModalOpen={setModalOpen} toUser={toUser} currentUser={currentUser} />
+                            <ReportModal isModalOpen={modalOpen} setIsModalOpen={setModalOpen} toUser={toUser} currentUser={currentUser} allStrings={allStrings} />
                         </> :
                         <>
                             <button className="flex md:hidden items-center justify-center"
@@ -129,11 +133,13 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
                                         <Image src={Logo} alt="" height={40} width={40} priority className="m-auto object-cover w-[23.5px] h-[27px] md:w-[34px] md:h-[40px] pointer-events-none rounded-full" />
                                     </div>
                                     <div className="flex flex-col md:flex-row justify-center items-center ">
-                                        <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">Team Elite</div>
+                                        <div className="text-[18px] md:text-[22px] capitalize font-medium md:font-semibold leading-[20px] ms-3 md:ms-6">
+                                            {allStrings["string_team_elite"]}
+                                        </div>
                                         <div className="">
                                             <div className="ms-[10px] flex items-center mt-2 md:mt-0">
                                                 <div className="h-[6px] w-[6px] md:h-[9px] md:w-[9px] bg-[#3DC73A] rounded-full" />
-                                                <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">Active</div>
+                                                <div className="ms-[8px] md:ms-[10px] text-white/50 text-[12px] md:text-[14px] font-medium leading-[12px] md:leading-[20px]">{allStrings["string_active"]}</div>
                                             </div>
                                         </div>
                                     </div>

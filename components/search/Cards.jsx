@@ -14,7 +14,7 @@ import settingsIcon from "/public/assets/settings_icon.svg";
 import No_profiles from "/public/assets/no_profile.svg";
 
 
-const Cards = ({ allUsers, filterHandler, resetHandler }) => {
+const Cards = ({ allUsers, filterHandler, resetHandler, allStrings }) => {
 
   const { state: { onlineUsers } } = useStore()
   return (
@@ -27,8 +27,8 @@ const Cards = ({ allUsers, filterHandler, resetHandler }) => {
         </button>
       </div>
       {
-        allUsers.length ?
-          <div className={`bg-primary max-h-full pb-20 md:pb-4 h-fit lg:w-[calc(100%-350px)] xl:w-[calc(100%-350px)] w-full p-4 lg:p-[40px] xl:p-[60px] 2xl:p-[70px] grid grid-cols-2 mb-[20px]  xl:grid-cols-3 2xl:grid-cols-4 gap-[16px] lg:gap-[30px] overflow-y-auto slide-in-bottom `} style={{ scrollbarWidth: "none" }} data-aos="fade-left">
+        allUsers.length
+          ? <div className={`bg-primary max-h-full pb-20 md:pb-4 h-fit lg:w-[calc(100%-350px)] xl:w-[calc(100%-350px)] w-full p-4 lg:p-[40px] xl:p-[60px] 2xl:p-[70px] grid grid-cols-2 mb-[20px]  xl:grid-cols-3 2xl:grid-cols-4 gap-[16px] lg:gap-[30px] overflow-y-auto slide-in-bottom `} style={{ scrollbarWidth: "none" }} data-aos="fade-left">
             {allUsers.length &&
               allUsers?.map((item, idx) => {
                 return (
@@ -72,14 +72,16 @@ const Cards = ({ allUsers, filterHandler, resetHandler }) => {
               })
 
             }
-          </div> :
-          <div className="text-white w-full h-full text-[25px] flex items-center justify-center">
+          </div>
+          : <div className="text-white w-full h-full text-[25px] flex items-center justify-center">
             <div className="mb-[142px] text-center flex flex-col items-center">
               <Image src={No_profiles} alt='no' width={180} height={180} className='' />
-              <p className='font-[400] text-[18px] mt-1'>No Profile Matches</p>
+              <p className='font-[400] text-[18px] mt-1'>{allStrings["string_no_profile_matches"]}</p>
               <p className='px-8 leading-[20px] font-light text-[16px] max-w-[28rem]  mt-1 text-white/60 text-center flex flex-col gap-y-2'>
-                <span>Sometimes a little spontaneity is all it takes! Explore new interests, hobbies, or even locations to find that special someone!</span>
-                <span>✨ Keep shining ✨</span>
+                <span>
+                  {allStrings["string_sometimes_a_little_spontaneity_is_all_it_takes!_explore_new_interests,_hobbies,_or_even_locations_to_find_that_special_someone!"]}
+                </span>
+                <span>✨ {allStrings["string_keep_shining"]} ✨</span>
               </p>
             </div>
           </div>

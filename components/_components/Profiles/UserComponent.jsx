@@ -9,7 +9,7 @@ import Pending from "/public/assets/pending.svg"
 import { useChat } from '@/store/ChatContext';
 import ProfileReadStatus from './ProfileReadStatus';
 
-const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, user }) => {
+const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, user, allStrings }) => {
 
     const { state: { onlineUsers }, dispatch } = useStore()
     const { state: { typingUsers, unReadCount } } = useChat()
@@ -28,7 +28,7 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
             const timeDiffInMinutes = Math.floor(timeDiffInMilliseconds / (1000 * 60));
 
             if (timeDiffInMinutes < 1) {
-                return "just now";
+                return allStrings["string_just_now"];
             } else if (timeDiffInMinutes < 60) {
                 return `${timeDiffInMinutes} mins`;
             } else {
@@ -37,7 +37,7 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
             }
             // return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         } else if (time.toDateString() === new Date(today.setDate(today.getDate() - 1)).toDateString()) {
-            return "Yesterday";
+            return allStrings["string_yesterday"];
         } else {
             const timeString = time.toDateString().split(' ')
             const month = time.getMonth() + 1
@@ -59,7 +59,7 @@ const UserComponent = ({ foundUser, latestMessage, setShowMobileChatContent, use
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">{foundUser.username}</p>
                     <p className="text-white/70 flex items-center text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] ">
-                        {typingUsers.some(i => (i.receiver_id === user.id && foundUser.id === i.sender_id)) ? "Typing..." : LatestMessage(foundUser, latestMessage)}
+                        {typingUsers.some(i => (i.receiver_id === user.id && foundUser.id === i.sender_id)) ? allStrings["string_typing..."] : LatestMessage(foundUser, latestMessage)}
                     </p>
                 </div>
             </div>
@@ -87,7 +87,7 @@ const LatestMessage = (user, latestMessage) => {
     else if (latestMessage.get_all_chat_with_image.length) {
         return <>
             {user.id === latestMessage.sender_id ? "" : <ProfileReadStatus message={latestMessage} />}
-            <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? "sended" : "received"}</span>
+            <span className='max-w-[150px] line-clamp-1 break-all emoji-fontFamily'>{latestMessage.get_all_chat_with_image.length} {latestMessage.get_all_chat_with_image.length > 1 ? "Images" : "Image"}  {latestMessage.sender_id !== user.id ? allStrings["string_sended"] : allStrings["string_received"]}</span>
         </>
     } else {
         return <>

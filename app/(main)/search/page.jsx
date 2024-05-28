@@ -4,10 +4,12 @@ import { cookies } from "next/headers"
 import CryptoJS from "crypto-js"
 import { redirect } from "next/navigation"
 import { client_routes } from "@/app/lib/helpers"
+import { getAllStrings } from "@/app/lib/allStrings"
 
 const Search = async () => {
 
   const userId = cookies().get("user")?.value
+  const allStrings = await getAllStrings();
 
   if (!userId) {
     redirect(client_routes.home)
@@ -51,9 +53,15 @@ const Search = async () => {
   //   })
   // }
 
-  return (
-    <Search_Index allUsers={users} remainingList={users.filter(i => !removalUsers.includes(i.id))} user={currentUser} myRecievedRequests={myRecievedRequests} />
-  )
+  if (allStrings?.success) {
+    return (
+      <Search_Index allUsers={users} remainingList={users.filter(i => !removalUsers.includes(i.id))} user={currentUser} myRecievedRequests={myRecievedRequests} allStrings={allStrings.data} />
+    )
+  } else {
+    return <div className="h-dvh w-full bg-primary text-white flex justify-center items-center">
+      Fetch failed
+    </div>
+  }
 }
 
 

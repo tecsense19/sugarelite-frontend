@@ -11,13 +11,13 @@ import { useStore } from '@/store/store';
 import './animations/style.css'
 import { friend_request_action } from '@/app/lib/actions';
 import { useSocket } from '@/store/SocketContext';
+import { sendMatchReq } from '@/app/lib/socket';
 
-const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser }) => {
+const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser, allStrings }) => {
     const [user, setUsers] = useState(remainingList)
     const { state: { onlineUsers }, dispatch } = useStore()
     const [showLike, setShowLike] = useState({ id: null, d: null })
     const { mySocket } = useSocket()
-    const [socket, setSocket] = useState(mySocket)
 
     const resetHandler = () => {
         setUsers(users);
@@ -27,10 +27,6 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser 
     }
 
     useEffect(() => {
-        setSocket(mySocket)
-    }, [mySocket])
-
-    useEffect(() => {
         // setUsers(users)
         handleSetCards()
     }, [])
@@ -38,7 +34,8 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser 
     const sendFriendReq = async (receiver_id) => {
         const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 0 })
         if (res.success) {
-            socket.emit("card-swiped", res.data)
+            // mySocket.emit("card-swiped", res.data)
+            sendMatchReq(res.data)
             dispatch({ type: "Add_Sended_Request", payload: { id: res.data.receiver_id } })
         }
     }
@@ -174,7 +171,7 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser 
                                 </div>
                             )
                         }) : <div className='text-white flex items-center justify-center h-full w-full'>
-                            <p className='py-1 px-6 bg-secondary rounded-[10px] ' onClick={resetHandler}>Reset</p>
+                            <p className='py-1 px-6 bg-secondary rounded-[10px] ' onClick={resetHandler}>{allStrings["string_reset"]}</p>
                         </div>
                 }
             </div>

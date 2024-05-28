@@ -9,7 +9,7 @@ import 'swiper/css/effect-coverflow';
 
 import { EffectCoverflow, } from 'swiper/modules';
 
-const ImagesModal = ({ setSelctedImages, list }) => {
+const ImagesModal = ({ setSelctedImages, list, allStrings }) => {
 
     const swiperRef = useRef(null);
 
@@ -69,7 +69,7 @@ const ImagesModal = ({ setSelctedImages, list }) => {
                 <div className='w-full text-white'>
                     <div className=' border-t-[6px] border-secondary bg-black pb-2 rounded-t-md w-full text-xl justify-between  flex items-center pt-[2px] px-5 text-Primary font-semibold '>
                         <div className='flex gap-3 items-center mt-1'>
-                            Preview
+                            {allStrings["string_preview"]}
                         </div>
                         <Image src={CloseIcon} alt='colse' width={24} height={24} onClick={() => { setSelctedImages([]); goToSlide(0) }} className='cursor-pointer mt-1' />
                     </div>

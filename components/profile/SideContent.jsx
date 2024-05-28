@@ -18,21 +18,19 @@ import subscription_logo from "/public/assets/subscription_logo.svg"
 import prohibition from "/public/assets/prohibition.svg"
 import NotificationIcon from "/public/assets/bell_icon.svg"
 
-const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) => {
+const SideContent = ({ control, user, setAvatar, register, setProfileToggle, allStrings }) => {
 
     const { state: { notifyBadgeState }, dispatch } = useStore()
 
     const path = usePathname()
     const [profilPic, setProfilePic] = useState("")
 
-    const getBase64 = (file) =>
-        new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
-        });
-
+    const getBase64 = (file) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
 
     const profileHandler = async (e) => {
         let obj = {}
@@ -69,7 +67,7 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                 <Link href={path === "/profile/edit" ? "/profile" : "/search"} className='absolute left-[15px]'>
                     <Image src={arrow_left} alt="left" width={24} height={24} priority className="cursor-pointer" />
                 </Link>
-                <p className="text-[24px] font-semibold select-none">Profile</p>
+                <p className="text-[24px] font-semibold select-none">{allStrings["string_profile"]}</p>
                 {/* <PopOver>
                     <Image src={more_horizontal} alt="more" width={30} height={30} priority className="cursor-pointer" />
                 </PopOver> */}
@@ -77,7 +75,7 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                     <div className='relative'>
                         <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />
                         {notifyBadgeState.notify &&
-                            <p className="h-2 w-2 bg-secondary bounce rounded-full absolute -top-1 -right-1 "></p>
+                            <p className="h-2 w-2 bg-secondary bounce rounded-full absolute -top-1 -right-1"></p>
                         }
                     </div>
                     <Image src={Bars_Icon} alt="more" width={24} height={24} priority className="cursor-pointer" onClick={() => dispatch({ type: "Show_Menu" })} />
@@ -114,7 +112,7 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                                 render={({ field }) => <>
                                     <label htmlFor="profile" className='flex flex-col justify-center items-center h-full  rounded-full cursor-pointer'>
                                         <Image src={edit} alt='edit' width={36} height={36} priority />
-                                        <span className='font-medium text-[16px]'>Edit Profile</span>
+                                        <span className='font-medium text-[16px]'>{allStrings["string_edit_profile"]}</span>
                                     </label>
                                     <input type="file" {...field} onChange={profileHandler} id='profile' className='hidden' />
                                 </>}
@@ -156,10 +154,10 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                     path === client_routes.profile &&
                     <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                         <div className="p-4 text-[16px] font-light">
-                            <p className='line-clamp-3'>{user.bio ? user.bio : "No Bio Added"}</p>
+                            <p className='line-clamp-3'>{user.bio ? user.bio : allStrings["string_no_bio_added"]}</p>
                         </div>
                         <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
-                            <p className="text-[18px] font-medium">Biography</p>
+                            <p className="text-[18px] font-medium">{allStrings["string_biography"]}</p>
                         </div>
                     </div>
                 }
@@ -169,10 +167,10 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                     path === client_routes.edit_profile &&
                     <div className="w-full bg-[#626262] mt-[30px] rounded-[5px] sm:max-w-[75%] lg:max-w-full lg:mb-[30px]" data-aos='zoom-in'>
                         <div className=" text-[16px] font-light">
-                            <textarea {...register("bio")} defaultValue={user.bio} id="bio" rows={5} placeholder='Enter Bio' className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
+                            <textarea {...register("bio")} defaultValue={user.bio} id="bio" rows={5} placeholder={allStrings["string_enter_bio"]} className=' mx-[6px] mt-[6px] p-2 resize-none rounded-t-[5px] outline-none border bg-[#626262] border-primary-dark-4 w-[calc(100%-12px)] h-full'></textarea>
                         </div>
                         <div className="bg-primary-dark-3 lg:bg-primary px-[24px] py-[12px] rounded-b-[5px]">
-                            <p className="text-[18px] font-medium">Biography</p>
+                            <p className="text-[18px] font-medium">{allStrings["string_biography"]}</p>
                         </div>
                     </div>
                 }
@@ -182,15 +180,15 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle }) =
                     <div className='w-full flex flex-col gap-y-[10px] mt-[26px] lg:mt-0 sm:max-w-[75%] md:max-w-full'>
                         <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-primary-dark-4 w-full h-[42px] lg:h-[56px]' onClick={() => handleProfileTogglBtn("photo")}>
                             <Image src={lock_1} width={24} height={24} alt='message' className='inline-block h-[22px] lg:h-[24px]' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[6px] tracking-wider uppercase'>photo access</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[6px] tracking-wider uppercase'>{allStrings["string_photo_access"]}</span>
                         </button>
                         <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-danger w-full h-[42px] lg:h-[56px]' onClick={() => handleProfileTogglBtn("block")}>
                             <Image src={prohibition} width={18} height={18} alt='message' className='inline-block ' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>block list</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>{allStrings["string_block_list"]}</span>
                         </button>
                         <Link href={client_routes.subscription} prefetch={true} className='flex justify-center items-center gap-[10.25px] rounded-[5px] bg-[#F4498F] w-full h-[42px] lg:h-[56px]'>
                             <Image src={subscription_logo} width={22.75} height={26} alt='message' className='inline-block mb-[6px]' />
-                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>Subscription</span>
+                            <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[4px] tracking-wider uppercase'>{allStrings["string_subscription"]}</span>
                         </Link>
                     </div>
                 }

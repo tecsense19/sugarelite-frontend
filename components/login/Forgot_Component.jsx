@@ -41,7 +41,7 @@ const Forgot_Component = ({ setIsForgotOpen, allStrings }) => {
     return (
         <main className="flex h-dvh">
             {contextHolder}
-            <div className="h-full w-full relative bg-tinder">
+            <div className="h-full w-full relative bg-tinder sm:bg-none">
                 <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
                     <div className="text-white w-full h-full sm:h-[78%] sm:rounded-[5px] sm:w-[85%] md:w-[75%] sm:min-h-[625px] sm:bg-gradient-to-l sm:from-tinder-1 sm:from-0% sm:to-tinder-2 sm:to-100% sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] lg:max-w-[762px] flex justify-center items-center flex-col">
                         <div className="flex flex-col justify-center items-center gap-4">
@@ -83,7 +83,7 @@ const Forgot_Component = ({ setIsForgotOpen, allStrings }) => {
                     </div>
                 </div>
                 {/* <Image src={bgMobileImg} width={1000} height={1000} alt="mob_bg" priority className="w-full block sm:hidden h-full object-cover object-top" /> */}
-                <Image src={bgDesktopImg} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" />
+                {/* <Image src={bgDesktopImg} unoptimized width={1000} height={1000} alt="mob_bg" priority className="w-full h-full hidden sm:block object-cover select-none pointer-events-none" /> */}
             </div>
         </main>
     )

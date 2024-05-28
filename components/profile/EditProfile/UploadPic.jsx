@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import cross from "/public/assets/cross.svg"
 
-const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalArray, progress }) => {
+const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalArray, progress, allStrings }) => {
 
     // const [photoList, setPhotoList] = useState([])
 
@@ -84,12 +84,12 @@ const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalAr
                     return <div className="aspect-square relative popup_upload_pic" key={index} data-aos='zoom-in'>
                         <ConfigProvider theme={customStyles}>
                             <Popconfirm
-                                title="Delete the photo"
+                                title={allStrings["string_delete_the_photo"]}
                                 placement="bottomLeft"
-                                description="Are you sure to delete this photo?"
+                                description={allStrings["string_are_you_sure_to_delete_this_photo?"]}
                                 onConfirm={() => deletePicHandler({ id: photo.id })}
-                                okText="Yes"
-                                cancelText="No"
+                                okText={allStrings["string_yes"]}
+                                cancelText={allStrings["string_no"]}
                                 arrow={{ pointAtCenter: true }}
                             >
                                 <button className='absolute backdrop-blur-3xl shadow-inner bg-secondary -top-2 -right-2 h-[18px] w-[18px] rounded-full  flex items-center justify-center' type='button'>
@@ -106,12 +106,12 @@ const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalAr
                     return <div className="aspect-square relative popup_upload_pic" key={index} data-aos='zoom-in'>
                         <ConfigProvider theme={customStyles}>
                             <Popconfirm
-                                title="Delete the photo"
+                                title={allStrings["string_delete_the_photo"]}
                                 placement="bottomLeft"
-                                description="Are you sure to delete this photo?"
+                                description={allStrings["string_are_you_sure_to_delete_this_photo?"]}
                                 onConfirm={() => deletePicHandler(index)}
-                                okText="Yes"
-                                cancelText="No"
+                                okText={allStrings["string_yes"]}
+                                cancelText={allStrings["string_no"]}
                                 arrow={{ pointAtCenter: true }}
                             >
                                 <button className='absolute backdrop-blur-3xl shadow-inner bg-secondary -top-2 -right-2 h-[18px] w-[18px] rounded-full  flex items-center justify-center' type='button'>
@@ -128,7 +128,7 @@ const UploadPic = ({ name, photoList, setPhotoList, uploadedImages, setRemovalAr
                 <input type='file' id={name} onChange={photoHandler} className='hidden' accept='.jpg,.png,.jpeg,.svg' />
                 <label htmlFor={name} className='h-full w-full border-dashed border border-[#ffffff70] hover:border-secondary transition-all duration-200 group flex flex-col gap-[10px] justify-center items-center rounded-[5px] cursor-pointer '>
                     <span className='text-[20px] text-white text-opacity-70 -mt-[8px] transition-all duration-200 group-hover:text-secondary'>+</span>
-                    <span className='text-[16px] font-medium text-white text-opacity-70 transition-all duration-200 group-hover:text-secondary'>Upload</span>
+                    <span className='text-[16px] font-medium text-white text-opacity-70 transition-all duration-200 group-hover:text-secondary'>{allStrings["string_upload"]}</span>
                 </label>
             </div>
         </div >
