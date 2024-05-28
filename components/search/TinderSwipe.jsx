@@ -33,11 +33,11 @@ const TinderSwipe = ({ users, filterHandler, remainingList, currentUser, myRecie
 
     return (
         <div className="h-full flex flex-col text-white items-center overflow-hidden">
-            <div className="md:hidden flex justify-between items-center w-full px-4 pt-3" data-aos="fade-down" data-aos-duration="800" data-aos-anchor="#example-anchor">
+            <div className="md:hidden flex justify-between items-center w-full px-4 pt-3 relative">
                 <div className="flex justify-center items-center " onClick={() => navigate.push(client_routes.profile)}>
                     <Image src={chevron_left} alt="" height={24} width={24} priority className="pointer-events-none" />
                 </div>
-                <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col justify-center items-center absolute left-1/2 -translate-x-1/2">
                     <div className="text-white text-[24px] font-semibold leading-[23px]">{allStrings["string_discover"]}</div>
                     <div className="text-white/70 text-[14px] font-medium leading-[16px] mt-2">{allStrings["string_you_looking"]}</div>
                 </div>

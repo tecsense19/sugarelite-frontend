@@ -97,7 +97,7 @@ const TopNav = ({ messages, user, allUsers, setShowMobileChatContent, allStrings
                 <Link href={client_routes.profile} prefetch className="flex justify-center items-center ">
                     <Image src={arrowLeft} alt="" height={24} width={24} className="pointer-events-none" />
                 </Link>
-                <div className="text-[24px] font-semibold leading-[22.8px]">{allStrings["string_messages"]}</div>
+                <div className="text-[24px] font-semibold leading-[22.8px] absolute left-1/2 -translate-x-1/2">{allStrings["string_messages"]}</div>
                 <div className='flex gap-x-4'>
                     <div className='relative' onClick={() => dispatch({ type: "Open_Notification", payload: true })}>
                         <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer pt-[2px]" />
