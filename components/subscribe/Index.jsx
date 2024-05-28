@@ -11,7 +11,7 @@ import { client_notification, client_routes } from '@/app/lib/helpers'
 import Link from 'next/link'
 import { cancel_subscription_action, search_profile_action, start_stop_subscription_action } from '@/app/lib/actions'
 
-const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
+const Index = ({ subscriptions, STRIPE_TEST_KEY, userData, allStrings }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPaymentObj, setSelectedPaymentObj] = useState("")
   const { dispatch } = useStore();
@@ -23,11 +23,11 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
   const [api, contextHolder] = notification.useNotification();
 
   const details = [
-    { including: true, desc: "Read and write messages without any restrictions" },
-    { including: true, desc: "Stop your subscription at any time" },
-    { including: true, desc: "See all pictures" },
-    { including: true, desc: "24-timers support" },
-    { including: true, desc: "Emblem on your profile that shows you are a Premium user" },
+    { including: true, desc: allStrings["string_read_and_write_messages_without_any_restrictions"] },
+    { including: true, desc: allStrings["string_stop_your_subscription_at_any_time"] },
+    { including: true, desc: allStrings["string_see_all_pictures"] },
+    { including: true, desc: allStrings["string_24-hour_support"] },
+    { including: true, desc: allStrings["string_emblem_on_your_profile_that_shows_you_are_a_premium_user"] },
     // { including: true, desc: "Lorem ipsum dolor sit amet" },
     // { including: true, desc: "Lorem ipsum dolor sit amet" },
   ]
@@ -110,23 +110,23 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
   // console.log(subscriptions)
 
   return (
-    <div className='md:pt-[66px] text-white p-5'>
+    <div className='md:pt-[66px] text-white px-5 py-3'>
       {contextHolder}
       <div className='md:mt-10 flex flex-col w-full items-center relative'>
         <Link href={client_routes.profile} prefetch={true} className='absolute left-0 top-1 flex md:hidden'>
           <Image src={arrow_left} alt='' height={30} width={30} className='pointer-events-none' />
         </Link>
-        <div className='xl:text-[30px] lg:text-[25px] text-[18px] font-bold leading-[40px] text-center px-6 sm:px-0'>
+        <div className='xl:text-[30px] lg:text-[25px] text-[20px] font-bold leading-[40px] text-center px-6 sm:px-0'>
           {isPremium
-            ? "Your Subscription"
-            : <span className='inline'>Upgrade Your Dating Journey. <span className='hidden sm:inline'>Get Premium Access Now.</span></span>
+            ? allStrings["string_your_subscription"]
+            : <span className='inline'>{allStrings["string_upgrade_your_dating_journey"]} <span className='hidden sm:inline'>{allStrings["string_get_premium_access_now."]}</span></span>
           }
         </div>
         <div className='mt-[14px] text-[18px] text-center font-light leading-[20px]'>
           {isPremium
-            ? "Manage your current plan"
+            ? allStrings["string_manage_your_current_plan"]
             : <span className='inline'>
-              Discover Your Perfect Match with Our Premium Features. <span className='hidden sm:inline'>Find Your Love Faster with Exclusive Benefits. Upgrade Your Dating Experience Today</span>
+              {allStrings["string_discover_your_perfect_match_with_our_premium_features."]} <span className='hidden sm:inline'>{allStrings["string_find_your_love_faster_with_exclusive_benefits._upgrade_your_dating_experience_today"]}</span>
             </span>
           }
         </div>
@@ -136,7 +136,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
           <div className="2xl:w-9/12 xl:w-10/12 w-full flex flex-col rounded-xl overflow-hidden">
             <div className='bg-black p-5 sm:p-8 2xl:px-[70px] xl:px-[60px] flex justify-between items-center'>
               <div className='flex flex-col items-start'>
-                <div className='text-[15px] sm:text-[16px] font-semibold leading-[normal]'>Current Plan</div>
+                <div className='text-[15px] sm:text-[16px] font-semibold leading-[normal]'>{allStrings["string_current_plan"]}</div>
                 <div className='mt-[10px] text-[24px] sm:text-[30px] font-semibold leading-[24px] sm:leading-[30px]'>
                   {getSubscriptionPlan(user?.user_subscriptions?.subscription_plan)}
                   {/* 4 Weeks  */}
@@ -150,7 +150,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
               <div className='flex justify-between sm:px-0 md:px-[20px] xl:px-[60px] 2xl:px-[80px]'>
                 <div className="flex flex-col items-start">
                   <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">{getDate(user?.subscription_start_date)}</div>
-                  <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">Subscription Date</div>
+                  <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">{allStrings["string_subscription_date"]}</div>
                 </div>
                 <div className="flex flex-col items-start">
                   <div className="text-[20px] sm:text-[22px] font-bold leading-[normal]">
@@ -166,11 +166,11 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
                   </div>
                   <div className="mt-[7px] sm:mt-[10px] text-[15px] sm:text-[16px] font-medium leading-[normal]">
                     {user?.is_subscription_cancel
-                      ? "Cancel Date"
+                      ? allStrings["string_cancel_date"]
                       : <>
                         {user?.is_subscription_stop
-                          ? "Pause Date"
-                          : "Renewal Date"
+                          ? allStrings["string_pause_date"]
+                          : allStrings["string_renewal_date"]
                         }
                       </>
                     }
@@ -182,14 +182,14 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
                   <button className={`w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-primary-dark-4 uppercase ${isLoading ? "pointer-events-none" : ""}`} onClick={handleCancelPlan}>
                     {isCancelLoading
                       ? <div className="loader"></div>
-                      : "CANCEL PLAN"
+                      : allStrings["string_cancel_plan"]
                     }
                   </button>
                   <button className={`w-full sm:w-[250px] md:w-[340px] rounded-[5px] justify-center items-center flex py-[15px] sm:py-[19px] text-[17px] sm:text-[18px] font-semibold leading-[17px] sm:leading-[18px] bg-danger uppercase ${isLoading ? "pointer-events-none" : ""}`} onClick={handleStartStopPlan}>
                     {isStartStopLoading
                       ? <div className="loader"></div>
                       : <>
-                        {user?.is_subscription_stop ? "RESUME PLAN" : "STOP PLAN"}
+                        {user?.is_subscription_stop ? allStrings["string_resume_plan"] : allStrings["string_stop_plan"]}
                       </>
                     }
                   </button>
@@ -221,8 +221,8 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData }) => {
                 </div>
 
                 <div className='w-full flex items-center justify-center mt-[45px] mb-10'>
-                  <button className='bg-tinder rounded-[5px] py-[11px] w-[230px] sm:w-[241px] flex justify-center items-center text-[16px] font-medium leading-[normal]' onClick={() => handleSubmit(item)}>
-                    GET STARTED
+                  <button className='bg-tinder rounded-[5px] py-[11px] w-[230px] sm:w-[241px] flex justify-center items-center text-[16px] font-semibold leading-[normal] uppercase' onClick={() => handleSubmit(item)}>
+                    {allStrings["string_get_started"]}
                   </button>
                 </div>
               </div>

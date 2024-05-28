@@ -17,7 +17,7 @@ const Index = async ({ children }) => {
     const user = await get_user_action()
     const allStrings = await getAllStrings();
 
-    if (user && allStrings.success) {
+    if (user && allStrings?.success) {
 
       const allUsers = await all_profiles_action()
       const matchNotifications = await all_friend_Notifications()

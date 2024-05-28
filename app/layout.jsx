@@ -9,6 +9,7 @@ import { ChatProvider } from "@/store/ChatContext";
 import { StringProvider } from "@/store/LanguageContext";
 import CookieConsent from "@/components/common/CookieConsent/CookieConsent";
 import { cookies } from "next/headers";
+import CookieIndex from "@/components/common/CookieConsent/CookieIndex";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -30,7 +31,7 @@ export default async function RootLayout({ children }) {
                 <ChatProvider>
                   {children}
                   {
-                    !cookieConsent && <CookieConsent />
+                    !cookieConsent && <CookieIndex />
                   }
                 </ChatProvider>
               </SocketProvider>
