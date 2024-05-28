@@ -197,7 +197,7 @@ import React, { Suspense } from 'react'
 
 const page = async () => {
 	const allStrings = await getAllStrings();
-	if (allStrings.success) {
+	if (allStrings?.success) {
 		return (
 			<Suspense fallback={<AuthLoader />}>
 				<RegisterIndex allStrings={allStrings.data} />

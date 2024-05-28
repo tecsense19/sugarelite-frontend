@@ -104,7 +104,7 @@ const ContactUs = ({ user, allStrings }) => {
             </div>
           ))}
         </div>
-        <form className='mt-6 md:mt-[75px] w-full px-5 md:px-0 md:w-[49.3%] md:min-w-[600px]' onSubmit={handleSubmit(handleContactUsSubmit)}>
+        <form className='xs:mt-6 md:mt-[75px] w-full px-5 md:px-0 md:w-[49.3%] md:min-w-[600px]' onSubmit={handleSubmit(handleContactUsSubmit)}>
           <div className='text-[25px] md:text-[30px] font-semibold leading-[25px] md:leading-[30px] text-center md:text-start'>{allStrings["string_send_us_a_message"]}</div>
           <div className='mt-5 md:mt-7 flex flex-col sm:flex-row gap-x-5 md:gap-x-10'>
             {isEmail

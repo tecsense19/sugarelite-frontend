@@ -6,7 +6,7 @@ import { Suspense } from "react"
 const Login = async () => {
   const allStrings = await getAllStrings();
 
-  if (allStrings.success) {
+  if (allStrings?.success) {
     return (
       <>
         <Suspense fallback={<AuthLoader />}>

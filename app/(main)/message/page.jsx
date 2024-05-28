@@ -7,7 +7,7 @@ const Chat = async () => {
     const token = cookies().get("user")?.value;
     const allStrings = await getAllStrings();
 
-    if (token && allStrings.success) {
+    if (token && allStrings?.success) {
         const user = await get_user_action()
         const allUsers = await all_profiles_action()
         // const chatList = await chat_list_action()
