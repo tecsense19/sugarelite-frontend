@@ -15,6 +15,9 @@ const EditMainContent = ({ control, progress, publicPhotoList, setPublicPhotoLis
         Aos.init()
     }, [])
 
+    const profileSelectAppearanceOptions = profile_select_options_appearance(allStrings);
+    const profileSelectLifestyleOptions = profile_select_options_lifestyle(allStrings);
+
     return (
         <div className="w-full lg:ml-[350px] 2xl:ml-[400px] text-white mt-[40px] px-[15px] lg:mt-[30px] lg:px-[50px]" >
             <Link href={client_routes.profile} className="hidden absolute z-[1] bg-secondary top-[96px] right-[40px] xl:right-[72px] h-10 w-10 xl:h-14 xl:w-14 md:flex items-center justify-center rounded-[5px] group" data-aos='fade-left'>
@@ -36,7 +39,7 @@ const EditMainContent = ({ control, progress, publicPhotoList, setPublicPhotoLis
                 <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in'>{allStrings["string_appearance"]}</h1>
                 <div className="mt-[25px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-[20px] lg:gap-[30px]">
                     {
-                        profile_select_options_appearance.map((type, inx) => {
+                        profileSelectAppearanceOptions.map((type, inx) => {
                             return <SelectBox name={type.name} options={type.options} text={type.text} key={inx} control={control} inx={inx} user={user} allStrings={allStrings} />
                         })
                     }
@@ -46,7 +49,7 @@ const EditMainContent = ({ control, progress, publicPhotoList, setPublicPhotoLis
                 <h1 className="text-[24px] font-bold lg:text-[30px] select-none" data-aos='zoom-in'>{allStrings["string_lifestyle"]}</h1>
                 <div className="mt-[25px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-[20px] lg:gap-[30px]">
                     {
-                        profile_select_options_lifestyle.map((type, inx) => {
+                        profileSelectLifestyleOptions.map((type, inx) => {
                             return <SelectBox name={type.name} options={type.options} text={type.text} key={inx} control={control} inx={inx} user={user} allStrings={allStrings} />
                         })
                     }
