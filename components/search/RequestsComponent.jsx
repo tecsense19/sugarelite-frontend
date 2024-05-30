@@ -16,8 +16,9 @@ import Stroke_Online from '/public/assets/online_stroke.svg'
 import Link from 'next/link';
 import { client_routes } from '@/app/lib/helpers';
 import { useChat } from '@/store/ChatContext'
+import { sendMatchReq, sendMsg } from '@/app/lib/socket';
 
-const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket, allStrings }) => {
+const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, allStrings }) => {
 
 	const [users, setUsers] = useState(myRecievedRequests)
 	const { state: { onlineUsers, requestsState, notificationState }, dispatch } = useStore()
@@ -38,9 +39,11 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket, al
 	const acceptReq = async (receiver_id) => {
 		const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 1 })
 		if (res.success) {
-			socket.emit("card-swiped", res.data)
+			// socket.emit("card-swiped", res.data)
+			sendMatchReq(res.data)
 			addMessage({ id: generateRandomId(), sender_id: currentUser.id, receiver_id: receiver_id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "Congratulations on your match", get_all_chat_with_image: "" })
-			socket.emit('send-message', { id: generateRandomId(), sender_id: currentUser.id, receiver_id: receiver_id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "Congratulations on your match", get_all_chat_with_image: "" })
+			// socket.emit('send-message', { id: generateRandomId(), sender_id: currentUser.id, receiver_id: receiver_id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "Congratulations on your match", get_all_chat_with_image: "" })
+			sendMsg({ id: generateRandomId(), sender_id: currentUser.id, receiver_id: receiver_id, type: "regular", status: "new", milisecondtime: Date.now(), created_at: new Date().getTime(), text: "Congratulations on your match", get_all_chat_with_image: "" })
 			dispatch({ type: "Add_Accepted_Request", payload: { id: receiver_id } })
 			dispatch({ type: "Remove_Friend_Request", payload: res.data })
 		}
@@ -50,7 +53,8 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, socket, al
 		console.log(receiver_id, currentUser.id)
 		const res = await friend_request_action({ receiver_id: receiver_id, sender_id: currentUser.id, is_approved: 2 })
 		if (res.success) {
-			socket.emit("card-swiped", res.data)
+			// socket.emit("card-swiped", res.data)
+			sendMatchReq(res.data)
 			dispatch({ type: "Remove_Friend_Request", payload: res.data })
 		}
 	}

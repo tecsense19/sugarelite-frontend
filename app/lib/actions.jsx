@@ -66,7 +66,7 @@ export const get_user_action = async () => {
     if (token) {
         var bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
         var userId = bytes.toString(CryptoJS.enc.Utf8);
-        const res = await fetch(server_routes.allProfiles + `?id=${userId}`)
+        const res = await fetch(server_routes.allProfiles + `?id=${userId}`, { cache: "force-cache" })
         if (res.ok) {
             const data = await res.json()
             if (data.success) {
@@ -138,7 +138,7 @@ export const all_profiles_action = async () => {
 
 export const search_profile_action = async (id) => {
     try {
-        const res = await fetch(server_routes.allProfiles + `?id=${id}`)
+        const res = await fetch(server_routes.allProfiles + `?id=${id}`, { cache: "force-cache" })
         if (res.ok) {
             const data = await res.json()
             return data
@@ -212,8 +212,8 @@ export const private_album_notification = async (id) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(id)
-        })
+            body: JSON.stringify(id),
+        },)
         const data = await res.json()
         return data
     } catch (error) {
@@ -416,7 +416,7 @@ export const get_support_msg = async (form) => {
 
 export const get_language_action = async () => {
     try {
-        const res = await fetch(server_routes.getLaguageMaster, { cache: "no-cache" })
+        const res = await fetch(server_routes.getLaguageMaster, { cache: "force-cache" })
         const data = await res.json()
         return data
     } catch (error) {

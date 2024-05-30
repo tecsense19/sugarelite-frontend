@@ -11,13 +11,9 @@ const ProfileId = async ({ params }) => {
   // const currentUser = decrypt_user();
   if (!profile) redirect(client_routes.profile);
   const currentUser = profile[0];
-  const myAccount = await search_profile_action(currentUser.id);
 
-  if (!myAccount.success) {
-    return null;
-  }
+  const isBlockedOrSelf = currentUser.is_blocked_users.some(i => i.user_id === parseInt(params.id)) || currentUser.id === parseInt(params.id);
 
-  const isBlockedOrSelf = myAccount.data[0].is_blocked_users.some(i => i.user_id === parseInt(params.id)) || currentUser.id === parseInt(params.id);
   if (isBlockedOrSelf) {
     redirect(client_routes.profile);
   }
