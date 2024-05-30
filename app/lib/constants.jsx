@@ -1,86 +1,165 @@
-export const profile_select_options_appearance = [
-    {
-        options: ["Male", "Female", "Others"],
-        name: "sex",
-        text: "sex"
-    },
-    {
-        options: ["African", "Arabian", "Asian", "Caucasian (White)", "Indian", "Latin", "Mixed", "Others"],
-        name: "ethnicity",
-        text: "ethnicity"
-    },
-    {
-        options: ["Athletic", "Chubby", "Powerful", "Normal Appearance", "Slender", "Very muscular"],
-        name: "body_structure",
-        text: "body structure"
-    },
-    {
-        options: ["Yes", "No"],
-        name: "piercings",
-        text: "piercings"
-    },
-    {
-        options: Array.from({ length: 120 }).map((_, inx) => inx + 120),
-        name: "height",
-        text: "height (cm.)"
-    },
-    {
-        options: ["Single", "In a relationship", "Gift", "Open Relationship", "It complicated"],
-        name: "civil_status",
-        text: "civil status"
-    },
-    {
-        options: ["Bard", "Sort", "Blond", "Brunt", "Cry", "Red", "White", "Blue", "Lilla", "Other things"],
-        name: "hair_color",
-        text: "hair color"
-    },
-    {
-        options: ["Yes", "No"],
-        name: "tattoos",
-        text: "tattoos"
-    },
-    {
-        options: Array.from({ length: 80 }).map((_, inx) => inx + 40),
-        name: "weight",
-        text: "weight (kg.)"
-    }
-]
-export const profile_select_options_lifestyle = [
-    {
-        options: ["Bachelor's degree", "Graduate degree", "Primary school",
-            "High school diploma", "Longer further", "Ph.D", "Shorter secondary school", "Vocational education", "NO"],
-        name: "education",
-        text: "education"
-    },
-    {
-        options: ["Tit", "Sometimes", "On festive occasions", "Rarely", "No"],
-        name: "smoking",
-        text: "smoking habits"
-    },
-    {
-        options: [
-            "Administration, management and HR", "Art/music/design", "Agriculture/forestry/fishing",
-            "Master apprentice/craftsman",
-            "Engineering",
-            "Media and entertainment",
-            "Construction",
-            'Finance',
-            "Medicine/health care", "IT/Computers Language", "writer", "journalism Legal/audit",
-            "Maritime",
-            "Marketing/Sales",
-            "Trade and office", "Pedagogue", "History/philosophy",
-            'Science',
-            "Restoration",
-            "Student", "Teacher/academics", "Hotel/Tourism", "Other things"],
-        name: "employment",
-        text: "employment"
-    },
-    {
-        options: ["Tit", "Sometimes", "On festive occasions", "Rarely", "No"],
-        name: "drinks",
-        text: "drinking habits"
-    },
-]
+export const profile_select_options_appearance = (allStrings) => {
+    return [
+        {
+            options: [
+                allStrings["string_male"],
+                allStrings["string_female"],
+                allStrings["string_others"]
+            ],
+            name: "sex",
+            text: allStrings["string_sex"]
+        },
+        {
+            options: [
+                allStrings["string_african"],
+                allStrings["string_arabian"],
+                allStrings["string_asian"],
+                allStrings["string_caucasian_(white)"],
+                allStrings["string_indian"],
+                allStrings["string_latin"],
+                allStrings["string_mixed"],
+                allStrings["string_others"]
+            ],
+            name: "ethnicity",
+            text: allStrings["string_ethnicity"]
+        },
+        {
+            options: [
+                allStrings["string_athletic"],
+                allStrings["string_chubby"],
+                allStrings["string_powerful"],
+                allStrings["string_normal_appearance"],
+                allStrings["string_slender"],
+                allStrings["string_very_muscular"]
+            ],
+            name: "body_structure",
+            text: allStrings["string_body_structure"]
+        },
+        {
+            options: [
+                allStrings["string_yes"],
+                allStrings["string_no"]
+            ],
+            name: "piercings",
+            text: allStrings["string_piercings"]
+        },
+        {
+            options: Array.from({ length: 120 }).map((_, inx) => inx + 120),
+            name: "height",
+            text: allStrings["string_height_(cm.)"]
+        },
+        {
+            options: [
+                allStrings["string_single"],
+                allStrings["string_in_a_relationship"],
+                allStrings["string_gift"],
+                allStrings["string_open_relationship"],
+                allStrings["string_it_complicated"]
+            ],
+            name: "civil_status",
+            text: allStrings["string_civil_status"]
+        },
+        {
+            options: [
+                allStrings["string_bald"],
+                allStrings["string_sort"],
+                allStrings["string_blond"],
+                allStrings["string_brunt"],
+                allStrings["string_cry"],
+                allStrings["string_red"],
+                allStrings["string_white"],
+                allStrings["string_blue"],
+                allStrings["string_lilla"],
+                allStrings["string_others"]
+            ],
+            name: "hair_color",
+            text: allStrings["string_hair_color"]
+        },
+        {
+            options: [
+                allStrings["string_yes"],
+                allStrings["string_no"]
+            ],
+            name: "tattoos",
+            text: allStrings["string_tattoos"]
+        },
+        {
+            options: Array.from({ length: 80 }).map((_, inx) => inx + 40),
+            name: "weight",
+            text: allStrings["string_weight_(kg.)"]
+        }
+    ]
+}
+export const profile_select_options_lifestyle = (allStrings) => {
+    return [
+        {
+            options: [
+                allStrings["string_bachelor's_degree"],
+                allStrings["string_graduate_degree"],
+                allStrings["string_primary_school"],
+                allStrings["string_high_school_diploma"],
+                allStrings["string_longer_further"],
+                allStrings["string_ph.d"],
+                allStrings["string_shorter_secondary_school"],
+                allStrings["string_vocational_education"],
+                allStrings["string_no"]
+            ],
+            name: "education",
+            text: allStrings["string_education"]
+        },
+        {
+            options: [
+                allStrings["string_tit"],
+                allStrings["string_sometimes"],
+                allStrings["string_on_festive_occasions"],
+                allStrings["string_rarely"],
+                allStrings["string_no"]
+            ],
+            name: "smoking",
+            text: allStrings["string_smoking_habits"]
+        },
+        {
+            options: [
+                allStrings["string_administration,_management_and_hr"],
+                allStrings["string_art/music/design"],
+                allStrings["string_agriculture/forestry/fishing"],
+                allStrings["string_master_apprentice/craftsman"],
+                allStrings["string_engineering"],
+                allStrings["string_media_and_entertainment"],
+                allStrings["string_construction"],
+                allStrings["string_finance"],
+                allStrings["string_medicine/health_care"],
+                allStrings["string_it/computers_language"],
+                allStrings["string_language,_writer,_journalism"],
+                allStrings["string_legal/audit"],
+                allStrings["string_maritime"],
+                allStrings["string_marketing/sales"],
+                allStrings["string_trade_and_office"],
+                allStrings["string_pedagogue"],
+                allStrings["string_history/philosophy"],
+                allStrings["string_science"],
+                allStrings["string_restoration"],
+                allStrings["string_student"],
+                allStrings["string_teacher/academics"],
+                allStrings["string_hotel/tourism"],
+                allStrings["string_others"]
+            ],
+            name: "employment",
+            text: allStrings["string_employment"]
+        },
+        {
+            options: [
+                allStrings["string_tit"],
+                allStrings["string_sometimes"],
+                allStrings["string_on_festive_occasions"],
+                allStrings["string_rarely"],
+                allStrings["string_no"]
+            ],
+            name: "drinks",
+            text: allStrings["string_drinking_habits"]
+        },
+    ]
+}
 
 export const Countries = [
     {
