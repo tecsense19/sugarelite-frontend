@@ -25,7 +25,7 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile, allStrings }) => {
                     <Image src={arrowLeft} alt="" height={24} width={24} priority className="pointer-events-none" />
                 </button>
                 <div className="text-[24px] font-semibold leading-[23px]">{allStrings["string_profile"]}</div>
-                <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
+                {/* <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "black" } }}>
                     <Popover placement="bottomRight" trigger="click" open={showOptions} onOpenChange={handleShowOptionsChange} content={(
                         <div className="text-white flex flex-col p-[10px] gap-y-[6px] z-20">
                             <button className="bg-secondary w-[125px] h-[32px] flex justify-start items-center gap-x-[10px] rounded-sm">
@@ -46,7 +46,8 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile, allStrings }) => {
                             <Image src={optionsIcon} alt="" height={30} width={30} priority className="pointer-events-none" />
                         </button>
                     </Popover>
-                </ConfigProvider>
+                </ConfigProvider> */}
+                <div></div>
             </div>
 
             <div className="w-full flex justify-start items-center flex-col h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
@@ -70,7 +71,7 @@ const ToUserProfile = ({ selectedObj, setShowMobileProfile, allStrings }) => {
                             <Link prefetch={true} href={client_routes.profile + "/" + selectedObj.id} className="text-[24px] md:text-[26px] font-bold leading-[30px] flex !text-white capitalize">{selectedObj.username}, {selectedObj.age}</Link>
                             {(selectedObj.is_subscribe === 1 && selectedObj.is_subscription_stop === 0 && selectedObj.is_subscription_cancel === 0) && <>
                                 <Image src={premium} alt='premium' width={30} height={30} priority className='pointer-events-none ms-3 md:ms-4' />
-                                <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>Premium</span>
+                                <span className='text-[16px] font-semibold leading-[normal] text-white/80 ms-2'>{allStrings["string_premium"]}</span>
                             </>}
                         </div>
                         <div className='mt-[11px] flex items-center self-center'>

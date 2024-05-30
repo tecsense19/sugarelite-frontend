@@ -16,16 +16,16 @@ const ChatStarted = ({ messages, user, toUser, allStrings }) => {
                 <div className='flex justify-center items-start relative'>
                     <div>
                         {user.avatar_url ? (
-                            <Image src={user.avatar_url} height={1000} width={500} alt="avatar" className=" h-[60px] w-[60px] md:h-[80px] md:min-w-[80px] object-cover rounded-full" />
+                            <Image src={user.avatar_url} height={1000} width={500} alt="avatar" className="border-[3px] border-primary h-[60px] w-[60px] md:h-[80px] md:min-w-[80px] object-cover rounded-full" />
                         ) : (
-                            <p className="uppercase flex justify-center items-center h-[60px] w-[60px] md:h-[80px] md:min-w-[80px] rounded-full bg-primary-dark text-[20px]">{user.username.charAt(0)}</p>
+                            <p className="uppercase flex justify-center items-center h-[60px] w-[60px] md:h-[80px] md:min-w-[80px] rounded-full border-[3px] border-primary bg-primary-dark text-[20px]">{user.username.charAt(0)}</p>
                         )}
                     </div>
                     <div className='-ms-5'>
                         {toUser.avatar_url ? (
-                            <Image src={toUser.avatar_url} height={80} width={80} alt="avatar" className="h-[60px] w-[60px] md:h-[80px] md:min-w-[80px]  object-cover rounded-full" />
+                            <Image src={toUser.avatar_url} height={80} width={80} alt="avatar" className="border-[3px] border-primary h-[60px] w-[60px] md:h-[80px] md:min-w-[80px]  object-cover rounded-full" />
                         ) : (
-                            <p className="uppercase flex justify-center items-center h-[60px] w-[60px] md:h-[80px] md:min-w-[80px] rounded-full bg-primary-dark text-[20px]">{toUser.username.charAt(0)}</p>
+                            <p className="uppercase flex justify-center items-center h-[60px] w-[60px] md:h-[80px] md:min-w-[80px] rounded-full border-[3px] border-primary bg-primary-dark text-[20px]">{toUser.username.charAt(0)}</p>
                         )}
                     </div>
                 </div>

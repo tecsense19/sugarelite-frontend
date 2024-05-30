@@ -297,12 +297,14 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                         <div className='flex justify-center items-center my-6'>
                             <div className='flex items-center relative ps-[20px] pe-[30px] py-[9px] gap-x-8 bg-white rounded-[30px] '>
                                 <span className={`z-[1] cursor-pointer flex justify-center items-center gap-x-1 transition-all duration-200 text-[13px] font-medium leading-[13px] ${isEmail ? "text-black" : "text-white"}`} onClick={() => { setIsEmail(false); setValue("email", "") }}>
-                                    <Image src={isEmail ? username_telephone_black : username_telephone_white} alt='' height={14} width={14} />
+                                    <Image src={username_telephone_black} alt='' height={14} width={14} className={`${isEmail ? "" : "hidden"}`} />
+                                    <Image src={username_telephone_white} alt='' height={14} width={14} className={`${isEmail ? "hidden" : ""}`} />
                                     <span>{allStrings["string_mobile_number"]}</span>
                                 </span>
                                 <div id='isEmailSelected' className={`bg-black absolute rounded-[20px] z-0 h-[100%] transition-all duration-200 ${isEmail ? `translate-x-[calc(100%+11px)]` : "translate-x-[-22px]"}`} style={{ width: `calc(100% - 32px - ${getAnotherEleWidth()}px - ${isEmail ? "0px" : "10px"})` }}></div>
                                 <span className={`z-[1] cursor-pointer flex justify-center items-center gap-x-2 transition-all duration-200 text-[13px] font-medium leading-[13px] ${!isEmail ? "text-black" : "text-white"}`} onClick={() => { setIsEmail(true); setValue("phone", "") }}>
-                                    <Image src={isEmail ? username_email_white : username_email_black} alt='' height={13} width={13} />
+                                    <Image src={username_email_white} alt='' height={13} width={13} className={`${isEmail ? "" : "hidden"}`} />
+                                    <Image src={username_email_black} alt='' height={13} width={13} className={`${isEmail ? "hidden" : ""}`} />
                                     <span>{allStrings["string_email"]}</span>
                                 </span>
                             </div>

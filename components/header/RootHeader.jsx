@@ -19,7 +19,7 @@ import { useSocket } from '@/store/SocketContext'
 import { useChat } from '@/store/ChatContext'
 import { connectSocket } from '@/app/lib/socket'
 
-const socket = io("https://socket.website4you.co.in");
+const socket = io("http://103.211.218.172:3001");
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat, allStrings }) => {
 
@@ -412,7 +412,13 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                                     <p className="h-2 w-2 bg-secondary bounce rounded-full absolute top-0 -right-1"></p>
                                 } */}
                                 {
-                                    unReadMsg ? <div className='absolute h-4 w-4 border-[1px] pt-[1px] border-white bg-secondary flex justify-center items-center text-[11px] font-medium rounded-full left-[10px] -top-[2px]'>{unReadMsg}</div> : ""
+                                    unReadMsg ? <div className='absolute h-4 w-4 pt-[1px] border-[1px] bg-white animate-ping flex justify-center items-center text-[11px] font-medium rounded-full left-[10px] -top-[2px]'>
+                                    </div> : ""
+                                }
+                                {
+                                    unReadMsg ? <div className='absolute h-4 w-4 pt-[1px] border-[1px] border-white bg-secondary flex justify-center items-center text-[11px] font-medium rounded-full left-[10px] -top-[2px]'>
+                                        {unReadMsg}
+                                    </div> : ""
                                 }
                             </Link>
                             <Link href={client_routes.search} className="py-[7px] rounded-[5px] h-[32px] flex items-center transition-all duration-150 hover:scale-110">
