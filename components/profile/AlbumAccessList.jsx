@@ -17,7 +17,6 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
     const matchedProfiles = allUsers.filter(user1 => {
       return albumAccessList.some(user2 => user2.user_id === user1.id);
     });
-    console.log("matchedProfiles ::", matchedProfiles);
     let tempData = matchedProfiles.filter(obj => obj.id !== user.id);
     setData(tempData)
   }, [albumAccessList])
@@ -27,7 +26,6 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
       const matchedProfiles = allUsers.filter(user1 => {
         return decisionState.some(user2 => (user2.data.sender_id === user1.id && user2.status === "accept"));
       });
-      console.log("matchedProfiles 2 ::", matchedProfiles);
       let tempData = matchedProfiles.filter(obj => obj.id !== user.id);
       setData((prev) => Array.from(new Set([...tempData, ...prev])))
     }

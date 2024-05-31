@@ -43,10 +43,6 @@ const AlbumNotification = ({ notification, allUsers, socket, allStrings }) => {
         }
     }
 
-    useEffect(() => {
-        console.log(socket)
-    }, [])
-
     const getTime = (id) => {
         const time = new Date(id)
         const today = new Date()

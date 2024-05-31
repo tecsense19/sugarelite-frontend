@@ -44,7 +44,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
     useEffect(() => {
         if (user) {
-            // console.log(socket.io.engine.transport.n)
             socket.emit("join", user.id);
             setSocket(socket);
             connectSocket(socket)
@@ -72,19 +71,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
             }
 
-            const receiveMessageHandler = (obj) => {
-                if (obj.receiver_id === user.id) {
-                    if (obj.type === "deleted" || obj.type === "edited") {
-                        addMessage(obj)
-                        editMessage(obj)
-                    } else {
-                        dispatch({ type: "Add_Msg_Badge", payload: true })
-                        newMessageHandler(obj)
-                        addMessage(obj)
-                    }
-                }
-            }
-
             const onlineUserHandler = (arr) => {
                 console.log(arr)
                 const filtered = arr.filter(i => i !== user.id)
@@ -97,16 +83,13 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
 
             const swipeHandler = (obj) => {
                 if (obj.receiver_id === user.id && obj.is_friend === 0) {
-                    console.log("receiver", obj)
                     dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
                     dispatch({ type: "Add_Friend_Request", payload: obj })
                 }
                 else if (obj.sender_id === user.id && obj.is_friend === 1) {
-                    console.log("receiver", obj)
                     dispatch({ type: "Add_Friend_Request", payload: obj })
                     dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
                 } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
-                    console.log("removed")
                     dispatch({ type: "Remove_Friend_Request", payload: obj })
                 }
             }
@@ -138,28 +121,6 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }, [])
 
     useEffect(() => {
-        // const receiveMessageHandler = (obj) => {
-        //     if (obj.receiver_id === user.id) {
-        //         if (obj.type === "deleted" || obj.type === "edited") {
-        //             // addMessage(obj)
-        //             editMessage(obj)
-        //         } else {
-        //             newMessageHandler(obj)
-        //             addMessage(obj)
-        //             if (pathname !== client_routes.chat) {
-        //                 dispatch({ type: "Add_Msg_Badge", payload: true })
-        //             }
-        //             if (toMessageState.id !== obj.sender_id && obj?.type === "regular") {
-        //                 if (unReadCount.some(i => i.id === obj.sender_id)) {
-        //                     updateUnReadCount(obj.sender_id)
-        //                 } else {
-        //                     addUnReadCount({ id: obj.sender_id, count: 1 })
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
         const receiveMessageHandler = (obj) => {
             if (obj.receiver_id === user.id && !obj.seenType) {
                 if (obj.type === "deleted" || obj.type === "edited") {
@@ -171,7 +132,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                     if (pathname !== client_routes.chat) {
                         dispatch({ type: "Add_Msg_Badge", payload: true })
                     }
-                    if (toMessageState.id !== obj.sender_id && obj?.type === "regular") {
+                    if (toMessageState.id !== obj.sender_id && obj?.type === "regular" && obj.status !== "new") {
                         if (unReadCount.some(i => i.id === obj.sender_id)) {
                             updateUnReadCount(obj.sender_id)
                         } else {
@@ -386,9 +347,9 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         }
     }, [])
 
-    useEffect(() => {
-        dispatch({ type: "Message_To", payload: "Admin" })
-    }, [pathname])
+    // useEffect(() => {
+    //     dispatch({ type: "Message_To", payload: "Admin" })
+    // }, [pathname])
 
     return (
         <>

@@ -35,13 +35,18 @@ const ChatSection = ({ toUser, setShowMobileChatContent, user, messages, support
 
     useEffect(() => {
         if (messages.length) {
-            const myChats = messages.filter((msg) => msg.sender_id === user.id);
-            const today = new Date().toLocaleDateString();
-            const todayChats = myChats.filter((chat) => {
-                const chatDate = new Date(chat.created_at).toLocaleDateString();
-                return chatDate === today;
-            });
-            setTodayMsgs(todayChats.length);
+            const myMsgs = messages.filter(msg => msg.status !== "new");
+            if (myMsgs.length) {
+                const myChats = myMsgs.filter((msg) => msg.sender_id === user.id);
+                const today = new Date().toLocaleDateString();
+                const todayChats = myChats.filter((chat) => {
+                    const chatDate = new Date(chat.created_at).toLocaleDateString();
+                    return chatDate === today;
+                });
+                setTodayMsgs(todayChats.length);
+            } else {
+                setTodayMsgs(0);
+            }
         }
     }, [messages])
 

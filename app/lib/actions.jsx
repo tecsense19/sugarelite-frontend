@@ -66,7 +66,7 @@ export const get_user_action = async () => {
     if (token) {
         var bytes = CryptoJS.AES.decrypt(token, 'SecretKey');
         var userId = bytes.toString(CryptoJS.enc.Utf8);
-        const res = await fetch(server_routes.allProfiles + `?id=${userId}`, { cache: "force-cache" })
+        const res = await fetch(server_routes.allProfiles + `?id=${userId}`)
         if (res.ok) {
             const data = await res.json()
             if (data.success) {
@@ -416,7 +416,7 @@ export const get_support_msg = async (form) => {
 
 export const get_language_action = async () => {
     try {
-        const res = await fetch(server_routes.getLaguageMaster, { cache: "force-cache" })
+        const res = await fetch(server_routes.getLaguageMaster, { cache: "no-store" })
         const data = await res.json()
         return data
     } catch (error) {
