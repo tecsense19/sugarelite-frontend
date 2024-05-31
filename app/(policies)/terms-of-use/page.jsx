@@ -20,9 +20,9 @@ const TermsOfUse = () => {
         <div className={`flex justify-center md:pt-[80px] ${isOpenMobileNavbar ? "pt-[156px]" : "pt-[65px]"}`}>
           <div className="p-4 py-6 flex flex-col text-white max-w-[700px]">
             <div className="relative flex justify-center items-center">
-              <Link className="absolute left-0" href={client_routes.home}>
+              {/* <Link className="absolute left-0" href={client_routes.home}>
                 <Image src={leftArrow} alt="" height={26} width={26} className="pointer-events-none" />
-              </Link>
+              </Link> */}
               <div className="text-[27px] font-semibold ">Terms of use</div>
             </div>
             <div className="mt-6 text-[19px] font-normal text-justify">

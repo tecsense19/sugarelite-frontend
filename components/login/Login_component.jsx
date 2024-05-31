@@ -94,10 +94,10 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
             <div className="h-full w-full relative bg-tinder sm:bg-none">
                 <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">
                     <div className="text-white w-full h-full sm:h-[78%] sm:rounded-[5px] sm:w-[85%] md:w-[75%] sm:min-h-[625px] sm:bg-gradient-to-l sm:from-tinder-1 sm:from-0% sm:to-tinder-2 sm:to-100% sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] lg:max-w-[762px] flex justify-center items-center flex-col">
-                        <div className="flex flex-col justify-center items-center gap-4">
+                        <Link href={client_routes.home} className="flex flex-col justify-center items-center gap-4">
                             <Image src={loginLogoImg} alt={"logo"} width={54} height={64} priority className="w-auto h-auto select-none pointer-events-none" />
                             <Image src={eliteLogoImg} alt={"logo"} width={156} height={34} priority className="select-none pointer-events-none" />
-                        </div>
+                        </Link>
                         <form className="w-full max-w-[30rem]" onSubmit={handleSubmit(loginHandler)}>
                             <div className=" w-full mt-[97px]">
                                 <div className='flex items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>

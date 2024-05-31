@@ -34,18 +34,18 @@ const Footer = ({ allStrings }) => {
 
   const footerMiddleContent = [
     // allStrings["string_happy_members"]
-    {
-      title: allStrings["string_company"],
-      features: [allStrings["string_about"], allStrings["string_reviews"], allStrings["string_clients"]]
-    },
+    // {
+    //   title: allStrings["string_company"],
+    //   features: [allStrings["string_about"], allStrings["string_reviews"], allStrings["string_clients"]]
+    // },
     {
       title: allStrings["string_feature"],
       features: [allStrings["string_quick_access"], allStrings["string_secure_payment"], allStrings["string_24/7_support"]]
     },
-    {
-      title: allStrings["string_download"],
-      features: [allStrings["string_android_app"], allStrings["string_ios_app"], allStrings["string_mobile_version"]]
-    }
+    // {
+    //   title: allStrings["string_download"],
+    //   features: [allStrings["string_android_app"], allStrings["string_ios_app"], allStrings["string_mobile_version"]]
+    // }
   ]
 
   const getMobileMiddleContent = () => {
@@ -103,8 +103,8 @@ const Footer = ({ allStrings }) => {
   return (
     <div className="w-full flex justify-center items-center bg-black pb-[30px] home-footer-container text-white" >
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
-        <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 2xl:grid-cols-12 gap-x-[55px]">
-          <div className="2xl:col-span-3">
+        <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 xl:grid-cols-12 gap-x-[55px]">
+          <div className="xl:col-span-4">
             <div>
               <Image src={logo} priority alt="" height={43} width={217} className="select-none pointer-events-none hidden 2xl:block" />
               <Image src={logo} priority alt="" height={35} width={177} className="select-none pointer-events-none 2xl:hidden" />
@@ -134,7 +134,7 @@ const Footer = ({ allStrings }) => {
           </div>
           {/* {/ Mobile Middle Content End /} */}
           {/* {/ Desktop Middle Content Start /} */}
-          <div className="2xl:col-span-6 md:flex justify-between mt-10 2xl:mt-0 hidden">
+          <div className="xl:col-span-4 md:flex justify-between xl:ms-10 xl:justify-start mt-10 xl:mt-0 hidden">
             {footerMiddleContent.map((item, idx) => {
               return (
                 <div key={idx}>
@@ -142,9 +142,9 @@ const Footer = ({ allStrings }) => {
                   <div className="mt-5 2xl:mt-10 flex flex-col gap-y-3 2xl:gap-y-5">
                     {item.features.map((name, index) => {
                       return (
-                        <div key={`${item.title}_${index}`} className="flex items-center justify-start gap-x-3 2xl:gap-x-5 group cursor-pointer">
+                        <div key={`${item.title}_${index}`} className="flex items-center justify-start gap-x-3 2xl:gap-x-5 ">
                           <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                          <div className="text-[clamp(16px,2vw,17px)] font-normal leading-[normal] group-hover:text-secondary text-white/70 md:text-white transition-all ease-linear duration-75">{name}</div>
+                          <div className="text-[clamp(16px,2vw,17px)] font-normal leading-[normal] text-white/70 md:text-white transition-all ease-linear duration-75">{name}</div>
                         </div>
                       )
                     })}
@@ -154,7 +154,7 @@ const Footer = ({ allStrings }) => {
             })}
           </div>
           {/* {/ Desktop Middle Content End /} */}
-          <div className="2xl:col-span-3 mt-10 2xl:mt-0">
+          <div className="xl:col-span-4 mt-10 xl:mt-0">
             <div className="text-[24px] font-extrabold leading-[30px]">
               {allStrings["string_news_letter"]}
             </div>
@@ -172,10 +172,20 @@ const Footer = ({ allStrings }) => {
           </div>
         </div>
 
-        <div className="w-full mt-[50px] 2xl:mt-[80px] border-t-[1px] border-white/25 lg:border-white/50 flex flex-col-reverse lg:flex-row justify-center items-center text-white/75 lg:text-white">
-          <div className="text-[14px] font-normal leading-[normal] mt-[15px] lg:mt-[18px]">{allStrings["string_copyright_©_2024_sugarelite_all_rights_reserved"]}</div>
-          <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">|  <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link></div>
-          <div className="text-[14px] font-normal leading-[normal] mt-5 lg:hidden"><Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>  |   <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>   |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link></div>
+        <div className="w-full mt-[50px] 2xl:mt-[80px] border-t-[1px] border-white/25 lg:border-white/50 flex flex-col-reverse  justify-center items-center text-white/75 lg:text-white">
+          <div className="text-[14px] font-normal text-center leading-[normal] mt-[15px] lg:mt-[18px]">{allStrings["string_copyright_©_2024_sugarelite_all_rights_reserved"]}</div>
+          {/* <div className="text-[14px] font-normal leading-[normal] mt-[18px] ms-3 hidden lg:block">
+            |  <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>  |
+            <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>
+            |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link>
+          </div> */}
+          <div className="text-[14px] font-normal leading-[normal] mt-5  flex gap-x-2">
+            <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>
+            <p >|</p>
+            <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>
+            {/* <p>|</p>
+            <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link> */}
+          </div>
         </div>
       </div>
     </div>
