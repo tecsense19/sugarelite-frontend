@@ -18,12 +18,12 @@ import { specificCountries } from '@/app/lib/allCountries'
 import { client_notification } from '@/app/lib/helpers'
 
 
-const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, allStrings, allUsersProfile, setAllUsersProfile }) => {
+const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, allStrings, allUsersProfile, setAllUsersProfile, isEmail, setIsEmail }) => {
 
     const [showUserAlreadyExistAlert, setShowUserAlreadyExistAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const [isEmail, setIsEmail] = useState(true);
+    // const [isEmail, setIsEmail] = useState(true);
     const [showOTP, setShowOTP] = useState(false);
     const [otpArr, setOtpArr] = useState(['', '', '', '', '', '']);
     const [countries, setCountries] = useState(specificCountries);

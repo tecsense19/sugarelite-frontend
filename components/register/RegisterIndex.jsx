@@ -33,6 +33,7 @@ const RegisterIndex = ({ allStrings }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [allUsersProfile, setAllUsersProfile] = useState([]);
+  const [isEmail, setIsEmail] = useState(true);
 
   const navigate = useRouter()
 
@@ -112,7 +113,7 @@ const RegisterIndex = ({ allStrings }) => {
                   nextStep === 1 && <SugarType register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} allStrings={allStrings} allUsersProfile={allUsersProfile} setAllUsersProfile={setAllUsersProfile} />
+                  nextStep === 2 && <UserName register={register} setValue={setValue} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} allStrings={allStrings} allUsersProfile={allUsersProfile} setAllUsersProfile={setAllUsersProfile} isEmail={isEmail} setIsEmail={setIsEmail} />
                 }
                 {
                   nextStep === 3 && <Password register={register} setValue={setValue} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} />
@@ -162,7 +163,7 @@ const RegisterIndex = ({ allStrings }) => {
                   nextStep === 1 && <SugarType setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} allStrings={allStrings} />
                 }
                 {
-                  nextStep === 2 && <UserName setValue={setValue} register={register} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} allStrings={allStrings} allUsersProfile={allUsersProfile} setAllUsersProfile={setAllUsersProfile} />
+                  nextStep === 2 && <UserName setValue={setValue} register={register} watch={watch} setNextStep={setNextStep} prevStepHandler={prevStepHandler} allStrings={allStrings} allUsersProfile={allUsersProfile} setAllUsersProfile={setAllUsersProfile} isEmail={isEmail} setIsEmail={setIsEmail} />
                 }
                 {
                   nextStep === 3 && <Password setValue={setValue} register={register} watch={watch} nextStepHandler={nextStepHandler} prevStepHandler={prevStepHandler} allStrings={allStrings} />
