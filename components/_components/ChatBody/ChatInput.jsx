@@ -139,9 +139,9 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
 
     useEffect(() => {
         if (!editingMsg) {
-            if (watch("message").length === 1) {
+            if (watch("message")?.length === 1) {
                 mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: true })
-            } else if (watch("message").length === 0) {
+            } else if (watch("message")?.length === 0) {
                 mySocket.emit("typing", { sender_id: user.id, receiver_id: toUser.id, decision: false })
             }
         }
