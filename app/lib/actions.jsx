@@ -138,7 +138,7 @@ export const all_profiles_action = async () => {
 
 export const search_profile_action = async (id) => {
     try {
-        const res = await fetch(server_routes.allProfiles + `?id=${id}`, { cache: "force-cache" })
+        const res = await fetch(server_routes.allProfiles + `?id=${id}`)
         if (res.ok) {
             const data = await res.json()
             return data

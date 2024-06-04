@@ -59,17 +59,17 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                 }
             };
 
-            const albumAccessHandler = (obj) => {
-                dispatch({ type: "Add_Decision_User", payload: obj })
-                const { data, status } = obj
-                if (user.id === data.receiver_id && status === "pending") {
-                    dispatch({ type: "Add_Album_Notification", payload: data })
-                }
-                if (!notificationOpenState && status === "pending" && data.receiver_id === user.id) {
-                    dispatch({ type: "Add_Notification_Badge", payload: true })
-                }
+            // const albumAccessHandler = (obj) => {
+            //     dispatch({ type: "Add_Decision_User", payload: obj })
+            //     const { data, status } = obj
+            //     if (user.id === data.receiver_id && status === "pending") {
+            //         dispatch({ type: "Add_Album_Notification", payload: data })
+            //     }
+            //     if (!notificationOpenState && status === "pending" && data.receiver_id === user.id) {
+            //         dispatch({ type: "Add_Notification_Badge", payload: true })
+            //     }
 
-            }
+            // }
 
             const onlineUserHandler = (arr) => {
                 console.log(arr)
@@ -81,18 +81,18 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                 dispatch({ type: "Add_Partner", payload: obj })
             }
 
-            const swipeHandler = (obj) => {
-                if (obj.receiver_id === user.id && obj.is_friend === 0) {
-                    dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
-                    dispatch({ type: "Add_Friend_Request", payload: obj })
-                }
-                else if (obj.sender_id === user.id && obj.is_friend === 1) {
-                    dispatch({ type: "Add_Friend_Request", payload: obj })
-                    dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
-                } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
-                    dispatch({ type: "Remove_Friend_Request", payload: obj })
-                }
-            }
+            // const swipeHandler = (obj) => {
+            //     if (obj.receiver_id === user.id && obj.is_friend === 0) {
+            //         dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
+            //         dispatch({ type: "Add_Friend_Request", payload: obj })
+            //     }
+            //     else if (obj.sender_id === user.id && obj.is_friend === 1) {
+            //         dispatch({ type: "Add_Friend_Request", payload: obj })
+            //         dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
+            //     } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
+            //         dispatch({ type: "Remove_Friend_Request", payload: obj })
+            //     }
+            // }
 
             const showAnimationHandler = (obj) => {
                 if (obj.receiver_id === user.id) {
@@ -107,10 +107,10 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.on("blocked-status", blockUserHandler);
             socket.on("unblocked-status", unblockUserHandler);
             // socket.on("receive-message", receiveMessageHandler);
-            socket.on("album-notification", albumAccessHandler);
+            // socket.on("album-notification", albumAccessHandler);
             socket.on("onlineUsers", onlineUserHandler)
             socket.on("opened-chat-user", myChattingPartner)
-            socket.on('swipe-notify', swipeHandler)
+            // socket.on('swipe-notify', swipeHandler)
             socket.on("show-animation", showAnimationHandler);
         }
 
@@ -119,6 +119,45 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             socket.off("onlineUsers")
         }
     }, [])
+
+    useEffect(() => {
+        const albumAccessHandler = (obj) => {
+            dispatch({ type: "Add_Decision_User", payload: obj })
+            const { data, status } = obj
+            if (user.id === data.receiver_id && status === "pending") {
+                dispatch({ type: "Add_Album_Notification", payload: data })
+            }
+            if (!notificationOpenState && status === "pending" && data.receiver_id === user.id) {
+                dispatch({ type: "Add_Notification_Badge", payload: true })
+            }
+        }
+
+        const swipeHandler = (obj) => {
+            if (obj.receiver_id === user.id && obj.is_friend === 0) {
+                if (!notificationOpenState) {
+                    dispatch({ type: "Add_Notification_Badge", payload: true })
+                }
+                dispatch({ type: "Add_Received_Request", payload: { id: obj.sender_id } })
+                dispatch({ type: "Add_Friend_Request", payload: obj })
+            }
+            else if (obj.sender_id === user.id && obj.is_friend === 1) {
+                if (!notificationOpenState) {
+                    dispatch({ type: "Add_Notification_Badge", payload: true })
+                }
+                dispatch({ type: "Add_Friend_Request", payload: obj })
+                dispatch({ type: "Add_Accepted_Request", payload: { id: obj.user_id } })
+            } else if (obj.receiver_id === user.id && obj.is_friend === 2) {
+                dispatch({ type: "Remove_Friend_Request", payload: obj })
+            }
+        }
+
+        socket.on("album-notification", albumAccessHandler);
+        socket.on('swipe-notify', swipeHandler)
+        return () => {
+            socket.off("album-notification")
+            socket.off('swipe-notify', swipeHandler)
+        }
+    }, [notificationOpenState])
 
     useEffect(() => {
         const receiveMessageHandler = (obj) => {
