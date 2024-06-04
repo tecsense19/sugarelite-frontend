@@ -33,7 +33,7 @@ const Cards = ({ allUsers, filterHandler, resetHandler, allStrings }) => {
               allUsers?.map((item, idx) => {
                 const privateImages = item.get_all_profileimg.filter(i => i.image_type === "private")
                 return (
-                  <Link key={idx} href={`${client_routes.profile}/${item.id}`} prefetch={true} className="relative border border-white/50 rounded-[5px] cursor-pointer lg:overflow-hidden xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem]   xs:h-auto  w-full flex justify-center items-center">
+                  <Link key={idx} href={`${client_routes.profile}/${item.id}`} prefetch={true} className="relative border border-white/50 rounded-[5px] cursor-pointer lg:overflow-hidden aspect-square xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem] xs:h-auto  w-full flex justify-center items-center">
                     {item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in")
                       ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                       : <div className="w-full h-full flex items-center justify-center">
@@ -63,8 +63,8 @@ const Cards = ({ allUsers, filterHandler, resetHandler, allStrings }) => {
                       </div>
                       <div className="">
                         <div className="flex items-center">
-                          <div className="text-[clamp(16px,2vw,22px)] lg:text-[clamp(19px,2vw,22px)] leading-[normal] lg:leading-[30px] font-bold">
-                            <span className="hidden sm:inline capitalize">{item.username}</span><span className="sm:hidden inline capitalize">{item.username.split(' ')[0]}</span>,{(item.age)}
+                          <div className="text-[clamp(16px,2vw,22px)] lg:text-[clamp(19px,2vw,22px)] leading-[normal] lg:leading-[30px] font-bold inline">
+                            <span className="hidden sm:inline break-all capitalize">{item.username}</span><span className="sm:hidden inline break-all capitalize">{item.username.split(' ')[0]}</span>,{(item.age)}
                           </div>
                           {(item.is_subscribe === 1 && item.is_subscription_stop === 0 && item.is_subscription_cancel === 0)
                             ? <Image src={premiumUserIcon} alt="" height={22} width={22} priority className="ms-2 pointer-events-none mb-[5px]" />
