@@ -3,7 +3,7 @@
 const nextConfig = {
   // basePath: process.env.BASE_ROUTE,
   // trailingSlash: true,
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "admin-sugarelite.tec-sense.co.in", port: "", pathname: "/**/**/**/**" }

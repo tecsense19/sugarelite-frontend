@@ -20,7 +20,7 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser,
     const { mySocket } = useSocket()
 
     const resetHandler = () => {
-        setUsers(users);
+        setUsers(remainingList);
         setTimeout(() => {
             handleSetCards()
         }, 500)
@@ -128,7 +128,7 @@ const SwiperComponent = ({ users, toggle, setOffSet, remainingList, currentUser,
                                         </div>
                                         <div className='discover-card-bg h-full w-full absolute flex flex-col text-white p-4 justify-end'>
                                             <div className="flex items-center gap-x-[11px]">
-                                                <div className='text-[clamp(19px,2vw,22px)] leading-[22px] font-bold'>{profile.username},{profile.age}</div>
+                                                <div className='text-[clamp(19px,2vw,22px)] leading-[22px] font-bold line-clamp-1 max-w-[70%]'>{profile.username},{profile.age}</div>
                                                 {(profile.is_subscribe === 1 && profile.is_subscription_stop === 0 && profile.is_subscription_cancel === 0)
                                                     ? <Image src={premiumUserIcon} alt="" height={24} width={24} priority className="pointer-events-none" />
                                                     : <></>
