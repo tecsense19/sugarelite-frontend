@@ -23,7 +23,7 @@ const Verification = ({ user, allStrings }) => {
         <Link href={client_routes.profile} className='absolute left-[15px]'>
           <Image src={arrowLeft} alt="left" width={24} height={24} priority className="cursor-pointer" />
         </Link>
-        <p className="text-[24px] font-semibold select-none">{allStrings["string_identity_verification"]}</p>
+        <p className="font-semibold select-none text-[20px] xs:text-[24px]">{allStrings["string_identity_verification"]}</p>
         <div className='flex gap-x-4 items-center absolute right-[15px]'>
           <div className='relative'>
             <Image src={NotificationIcon} alt="bell icon" width={20} height={20} priority className="cursor-pointer" onClick={() => dispatch({ type: "Open_Notification", payload: true })} />

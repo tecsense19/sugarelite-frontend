@@ -111,7 +111,7 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
             const randomId = generateRandomId()
             await sendPendingMessage(randomId, message, "regular")
             setSendingImages([])
-            let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "regular" })
+            let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message === undefined ? "" : message, type: "regular" })
             const res = await send_message_action(obj)
             // addMessage(res.message)
             if (res.success) {
@@ -122,7 +122,7 @@ const ChatInput = ({ toUser, user, editingMsg, setEditingMsg, sendingImages, set
             console.log("first")
             setSendingImages([])
             reset({ message: '' })
-            let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message, type: "edited", id: editingMsg.id })
+            let obj = getFormData({ sender_id: user.id, receiver_id: toUser.id, message: message === undefined ? "" : message, type: "edited", id: editingMsg.id })
             const res = await send_message_action(obj)
             if (res.success) {
                 setEditingMsg(null)

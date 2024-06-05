@@ -83,7 +83,7 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, allStrings
 			stack.on('throwout', (event) => {
 				const id = event.target.id
 				const profile = myRecievedRequests.find(i => i.id === parseInt(id))
-				console.log(`You ${(event.throwDirection == Direction.LEFT ? 'removed' : 'liked')} ${profile.username} profile`)
+				console.log(`You ${(event.throwDirection == Direction.LEFT ? 'removed' : 'liked')} ${profile?.username} profile`)
 				if (event.throwDirection == Direction.RIGHT) {
 					acceptReq(profile.id)
 				} else {
@@ -114,12 +114,12 @@ const RequestsComponent = ({ toggle, myRecievedRequests, currentUser, allStrings
 			setShowLike({ id: parseInt(id), d: "right" })
 			card.style.transition = "transform 1s ease-out";
 			card.style.transform = "translateX(1000px) translateY(100px) rotate(70deg)";
-			console.log(`You liked ${profile.username} profile`)
+			console.log(`You liked ${profile?.username} profile`)
 		} else {
 			setShowLike({ id: parseInt(id), d: "left" })
 			card.style.transition = "transform 1s ease-out";
 			card.style.transform = "translateX(-1000px) translateY(100px) rotate(-70deg)";
-			console.log(`You removed ${profile.username} profile`)
+			console.log(`You removed ${profile?.username} profile`)
 		}
 		setTimeout(() => {
 			setUsers(prev => prev.filter(i => i.id !== parseInt(id)))
