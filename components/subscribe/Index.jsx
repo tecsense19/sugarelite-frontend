@@ -114,9 +114,9 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData, allStrings }) => {
       {contextHolder}
       <div className='md:mt-10 flex flex-col w-full items-center relative'>
         <Link href={client_routes.profile} prefetch={true} className='absolute left-0 top-1 flex md:hidden'>
-          <Image src={arrow_left} alt='' height={30} width={30} className='pointer-events-none' />
+          <Image src={arrow_left} alt='' height={30} width={30} className='pointer-events-none h-[24px] w-[24px] md:h-[30px] md:w-[30px]' />
         </Link>
-        <div className='xl:text-[30px] lg:text-[25px] text-[20px] font-bold leading-[40px] text-center px-6 sm:px-0'>
+        <div className='xl:text-[30px] lg:text-[25px] text-[20px] font-bold leading-[32px] xl:leading-[40px] text-center px-6 sm:px-0'>
           {isPremium
             ? allStrings["string_your_subscription"]
             : <span className='inline'>{allStrings["string_upgrade_your_dating_journey"]} <span className='hidden sm:inline'>{allStrings["string_get_premium_access_now."]}</span></span>
@@ -143,7 +143,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData, allStrings }) => {
                 </div>
               </div>
               <div className='text-[30px] sm:text-[40px] font-semibold leading-[normal]'>
-                ${user?.user_subscriptions?.subscription_amount}
+                {allStrings["string_dkk"]} {user?.user_subscriptions?.subscription_amount}
               </div>
             </div>
             <div className="bg-primary-dark-6 p-6 sm:p-10">
@@ -209,7 +209,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData, allStrings }) => {
                 <div className={`mt-10 bg-[url('/assets/subscription_details_bg.png')] bg-cover bg-right-top text-[28px] sm:text-[32px] font-bold leading-[56px] h-[79px] w-[260px] sm:w-[275px] ps-[45px] sm:ps-[56px] flex items-center`}>
                   {item.name}
                 </div>
-                <div className='mt-[35px] flex justify-center items-center text-[50px] sm:text-[60px] font-bold leading-[70px] sm:leading-[80px]'> ${item.amount}</div>
+                <div className='mt-[35px] flex justify-center items-center text-[50px] sm:text-[60px] font-bold leading-[70px] sm:leading-[80px]'> {allStrings["string_dkk"]} {item.amount}</div>
                 <div className='mt-[30px] flex flex-col gap-y-7 items-center'>
                   {details.map((item, idx) => (
                     <div key={idx} className='flex gap-x-[7px] sm:gap-x-[10px] items-start justify-start px-3 w-full sm:px-5 md:px-8 xl:px-5 2xl:px-8'>
