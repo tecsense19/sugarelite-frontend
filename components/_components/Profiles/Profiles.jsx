@@ -42,11 +42,13 @@ const Profiles = ({ messages, user, allUsers, setShowMobileChatContent, supportC
                 <AdminProfie message={supportChat[supportChat.length - 1]} setShowMobileChatContent={setShowMobileChatContent} allStrings={allStrings} />
                 {/* {console.log(sortUsersByLatestMessage(messages, user))} */}
                 {
-                    sortUsersByLatestMessage(messages, user).length ? sortUsersByLatestMessage(messages, user).filter(i => i.username.toLowerCase().includes(searchVal.toLowerCase())).map((latestMessage, index) => {
-                        const otherUserId = latestMessage.sender_id === user.id ? latestMessage.receiver_id : latestMessage.sender_id;
-                        const foundUser = allUsers.find(user => user.id === otherUserId);
-                        return <UserComponent key={index} latestMessage={latestMessage} foundUser={foundUser} setShowMobileChatContent={setShowMobileChatContent} user={user} allStrings={allStrings} />
-                    }) : ""
+                    sortUsersByLatestMessage(messages, user).length
+                        ? sortUsersByLatestMessage(messages, user).filter(i => i.username.toLowerCase().includes(searchVal.toLowerCase())).map((latestMessage, index) => {
+                            const otherUserId = latestMessage.sender_id === user.id ? latestMessage.receiver_id : latestMessage.sender_id;
+                            const foundUser = allUsers.find(user => user.id === otherUserId);
+                            return <UserComponent key={index} latestMessage={latestMessage} foundUser={foundUser} setShowMobileChatContent={setShowMobileChatContent} user={user} allStrings={allStrings} />
+                        })
+                        : ""
                 }
             </div>
         </>

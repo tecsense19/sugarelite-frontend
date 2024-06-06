@@ -36,7 +36,7 @@ const ChatHeader = ({ setShowMobileChatContent, setShowMobileProfile, toUser, cu
     const blockHandler = async () => {
         setShowBlockLoader(true)
         const res = await block_user_action({ sender_id: currentUser?.id, receiver_id: toUser.id, is_blocked: 1 })
-        if (res.success) {
+        if (res?.success) {
             client_notification(api, 'topRight', "success", res.message, 4)
             mySocket.emit("user-blocked", res.data)
         }

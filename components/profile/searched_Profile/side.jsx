@@ -47,7 +47,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                         <div className={`flex items-center justify-start gap-2 lg:w-full`}>
                             <div className="text-[24px] leading-[30px] md:text-[30px] font-bold relative capitalize">{user?.username},{user?.age}
                                 {
-                                    user?.online === 1 &&
+                                    (onlineUsers.some(i => i === user.id)) &&
                                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-success absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
                                 }
                             </div>

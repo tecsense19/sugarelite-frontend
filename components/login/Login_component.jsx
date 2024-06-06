@@ -19,6 +19,7 @@ import CryptoJS from "crypto-js"
 import { setCookie } from "nookies"
 import { useRouter } from "next/navigation"
 import { useStore } from "@/store/store"
+import AuthLoader from "../common/AuthLoader"
 // import { connectSocket } from "@/app/lib/socket"
 
 // let socket;
@@ -29,6 +30,7 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
     const { register, setValue, handleSubmit, control, watch, formState: { isValid } } = useForm()
     const [showPass, setShowPass] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [showLoader, setSetLoader] = useState(false)
 
     const navigate = useRouter()
 
@@ -79,6 +81,7 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
         setIsLoading(false)
         // connectSocket(res.data.id)
         client_notification(api, "topRight", "success", res.message, 2)
+        setSetLoader(true);
         navigate.push(client_routes.search)
     }
 
@@ -90,6 +93,7 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
 
     return (
         <main className="flex h-dvh">
+            {showLoader && <AuthLoader />}
             {contextHolder}
             <div className="h-full w-full relative bg-tinder sm:bg-none">
                 <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[150px] sm:pb-[50px] justify-center overflow-y-auto">

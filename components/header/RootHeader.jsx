@@ -23,10 +23,11 @@ const socket = io("https://socket.website4you.co.in");
 // const socket = io("http://103.211.218.172:3001");
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat, allStrings }) => {
+    // const socket = io("http://103.211.218.172:3001");
 
     const { setSocket } = useSocket();
     const { addAllMessages, addMessage, addTypingUser, removerTypingUser, editMessage, addUnReadCount, updateUnReadCount, state: { unReadCount, messages } } = useChat()
-    const { state: { notificationOpenState, notifyBadgeState, chatProfileState, toMessageState }, dispatch } = useStore();
+    const { state: { notificationOpenState, notifyBadgeState, chatProfileState, toMessageState, onlineUsers }, dispatch } = useStore();
 
     const [unReadMsg, setUnReadMsgs] = useState(0)
 
@@ -72,9 +73,10 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
             // }
 
             const onlineUserHandler = (arr) => {
-                console.log(arr)
-                const filtered = arr.filter(i => i !== user.id)
-                dispatch({ type: "Update_Online_Users", payload: filtered })
+                console.log(arr);
+                // const filtered = arr.filter(i => i !== user.id)
+                // dispatch({ type: "Update_Online_Users", payload: filtered })
+                dispatch({ type: "Update_Online_Users", payload: arr })
             }
 
             const myChattingPartner = (obj) => {
@@ -115,6 +117,8 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
         }
 
         return () => {
+            const filtered = onlineUsers.filter(i => i !== user.id);
+            dispatch({ type: "Update_Online_Users", payload: filtered });
             socket.close()
             socket.off("onlineUsers")
         }
@@ -370,10 +374,17 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
     }, [])
 
     useEffect(() => {
-        const unRead = messages.filter(i => (i.receiver_id === user.id && i.status !== "read"))
-        const senderId = Array.from(new Set(unRead.map(i => i.sender_id)))
-        setUnReadMsgs(senderId.length)
-    }, [messages])
+        // const unRead = messages.filter(i => (i.receiver_id === user.id && i.status !== "read"))
+        if (unReadCount.length) {
+            const unReadMsgIds = unReadCount.map(obj => obj.id);
+            const unRead = messages.filter(i => (i.receiver_id === user.id && i.status !== "read" && unReadMsgIds.includes(i.sender_id)))
+            // console.log("unReadCount ::", unReadCount)
+            const senderId = Array.from(new Set(unRead.map(i => i.sender_id)))
+            setUnReadMsgs(senderId.length)
+        } else {
+            setUnReadMsgs(0)
+        }
+    }, [messages, unReadCount])
 
     useEffect(() => {
         if (chatList.length) {

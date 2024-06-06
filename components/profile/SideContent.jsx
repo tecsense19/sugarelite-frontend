@@ -20,7 +20,7 @@ import NotificationIcon from "/public/assets/bell_icon.svg"
 
 const SideContent = ({ control, user, setAvatar, register, setProfileToggle, allStrings }) => {
 
-    const { state: { notifyBadgeState }, dispatch } = useStore()
+    const { state: { notifyBadgeState, onlineUsers }, dispatch } = useStore()
 
     const path = usePathname()
     const [profilPic, setProfilePic] = useState("")
@@ -97,7 +97,7 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle, all
                         </>
                     }
                     {
-
+                        onlineUsers.some(i => i === user.id) &&
                         <div className='h-3 w-3 hidden lg:block lg:h-[14px] lg:w-[14px] bg-success absolute lg:right-[10px] lg:top-[10px] border border-white rounded-full'></div>
                     }
 
@@ -128,7 +128,9 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle, all
                         <div className='flex items-center lg:justify-between lg:w-full'>
                             <div className="text-[30px] font-bold leading-[30px] relative capitalize min-w-max">
                                 {user && user.username.charAt(0).toUpperCase() + user.username.slice(1) + ", " + user.age}
-                                <div className='h-3 w-3 lg:hidden bg-success absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
+                                {onlineUsers.some(i => i === user.id) &&
+                                    <div className='h-3 w-3 lg:hidden bg-success absolute -top-[2px] -right-[15px] lg:right-[10px] border border-white rounded-full'></div>
+                                }
                             </div>
                             <div className='flex items-center justify-between ms-4' style={{ width: "-webkit-fill-available" }}>
                                 {user.is_identityverification === "approved"
