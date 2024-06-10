@@ -6,7 +6,8 @@ export default async function RootLayout({ children }) {
 
     if (allStrings?.success) {
         return <>
-            <div className="relative bg-[url('/assets/large_image.png')] bg-no-repeat bg-cover">
+            {/* <div className="relative bg-[url('/assets/large_image.png')] bg-no-repeat bg-cover"> */}
+            <div className="relative ">
                 <Header allStrings={allStrings.data} />
                 {children}
             </div>

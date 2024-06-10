@@ -12,13 +12,16 @@ const REMOVE_TYPING_USER = "REMOVE_TYPING_USER"
 const ADD_COUNT = "ADD_COUNT"
 const UPDATE_COUNT = "UPDATE_COUNT"
 const REMOVE_COUNT = 'REMOVE_COUNT'
+const ADD_TAB_OPEN = 'ADD_TAB_OPEN'
+const REMOVE_TAB_OPEN = 'REMOVE_TAB_OPEN'
 
 // Define the initial state
 const initialState = {
     messages: [],
     onlineUsers: [],
     typingUsers: [],
-    unReadCount: []
+    unReadCount: [],
+    tabOpenedUsers: []
 };
 
 // Define the reducer function
@@ -112,6 +115,16 @@ const chatReducer = (state, action) => {
                 ...state,
                 unReadCount: filteredCount
             };
+        case ADD_TAB_OPEN:
+            return {
+                ...state,
+                tabOpenedUsers: [...state.tabOpenedUsers, action.payload]
+            }
+        case REMOVE_TAB_OPEN:
+            return {
+                ...state,
+                tabOpenedUsers: state.tabOpenedUsers.filter(i => i !== action.payload)
+            }
         default:
             return state;
     }
@@ -172,8 +185,16 @@ export const ChatProvider = ({ children }) => {
         dispatch({ type: REMOVE_COUNT, payload: id })
     }
 
+    const addTabOpenUser = (id) => {
+        dispatch({ type: ADD_TAB_OPEN, payload: id })
+    }
+
+    const removeTabClosedUser = (id) => {
+        dispatch({ type: REMOVE_TAB_OPEN, payload: id })
+    }
+
     return (
-        <ChatContext.Provider value={{ state, addAllMessages, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser, addTypingUser, addUnReadCount, updateUnReadCount, removeUnReadCount }}>
+        <ChatContext.Provider value={{ state, addAllMessages, addMessage, deleteMessage, editMessage, updateOnlineUsers, addTypingUser, removerTypingUser, addTypingUser, addUnReadCount, updateUnReadCount, removeUnReadCount, addTabOpenUser, removeTabClosedUser }}>
             {children}
         </ChatContext.Provider>
     );

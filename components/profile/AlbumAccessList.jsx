@@ -123,17 +123,17 @@ const AlbumAccessList = ({ setProfileToggle, user, type, albumAccessList, allUse
                           <div className='sm:flex hidden ms-10 items-center'>
                             {item.avatar_url
                               ? <Image src={item.avatar_url} alt='' height={50} width={50} className='rounded-full object-cover pointer-events-none h-[50px] w-[50px]' />
-                              : <div className='h-[50px] w-[50px] text-[25px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
+                              : <div className='h-[50px] min-w-[50px] text-[24px] pt-1 bg-secondary text-white flex justify-center items-center rounded-full uppercase'>{item.username.charAt(0)}</div>
                             }
                             <div className='ms-[14px] text-[20px] font-normal leading-[20px] flex items-center'>{item.username}</div>
                           </div>
                           <div className='sm:hidden flex ms-4 items-center'>
                             {item.avatar_url
                               ? <Image src={item.avatar_url} alt='' height={50} width={50} className='rounded-full object-cover pointer-events-none h-[40px] w-[40px]' />
-                              : <div className='h-[40px] w-[40px] text-[25px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
+                              : <div className='h-[40px] min-w-[40px] text-[24px] pt-1 bg-secondary text-white flex justify-center items-center rounded-full uppercase'>{item.username.charAt(0)}</div>
                             }
                             <div className='ms-[10px] flex flex-col items-start gap-y-1'>
-                              <div className='text-[17px] font-semibold leading-[20px]'>{item.username}</div>
+                              <div className='text-[17px] font-semibold leading-[20px] capitalize'>{item.username}</div>
                               <div className='text-start text-[11px] font-normal leading-[normal]'>
                                 {type === "photo"
                                   ? `${item.username} ${allStrings["string_can_access_your_private_photos."]}`

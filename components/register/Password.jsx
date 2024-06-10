@@ -21,9 +21,9 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue,
     const [isValidPass, setIsValidPass] = useState({
         sixChar: false,
         mixChar: false,
-        numChar: false,
+        // numChar: false,
         spclChar: false,
-        sqncChar: false
+        // sqncChar: false
     })
 
     const isValid = {
@@ -53,16 +53,16 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue,
                 sixChar: /.{6,}/,
                 mixChar: /^(?=.*[a-z])(?=.*[A-Z])/,
                 spclChar: /[!@#$%^&*]/,
-                numChar: /\d/,
-                sqncChar: /^(?!.*(.)\1{2})/
+                // numChar: /\d/,
+                // sqncChar: /^(?!.*(.)\1{2})/
             };
 
             setIsValidPass({
                 sixChar: regex.sixChar.test(password),
                 mixChar: regex.mixChar.test(password),
                 spclChar: regex.spclChar.test(password),
-                numChar: regex.numChar.test(password),
-                sqncChar: regex.sqncChar.test(password)
+                // numChar: regex.numChar.test(password),
+                // sqncChar: regex.sqncChar.test(password)
             });
         };
 
@@ -82,18 +82,18 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue,
                     <Image src={isValidPass.mixChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
                     <p className={isValidPass.mixChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_include_a_mix_of_uppercase_and_lowercase_letters"]}</p>
                 </div>
-                <div className='flex gap-x-2'>
+                {/* <div className='flex gap-x-2'>
                     <Image src={isValidPass.numChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
                     <p className={isValidPass.numChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_include_at_least_one_number_(0-9)"]}</p>
-                </div>
+                </div> */}
                 <div className='flex gap-x-2'>
                     <Image src={isValidPass.spclChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
                     <p className={isValidPass.spclChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings["string_at_least_one_special_character_(!@#$%^&*)"]}</p>
                 </div>
-                <div className='flex gap-x-2'>
+                {/* <div className='flex gap-x-2'>
                     <Image src={isValidPass.sqncChar ? valid_pass : in_valid_pass} alt="pad_lock" width={14} height={14} className="pointer-events-none select-none" />
                     <p className={isValidPass.sqncChar ? 'leading-[19px] text-green-600' : 'leading-[19px]'}>{allStrings['string_avoid_repeating_characters_(e.g.,_\"aaa\")']}</p>
-                </div>
+                </div> */}
             </div>
         </div>
     );
@@ -142,7 +142,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue,
                     <Image src={eye_open} width={20} height={20} alt='password' className={`me-[14px] w-[20px] h-[20px] cursor-pointer ${showCPass ? "hidden" : "block"}`} onClick={() => showPasswordHandler("open", "cpass")} />
                 </div>
             </div>
-            <div className='mt-14 w-full sm:grid grid-cols-2 gap-x-[37px]'>
+            <div className='mt-14 w-full flex flex-col-reverse gap-y-3 sm:grid grid-cols-2 gap-x-[37px]'>
                 <button className="bg-stone-600 w-full h-[42px] mb-3 rounded-[5px] text-white transition-all duration-150 hover:scale-[1.02]" onClick={prevStepHandler} type="button">
                     <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
                         <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden " />
@@ -152,7 +152,7 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue,
                 <button
                     className={`bg-white w-full h-[42px] rounded-[5px] relative text-[#263238] ${((isValid.passowrd !== isValid.cpassowrd) || !isValid.passowrd || isValid.passowrd.length < 6) ? "" : "transition-all duration-150 hover:scale-[1.02]"}`}
                     onClick={nextStepHandler} type="button"
-                    disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValidPass.mixChar || !isValidPass.numChar || !isValidPass.sixChar || !isValidPass.spclChar || !isValidPass.sqncChar}>
+                    disabled={(isValid.passowrd !== isValid.cpassowrd) || !isValidPass.mixChar || !isValidPass.sixChar || !isValidPass.spclChar}>
                     <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal] sm:ms-4 ">
                         {allStrings["string_next"]}
                         <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

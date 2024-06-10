@@ -194,7 +194,8 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                 }
                 setValue("otp", tempOtp);
             } else {
-                client_notification(api, "topRight", "error", res.error, 3);
+                console.log(res)
+                client_notification(api, "topRight", "error", res.message, 3);
                 setOtpArr(["", "", "", "", "", ""])
             }
             // }
@@ -261,7 +262,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                     <p className={`text-2xl sm:text-[20px] text-white font-medium max-w-[15rem] mb-8 sm:max-w-full border-b-[2px] leading-[normal] cursor-pointer ${isLoading ? "pointer-events-none" : ""}`} onClick={handleResetOTP}>
                         {allStrings["string_resend_otp"]}
                     </p>
-                    <div className={`mt-[30px] w-full sm:grid grid-cols-2 gap-x-[37px]`}>
+                    <div className={`mt-[30px] w-full flex flex-col-reverse gap-y-3 sm:grid grid-cols-2 gap-x-[37px]`}>
                         <button className={`sm:border-none bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02] ${isLoading ? "pointer-events-none" : ""}`} type="button" onClick={() => setShowOTP(false)}>
                             <div className="flex justify-center gap-[5px] font-medium text-[16px] leading-[normal]">
                                 <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />
@@ -341,7 +342,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                             : <></>
                         }
                     </div>
-                    <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} w-full sm:grid grid-cols-2 gap-x-[37px] `}>
+                    <div className={`${showUserAlreadyExistAlert ? "mt-[18px]" : "mt-14"} flex flex-col-reverse gap-y-3 w-full sm:grid grid-cols-2 gap-x-[37px] `}>
                         <button className="sm:border-none bg-stone-600 w-full h-[42px] mb-3 rounded text-white transition-all duration-150 hover:scale-[1.02]" onClick={() => { prevStepHandler() }} type="button" disabled={isLoading ? isLoading : false}>
                             <div className="flex justify-center gap-[5px] font-bold text-[16px] leading-[normal]">
                                 <Image src={chevron_right_white} width={20} height={20} alt="next_btn" priority className="sm:block rotate-180 w-auto h-auto hidden" />

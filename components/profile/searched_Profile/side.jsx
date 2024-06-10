@@ -51,7 +51,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
                                     <div className='h-3 w-3 lg:h-[14px] lg:w-[14px] block lg:hidden bg-success absolute top-[0px] -right-[15px] border border-white rounded-full'></div>
                                 }
                             </div>
-                            <div className='flex items-center justify-between ms-2' style={{ width: "-webkit-fill-available" }}>
+                            <div className='flex items-center justify-between ms-2' >
                                 {user.is_identityverification === "approved"
                                     ? <Image src={premium} alt='edit' width={30} height={30} priority />
                                     : <></>

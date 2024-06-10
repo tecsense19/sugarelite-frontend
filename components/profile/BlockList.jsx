@@ -104,7 +104,7 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user, allStrings 
 													<div className='sm:hidden flex ms-4 items-center'>
 														{item.avatar_url
 															? <Image src={item.avatar_url} alt='' height={50} width={50} className='rounded-full object-cover pointer-events-none h-[40px] w-[40px]' />
-															: <div className='h-[40px] w-[40px] text-[25px] bg-secondary text-white flex justify-center items-center rounded-full'>{item.username.charAt(0)}</div>
+															: <div className='h-[40px] min-w-[40px] text-[24px] pt-1 bg-secondary text-white flex justify-center items-center rounded-full uppercase'>{item.username.charAt(0)}</div>
 														}
 														<div className='ms-[10px] flex flex-col items-start gap-y-1'>
 															<div className='text-[17px] font-semibold leading-[20px]'>{item.username}</div>
@@ -132,7 +132,7 @@ const BlockList = ({ setProfileToggle, type, allUsers, socket, user, allStrings 
 												<td className='text-end pe-4 ps-2 sm:text-center sm:px-2 h-full table-cell sm:hidden'>
 													<div className='flex flex-col items-end gap-y-3'>
 														<div className='text-[11px] font-normal leading-[normal]'>{getDateOfAccess(item.id)}</div>
-														<button className={`bg-danger px-3 py-[3px] text-[11px] sm:text-[16px] font-medium rounded-[5px] leading-[20px] ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[67.26px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
+														<button className={`bg-danger w-[95px] py-[3px] text-[11px] sm:text-[16px] font-medium rounded-[5px] leading-[20px] ${(isLoading.some(ele => ele === item.id)) && "pointer-events-none w-[67.26px]"}`} onClick={() => { handleSubmit(item.id); setIsLoading((prev) => [...prev, item.id]) }}>
 															{(isLoading.some(ele => ele === item.id)) ? <span className='loader after:border-[9px] '></span> : allStrings["string_unblock"]}
 														</button>
 													</div>
