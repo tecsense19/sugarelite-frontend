@@ -4,7 +4,8 @@ import Img2 from "../../public/assets/online-dating.svg"
 import Img3 from "../../public/assets/champagne.svg"
 import Img4 from "../../public/assets/date.svg"
 import Img5 from "../../public/assets/search (1).svg"
-import Img6 from "../../public/assets/profile.svg"
+import Img6 from "../../public/assets/green_check_mark.svg"
+// import Img6 from "../../public/assets/profile.svg"
 
 const Services = ({ allStrings }) => {
   const servicesArr = [
