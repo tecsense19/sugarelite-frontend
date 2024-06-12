@@ -47,8 +47,8 @@ const Home = ({ user, allStrings }) => {
         <Banner allStrings={allStrings} user={user} />
         <Services allStrings={allStrings} />
         <UserFriendly allStrings={allStrings} />
-        {/* <EasySearch allStrings={allStrings} />
-        <UniqueProfile allStrings={allStrings} /> */}
+        <EasySearch allStrings={allStrings} />
+        {/* <UniqueProfile allStrings={allStrings} /> */}
         <HomeCounter allStrings={allStrings} />
         <Working allStrings={allStrings} />
         <Footer allStrings={allStrings} />

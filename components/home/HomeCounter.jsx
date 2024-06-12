@@ -8,11 +8,36 @@ const HomeCounter = ({ allStrings }) => {
   const countRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  const convertStringToNumber = (str) => {
+    let obj = {
+      number: 0,
+      string: ""
+    }
+    if (typeof str === "string") {
+      try {
+        let number = parseInt(str);
+        if (number >= 1000) {
+          obj.number = Math.floor(number / 1000);
+          obj.string = "k";
+          return obj;
+        }
+        obj.number = number;
+        return obj;
+      } catch (err) {
+        obj.number = 1;
+        return obj;
+      }
+    } else {
+      obj.number = 1;
+      return obj;
+    }
+  }
+
   const counters = [
-    { id: 1, name: allStrings["string_happy_members"], value: 150 },
-    { id: 2, name: allStrings["string_elite_male"], value: 80 },
-    { id: 3, name: allStrings["string_elite_female"], value: 70 },
-    { id: 4, name: allStrings["string_happy_match"], value: 60 }
+    { id: 1, name: allStrings["string_happy_members"], value: convertStringToNumber(allStrings["string_happy_members_count"]) },
+    { id: 2, name: allStrings["string_elite_male"], value: convertStringToNumber(allStrings["string_elite_male_count"]) },
+    { id: 3, name: allStrings["string_elite_female"], value: convertStringToNumber(allStrings["string_elite_female_count"]) },
+    { id: 4, name: allStrings["string_happy_match"], value: convertStringToNumber(allStrings["string_happy_match_count"]) }
   ]
 
   useEffect(() => {
@@ -52,9 +77,9 @@ const HomeCounter = ({ allStrings }) => {
             return (
               <div key={idx} className="flex flex-col justify-center items-center">
                 <div className="text-[26px] font-extrabold lg:text-[clamp(36px,3vw,40px)] leading-[normal] lg:font-bold text-center">
-                  {item.value > 0
+                  {item.value?.number > 0
                     ? <>
-                      {isVisible && <CountUp start={0} end={item.value} duration={2} />}k+
+                      {isVisible && <CountUp start={0} end={item.value.number} duration={2} />}{item.value.string ? item.value.string : ""}+
                     </>
                     : 0
                   }

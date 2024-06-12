@@ -83,6 +83,7 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
         client_notification(api, "topRight", "success", res.message, 2)
         setSetLoader(true);
         navigate.push(client_routes.search)
+        window.location.reload();
     }
 
     // const loadingHandler = () => {
