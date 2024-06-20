@@ -444,6 +444,7 @@ button:disabled {
     conic-gradient(#0000 30%, #F16667);
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: l13 1s infinite linear;
+  mask: inherit;
 }
 
 @keyframes l13 {
@@ -519,3 +520,16 @@ button:disabled {
 .bg-gradient-home {
   background: radial-gradient(50% 50% at 50% 50%, #FEF8F0 0%, #F3DAC5 89.5%);
 }
+
+.custom-shadow-home {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.10);
+}
+
+.text-gradient {
+  background: var(--Tinder-Color, linear-gradient(270deg, #FF695B 0%, #FE426F 100%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* new changes */
