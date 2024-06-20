@@ -16,12 +16,12 @@ const NewBanner = ({ user, allStrings }) => {
                     <Link className='bg-tinder px-4 md:pl-[29px] md:pr-[34px] h-[32px] md:h-[45px] text-center text-white rounded-[5px] text-[12px] md:text-[18px] font-semibold tracking-[-0.18px] leading-[normal] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase pt-[2px]' href={client_routes.register}>
                         {allStrings.string_register_now}
                     </Link>
-                    <Link className='bg-black px-3 md:px-[28px] h-[32px] md:h-[45px] text-center text-white rounded-[5px] text-[12px] md:text-[18px] font-semibold tracking-[-0.18px] leading-[normal] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase pt-[2px]' href={client_routes.register}>
+                    <Link className='bg-black px-3 md:px-[28px] h-[32px] md:h-[45px] text-center text-white rounded-[5px] text-[12px] md:text-[18px] font-semibold tracking-[-0.18px] leading-[normal] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase pt-[2px]' href={client_routes.login}>
                         {allStrings.string_login}
                     </Link>
                 </div>
             </header>
-            <div className='h-[calc(100%-65px)] lg:h-[calc(100%-85px)] w-11/12 xl:w-9/12 mx-4 flex flex-col items-center justify-center lg:flex-row-reverse'>
+            <div className='h-[calc(100%-65px)] lg:h-[calc(100%-85px)] w-11/12 md:w-9/12 xl:w-9/12 mx-4 flex flex-col items-center justify-center lg:flex-row-reverse'>
                 <div className='h-[260px] sm:h-[295px] w-[260px] sm:w-[295px] lg:basis-1/2  lg:h-full lg:flex'>
                     <Image src={BANNER_IMG} alt="BANNER_IMG" width={1000} height={1000} priority className="pointer-events-none h-full lg:h-[68%] lg:m-auto w-full mix-blend-multiply" />
                 </div>
@@ -42,10 +42,10 @@ const NewBanner = ({ user, allStrings }) => {
                         </Link>
                         {
                             user
-                                ? <Link href={client_routes.register} className='h-[42px] lg:h-[50px] bg-black basis-1/2 lg:max-w-[220px] rounded-[5px] font-medium lg:font-semibold text-white text-[clamp(16px,4vw,18px)] flex uppercase pt-[2px]'>
+                                ? <div className='h-[42px] lg:h-[50px] bg-black basis-1/2 lg:max-w-[220px] rounded-[5px] font-medium lg:font-semibold text-white text-[clamp(16px,4vw,18px)] flex uppercase pt-[2px]'>
                                     <span className='m-auto'>  {allStrings["string_read_more"]}</span>
-                                </Link>
-                                : <Link href={client_routes.register} className='h-[42px] lg:h-[50px] bg-black basis-1/2 lg:max-w-[220px] rounded-[5px] font-medium lg:font-semibold text-white text-[clamp(16px,4vw,18px)] flex uppercase pt-[2px]'>
+                                </div>
+                                : <Link href={client_routes.login} className='h-[42px] lg:h-[50px] bg-black basis-1/2 lg:max-w-[220px] rounded-[5px] font-medium lg:font-semibold text-white text-[clamp(16px,4vw,18px)] flex uppercase pt-[2px]'>
                                     <span className='m-auto'>{allStrings["string_login"]}</span>
                                 </Link>
                         }
