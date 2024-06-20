@@ -66,9 +66,9 @@ const Region = ({ nextStepHandler, prevStepHandler, control, watch, setValue, al
         <>
             <div className="text-center flex flex-col items-center">
                 <div className="flex justify-center items-center rounded-full">
-                    <Image src={sugar_region} alt="pad_lock" width={137} height={126} className="pointer-events-none select-none" />
+                    <Image src={sugar_region} alt="pad_lock" width={137} height={126} className="w-[120px] sm:w-[165px] pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">{allStrings["string_where_are_you_from?_which_region?"]}</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px] leading-[28px]">{allStrings["string_where_are_you_from?_which_region?"]}</p>
                 <p className='text-white sm:hidden mt-3 text-[16px] max-w-[20rem]'>{allStrings["string_country_region_description"]}</p>
             </div>
             <div className='mt-14 w-full relative region_dropdown sm:mt-[25px]'>

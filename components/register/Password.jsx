@@ -102,9 +102,9 @@ const Password = ({ nextStepHandler, prevStepHandler, register, watch, setValue,
         <>
             <div className="text-center flex flex-col items-center">
                 <div className="flex justify-center items-center rounded-full">
-                    <Image src={sugar_password} alt="pad_lock" width={120} height={126} className="pointer-events-none select-none" />
+                    <Image src={sugar_password} alt="pad_lock" width={120} height={126} className=" pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">{allStrings["string_what_should_your_password_be?"]}</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px] leading-[28px]">{allStrings["string_what_should_your_password_be?"]}</p>
                 <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>{allStrings["string_password_description"]}</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>

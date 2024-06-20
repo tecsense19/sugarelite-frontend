@@ -25,9 +25,9 @@ const DOB = ({ nextStepHandler, isLoading, prevStepHandler, watch, control, setV
         <>
             <div className="text-center flex flex-col items-center">
                 <div className="flex justify-center items-center rounded-full">
-                    <Image src={sugar_DOB} alt="calender" width={151} height={126} className="pointer-events-none select-none" />
+                    <Image src={sugar_DOB} alt="calender" width={151} height={126} className="w-[120px] sm:w-[165px] pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">{allStrings["string_enter_date_of_birth?"]}</p>
+                <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px] leading-[28px]">{allStrings["string_enter_date_of_birth?"]}</p>
                 <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:hidden'>{allStrings["string_date_of_birth_description"]}</p>
             </div>
             <div className='mt-14 w-full sm:mt-[25px]'>
