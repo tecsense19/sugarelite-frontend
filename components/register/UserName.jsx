@@ -234,21 +234,21 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
     return (
         <>
             {contextHolder}
-            <div className="text-center flex flex-col items-center ">
+            <div className="text-center flex flex-col items-center mt-3">
                 <div className="flex justify-center items-center rounded-full">
-                    <Image src={sugar_email} alt="Card_email" width={135.67} height={126} className="pointer-events-none select-none" />
+                    <Image src={sugar_email} alt="Card_email" width={135.67} height={126} className="w-[120px] sm:w-[165px] pointer-events-none select-none" />
                 </div>
                 {showOTP
                     ? <>
-                        <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px] mt-3">
+                        <p className="text-2xl sm:text-[20px] pt-5 leading-[23px] font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px] mt-3">
                             {allStrings["string_enter_your_otp"]}
                         </p>
                     </>
                     : <>
-                        <p className="text-2xl sm:text-[20px] pt-5 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">
+                        <p className="text-2xl sm:text-[20px] leading-[18px] pt-3 font-medium max-w-[15rem] sm:max-w-full sm:pt-[11px]">
                             {allStrings["string_what_is_your_username_&_email?"]}
                         </p>
-                        <p className='text-white mt-3 text-[16px] max-w-[20rem] sm:max-w-full sm:mt-[6px]'>{allStrings["string_username_&_email_description"]}</p>
+                        <p className='text-white mt-3 text-[16px] leading-[23px] max-w-[20rem] sm:max-w-full sm:mt-[6px]'>{allStrings["string_username_&_email_description"]}</p>
                     </>
                 }
             </div>
@@ -282,7 +282,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                     </div>
                 </>
                 : <>
-                    <div className='mt-14 w-full sm:mt-[25px]'>
+                    <div className='mt-10 w-full sm:mt-[25px]'>
                         <div className=' mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
                             <Image src={username} width={20} height={20} alt='username ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                             <input

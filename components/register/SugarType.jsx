@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image"
-import sugarDaddy from '../../public/assets/sugar_dady.svg'
-import sugarBoy from '../../public/assets/sugar_boy.svg'
-import sugarMama from '../../public/assets/sugar_mama.svg'
-import sugarBabe from '../../public/assets/sugar_babe.svg'
+import sugarDaddy from '../../public/new_assets/sugar_daddy.svg'
+import sugarBoy from '../../public/new_assets/sugar_boy.svg'
+import sugarMama from '../../public/new_assets/sugar_mom.svg'
+import sugarBabe from '../../public/new_assets/sugar_babe.svg'
 import boy_2 from '../../public/assets/boy_2.svg'
 import sugar_type from "/public/assets/sugar_type.svg"
 import chevron_right from '../../public/assets/chevron_right.svg'
@@ -37,13 +37,13 @@ const SugarType = ({ register, nextStepHandler, watch, setValue, allStrings }) =
         <>
             <div className="text-center ">
                 <div className="flex justify-center items-center rounded-full">
-                    <Image src={sugar_type} alt="boy" width={165} height={125} className="pointer-events-none select-none" />
+                    <Image src={sugar_type} alt="boy" width={165} height={125} className="w-[120px] sm:w-[165px] pointer-events-none select-none" />
                 </div>
-                <p className="text-2xl sm:text-[20px] pt-5 sm:pt-[13px] font-medium">
+                <p className="text-2xl sm:text-[20px] pt-3 sm:pt-[13px] font-medium">
                     {allStrings["string_i_am_a"]}
                 </p>
             </div>
-            <div className="text-center mt-[50px] sm:mt-[28px] w-[20rem] sm:w-full md:w-[85%]">
+            <div className="text-center mt-10 sm:mt-[28px] w-[20rem] sm:w-full md:w-[85%]">
                 <div className="flex gap-x-6 gap-y-2 sm:gap-3 flex-wrap justify-center sm:flex-nowrap">
                     {
                         typeArray.map((type, inx) => (
@@ -60,7 +60,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue, allStrings }) =
                 </div>
 
             </div>
-            <button className={`bg-white w-full max-w-[26rem] sm:max-w-full text-primary-dark-5 h-[42px] mt-[65px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
+            <button className={`bg-white w-full max-w-[26rem] sm:max-w-full text-primary-dark-5 h-[42px] mt-[60px] sm:mt-[51px] rounded  lg:w-[665px] ${isValid ? "transition-all duration-150 hover:scale-[1.01]" : ""}`} onClick={nextStepHandler} type="button" disabled={!isValid}>
                 <div className="flex justify-center gap-[5px] font-bold text-[#263238]">
                     {allStrings["string_next"]}
                     <Image src={chevron_right} width={20} height={20} alt="next_btn" priority className="sm:block hidden w-auto h-auto text-white" />

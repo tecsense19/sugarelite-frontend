@@ -131,6 +131,9 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
                                 </div>
                             </div>
                             <div className="w-full flex justify-between text-[12px] text-white mt-[10px]">
+                                <span className="underline pb-1 cursor-pointer select-none font-normal transition-all duration-150 hover:text-white/80" onClick={() => setIsForgotOpen(true)}>
+                                    {allStrings["string_forgotten_password"]}
+                                </span>
                                 <div className="flex items-center gap-[5px]">
                                     {/* <Controller name="remember" defaultValue={false} control={control} render={() => (
                                         <ConfigProvider theme={{ token: { colorPrimary: "#F16667", fontSize: 20 } }}>
@@ -139,9 +142,6 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
                                     )} />
                                     <label htmlFor="remember" className="select-none cursor-pointer font-normal">Remember me</label> */}
                                 </div>
-                                <span className="underline pb-1 cursor-pointer select-none font-normal transition-all duration-150 hover:text-white/80" onClick={() => setIsForgotOpen(true)}>
-                                    {allStrings["string_forgotten_password"]}
-                                </span>
                             </div>
                             <button className={`rounded-[5px] bg-white w-full max-w-[30rem] h-[42px] mt-[50px] font-bold uppercase flex justify-center items-center text-[#263238] ${isLoading ? "pointer-events-none" : "transition-all duration-75 hover:scale-[1.01]"}`} type="submit">
                                 {!isLoading ? allStrings["string_login"] :

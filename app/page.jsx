@@ -54,6 +54,7 @@ import NewServices from '@/components/NewHome/NewServices'
 import NewSugarTypes from '@/components/NewHome/NewSugarTypes'
 import NewCounter from '@/components/NewHome/NewCounter'
 import NewWorking from '@/components/NewHome/NewWorking'
+import NewFooter from '@/components/common/NewFooter'
 
 const page = async () => {
 
@@ -71,7 +72,7 @@ const page = async () => {
       <NewSugarTypes allStrings={allStrings.data} />
       <NewCounter allStrings={allStrings.data} />
       <NewWorking allStrings={allStrings.data} />
-      <Footer allStrings={allStrings.data} />
+      <NewFooter allStrings={allStrings.data} />
     </div>
   )
 }
