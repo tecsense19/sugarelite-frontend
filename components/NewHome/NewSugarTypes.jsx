@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useState } from 'react'
-import sugar_mom from "../../public/new_assets/sugar_mom.svg";
-import sugar_babe from "../../public/new_assets/sugar_babe.svg";
-import sugar_daddy from "../../public/new_assets/sugar_daddy.svg";
-import sugar_boy from "../../public/new_assets/sugar_boy.svg";
+import sugar_mom from "../../public/new_assets/sugar_mom.jpg";
+import sugar_babe from "../../public/new_assets/sugar_babe.jpg";
+import sugar_daddy from "../../public/new_assets/sugar_daddy.jpg";
+import sugar_boy from "../../public/new_assets/sugar_boy.jpg";
 import Image from 'next/image';
 
 const NewSugarTypes = ({ allStrings }) => {
@@ -33,7 +33,7 @@ const NewSugarTypes = ({ allStrings }) => {
 				</div>
 			</div>
 			<div className='w-full py-4 sm:py-8 xl:py-9 px-4 sm:px-10 lg:px-8 xl:px-[50px] 2xl:px-[100px] custom-shadow-home rounded-[15px] sm:rounded-[20px] flex flex-col items-center lg:flex-row gap-5 sm:gap-8 xl:gap-[64px] sm:w-10/12 md:w-[65%]'>
-				<Image src={sugarItems[selectedItem - 1].image} alt={sugarItems[selectedItem - 1].title} priority quality={1} height={1000} width={1000} className='w-[180px] sm:w-[250px] lg:w-[220px] xl:w-[310px] aspect-square pointer-events-none' />
+				<Image src={sugarItems[selectedItem - 1].image} alt={sugarItems[selectedItem - 1].title} priority quality={100} height={1000} width={1000} className='w-[180px] sm:w-[250px] lg:w-[220px] xl:w-[310px] aspect-square pointer-events-none object-cover' />
 				<div className='w-full flex flex-col justify-center lg:items-start items-center'>
 					<div className='text-black text-[clamp(26px,5vw,35px)] font-extrabold leading-[normal]'>{sugarItems[selectedItem - 1].title}</div>
 					<div className='mt-3 sm:mt-4 text-[#555] text-center lg:text-left text-[16px] lg:text-[18px] font-normal leading-[normal]'>{sugarItems[selectedItem - 1].desc}</div>

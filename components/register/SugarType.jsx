@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image"
-import sugarDaddy from '../../public/new_assets/sugar_daddy.svg'
-import sugarBoy from '../../public/new_assets/sugar_boy.svg'
-import sugarMama from '../../public/new_assets/sugar_mom.svg'
-import sugarBabe from '../../public/new_assets/sugar_babe.svg'
+import sugarDaddy from '../../public/new_assets/sugar_daddy.jpg'
+import sugarBoy from '../../public/new_assets/sugar_boy.jpg'
+import sugarMama from '../../public/new_assets/sugar_mom.jpg'
+import sugarBabe from '../../public/new_assets/sugar_babe.jpg'
 import boy_2 from '../../public/assets/boy_2.svg'
 import sugar_type from "/public/assets/sugar_type.svg"
 import chevron_right from '../../public/assets/chevron_right.svg'

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import LOGO from '/public/new_assets/new_logo.svg'
-import BANNER_IMG from '/public/new_assets/new_banner_img.svg'
+import BANNER_IMG from '/public/new_assets/new_banner_img.jpg'
 import { client_routes } from '@/app/lib/helpers'
 import upArrowIcon from "../../public/assets/up_arrow.svg";
 
