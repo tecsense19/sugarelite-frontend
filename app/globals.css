@@ -512,3 +512,10 @@ button:disabled {
 .linear-bg {
   background: linear-gradient(to top, rgb(14 14 14 / 72%), rgb(18 27 33 / 0%));
 }
+
+
+/* new changes */
+
+.bg-gradient-home {
+  background: radial-gradient(50% 50% at 50% 50%, #FEF8F0 0%, #F3DAC5 89.5%);
+}

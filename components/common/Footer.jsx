@@ -103,7 +103,7 @@ const Footer = ({ allStrings }) => {
   return (
     <div className="w-full flex justify-center items-center bg-black pb-[30px] home-footer-container text-white" >
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
-        <div className="w-full mt-[50px] 2xl:mt-[150px] grid grid-cols-1 xl:grid-cols-12 gap-x-[55px]">
+        <div className="w-full mt-[50px]  grid grid-cols-1 xl:grid-cols-12 gap-x-[55px]">
           <div className="xl:col-span-4">
             <div>
               <Image src={logo} priority alt="" height={43} width={217} className="select-none pointer-events-none hidden 2xl:block" />
