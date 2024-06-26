@@ -46,14 +46,14 @@ const NewBanner = ({ user, allStrings }) => {
 
 	return (
 		<>
-			<div className={`w-full flex flex-col items-center fixed transition-all ease-linear duration-200 z-[1] ${headerBg ? "bg-white shadow" : "bg-transparent"}`}>
+			<div className={`w-full flex flex-col items-center fixed transition-all ease-linear duration-200 z-[1] ${headerBg ? "bg-white shadow-md" : "bg-transparent"}`}>
 				<header className='h-[65px] md:h-[85px] flex justify-between items-center w-11/12 xl:w-9/12'>
 					<Link href={user ? client_routes.profile : client_routes.home}>
 						<Image src={LOGO} alt="logo" height={1000} width={1000} className="pointer-events-none select-none h-[30px] w-[120px] md:h-[47px] md:w-[237px]" priority />
 					</Link>
 					{user
 						? <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
-							{!user[0]?.avatar_url
+							{user[0]?.avatar_url
 								? <Image height={100} width={100} src={user[0]?.avatar_url} alt="profile_pic" className="w-10 md:w-[50px] cursor-pointer rounded-full aspect-square object-cover" priority quality={1} />
 								: <div className="pt-[2px] w-10 md:w-[50px] aspect-square flex items-center justify-center text-[20px] md:text-[25px] font-bold bg-tinder text-white rounded-full capitalize">{user[0]?.username.charAt(0)}</div>
 							}
@@ -72,7 +72,7 @@ const NewBanner = ({ user, allStrings }) => {
 			<div className='pb-10 lg:pb-0 lg:h-dvh bg-gradient-home w-full flex flex-col items-center pt-[65px] md:pt-[85px]'>
 				<div className='h-[calc(100%-65px)] lg:h-[calc(100%-85px)] w-11/12 md:w-9/12 xl:w-9/12 mx-4 flex flex-col items-center justify-center lg:flex-row-reverse'>
 					<div className='h-[260px] sm:h-[295px] w-[260px] sm:w-[295px] md:w-[350px] md:h-[350px] lg:basis-1/2 lg:h-full lg:flex'>
-						<Image src={BANNER_IMG} alt="BANNER_IMG" width={1000} height={1000} priority className="pointer-events-none h-full lg:h-[68%] lg:m-auto w-full mix-blend-multiply" />
+						<Image src={BANNER_IMG} alt="BANNER_IMG" width={1000} height={1000} priority className="pointer-events-none w-full lg:w-[85%] aspect-square lg:m-auto mix-blend-multiply" />
 					</div>
 					<div className='text-center w-full flex flex-col lg:basis-1/2 lg:text-start'>
 						<div>
