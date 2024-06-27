@@ -13,8 +13,8 @@ const NewSugarTypes = ({ allStrings }) => {
 
 	const sugarItems = [
 		{ id: 1, title: allStrings["string_sugardaddy"], desc: allStrings["string_sugardaddy_description"], image: sugar_daddy },
-		{ id: 2, title: allStrings["string_sugarmom"], desc: allStrings["string_sugarmom_description"], image: sugar_mom },
-		{ id: 3, title: allStrings["string_sugarbabe"], desc: allStrings["string_sugarbabe_description"], image: sugar_babe },
+		{ id: 2, title: allStrings["string_sugarbabe"], desc: allStrings["string_sugarbabe_description"], image: sugar_babe },
+		{ id: 3, title: allStrings["string_sugarmom"], desc: allStrings["string_sugarmom_description"], image: sugar_mom },
 		{ id: 4, title: allStrings["string_sugarboy"], desc: allStrings["string_sugarboy_description"], image: sugar_boy }
 	]
 
