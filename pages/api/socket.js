@@ -8,7 +8,7 @@ export default function SocketHandler(req, res) {
     }
 
     const io = new Server(res.socket.server, {
-        cors: ['http://localhost:3000', 'https://sugarelite.website4you.co.in']
+        cors: ['https://sugarelite.tec-sense.co.in', 'https://sugarelite.website4you.co.in']
     });
     res.socket.server.io = io;
 

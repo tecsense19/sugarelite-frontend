@@ -1,6 +1,6 @@
 "use client"
 
-import { client_routes, socket_server } from "@/app/lib/helpers"
+import { client_routes } from "@/app/lib/helpers"
 import { usePathname } from "next/navigation"
 import AuthHeader from "./AuthHeader"
 import MainHeader from "./MainHeader"

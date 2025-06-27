@@ -283,19 +283,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                 </>
                 : <>
                     <div className='mt-10 w-full sm:mt-[25px]'>
-                        <div className=' mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
-                            <Image src={username} width={20} height={20} alt='username ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
-                            <input
-                                type="text"
-                                {...register('username', { required: true })}
-                                onChange={(e) => setValue("username", e.target.value)}
-                                placeholder={allStrings["string_username"]}
-                                className='w-full bg-transparent  placeholder:text-[rgba(255,255,255)]  text-[16px] text-white font-medium outline-none '
-                                autoComplete='off'
-                                required
-                            />
-                        </div>
-                        <div className='flex justify-center items-center my-6'>
+                        <div className='flex justify-center items-center mb-6'>
                             <div className='flex items-center relative ps-[20px] pe-[30px] py-[9px] gap-x-8 bg-white rounded-[30px] '>
                                 <span className={`z-[1] cursor-pointer flex justify-center items-center gap-x-1 transition-all duration-200 text-[13px] font-medium leading-[13px] ${isEmail ? "text-black" : "text-white"}`} onClick={() => { setIsEmail(false); setValue("email", "") }}>
                                     <Image src={username_telephone_black} alt='' height={14} width={14} className={`${isEmail ? "" : "hidden"}`} />
@@ -310,7 +298,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                                 </span>
                             </div>
                         </div>
-                        <div className={`items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px] ${isEmail ? "flex" : "hidden"}`}>
+                        <div className={`mb-6 items-center h-[42px] border border-white ps-[12px] sm:ps-[20px] rounded-[5px] ${isEmail ? "flex" : "hidden"}`}>
                             <Image src={email} width={20} height={20} alt='email ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                             <input
                                 type="email"
@@ -326,7 +314,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                                 </div>
                             }
                         </div>
-                        <div className={`items-center h-[42px] gap-x-3 ${isEmail ? "hidden" : "flex"}`}>
+                        <div className={`mb-6 items-center h-[42px] gap-x-3 ${isEmail ? "hidden" : "flex"}`}>
                             <GetCountries countries={countries} setCountries={setCountries} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} showCountryCode={showCountryCode} setShowCountryCode={setShowCountryCode} />
                             <input
                                 type="tel"
@@ -335,6 +323,18 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                                 placeholder={allStrings["string_mobile_number"]}
                                 className='basis-[70.83%] border h-full rounded-[5px] border-white placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none px-2'
                                 autoComplete='off'
+                            />
+                        </div>
+                        <div className='mb-3 flex h-[42px] items-center border border-white ps-[12px] sm:ps-[20px] rounded-[5px]'>
+                            <Image src={username} width={20} height={20} alt='username ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
+                            <input
+                                type="text"
+                                {...register('username', { required: true })}
+                                onChange={(e) => setValue("username", e.target.value)}
+                                placeholder={allStrings["string_username"]}
+                                className='w-full bg-transparent  placeholder:text-[rgba(255,255,255)]  text-[16px] text-white font-medium outline-none '
+                                autoComplete='off'
+                                required
                             />
                         </div>
                         {showUserAlreadyExistAlert

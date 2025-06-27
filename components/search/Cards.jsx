@@ -6,7 +6,7 @@ import placeholder from "/public/assets/place_holder.png";
 import verifiedUserIcon from "../../public/assets/premium_user_icon.svg";
 // import premiumUserIcon from "../../public/assets/premium_user_icon.svg";
 import premiumUserIcon from "../../public/assets/crown_yellow_icon.svg";
-import { client_routes } from "@/app/lib/helpers";
+import { client_routes, server_domain } from "@/app/lib/helpers";
 import { useStore } from "@/store/store";
 import Link from "next/link";
 import chevron_down from "/public/assets/arrow_left.svg"
@@ -34,7 +34,7 @@ const Cards = ({ allUsers, filterHandler, resetHandler, allStrings }) => {
                 const privateImages = item.get_all_profileimg.filter(i => i.image_type === "private")
                 return (
                   <Link key={idx} href={`${client_routes.profile}/${item.id}`} prefetch={true} className="relative border border-white/50 rounded-[5px] cursor-pointer lg:overflow-hidden aspect-square xs:aspect-h-1 xs:aspect-w-1 md:aspect-square h-[182px] min-h-[12rem] xs:h-auto  w-full flex justify-center items-center">
-                    {item.avatar_url && item.avatar_url.includes("https://admin-sugarelite.tec-sense.co.in")
+                    {item.avatar_url && item.avatar_url.includes(server_domain)
                       ? <Image src={item.avatar_url} alt="" width={1000} height={1000} className="pointer-events-none w-full h-full object-cover object-center rounded-[5px]" priority />
                       : <div className="w-full h-full flex items-center justify-center">
                         {(item.sugar_type === "EliteDaddy" || item.sugar_type === "EliteBoy")

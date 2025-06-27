@@ -45,7 +45,7 @@ const CookieConsent = ({ allStrings }) => {
             <div className={`fixed hidden  bottom-[-100px] left-0 right-0 z-[1000] bg-[#141414] items-center py-[80px] px-[120px] ${(isModalOpen || isCookie) ? "hidden" : "xl:flex  "} text-white gap-x-10  justify-center w-full slide-top `}>
                 <div className='flex flex-col items-center justify-center gap-y-2'>
                     <Image src={Logo} alt='logo' width={1000} height={1000} priority className='h-12 w-12' />
-                    <p className='text-[20px] text-secondary font-semibold'>Elite Sugar</p>
+                    <p className='text-[20px] text-secondary font-semibold'>Sugar Make</p>
                 </div>
                 <div className='max-w-[60%]'>
                     <p className='text-[20px] font-bold'>{allStrings["string_we_use_cookies"]}</p>

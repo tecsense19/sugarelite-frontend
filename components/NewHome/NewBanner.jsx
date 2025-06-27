@@ -3,7 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import LOGO from '/public/new_assets/new_logo.svg'
-import BANNER_IMG from '/public/new_assets/new_banner_img.jpg'
+// import BANNER_IMG from '/public/new_assets/new_banner_img.jpg'
+import BANNER_IMG from '/public/assets/new_banner_img_2.png'
 import { client_routes } from '@/app/lib/helpers'
 import upArrowIcon from "../../public/assets/up_arrow.svg";
 
@@ -70,11 +71,11 @@ const NewBanner = ({ user, allStrings }) => {
 				</header>
 			</div>
 			<div className='pb-10 lg:pb-0 lg:h-dvh bg-gradient-home w-full flex flex-col items-center pt-[65px] md:pt-[85px]'>
-				<div className='h-[calc(100%-65px)] lg:h-[calc(100%-85px)] w-11/12 md:w-9/12 xl:w-9/12 mx-4 flex flex-col items-center justify-center lg:flex-row-reverse'>
-					<div className='h-[260px] sm:h-[295px] w-[260px] sm:w-[295px] md:w-[350px] md:h-[350px] lg:basis-1/2 lg:h-full lg:flex'>
-						<Image src={BANNER_IMG} alt="BANNER_IMG" width={1000} height={1000} priority className="pointer-events-none w-full lg:w-[85%] aspect-square lg:m-auto mix-blend-multiply" />
+				<div className='h-[calc(100%-65px)] lg:h-[calc(100%-85px)] w-11/12 md:w-9/12 xl:w-9/12 mx-4 2xl:pr-20 flex flex-col items-center justify-center lg:flex-row-reverse 2xl:gap-[100px]'>
+					<div className='my-5 md:my-0 h-[260px] sm:h-[295px] w-[260px] sm:w-[295px] md:w-[350px] md:h-[350px] lg:basis-1/2 lg:h-full lg:flex'>
+						<Image unoptimized src={BANNER_IMG} alt="BANNER_IMG" width={1000} height={1000} priority className="pointer-events-none w-full max-w-[571px] lg:w-[95%] aspect-square lg:m-auto mix-blend-multiply" />
 					</div>
-					<div className='text-center w-full flex flex-col lg:basis-1/2 lg:text-start'>
+					<div className='text-center w-full flex flex-col lg:basis-1/2 lg:text-start 2xl:mr-5'>
 						<div>
 							<span className='uppercase text-[clamp(30px,9vw,60px)] font-extrabold tracking-[-0.2px] me-[6px]'>SUGAR</span>
 							<span className='uppercase text-[clamp(30px,9vw,60px)] font-medium'>MAKE</span>

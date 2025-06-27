@@ -15,7 +15,7 @@ const Details = ({ setData, data, allStrings }) => {
             desc: allStrings["string_necessary_cookies_help_make_a_website_usable_by_enabling_basic_functions_such_as_page_navigation_and_access_to_secure_areas_of_the_website._the_website_cannot_function_properly_without_these_cookies."],
             items: [
                 {
-                    title: "Elite Sugar",
+                    title: "Sugar Make",
                     link: client_routes.privacyPolicy,
                     label: allStrings["string_learn_more_about_us"]
                 },

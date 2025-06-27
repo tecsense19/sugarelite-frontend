@@ -3,11 +3,13 @@ import { client_routes } from "./app/lib/helpers"
 
 export const middleware = (request) => {
 
-    const local_path = "http://localhost:3000"
+    const local_path = "https://sugarelite.tec-sense.co.in"
     // const development = "https://sugarelite-frontend-development.vercel.app"
-    const development = "http://sugarelite.website4you.co.in"
+    const development = "https://sugarelite.tec-sense.co.in"
+    // const development = "https://sugarmake.dk"
     // const main = "https://sugarelite.tec-sense.co.in"
-    const main = "https://sugarelite.website4you.co.in"
+    const main = "https://sugarelite.tec-sense.co.in"
+    // const main = "https://sugarmake.dk"
 
 
     const origin = request.nextUrl.origin

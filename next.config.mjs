@@ -6,7 +6,8 @@ const nextConfig = {
   reactStrictMode: false,
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "admin-sugarelite.tec-sense.co.in", port: "", pathname: "/**/**/**/**" }
+      { protocol: "https", hostname: "admin-sugarelite.tec-sense.co.in", port: "", pathname: "/**/**/**/**" },
+      { protocol: "https", hostname: "admin.sugarmake.dk", port: "", pathname: "/**/**/**/**" }
     ]
   }
 };

@@ -18,11 +18,11 @@ export const client_routes = {
   verifyIdentity: "/verify-identity",
 }
 
+// const server_domain = "https://admin.sugarmake.dk";
 const server_domain = "https://admin-sugarelite.tec-sense.co.in";
 const base_path = server_domain + "/api/V1";
 
-export const socket_server = "https://sugarelite-socket-server.onrender.com"
-// export const socket_server = "http://localhost:8080"
+export const socket_server = "https://socket.sugarmake.dk"
 
 export const server_routes = {
   register: base_path + "/profile/register",

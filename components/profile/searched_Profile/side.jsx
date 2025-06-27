@@ -7,7 +7,7 @@ import more_horizontal from "../../../public/assets/more_horizontal.svg"
 import premium from "../../../public/assets/premium.svg"
 import crown_yellow_icon from "/public/assets/crown_yellow_icon.svg"
 import PopOver from '../commons/PopOver'
-import { client_routes } from '@/app/lib/helpers'
+import { client_routes, server_domain } from '@/app/lib/helpers'
 import Buttons from './Buttons'
 import { useStore } from '@/store/store'
 
@@ -30,7 +30,7 @@ const Side = ({ user, currentUser, privateAlbumState, socket, setIsModalOpen, is
             <div className="w-full flex justify-start items-center flex-col lg:items-start h-full md:pt-[96px] lg:pt-[30px] px-[15px] lg:px-[30px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
                 <div className="w-full aspect-square max-w-[200px] lg:max-w-full lg:rounded-[10px] flex justify-center items-center relative">
                     {
-                        user?.avatar_url && (user?.avatar_url).includes("https://admin-sugarelite.tec-sense.co.in") ?
+                        user?.avatar_url && (user?.avatar_url).includes(server_domain) ?
                             <Image src={user.avatar_url} width={1000} height={1000} alt="person" className={`h-full w-full object-cover object-center rounded-full lg:rounded-[10px] select-none pointer-events-none ${path === client_routes.edit_profile && "opacity-50"}`} priority quality={100} />
                             :
                             <p className='bg-primary-dark-4 lg:bg-primary h-full w-full  rounded-full lg:rounded-[10px] select-none flex justify-center items-center capitalize text-[650%] md:text-[8rem]'>

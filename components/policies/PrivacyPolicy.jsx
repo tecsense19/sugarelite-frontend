@@ -11,7 +11,7 @@ const PrivacyPolicy = ({ allStrings }) => {
           <div className="p-4 py-6 flex flex-col text-white w-full max-w-[770px]">
             <div className="relative flex flex-col justify-center items-center">
               <div className="text-[16px] font-semibold text-secondary uppercase">{allStrings["string_privacy_policy"]}</div>
-              <p className="text-[26px] md:text-[32px] font-semibold text-center leading-[38px]">EliteSugar's <span>{allStrings["string_privacy_policy"]}</span></p>
+              <p className="text-[26px] md:text-[32px] font-semibold text-center leading-[38px]">SugarMake's <span>{allStrings["string_privacy_policy"]}</span></p>
             </div>
             <div className="my-5">
               <div>
