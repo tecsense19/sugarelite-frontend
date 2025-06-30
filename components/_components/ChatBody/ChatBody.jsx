@@ -114,6 +114,7 @@ const MessageItem = React.memo(({ message, user, toUser, isLastMessage, isFirstM
 });
 
 ChatBody.displayName = "ChatBody";
+MessageItem.displayName = "MessageItem";
 
 export default React.memo(ChatBody);
 
