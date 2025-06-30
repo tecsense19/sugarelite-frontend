@@ -7,7 +7,9 @@ export default async function RootLayout({ children }) {
     if (token) {
         return (
             <>
-                <Index children={children} />
+                <Index>
+                    {children}
+                </Index>
             </>
         );
     }
