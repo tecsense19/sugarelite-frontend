@@ -22,7 +22,8 @@ export const client_routes = {
 export const server_domain = "https://admin-sugarelite.tec-sense.co.in";
 const base_path = server_domain + "/api/V1";
 
-export const socket_server = "https://socket.sugarmake.dk"
+// export const socket_server = "https://socket.sugarmake.dk"
+export const socket_server = "https://sugarelite-socket-server.onrender.com"
 
 export const server_routes = {
   register: base_path + "/profile/register",

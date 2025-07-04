@@ -19,7 +19,8 @@ import { useSocket } from '@/store/SocketContext'
 import { useChat } from '@/store/ChatContext'
 import { connectSocket } from '@/app/lib/socket'
 
-const socket = io("https://socket.sugarmake.dk");
+// const socket = io("https://socket.sugarmake.dk");
+const socket = io("https://sugarelite-socket-server.onrender.com");
 // const socket = io("http://103.211.218.172:3001");
 
 const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, chatList, supportChat, allStrings }) => {
