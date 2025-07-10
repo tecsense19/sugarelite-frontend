@@ -443,7 +443,7 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                         </button>
                         {/* <div className='relative inline-flex justify-center items-center'> */}
                         {/* {showDropdown
-                                ? 
+                                ?
                                 : <></>
                             } */}
                         <ConfigProvider theme={{ components: { Popover: {} }, token: { colorBgElevated: "#000000" } }}>
@@ -456,6 +456,8 @@ const RootHeader = ({ user, allUsers, matchNotifications, albumNotifications, ch
                                     <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.verifyIdentity ? "bg-secondary" : ""}`} href={client_routes.verifyIdentity} onClick={() => setShowDropdown(false)}>{allStrings["string_identity_verification"]}</Link>
                                     <hr className='m-0 border-gray-500' />
                                     <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.contactUs ? "bg-secondary" : ""}`} href={client_routes.contactUs} onClick={() => setShowDropdown(false)}>{allStrings["string_contact_us"]}</Link>
+                                    <hr className='m-0 border-gray-500' />
+                                    <Link className={`py-2 px-3 hover:bg-secondary text-white hover:text-white ${pathname === client_routes.subscription ? "bg-secondary" : ""}`} href={client_routes.subscription} onClick={() => setShowDropdown(false)}>{allStrings["string_subscription"]}</Link>
                                 </div>
                             )}>
                                 <div className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105 cursor-pointer" >

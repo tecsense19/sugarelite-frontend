@@ -17,18 +17,22 @@ const SugarType = ({ register, nextStepHandler, watch, setValue, allStrings }) =
     const typeArray = [
         {
             sugarType: "EliteDaddy",
+            sugarTypeName: "SugarDaddy",
             img: sugarDaddy
         },
         {
             sugarType: "EliteBoy",
+            sugarTypeName: "SugarBoy",
             img: sugarBoy
         },
         {
             sugarType: "EliteMama",
+            sugarTypeName: "SugarMom",
             img: sugarMama
         },
         {
             sugarType: "EliteBabe",
+            sugarTypeName: "SugarBabe",
             img: sugarBabe
         }
     ]
@@ -49,7 +53,7 @@ const SugarType = ({ register, nextStepHandler, watch, setValue, allStrings }) =
                         typeArray.map((type, inx) => (
                             <div className={`${isValid === type.sugarType && "bg-white"} border border-transparent hover:border-white py-3 px-5 sm:px-3 sm:py-2 rounded-[5px] sm:w-full  sm:flex justify-center transition-all ease-linear duration-200`} key={inx}>
                                 <label htmlFor={type.sugarType} className=" cursor-pointer ">
-                                    <p className={`mb-[9px] font-bold text-[16px] ${isValid === type.sugarType ? "text-primary-dark-5" : ""}`}>{type.sugarType}</p>
+                                    <p className={`mb-[9px] font-bold text-[16px] ${isValid === type.sugarType ? "text-primary-dark-5" : ""}`}>{type.sugarTypeName}</p>
                                     <Image src={type.img} alt={type.sugarType} width={90} height={90} className=" min-w-[90px] rounded-full" priority />
                                 </label>
                                 <input type="radio" {...register("sugar_type")} onChange={(e) => setValue("sugar_type", e.target.value)} value={type.sugarType} className="hidden" id={type.sugarType} />

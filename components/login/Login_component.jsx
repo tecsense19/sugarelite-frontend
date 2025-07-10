@@ -60,7 +60,7 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
         let obj = {};
         if (mobile_no) {
             obj = {
-                mobile_no: tempUserName,
+                mobile_no: '+45' + tempUserName,
                 password: watch("password")
             }
         } else {

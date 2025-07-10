@@ -30,12 +30,13 @@ const ContactUs = ({ user, allStrings }) => {
       name: allStrings["string_press_&_media"],
       desc: allStrings["string_press@elitesugar.com"],
       image: mailIcon
-    },
-    {
-      name: allStrings["string_address"],
-      desc: allStrings["string_disp_i/s_maglebjergvej_6_2800_cvr_:_433433912"],
-      image: locationIcon
     }
+    // ,
+    // {
+    //   name: allStrings["string_address"],
+    //   desc: allStrings["string_disp_i/s_maglebjergvej_6_2800_cvr_:_433433912"],
+    //   image: locationIcon
+    // }
   ]
 
   useEffect(() => {
@@ -88,8 +89,8 @@ const ContactUs = ({ user, allStrings }) => {
         </div>
       </div>
       <div className="font-bold text-[30px] leading-[40px] hidden md:block">{allStrings["string_contact_us"]}</div>
-      <div className='flex flex-col-reverse xs:flex-col items-center w-full'>
-        <div className='mt-6 md:mt-[100px] grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 items-center gap-y-5 md:w-[61%] md:min-w-[750px] w-full'>
+      <div className='flex flex-col-reverse xs:flex-col items-center w-max sm:mb-0 mb-8'>
+        <div className='mt-6 md:mt-[100px] grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 items-center gap-y-5 md:w-[61%] md:min-w-[750px] w-full'>
           {boxes.map((obj, inx) => (
             <div key={inx} className={`flex justify-center w-full  ${inx === 2 ? "xs:col-span-2 md:col-span-1" : ""} ${inx === 0 ? "md:justify-start" : (inx === boxes.length - 1 ? "md:justify-end" : "md:justify-center")}`}>
               <div className={`flex flex-col gap-y-2 md:gap-y-5 items-center md:w-[230px] w-full px-5 xs:px-3  md:px-0`}>
@@ -104,6 +105,9 @@ const ContactUs = ({ user, allStrings }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className='flex flex-col-reverse xs:flex-col items-center w-full'>
         <form className='xs:mt-6 md:mt-[75px] w-full px-5 md:px-0 md:w-[49.3%] md:min-w-[600px]' onSubmit={handleSubmit(handleContactUsSubmit)}>
           <div className='text-[25px] md:text-[30px] font-semibold leading-[25px] md:leading-[30px] text-center md:text-start'>{allStrings["string_send_us_a_message"]}</div>
           <div className='mt-5 md:mt-7 flex flex-col sm:flex-row gap-x-5 md:gap-x-10'>

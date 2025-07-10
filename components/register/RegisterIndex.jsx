@@ -140,7 +140,7 @@ const RegisterIndex = ({ allStrings }) => {
         <div className="h-full w-full relative">
           <div className="h-full w-full absolute p-4 sm:flex items-center sm:items-start sm:pt-[130px] sm:pb-[50px] justify-center overflow-y-auto">
             <div className="text-white h-[725px] sm:w-[90%] xl:w-[60%] my-auto py-[50px] rounded-[5px] sm:bg-gradient-to-l sm:from-tinder-1 sm:from-0% sm:to-tinder-2 sm:to-100% sm:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] flex justify-center items-center flex-col ">
-              <h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">ELITE<span className="font-normal sm:ms-2 md:ms-3">SUGAR</span></h1>
+              <h1 className="italic font-[900] sm:text-[35px] md:text-[45px] pb-[50px]">Sugar<span className="font-normal">Make</span></h1>
 
               {/* step status tarcker starts */}
               <div className="sm:w-[82%] lg:w-[665px] mb-[50px] relative h-[40px]">

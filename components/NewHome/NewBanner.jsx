@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import LOGO from '/public/new_assets/new_logo.svg'
 // import BANNER_IMG from '/public/new_assets/new_banner_img.jpg'
-import BANNER_IMG from '/public/assets/new_banner_img_2.png'
+import BANNER_IMG from '/public/assets/new_banner_img_3.png'
 import { client_routes } from '@/app/lib/helpers'
 import upArrowIcon from "../../public/assets/up_arrow.svg";
 
@@ -53,12 +53,15 @@ const NewBanner = ({ user, allStrings }) => {
 						<Image src={LOGO} alt="logo" height={1000} width={1000} className="pointer-events-none select-none h-[30px] w-[120px] md:h-[47px] md:w-[237px]" priority />
 					</Link>
 					{user
-						? <Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
+						? <div className="flex items-center" ><Link className='bg-tinder px-4 md:pl-[29px] md:pr-[34px] h-[32px] md:h-[45px] text-center text-white rounded-[5px] text-[12px] md:text-[18px] font-semibold tracking-[-0.18px] leading-[normal] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase pt-[2px] mx-2' href={client_routes.subscription}>
+								{allStrings["string_subscription"]}
+							</Link>
+						<Link href={client_routes.profile} className="inline-flex justify-center items-center transition-all duration-150 hover:scale-105">
 							{user[0]?.avatar_url
 								? <Image height={100} width={100} src={user[0]?.avatar_url} alt="profile_pic" className="w-10 md:w-[50px] cursor-pointer rounded-full aspect-square object-cover" priority quality={1} />
 								: <div className="pt-[2px] w-10 md:w-[50px] aspect-square flex items-center justify-center text-[20px] md:text-[25px] font-bold bg-tinder text-white rounded-full capitalize">{user[0]?.username.charAt(0)}</div>
 							}
-						</Link>
+						</Link></div>
 						: <div className='flex gap-x-2 md:gap-x-[18px]'>
 							<Link className='bg-tinder px-4 md:pl-[29px] md:pr-[34px] h-[32px] md:h-[45px] text-center text-white rounded-[5px] text-[12px] md:text-[18px] font-semibold tracking-[-0.18px] leading-[normal] transition-all ease-linear duration-75 hover:scale-105 inline-flex justify-center items-center uppercase pt-[2px]' href={client_routes.register}>
 								{allStrings.string_register_now}
@@ -77,8 +80,8 @@ const NewBanner = ({ user, allStrings }) => {
 					</div>
 					<div className='text-center w-full flex flex-col lg:basis-1/2 lg:text-start 2xl:mr-5'>
 						<div>
-							<span className='uppercase text-[clamp(30px,9vw,60px)] font-extrabold tracking-[-0.2px] me-[6px]'>SUGAR</span>
-							<span className='uppercase text-[clamp(30px,9vw,60px)] font-medium'>MAKE</span>
+							<span className='text-[clamp(30px,9vw,60px)] font-extrabold tracking-[-0.2px]'>Sugar</span>
+							<span className='text-[clamp(30px,9vw,60px)] font-medium'>Make</span>
 						</div>
 						<div className="m-auto lg:m-none w-[285px] lg:w-full text-[clamp(22px,6vw,30px)] font-medium text-center lg:text-start" style={{ lineHeight: "clamp(22px,6vw,30px)" }}>
 							<span className=''>{allStrings["string_create_a_free_sugar_date_profile_now!"]}</span>

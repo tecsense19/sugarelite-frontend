@@ -2,7 +2,7 @@ import React from 'react'
 
 const NewWorking = ({ allStrings }) => {
     return (
-        <div className='my-[100px] flex flex-col items-center px-4 '>
+        <div className='my-[50px] lg:my-[100px] flex flex-col items-center px-4 '>
             <div className='text-center'>
                 <div className='text-[clamp(26px,5vw,50px)] font-bold leading-[normal] -tracking-[0.5px] lg:-tracking-[1px] text-center'>
                     {allStrings["string_how_does_it_work?"]}

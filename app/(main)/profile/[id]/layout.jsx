@@ -1,7 +1,7 @@
 import 'aos/dist/aos.css';
 
 export const metadata = {
-  title: "Sugar Make - Profile",
+  title: "SugarMake - Profile",
   description: "Profile",
 };
 

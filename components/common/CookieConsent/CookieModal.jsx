@@ -39,7 +39,7 @@ const CookieModal = ({ isModalOpen, cookieSet, setData, data, allStrings }) => {
                 <div className='w-full text-white'>
                     <div className='flex items-center justify-center gap-x-2 h-[70px] bg-[#2d2d2d]'>
                         <Image src={Logo} alt='logo' width={1000} height={1000} priority className='h-10 w-10' />
-                        <p className='text-[25px] font-semibold mt-2'>Sugar Make</p>
+                        <p className='text-[25px] font-semibold mt-2'>SugarMake</p>
                     </div>
                     <div className='flex justify-between h-[50px] text-[16px] border-b border-[#4b4b4b] bg-primary-dark-2'>
                         <button onClick={() => setIsType("consent")} className={`w-full flex items-center hover:text-secondary justify-center font-medium ${type === "consent" && "text-secondary border-b border-secondary"}`}>{allStrings["string_consent"]}</button>

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "SugarMake - Contact US",
-  description: "Contact US - Get in Touch !",
+  title: "Get In Touch",
+  description: "Get In Touch",
 };
 
 export default function RootLayout({ children }) {

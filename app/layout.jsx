@@ -11,7 +11,7 @@ import CookieIndex from "@/components/common/CookieConsent/CookieIndex";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Sugar Make",
+  title: "SugarMake",
   description: "A dating app.",
 };
 

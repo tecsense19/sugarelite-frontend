@@ -101,16 +101,24 @@ const Footer = ({ allStrings }) => {
   };
 
   return (
-    <div className="w-full flex justify-center items-center bg-black pb-[30px] home-footer-container text-white" >
+    <div className="w-full flex justify-center items-center bg-black pb-5 home-footer-container text-white" >
       <div className="w-full px-4 sm:px-0 sm:w-8/12">
         <div className="w-full mt-[50px]  grid grid-cols-1 xl:grid-cols-12 gap-x-[55px]">
-          <div className="xl:col-span-4">
+          <div className="xl:col-span-3">
             <div>
               <Image src={logo} priority alt="" height={43} width={217} className="select-none pointer-events-none hidden 2xl:block" />
               <Image src={logo} priority alt="" height={35} width={177} className="select-none pointer-events-none 2xl:hidden" />
             </div>
             <div className="mt-4 2xl:mt-[25px] text-start text-[16px] font-normal leading-[28px]">
               {allStrings["string_footer_description"]}
+            </div>
+            <div className="text-start text-[16px] font-normal leading-[28px]">
+                  {allStrings["string_footer_description_2"]}
+            </div>
+            <div className="mt-2 2xl:mt-[15px] text-start text-[16px] font-normal leading-[28px]">
+                <Link href={`mailto:${allStrings["string_footer_description_3"]}`} className="hover:text-secondary">
+                {allStrings["string_footer_description_3"]}
+                </Link>
             </div>
             <div className="mt-6 flex items-center justify-start gap-x-[11px]">
               {socialButtons.map((item, idx) => {
@@ -134,7 +142,7 @@ const Footer = ({ allStrings }) => {
           </div>
           {/* {/ Mobile Middle Content End /} */}
           {/* {/ Desktop Middle Content Start /} */}
-          <div className="xl:col-span-4 md:flex justify-between xl:ms-10 xl:justify-start mt-10 xl:mt-0 hidden">
+          {/* <div className="xl:col-span-4 md:flex justify-between xl:ms-10 xl:justify-start mt-10 xl:mt-0 hidden">
             {footerMiddleContent.map((item, idx) => {
               return (
                 <div key={idx}>
@@ -152,14 +160,78 @@ const Footer = ({ allStrings }) => {
                 </div>
               )
             })}
+          </div> */}
+
+      <div className="xl:col-span-3 md:flex justify-between xl:ms-10 xl:justify-start mt-10 xl:mt-0">
+          <div>
+              <div className="text-[26px] font-semibold leading-[30px]">
+                  {allStrings["string_information"]}
+              </div>
+              <div className='mt-4 lg:mt-10'>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_contact_us"]}</p>
+                      {/* string_quick_access */}
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_membership_footer"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_community_guidelines_footer"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_general_terms_and_conditions_footer"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_statement_on_data_protection_footer"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_cookie_policy_footer"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_faq_footer"]}</p>
+                  </div>
+              </div>
           </div>
+      </div>
+
+
+      <div className="xl:col-span-3 md:flex justify-between xl:ms-10 xl:justify-start mt-10 xl:mt-0">
+          <div>
+              <div className="text-[26px] font-semibold leading-[30px]">
+                  {allStrings["string_explore_more"]}
+              </div>
+              <div className='mt-4 lg:mt-10'>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_online_dating_and_tips"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_success_stories_from_members"]}</p>
+                  </div>
+                  <div className='flex items-center gap-2 mt-1'>
+                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      <p>{allStrings["string_guide_to_safe_dating"]}</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
           {/* {/ Desktop Middle Content End /} */}
-          <div className="xl:col-span-4 mt-10 xl:mt-0">
+          <div className="xl:col-span-3 mt-10 xl:mt-0">
             <div className="text-[24px] font-extrabold leading-[30px]">
               {allStrings["string_news_letter"]}
             </div>
             <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
-              <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" autoComplete="off"
+              <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder={allStrings["string_enter_your_email"]} autoComplete="off"
                 {...register("email", { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, required: true })} />
               <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)] transition-all ease-linear duration-75 hover:scale-105" onClick={handleWrongEmail}>
                 <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />
@@ -179,13 +251,14 @@ const Footer = ({ allStrings }) => {
             <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>
             |   <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link>
           </div> */}
-          <div className="text-[14px] font-normal leading-[normal] mt-5  flex gap-x-2">
+          {/* <div className="text-[14px] font-normal leading-[normal] mt-5  flex gap-x-2">
             <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>
             <p >|</p>
             <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>
-            {/* <p>|</p>
-            <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link> */}
-          </div>
+             <p>|</p>
+            <Link href={client_routes.disclaimer} className="hover:text-secondary">{allStrings["string_disclaimer"]}</Link>
+          </div> */}
+
         </div>
       </div>
     </div>

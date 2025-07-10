@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Sugar Make - Discover",
+  title: "SugarMake - Discover",
   description: "Discover more peoples !",
 };
 

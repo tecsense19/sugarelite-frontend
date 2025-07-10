@@ -10,6 +10,10 @@ import linkdinImg from "../../public/assets/linkdin_footer_img.svg";
 import linkdinActiveImg from "../../public/assets/linkdin_footer_active_img.svg";
 import twitterImg from "../../public/assets/twitter_footer_img.svg";
 import twitterActiveImg from "../../public/assets/twitter_footer_active_img.svg";
+import YoutubeImg from "../../public/assets/youtube_footer_img.svg";
+import YoutubeActiveImg from "../../public/assets/youtube_footer_active_img.svg";
+import tiktokImg from "../../public/assets/tiktok_footer_img.svg";
+import tiktokActiveImg from "../../public/assets/tiktok_footer_active_img.svg";
 import correctIcon from "../../public/assets/correct_icon.svg";
 import sendIcon from "../../public/assets/send_icon.svg";
 import React, { useState } from 'react'
@@ -26,8 +30,10 @@ const NewFooter = ({ allStrings }) => {
     const socialButtons = [
         { image: facebookImg, activeImg: facebookActiveImg },
         { image: instagramImg, activeImg: instagramActiveImg },
-        { image: linkdinImg, activeImg: linkdinActiveImg },
-        { image: twitterImg, activeImg: twitterActiveImg }
+        { image: YoutubeImg, activeImg: YoutubeActiveImg },
+        { image: tiktokImg, activeImg: tiktokActiveImg },
+        // { image: linkdinImg, activeImg: linkdinActiveImg },
+        // { image: twitterImg, activeImg: twitterActiveImg }
     ]
 
     const handleNewLetterSubmit = async (data) => {
@@ -67,6 +73,14 @@ const NewFooter = ({ allStrings }) => {
                     <div className="mt-4 2xl:mt-[25px] text-start text-[16px] font-normal leading-[28px]">
                         {allStrings["string_footer_description"]}
                     </div>
+                    <div className="text-start text-[16px] font-normal leading-[28px]">
+                         {allStrings["string_footer_description_2"]}
+                    </div>
+                    <div className="mt-2 2xl:mt-[15px] text-start text-[16px] font-normal leading-[28px]">
+                        <Link href={`mailto:${allStrings["string_footer_description_3"]}`} className="hover:text-secondary">
+                        {allStrings["string_footer_description_3"]}
+                        </Link>
+                    </div>
                     <div className="my-6 flex items-center justify-start gap-x-[11px]">
                         {socialButtons.map((item, idx) => {
                             return (
@@ -78,6 +92,7 @@ const NewFooter = ({ allStrings }) => {
                         })}
                     </div>
                 </div>
+
                 <div>
                     <div className="text-[26px] font-semibold leading-[30px]">
                         {allStrings["string_information"]}
@@ -85,24 +100,62 @@ const NewFooter = ({ allStrings }) => {
                     <div className='mt-4 lg:mt-10'>
                         <div className='flex items-center gap-2 mt-1'>
                             <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                            <p>{allStrings["string_quick_access"]}</p>
+                            <p>{allStrings["string_contact_us"]}</p>
+                            {/* string_quick_access */}
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
                             <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                            <p>{allStrings["string_secure_payment"]}</p>
+                            <p>{allStrings["string_membership_footer"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
                             <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                            <p>{allStrings["string_24/7_support"]}</p>
+                            <p>{allStrings["string_community_guidelines_footer"]}</p>
+                        </div>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_general_terms_and_conditions_footer"]}</p>
+                        </div>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_statement_on_data_protection_footer"]}</p>
+                        </div>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_cookie_policy_footer"]}</p>
+                        </div>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_faq_footer"]}</p>
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <div className="text-[26px] font-semibold leading-[30px]">
+                        {allStrings["string_explore_more"]}
+                    </div>
+                    <div className='mt-4 lg:mt-10'>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_online_dating_and_tips"]}</p>
+                        </div>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_success_stories_from_members"]}</p>
+                        </div>
+                        <div className='flex items-center gap-2 mt-1'>
+                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            <p>{allStrings["string_guide_to_safe_dating"]}</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div className=''>
                     <div className="text-[24px] font-extrabold leading-[30px]">
                         {allStrings["string_news_letter"]}
                     </div>
                     <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
-                        <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder="Enter your email" autoComplete="off"
+                        <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder={allStrings["string_enter_your_email"]} autoComplete="off"
                             {...register("email", { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, required: true })} />
                         <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)] transition-all ease-linear duration-75 hover:scale-105" onClick={handleWrongEmail}>
                             <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />
@@ -116,11 +169,11 @@ const NewFooter = ({ allStrings }) => {
             </div>
             <div className="w-full md:w-9/12 border-t-[1px] border-white/25 lg:border-white/50 flex flex-col-reverse  justify-center items-center text-white/75 lg:text-white">
                 <div className="text-[14px] font-normal text-center leading-[normal] mt-[15px] lg:mt-[18px]">{allStrings["string_copyright_©_2024_sugarelite_all_rights_reserved"]}</div>
-                <div className="text-[14px] font-normal leading-[normal] mt-5  flex gap-x-2">
+                {/* <div className="text-[14px] font-normal leading-[normal] mt-5  flex gap-x-2">
                     <Link href={client_routes.termsOfUse} className="hover:text-secondary">{allStrings["string_terms_of_use"]}</Link>
                     <p >|</p>
                     <Link href={client_routes.privacyPolicy} className="hover:text-secondary">{allStrings["string_privacy_policy"]}</Link>
-                </div>
+                </div> */}
             </div>
         </div>
     )

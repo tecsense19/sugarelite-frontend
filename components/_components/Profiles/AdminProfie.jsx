@@ -47,11 +47,11 @@ const AdminProfie = ({ message, setShowMobileChatContent, allStrings }) => {
                 </div>
                 <div>
                     <p className="font-semibold text-[18px] md:text-[20px] leading-[20px] capitalize">
-                        Team Sugar Make
+                        Team SugarMake
                     </p>
                     <p className="text-white/70 text-[14px] md:text-[16px] font-normal leading-[20px] mt-[5px] max-w-[200px] line-clamp-1 break-all">
                         {
-                            message ? message.description : "Welcome to the Sugar Make Support"
+                            message ? message.description : "Welcome to the SugarMake Support"
                         }
                     </p>
                 </div>

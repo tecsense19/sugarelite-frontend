@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Sugar Make - Verify",
+  title: "SugarMake - Verify",
   description: "Verification - Verify Your Identity !",
 };
 
