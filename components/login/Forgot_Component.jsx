@@ -78,7 +78,7 @@ const Forgot_Component = ({ setIsForgotOpen, allStrings }) => {
                         </form>
                         <div className="mt-[50px] text-center">
                             <p className="text-[14px] text-white mb-[10px]">{allStrings["string_if_you_know_password?_back_to"]}</p>
-                            <button onClick={() => setIsForgotOpen(false)} className="text-white font-semibold text-[16px] transition-all duration-150 hover:text-white/70">{allStrings["string_login"]}</button>
+                            <button onClick={() => setIsForgotOpen(false)} className="text-white font-semibold text-[16px] transition-all duration-150 hover:text-white/70">{allStrings["string_register_page_log_in_button"]}</button>
                         </div>
                     </div>
                 </div>

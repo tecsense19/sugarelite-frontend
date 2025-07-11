@@ -132,14 +132,14 @@ const Footer = ({ allStrings }) => {
             </div>
           </div>
           {/* {/ Mobile Middle Content Start /} */}
-          <div className="block md:hidden mt-9 text-[26px] font-semibold leading-[30px]">
+          {/* <div className="block md:hidden mt-9 text-[26px] font-semibold leading-[30px]">
             {allStrings["string_information"]}
           </div>
           <div className="grid md:hidden w-full mt-9 border-b-[1px] border-white/25">
             <ConfigProvider theme={{ components: { Collapse: { contentPadding: "0px", headerPadding: "0px 4px 0px 0px", colorBorder: "rgba(255,255,255,0.25)" } } }}>
               <Collapse items={getMobileMiddleContent()} bordered={false} defaultActiveKey={['1']} expandIconPosition="end" />
             </ConfigProvider>
-          </div>
+          </div> */}
           {/* {/ Mobile Middle Content End /} */}
           {/* {/ Desktop Middle Content Start /} */}
           {/* <div className="xl:col-span-4 md:flex justify-between xl:ms-10 xl:justify-start mt-10 xl:mt-0 hidden">
@@ -168,33 +168,35 @@ const Footer = ({ allStrings }) => {
                   {allStrings["string_information"]}
               </div>
               <div className='mt-4 lg:mt-10'>
+                {/* <Link href={client_routes.getintouch} className=""> */}
+                    <div className='flex items-center gap-2 mt-1'>
+                        {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
+                        <p>{allStrings["string_contact_us"]}</p>
+                        {/* string_quick_access */}
+                    </div>
+                  {/* </Link> */}
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                      <p>{allStrings["string_contact_us"]}</p>
-                      {/* string_quick_access */}
-                  </div>
-                  <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_membership_footer"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_community_guidelines_footer"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_general_terms_and_conditions_footer"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_statement_on_data_protection_footer"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_cookie_policy_footer"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_faq_footer"]}</p>
                   </div>
               </div>
@@ -209,15 +211,15 @@ const Footer = ({ allStrings }) => {
               </div>
               <div className='mt-4 lg:mt-10'>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_online_dating_and_tips"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_success_stories_from_members"]}</p>
                   </div>
                   <div className='flex items-center gap-2 mt-1'>
-                      <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                      {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                       <p>{allStrings["string_guide_to_safe_dating"]}</p>
                   </div>
               </div>

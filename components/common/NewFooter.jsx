@@ -98,33 +98,35 @@ const NewFooter = ({ allStrings }) => {
                         {allStrings["string_information"]}
                     </div>
                     <div className='mt-4 lg:mt-10'>
+                            {/* <Link href={client_routes.getintouch} className=""> */}
+                                <div className='flex items-center gap-2 mt-1'>
+                                        {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
+                                        <p>{allStrings["string_contact_us"]}</p>
+                                    {/* string_quick_access */}
+                                </div>
+                            {/* </Link> */}
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
-                            <p>{allStrings["string_contact_us"]}</p>
-                            {/* string_quick_access */}
-                        </div>
-                        <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_membership_footer"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_community_guidelines_footer"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_general_terms_and_conditions_footer"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_statement_on_data_protection_footer"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_cookie_policy_footer"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_faq_footer"]}</p>
                         </div>
                     </div>
@@ -136,15 +138,15 @@ const NewFooter = ({ allStrings }) => {
                     </div>
                     <div className='mt-4 lg:mt-10'>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_online_dating_and_tips"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_success_stories_from_members"]}</p>
                         </div>
                         <div className='flex items-center gap-2 mt-1'>
-                            <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" />
+                            {/* <Image src={correctIcon} alt="" width={16} height={11} className="select-none pointer-events-none opacity-70 md:opacity-100 h-[11px] w-[16px]" /> */}
                             <p>{allStrings["string_guide_to_safe_dating"]}</p>
                         </div>
                     </div>

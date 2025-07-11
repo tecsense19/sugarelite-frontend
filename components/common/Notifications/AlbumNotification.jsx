@@ -94,7 +94,7 @@ const AlbumNotification = ({ notification, allUsers, socket, allStrings }) => {
     }
 
     return (
-        <div className='w-full h-auto px-[30px] ' >
+        <div className='w-full h-auto px-[15px] md:px-[30px] ' >
             {contextHolder}
             <div className='flex gap-4'>
                 {getUserData(i, "avatar_url") ?

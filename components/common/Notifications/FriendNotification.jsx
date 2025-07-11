@@ -194,7 +194,7 @@ const FriendNotification = ({ notification, allUsers, user, allStrings }) => {
     };
 
     return (
-        <div className='w-full h-auto px-[30px]'>
+        <div className='w-full h-auto px-[15px] md:px-[30px]'>
             <div className='flex gap-4'>
 
                 {

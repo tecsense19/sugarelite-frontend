@@ -114,6 +114,7 @@ const Login = ({ setIsForgotOpen, allStrings }) => {
                                         placeholder={`${allStrings["string_email"]} / ${allStrings["string_mobile_number"]}`}
                                         className='w-full placeholder:text-[rgba(255,255,255)] bg-transparent text-[16px] text-white font-medium outline-none'
                                         autoComplete='off' required
+                                        autoFocus
                                     />
                                 </div>
                                 <div className=' flex h-[42px] items-center border border-white ps-[12px] mt-[12px] sm:ps-[20px] rounded-[5px]'>

@@ -314,7 +314,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                                 </div>
                             }
                         </div>
-                        <div className={`mb-6 items-center h-[42px] gap-x-3 ${isEmail ? "hidden" : "flex"}`}>
+                        <div className={`mb-6 items-center h-[42px] gap-x-3 justify-between ${isEmail ? "hidden" : "flex"}`}>
                             <GetCountries countries={countries} setCountries={setCountries} selectedCountry={selectedCountry} setSelectedCountry={setSelectedCountry} showCountryCode={showCountryCode} setShowCountryCode={setShowCountryCode} />
                             <input
                                 type="tel"
@@ -329,10 +329,11 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                             <Image src={username} width={20} height={20} alt='username ' className='me-[10px] sm:me-[14px] w-[20px] h-[20px]' />
                             <input
                                 type="text"
+                                 maxLength={100}
                                 {...register('username', { required: true })}
                                 onChange={(e) => setValue("username", e.target.value)}
                                 placeholder={allStrings["string_username"]}
-                                className='w-full bg-transparent  placeholder:text-[rgba(255,255,255)]  text-[16px] text-white font-medium outline-none '
+                                className='w-full bg-transparent  placeholder:text-[rgba(255,255,255)]  text-[16px] text-white font-medium outline-none pr-4'
                                 autoComplete='off'
                                 required
                             />

@@ -52,7 +52,7 @@ const NotificationComaponent = ({ open, allUsers, socket, user, allStrings }) =>
                     {
                         allNotifications.length
                             ? <>
-                                <div className='text-[26px] font-bold leading-[30px] px-[30px] py-[20px] flex items-center justify-between'>
+                                <div className='text-[26px] font-bold leading-[30px] px-[15px] md:px-[30px] py-[20px] flex items-center justify-between'>
                                     {allStrings["string_notification"]}
                                     <Image src={Cross} width={30} height={30} alt='cross' className='md:hidden cursor-pointer' onClick={() => dispatch({ type: "Close_Notification", payload: false })} />
                                 </div>

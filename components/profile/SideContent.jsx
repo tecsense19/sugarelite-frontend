@@ -179,7 +179,7 @@ const SideContent = ({ control, user, setAvatar, register, setProfileToggle, all
 
                 {
                     path === client_routes.profile &&
-                    <div className='w-full flex flex-col gap-y-[10px] mt-[26px] lg:mt-0 sm:max-w-[75%] md:max-w-full'>
+                    <div className='w-full flex flex-col gap-y-[10px] mt-[26px] lg:mt-0 sm:max-w-[75%] lg:max-w-full'>
                         <button className='flex justify-center items-center gap-[10px] rounded-[5px] bg-primary-dark-4 w-full h-[42px] lg:h-[56px]' onClick={() => handleProfileTogglBtn("photo")}>
                             <Image src={lock_1} width={24} height={24} alt='message' className='inline-block h-[22px] lg:h-[24px]' />
                             <span className='text-[16px] xl:text-[18px] font-[600] leading-[18px] mt-[6px] tracking-wider uppercase'>{allStrings["string_photo_access"]}</span>

@@ -31,9 +31,9 @@ const FiveBoxSection = ({ allStrings }) => {
                     return (
                     <div
                         key={idx}
-                        className="bg-tinder max-w-[450px] mx-4 sm:m-0 rounded-[5px] px-4 py-10 sm:py-7 sm:px-8 flex flex-col items-center justify-center sm:block text-white"
+                        className="relative bg-tinder max-w-[450px] mx-4 sm:m-0 rounded-[5px] px-4 py-10 sm:py-7 sm:px-8 flex flex-col items-center justify-center sm:block text-white"
                     >
-                        <p class="text-[24px]-400 leading-[normal] ">0{item.id}</p>
+                        <p class="text-[24px]-400 leading-[normal] opacity-50 absolute left-[20px] top-[20px]">0{item.id}</p>
                         <div className="flex items-center justify-center">
                         <Image
                             src={item.imgUrl}
@@ -61,9 +61,9 @@ const FiveBoxSection = ({ allStrings }) => {
                     return (
                     <div
                         key={idx}
-                        className="bg-tinder max-w-[450px] mx-4 sm:m-0 rounded-[5px] px-4 py-10 sm:py-7 sm:px-8 flex flex-col items-center justify-center sm:block text-white"
+                        className="relative bg-tinder max-w-[450px] mx-4 sm:m-0 rounded-[5px] px-4 py-10 sm:py-7 sm:px-8 flex flex-col items-center justify-center sm:block text-white"
                     >
-                        <p class="text-[24px]-400 leading-[normal] ">0{item.id}</p>
+                        <p class="text-[24px]-400 leading-[normal] opacity-50 absolute left-[20px] top-[20px]">0{item.id}</p>
                         <div className="flex items-center justify-center">
                         <Image
                             src={item.imgUrl}
