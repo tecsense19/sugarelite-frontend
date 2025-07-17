@@ -62,7 +62,7 @@ const Verification = ({ user, allStrings }) => {
         : <></>
       }
       <Image src={verification_img} alt='' height={300} width={250} className='pointer-events-none mx-2 mb-5 mt-12' />
-      <div className={`flex flex-col justify-center px-2 md:px-0 ${(user.is_identityverification === "pending" || user.is_identityverification === "approved") ? "pointer-events-none opacity-50" : ""}`}>
+      <div className={`flex flex-col justify-center px-4 md:px-0 ${(user.is_identityverification === "pending" || user.is_identityverification === "approved") ? "pointer-events-none opacity-50" : ""}`}>
         <div className='flex flex-col text-center'>
           <div>{allStrings["string_get_your_profile_verified."]}</div>
           <div>{allStrings["string_in_this_way,_we_and_others_can_see_that_you_are_genuine."]}</div>

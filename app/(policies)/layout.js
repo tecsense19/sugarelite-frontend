@@ -2,7 +2,8 @@ import Header from "@/components/header/Header";
 import { get_user_action } from "../lib/actions";
 import Image from "next/image";
 import { client_routes } from "../lib/helpers";
-import logo from "/public/assets/Logo (1).svg"
+// import logo from "/public/assets/Logo (1).svg"
+import logo from "/public/assets/main-site-logo.svg"
 import Link from "next/link";
 import Footer from "@/components/common/Footer";
 import { getAllStrings } from "../lib/allStrings";
@@ -15,7 +16,7 @@ export default async function RootLayout({ children }) {
             {
                 user ?
                     <header className="flex h-[66px] bg-primary-dark text-white items-center justify-center top-0 fixed w-full z-[2]" >
-                        <div className="flex justify-between items-center w-full px-6 md:px-0">
+                        <div className="flex justify-between items-center w-full px-4 md:px-0">
                             <div className={`flex items-center md:ms-[72px]`}>
                                 <button >
                                     <Image height={35} width={177} src={logo} alt="" className="pointer-events-none h-[35px] w-[152px] md:w-[177px]" priority />

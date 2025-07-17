@@ -1,7 +1,8 @@
 "use client"
 
 import Image from "next/image";
-import logo from "../../public/assets/logo_home_footer.svg";
+// import logo from "../../public/assets/logo_home_footer.svg";
+import logo from "../../public/assets/main-site-logo.svg"
 import facebookImg from "../../public/assets/facebook_footer_img.svg";
 import facebookActiveImg from "../../public/assets/facebook_footer_active_img.svg";
 import instagramImg from "../../public/assets/instagram_footer_img.svg";
@@ -233,7 +234,7 @@ const Footer = ({ allStrings }) => {
               {allStrings["string_news_letter"]}
             </div>
             <form onSubmit={handleSubmit(handleNewLetterSubmit)} className="mt-5 2xl:mt-10 relative flex items-center news-letter" autoComplete="nope">
-              <input type="email" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder={allStrings["string_enter_your_email"]} autoComplete="off"
+              <input type="text" className="w-full bg-white rounded-[5px] h-12 ps-5 pe-14 outline-none border-0 text-primary text-[17px] font-normal leading-[normal]" placeholder={allStrings["string_enter_your_email"]} autoComplete="off"
                 {...register("email", { pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, required: true })} />
               <button type="submit" className="w-12 h-12 flex justify-center items-center rounded-[5px] absolute bg-secondary left-[calc(100%-48px)] transition-all ease-linear duration-75 hover:scale-105" onClick={handleWrongEmail}>
                 <Image src={sendIcon} alt="" width={20} height={20} className="select-none pointer-events-none" />

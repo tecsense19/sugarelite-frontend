@@ -39,7 +39,7 @@ const RegisterIndex = ({ allStrings }) => {
 
   const registerhandler = async (data) => {
     console.log("called register")
-    data = { ...data, "mobile_no": data.phone, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
+    data = { ...data, "mobile_no": data.selectedCountry + data.phone, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
     // data = { ...data, "birthdate": dayjs(data.birthdate).format("YYYY/MM/DD") }
     setIsLoading(true)
     console.log(data);

@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
-import logo from "../../public/assets/Logo (1).svg"
+// import logo from "../../public/assets/Logo (1).svg"
+import logo from "../../public/assets/main-site-logo.svg"
 import notificationIcon from "../../public/assets/Mask group (1).svg"
 import messagesIcon from "../../public/assets/Mask group.svg"
 import search from "../../public/assets/search.svg"

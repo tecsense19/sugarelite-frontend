@@ -99,7 +99,11 @@ const ContactUs = ({ user, allStrings }) => {
                 </div>
                 <div className='flex flex-col items-center gap-y-1 md:gap-y-[5px]'>
                   <div className='text-center text-[18px] md:text-[20px] font-medium md:font-semibold leading-[normal]'>{obj.name}</div>
-                  <div className='text-center text-white/90 text-[14px] md:text-[16px] font-normal leading-[20px] md:leading-[25px]'>{obj.desc}</div>
+                  <div className='text-center text-white/90 text-[14px] md:text-[16px] font-normal leading-[20px] md:leading-[25px]'>
+                    <Link href={`mailto:${obj.desc}`} className="hover:text-secondary">
+                      {obj.desc}
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

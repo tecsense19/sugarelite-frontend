@@ -209,7 +209,7 @@ const Index = ({ subscriptions, STRIPE_TEST_KEY, userData, allStrings }) => {
                 <div className={`mt-10 bg-[url('/assets/subscription_details_bg.png')] bg-cover bg-right-top text-[28px] sm:text-[32px] font-bold leading-[56px] h-[79px] w-[260px] sm:w-[275px] ps-[45px] sm:ps-[56px] flex items-center`}>
                   {item.name}
                 </div>
-                <div className='mt-[35px] flex justify-center items-center text-[50px] sm:text-[60px] font-bold leading-[70px] sm:leading-[80px]'> {allStrings["string_dkk"]} {item.amount}</div>
+                <div className='mt-[35px] flex justify-center items-center text-[30px] sm:text-[60px] font-bold leading-[70px] sm:leading-[80px]'> {allStrings["string_dkk"]} {item.amount}</div>
                 <div className='mt-[30px] flex flex-col gap-y-7 items-center'>
                   {details.map((item, idx) => (
                     <div key={idx} className='flex gap-x-[7px] sm:gap-x-[10px] items-start justify-start px-3 w-full sm:px-5 md:px-8 xl:px-5 2xl:px-8'>

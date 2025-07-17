@@ -99,7 +99,7 @@ const SideDrawer = ({ user, allStrings }) => {
                                 {
                                     navs.map((i, inx) => {
                                         return <div className='px-4 w-full' key={inx}>
-                                            <button onClick={() => { router.push(i.path); dispatch({ type: "Close_Menu" }); }} className={`py-3 px-4 ${i.path === path && "bg-secondary border-none"} border-b border-primary-dark-4 w-full text-left h-full capitalize text-[20px] tracking-wide font-[550]`}>{i.name}</button>
+                                            <button onClick={() => { router.push(i.path); dispatch({ type: "Close_Menu" }); }} className={`py-3 px-4 ${i.path === path && "bg-secondary border-none"} border-b border-primary-dark-4 w-full text-left h-full capitalize text-[18px] md:text-[20px] tracking-wide font-[550]`}>{i.name}</button>
                                         </div>
                                     })
                                 }

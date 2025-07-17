@@ -32,6 +32,10 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
     const [otpId, setOtpId] = useState("")
     const [api, contextHolder] = notification.useNotification();
 
+    useEffect(() => {
+        setValue('selectedCountry', selectedCountry.code);  // ✅ Sync country code
+    }, [selectedCountry, setValue]);
+
     let handleSubmitCalls = true
 
     const isValid = {
@@ -49,6 +53,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
             }
         } else {
             // let countryCode = selectedCountry.code.split("+")[1]
+
             obj = {
                 mobile_no: selectedCountry.code + watch("phone")
             }
@@ -195,7 +200,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                 setValue("otp", tempOtp);
             } else {
                 console.log(res)
-                client_notification(api, "topRight", "error", res.message, 3);
+                client_notification(api, "topRight", "error", res.error, 3);
                 setOtpArr(["", "", "", "", "", ""])
             }
             // }
@@ -290,7 +295,7 @@ const UserName = ({ prevStepHandler, register, watch, setValue, setNextStep, all
                                     <Image src={username_telephone_white} alt='' height={14} width={14} className={`${isEmail ? "hidden" : ""}`} />
                                     <span>{allStrings["string_mobile_number"]}</span>
                                 </span>
-                                <div id='isEmailSelected' className={`bg-black absolute rounded-[20px] z-0 h-[100%] transition-all duration-200 ${isEmail ? `translate-x-[calc(100%+11px)]` : "translate-x-[-22px]"}`} style={{ width: `calc(100% - 32px - ${getAnotherEleWidth()}px - ${isEmail ? "0px" : "10px"})` }}></div>
+                                <div id='isEmailSelected' className={`bg-black absolute rounded-[20px] z-0 h-[100%] transition-all duration-200 ${isEmail ? `translate-x-[calc(100%-50px)]` : "translate-x-[-22px]"}`} style={{ width: `calc(100% - 95px - ${getAnotherEleWidth()}px - ${isEmail ? "-62px" : "10px"})` }}></div>
                                 <span className={`z-[1] cursor-pointer flex justify-center items-center gap-x-2 transition-all duration-200 text-[13px] font-medium leading-[13px] ${!isEmail ? "text-black" : "text-white"}`} onClick={() => { setIsEmail(true); setValue("phone", "") }}>
                                     <Image src={username_email_white} alt='' height={13} width={13} className={`${isEmail ? "" : "hidden"}`} />
                                     <Image src={username_email_black} alt='' height={13} width={13} className={`${isEmail ? "hidden" : ""}`} />
